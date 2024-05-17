@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-
+import { motion } from "framer-motion";
 const Wrapper = styled.div`
   display: grid;
   position: relative;
@@ -101,7 +101,9 @@ function Home() {
         <img src="/img/image3.png" alt="" />
       </Wrapper>
       <MainWrapper>
-        <EmphasizedHeading>그녀를 구해라</EmphasizedHeading>
+        <motion.div whileHover={{ scale: 1.05 }}>
+          <EmphasizedHeading>Save Her</EmphasizedHeading>
+        </motion.div>
         <Config>
           {isAuthenticated ? (
             <Link to={"/intro"}>
