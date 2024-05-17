@@ -96,7 +96,7 @@ function GameOver() {
       // Handle success (e.g., display a success message, redirect to another page, etc.)
     } catch (error) {
       console.error(error);
-      alert("중복된 이메일입니다");
+
       // Handle error (e.g., display an error message)
     }
   };

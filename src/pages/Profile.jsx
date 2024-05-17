@@ -106,7 +106,8 @@ function Profile() {
             },
           }
         );
-        setProfile(response.data);
+        setProfile(response?.data);
+        console.log(profile);
       } catch (error) {
         console.error("Error fetching profile:", error);
       }
@@ -128,7 +129,7 @@ function Profile() {
       >
         <motion.div whileHover={{ scale: 1.1 }}>
           <ProfileImage
-            src={profile?.profileImageUrl || "/img/character.png"}
+            src={"/img/profile.png"}
             alt="Profile"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
