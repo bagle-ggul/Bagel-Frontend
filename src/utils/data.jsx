@@ -68,11 +68,11 @@ export const Ans1 = {
       text: [
         {
           ans: "자동차",
-          score: "",
+          score: 10,
         },
         {
           ans: "도보",
-          score: "",
+          score: 0,
         },
       ],
     },
