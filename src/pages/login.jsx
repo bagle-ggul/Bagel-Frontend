@@ -93,7 +93,7 @@ function Login() {
       localStorage.setItem("refreshToken", refreshToken);
       console.log(response.data);
       console.log(refreshToken);
-      navigate("/main1");
+      navigate("/");
     } catch (error) {
       console.error(error);
       alert("잘못된 계정입니다");
