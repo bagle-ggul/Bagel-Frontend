@@ -1,4 +1,3 @@
-// src/components/Profile.js
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
@@ -62,6 +61,7 @@ const DetailTitle = styled.span`
 const DetailValue = styled.span`
   color: black;
 `;
+
 const ButtonContainer = styled.div`
   display: flex;
   position: absolute;
@@ -200,7 +200,7 @@ function Profile() {
         <Link to={"/"}>
           <ButtonSpan>홈</ButtonSpan>
         </Link>
-        <Link to={"/board"}>
+        <Link to={"/board/1"}>
           <ButtonSpan>랭킹 보기</ButtonSpan>
         </Link>
         <Link to={"/intro"}>

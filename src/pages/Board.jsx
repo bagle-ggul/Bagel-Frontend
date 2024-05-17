@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 // 배경 이미지 URL
 const backgroundImageUrl = "/img/community.png";
@@ -62,10 +62,6 @@ const TableCell = styled.td`
   font-weight: bold;
 `;
 
-const MenuLink = styled(Link)`
-  text-decoration: none;
-`;
-
 const ButtonContainer = styled.div`
   display: flex;
   position: absolute;
@@ -118,7 +114,7 @@ const PaginationButton = styled.button`
   }
 
   &:disabled {
-    background-color: #aaa;
+    background-color: #1e3d59;
     cursor: not-allowed;
   }
 `;
@@ -129,18 +125,23 @@ const PaginationInfo = styled.span`
 `;
 
 function Board() {
+  const { page } = useParams();
+  const navigate = useNavigate();
   const accessToken = localStorage.getItem("refreshToken");
   const [data, setData] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize] = useState(10);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
+  const currentPage = parseInt(page, 10) || 1;
+  const pageSize = 10;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://api.she-is-newyork-bagel.co.kr/api/game/ranking", {
+          "https://api.she-is-newyork-bagel.co.kr/api/game/ranking",
+          {
             headers: {
-              Authorization: `Bearer ${accessToken}`
+              Authorization: `Bearer ${accessToken}`,
             },
             params: {
               page: currentPage - 1, // API 페이지는 0부터 시작
@@ -148,29 +149,24 @@ function Board() {
             },
           }
         );
-        console.log(response);
-        setData(response.data);
+        setData(response.data.rankings);
+        setTotalPages(response.data.totalPages);
+        setTotalItems(response.data.totalItems);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
     fetchData();
-  }, [currentPage, pageSize]);
-
-  const indexOfLastPost = currentPage * pageSize;
-  const indexOfFirstPost = indexOfLastPost - pageSize;
-  const currentData = data.slice(indexOfFirstPost, indexOfLastPost);
+  }, [currentPage, accessToken, pageSize]);
 
   const nextPage = () => {
-    if (currentPage < Math.ceil(data.length / pageSize)) {
-      setCurrentPage(currentPage + 1);
-    }
+    navigate(`/board/${currentPage + 1}`);
   };
 
   const prevPage = () => {
     if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
+      navigate(`/board/${currentPage - 1}`);
     }
   };
 
@@ -184,19 +180,19 @@ function Board() {
             <TableHeader>캐릭터 이름</TableHeader>
             <TableHeader>점수</TableHeader>
             <TableHeader>MBTI</TableHeader>
+            <TableHeader>이메일</TableHeader>
             <TableHeader>날짜</TableHeader>
-
           </TableRow>
         </TableHead>
         <tbody>
-          {currentData.map((item, index) => (
+          {data.map((item, index) => (
             <TableRow key={index}>
-              <TableCell>{indexOfFirstPost + index + 1}</TableCell>
+              <TableCell>{(currentPage - 1) * pageSize + index + 1}</TableCell>
               <TableCell>{item.characterName}</TableCell>
               <TableCell>{item.finalScore}</TableCell>
               <TableCell>{item.mbti}</TableCell>
+              <TableCell>{item.memberEmail}</TableCell>
               <TableCell>{new Date(item.gameDate).toLocaleString()}</TableCell>
-   
             </TableRow>
           ))}
         </tbody>
@@ -206,11 +202,11 @@ function Board() {
           이전
         </PaginationButton>
         <PaginationInfo>
-          {currentPage} / {Math.ceil(data.length / pageSize)}
+          {currentPage} / {totalPages}
         </PaginationInfo>
         <PaginationButton
           onClick={nextPage}
-          disabled={currentPage === Math.ceil(data.length / pageSize)}
+          disabled={currentPage === totalPages}
         >
           다음
         </PaginationButton>
