@@ -14,6 +14,7 @@ import Result from "./pages/Result";
 import Sad from "./pages/Sad";
 import Profile from "./pages/Profile";
 import Intro from "./pages/Intro";
+import Board from "./pages/Board";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -85,6 +86,9 @@ const router = createBrowserRouter([
       {
         path: "result",
         element: <Result />,
+
+        path: "board",
+        element: <Board />,
       },
     ],
   },

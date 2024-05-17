@@ -1,12 +1,14 @@
 import { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 const Wrapper = styled.div`
   display: grid;
   position: relative;
   grid-template-columns: repeat(3, 1fr);
   height: 100vh;
+  overflow: hidden;
   img {
     width: 100%;
     height: 100vh;
@@ -15,17 +17,16 @@ const Wrapper = styled.div`
   }
 `;
 
-const MainWrapper = styled.div`
+const MainWrapper = styled(motion.div)`
   z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border-radius: 13px;
-  position: absolute; /* Position it absolutely within the Wrapper */
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); /* Center the MainWrapper div */
+  position: absolute;
+  top: 20%;
+  left: 40%;
+  transform: translate(-50%, -50%);
   color: white; /* Add text color for visibility, adjust as needed */
   font-size: 3rem; /* Adjust font size as needed */
   background: rgba(0, 0, 0, 0.5); /* 배경을 반투명하게 설정하여 가독성 향상 */
@@ -42,7 +43,7 @@ const MainWrapper = styled.div`
   }
   input {
     width: 400px;
-    height: 40px;
+    height: 50px;
     border-radius: 12px;
     margin-bottom: 15px; /* Add some margin for better spacing */
   }
@@ -52,7 +53,7 @@ const MainWrapper = styled.div`
   }
 `;
 
-const StyledSelectButton = styled.button`
+const StyledSelectButton = styled(motion.button)`
   height: 20px;
   width: 40%;
   border-radius: 10px;
@@ -112,52 +113,67 @@ function Signup() {
         <img src="/img/image1.png" alt="" />
         <img src="/img/image2.png" alt="" />
         <img src="/img/image3.png" alt="" />
-        <MainWrapper>
+        <MainWrapper
+          initial={{ opacity: 0, y: "-100%" }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        >
           <div className="title">회원가입</div>
           <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              placeholder="이메일을 입력해주세요"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <input
-              type="password"
-              placeholder="비밀번호를 입력해주세요"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <input
-              type="text"
-              placeholder="이름을 입력해주세요"
-              value={characterName}
-              onChange={(e) => setCharacterName(e.target.value)}
-              required
-            />
-            <input
-              type="text"
-              placeholder="MBTI를 입력해주세요"
-              value={mbti}
-              onChange={(e) => setMbti(e.target.value)}
-              required
-            />
-            <input
-              type="text"
-              placeholder="생일을 입력해주세요 ex)2000-08-13"
-              value={birthDate}
-              onChange={(e) => setBirthDate(e.target.value)}
-              required
-            />
-            <input
-              type="text"
-              placeholder="성별을 입력해주세요"
-              value={gender}
-              onChange={(e) => setGender(e.target.value)}
-              required
-            />
-            <StyledSelectButton className="submitBtn" type="submit">
+            <motion.div whileHover={{ scale: 1.1 }}>
+              <input
+                type="email"
+                placeholder="이메일을 입력해주세요"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.1 }}>
+              <input
+                type="password"
+                placeholder="비밀번호를 입력해주세요"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.1 }}>
+              <input
+                type="text"
+                placeholder="이름을 입력해주세요"
+                value={characterName}
+                onChange={(e) => setCharacterName(e.target.value)}
+              />
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.1 }}>
+              <input
+                type="text"
+                placeholder="MBTI를 입력해주세요"
+                value={mbti}
+                onChange={(e) => setMbti(e.target.value)}
+              />
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.1 }}>
+              <input
+                type="text"
+                placeholder="생일을 입력해주세요 ex)2000-08-13"
+                value={birthDate}
+                onChange={(e) => setBirthDate(e.target.value)}
+              />
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.1 }}>
+              <input
+                type="text"
+                placeholder="성별을 입력해주세요"
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+              />
+            </motion.div>
+            <StyledSelectButton
+              className="submitBtn"
+              type="submit"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
               Submit
             </StyledSelectButton>
           </form>
