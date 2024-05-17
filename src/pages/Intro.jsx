@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import styled, { keyframes } from 'styled-components';
-
+import React, { useState, useEffect } from "react";
+import styled, { keyframes } from "styled-components";
+import { useNavigate } from "react-router-dom";
 const scenes = [
   {
     text: "드디어 오늘이네... 그녀와 단둘이 바닷가로 여행! 오늘은 정말 좋아한다고 말해야지.",
@@ -89,24 +89,29 @@ const CharacterName = styled.h2`
   margin: 0;
   padding: 0;
   font-size: 1.5em;
+  font-weight: bold;
 `;
 
 const DialogueText = styled.p`
   font-size: 1.2em;
+  font-weight: bold;
 `;
 
 const SelectPageComponent = () => {
   const [currentScene, setCurrentScene] = useState(0);
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (currentScene < scenes.length - 1) {
       const timer = setTimeout(() => {
         setCurrentScene(currentScene + 1);
-      }, 5000); // 5초마다 다음 장면으로 전환
+      }, 4000); // 5초마다 다음 장면으로 전환
 
       return () => clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 클리어
+    } else {
+      // 모든 장면이 끝나면 Main1 페이지로 이동
+      navigate("/main1");
     }
-  }, [currentScene]);
+  }, [currentScene, navigate]);
 
   const { text, character } = scenes[currentScene];
 
