@@ -93,6 +93,7 @@ const ButtonSpan = styled.span`
 function Profile() {
   const accessToken = localStorage.getItem("refreshToken");
   const [profile, setProfile] = useState(null);
+  console.log(accessToken);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -114,8 +115,6 @@ function Profile() {
     fetchProfile();
   }, [accessToken]);
 
-  if (!profile) return <div>Loading...</div>;
-
   return (
     <ProfileWrapper
       initial={{ opacity: 0 }}
@@ -129,7 +128,7 @@ function Profile() {
       >
         <motion.div whileHover={{ scale: 1.1 }}>
           <ProfileImage
-            src={profile.profileImageUrl || "/img/character.png"}
+            src={profile?.profileImageUrl || "/img/character.png"}
             alt="Profile"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
@@ -140,7 +139,7 @@ function Profile() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-            {profile.characterName}
+            {profile?.characterName}
           </UserName>
           <UserDetailContainer>
             <DetailRow
@@ -149,7 +148,7 @@ function Profile() {
               transition={{ duration: 0.6, delay: 0.6 }}
             >
               <DetailTitle>이메일:</DetailTitle>
-              <DetailValue>{profile.email}</DetailValue>
+              <DetailValue>{profile?.email}</DetailValue>
             </DetailRow>
             <DetailRow
               initial={{ opacity: 0 }}
@@ -158,7 +157,7 @@ function Profile() {
             >
               <DetailTitle>생일:</DetailTitle>
               <DetailValue>
-                {new Date(profile.birthDate).toLocaleDateString()}
+                {new Date(profile?.birthDate).toLocaleDateString()}
               </DetailValue>
             </DetailRow>
             <DetailRow
@@ -167,7 +166,7 @@ function Profile() {
               transition={{ duration: 0.6, delay: 1.6 }}
             >
               <DetailTitle>성별:</DetailTitle>
-              <DetailValue>{profile.gender}</DetailValue>
+              <DetailValue>{profile?.gender}</DetailValue>
             </DetailRow>
             <DetailRow
               initial={{ opacity: 0 }}
@@ -175,7 +174,7 @@ function Profile() {
               transition={{ duration: 0.6, delay: 1.8 }}
             >
               <DetailTitle>MBTI:</DetailTitle>
-              <DetailValue>{profile.mbti.toUpperCase()}</DetailValue>
+              <DetailValue>{profile?.mbti}</DetailValue>
             </DetailRow>
             <DetailRow
               initial={{ opacity: 0 }}
@@ -183,7 +182,7 @@ function Profile() {
               transition={{ duration: 0.6, delay: 1.2 }}
             >
               <DetailTitle>총 획득 호감도:</DetailTitle>
-              <DetailValue>{profile.totalScore}</DetailValue>
+              <DetailValue>{profile?.totalScore}</DetailValue>
             </DetailRow>
             <DetailRow
               initial={{ opacity: 0 }}
@@ -191,7 +190,7 @@ function Profile() {
               transition={{ duration: 0.6, delay: 2 }}
             >
               <DetailTitle>총 회귀수:</DetailTitle>
-              <DetailValue>{profile.totalRegressionCount}</DetailValue>
+              <DetailValue>{profile?.totalRegressionCount}</DetailValue>
             </DetailRow>
           </UserDetailContainer>
         </motion.div>
