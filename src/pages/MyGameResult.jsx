@@ -11,7 +11,7 @@ const ResultsWrapper = styled(motion.div)`
   justify-content: center;
   width: 100vw;
   height: 100vh;
-  background: url("/img/분기2.png") no-repeat center center;
+  background: url("/img/community.png") no-repeat center center;
   background-size: cover;
   padding: 20px;
 `;

@@ -69,8 +69,8 @@ const SceneWrap = styled.div`
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background: url("/img/intro.png") no-repeat center center;
-  background-size: contain;
+  background: url("/img/introN.png") no-repeat center center;
+  background-size: cover;
   padding: 20px;
   text-align: center;
   animation: ${fadeIn} 2s ease-in-out;
@@ -98,14 +98,40 @@ const DialogueText = styled.p`
   font-weight: bold;
 `;
 
+const SkipButton = styled.button`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    background-color: #555;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    background-color: #444;
+    transform: translateY(0);
+  }
+`;
+
 const SelectPageComponent = () => {
   const [currentScene, setCurrentScene] = useState(0);
   const navigate = useNavigate();
+
   useEffect(() => {
     if (currentScene < scenes.length - 1) {
       const timer = setTimeout(() => {
         setCurrentScene(currentScene + 1);
-      }, 4000); // 5초마다 다음 장면으로 전환
+      }, 4000); // 4초마다 다음 장면으로 전환
 
       return () => clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 클리어
     } else {
@@ -116,12 +142,17 @@ const SelectPageComponent = () => {
 
   const { text, character } = scenes[currentScene];
 
+  const handleSkip = () => {
+    navigate("/main1");
+  };
+
   return (
     <SceneWrap>
       <DialogueBox>
         <CharacterName>{character}</CharacterName>
         <DialogueText>{text}</DialogueText>
       </DialogueBox>
+      <SkipButton onClick={handleSkip}>Skip</SkipButton>
     </SceneWrap>
   );
 };
