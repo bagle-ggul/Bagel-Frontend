@@ -46,9 +46,9 @@ function Home() {
   return (
     <div>
       <Wrapper>
-        <img src="/image1.png" alt="" />
-        <img src="/image2.png" alt="" />
-        <img src="/image3.png" alt="" />
+        <img src="/img/image1.png" alt="" />
+        <img src="/img/image2.png" alt="" />
+        <img src="/img/image3.png" alt="" />
       </Wrapper>
       <MainWrapper>
         <h1>SAVE ME</h1>
