@@ -77,7 +77,7 @@ const EmphasizedHeading = styled.h1`
   font-weight: 400;
   font-style: normal;
   font-size: 3rem; /* 큰 폰트 크기 */
-  color: #ff4757; /* 강조된 색상 */
+  color: white; /* 강조된 색상 */
   text-align: center; /* 가운데 정렬 */
   margin: 2rem 0; /* 상하 여백 */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* 텍스트 그림자 효과 */
