@@ -105,7 +105,8 @@ function Profile() {
             },
           }
         );
-        setProfile(response.data);
+        setProfile(response?.data);
+        console.log(profile);
       } catch (error) {
         console.error("Error fetching profile:", error);
       }
