@@ -44,6 +44,7 @@ const StyledSelectButton = styled.button`
   height: 30%;
   width: 40%;
   border-radius: 10px;
+  font-size: 1rem;
   border: 1px solid grey;
   margin: 0.3%;
   cursor: pointer;

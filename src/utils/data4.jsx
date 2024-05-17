@@ -4,7 +4,7 @@ export const storyData = {
     {
       index: "1",
       text: `(갑자기 비가 온다). 
-      얻은 돈으로 편의점에서 우산을 사올 수 있었다."`,
+      얻은 돈으로 편의점에서 우산을 사올 수 있었다.`,
       img: "/img/road1-1.png",
       options: [
         {
