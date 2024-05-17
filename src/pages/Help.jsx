@@ -32,15 +32,6 @@ const MainWrapper = styled.div`
   }
 `;
 
-const Config = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  span {
-    font-size: 3rem;
-  }
-`;
-
 function Help() {
   return (
     <div>
