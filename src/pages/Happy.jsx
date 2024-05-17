@@ -1,33 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 import { useNavigate } from "react-router-dom";
-
-const scenes = [
-  {
-    text: "있잖아… 너 덕분에 오늘 하루 정말 재밌었어! 진짜 이렇게 재밌는 하루는 정말 오랜만이야.",
-    character: "여자",
-  },
-  {
-    text: "그럼 나랑 좀 더 자주 이렇게 놀러 다닐래? 나도 좋아하는 사람이랑 같이 있으면 즐겁거든.",
-    character: "주인공",
-  },
-  {
-    text: "어? 뭐라고?",
-    character: "여자",
-  },
-  {
-    text: "나 너 좋아한다고. 네가 나한테 뉴욕 베이글을 사줬을 때부터. 그때부터 쭉 좋아했어.",
-    character: "주인공",
-  },
-  {
-    text: "나도… 나도 네가 좋아.",
-    character: "여자",
-  },
-  {
-    text: "그녀는 고백을 받아주고 두 사람은 연인이 된다. 해피 엔딩",
-    character: "해설",
-  },
-];
+import { useRecoilValue } from "recoil";
+import { characterNameAtom } from "../atom/atom";
 
 const fadeIn = keyframes`
   from {
@@ -77,11 +52,9 @@ const DialogueText = styled.p`
   font-weight: bold;
 `;
 
-
-
 const StyledCharacterBackground = styled.div`
-  width: 50rem;
-  height: 80rem;
+  width: 40rem;
+  height: 60rem;
   z-index: 5;
   position: absolute;
   bottom: 0; /* Adjust the position as needed */
@@ -94,12 +67,42 @@ const StyledCharacterBackground = styled.div`
 `;
 
 function Happy() {
+  const characterName = useRecoilValue(characterNameAtom);
+
+  const scenes = [
+    {
+      text: "있잖아… 너 덕분에 오늘 하루 정말 재밌었어! 진짜 이렇게 재밌는 하루는 정말 오랜만이야.",
+      character: "이수정",
+    },
+    {
+      text: "그럼 나랑 좀 더 자주 이렇게 놀러 다닐래? 나도 좋아하는 사람이랑 같이 있으면 즐겁거든.",
+      character: characterName,
+    },
+    {
+      text: "어? 뭐라고?",
+      character: "이수정",
+    },
+    {
+      text: "나 너 좋아한다고. 네가 나한테 뉴욕 베이글을 사줬을 때부터. 그때부터 쭉 좋아했어.",
+      character: characterName,
+    },
+    {
+      text: "나도… 나도 네가 좋아.",
+      character: "이수정",
+    },
+    {
+      text: "그녀는 고백을 받아주고 두 사람은 연인이 된다. 해피 엔딩",
+      character: "해설",
+    },
+  ];
+
   const [currentScene, setCurrentScene] = useState(0);
   const navigate = useNavigate();
+
   useEffect(() => {
     if (currentScene < scenes.length - 1) {
       const timer = setTimeout(() => {
-        setCurrentScene(currentScene + 1);
+        setCurrentScene((prevScene) => prevScene + 1);
       }, 4000); // 4초마다 다음 장면으로 전환
 
       return () => clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 클리어
