@@ -1,13 +1,12 @@
 import SelectPageComponent from "../components/SelectPageComponent";
+import { Data1, Ans1 } from "../utils/data";
 
 function Start() {
-  const ButtonSelects = ["Select 1", "Select 2", "Select 3", "Select 4"];
-
   return (
     <SelectPageComponent
       //backgroundImage={"./img/Background.png"}
       characterImage={"./img/character.png"}
-      buttonSelects={ButtonSelects}
+      buttonSelects={Ans1}
       chatting={"야 꺼져"}
     ></SelectPageComponent>
   );
