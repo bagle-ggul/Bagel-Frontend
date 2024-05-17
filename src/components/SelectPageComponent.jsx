@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
@@ -48,9 +48,7 @@ const StyledSelectButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: all;
-  transition-duration: 0.5s;
-  transition-timing-function: ease-in-out;
+  transition: all 0.5s ease-in-out;
   &:hover {
     background-color: #111;
     color: white;
@@ -81,33 +79,62 @@ const NextButton = styled.button`
   cursor: pointer;
 `;
 
-function SelectPageComponent({
-  backgroundImage,
-  characterImage,
-  buttonSelects,
-  chatting,
-}) {
+function SelectPageComponent({ backgroundImage, characterImage, storyData }) {
   const [index, setIndex] = useState(0);
+  const [toggle, setToggle] = useState(false);
+  const [subText, setSubText] = useState([]);
+  const [subIndex, setSubIndex] = useState(0);
   const navigate = useNavigate();
 
-  const onClicked = () => {
-    setIndex((prev) => prev + 1);
+  const currentScene = storyData.home.plot[index];
+
+  const onClicked = (option) => {
+    if (option.error) {
+      alert(option.error);
+      navigate("/");
+    } else {
+      setSubText(option.subtext.split("^").map((text) => text.trim()));
+      setToggle(true);
+      setSubIndex(0);
+    }
   };
+
+  const onSubClicked = () => {
+    if (subIndex < subText.length - 1) {
+      setSubIndex(subIndex + 1);
+    } else {
+      setToggle(false);
+      setIndex((prev) => prev + 1);
+    }
+  };
+
+  useEffect(() => {
+    if (!toggle) {
+      setSubText([]);
+      setSubIndex(0);
+    }
+  }, [toggle]);
 
   return (
     <StyledBackGround bgImage={backgroundImage}>
       <StyledCharacterBackground>
         <img src={characterImage} alt="Character" />
       </StyledCharacterBackground>
-      {index <= 2 ? (
+      {index < storyData.home.plot.length ? (
         <>
-          <StyledChatWrap>{chatting.plot[index].text}</StyledChatWrap>
+          <StyledChatWrap>{currentScene.text}</StyledChatWrap>
           <StyledTextWrap>
-            {buttonSelects.plot[index].text.map((text, i) => (
-              <StyledSelectButton key={i} onClick={onClicked}>
-                {text.ans}
+            {toggle ? (
+              <StyledSelectButton onClick={onSubClicked}>
+                {subText[subIndex]}
               </StyledSelectButton>
-            ))}
+            ) : (
+              currentScene.options.map((option, i) => (
+                <StyledSelectButton key={i} onClick={() => onClicked(option)}>
+                  {option.ans}
+                </StyledSelectButton>
+              ))
+            )}
           </StyledTextWrap>
         </>
       ) : (
