@@ -101,7 +101,7 @@ function Home() {
         <img src="/img/image3.png" alt="" />
       </Wrapper>
       <MainWrapper>
-        <EmphasizedHeading>그녀를 구해라</EmphasizedHeading>
+        <EmphasizedHeading>Save Her</EmphasizedHeading>
         <Config>
           {isAuthenticated ? (
             <Link to={"/intro"}>
