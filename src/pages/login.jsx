@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 
@@ -74,6 +75,7 @@ const StyledSelectButton = styled.button`
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -87,7 +89,11 @@ function Login() {
         "https://api.she-is-newyork-bagel.co.kr/api/login",
         userData
       );
+      const { refreshToken } = response.data;
+      localStorage.setItem("refreshToken", refreshToken); // Store the refresh token
       console.log(response.data);
+      console.log(refreshToken);
+      navigate("/main1");
       // Handle success (e.g., display a success message, redirect to another page, etc.)
     } catch (error) {
       console.error(error);
@@ -106,7 +112,7 @@ function Login() {
           <div className="title">로그인</div>
           <form onSubmit={handleSubmit}>
             <input
-              type="email"
+              type="text"
               placeholder="이메일을 입력해주세요"
               value={email}
               onChange={(e) => setEmail(e.target.value)}

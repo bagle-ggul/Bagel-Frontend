@@ -1,5 +1,6 @@
 import styled from "styled-components";
-
+import { useState, useEffect } from "react";
+import axios from "axios";
 const Wrapper = styled.div`
   height: 100vh;
   width: 100vw;
@@ -33,6 +34,27 @@ const Avatar = styled.div`
 `;
 
 export default function Profile() {
+  const [userData, setUserData] = useState(null);
+
+  const fetchUserData = async () => {
+    try {
+      const refreshToken = localStorage.getItem("refreshToken");
+      console.log(refreshToken);
+      const response = await axios.post(
+        "https://api.she-is-newyork-bagel.co.kr/api/token",
+        { refreshToken: refreshToken }
+      );
+      setUserData(response.data);
+    } catch (error) {
+      console.error("Failed to authenticate:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
+  if (!userData) return <div>Loading...</div>;
   return (
     <Wrapper>
       <Main>
