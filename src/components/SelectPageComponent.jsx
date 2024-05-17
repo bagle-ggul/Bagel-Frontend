@@ -13,15 +13,14 @@ const StyledBackGround = styled.div`
 `;
 
 const StyledCharacterBackground = styled.div`
-  width: 25rem;
-  height: 35rem;
+  width: 20rem;
+  height: 30rem;
   img {
     width: 100%;
     height: 100%;
     z-index: 10;
     border-radius: 10px;
   }
-
 `;
 
 const StyledTextWrap = styled.div`
@@ -44,12 +43,30 @@ const StyledSelectButton = styled.div`
   margin: 0.3%;
 `;
 
-function SelectPageComponent({ backgroundImage, characterImage, buttonSelects }) {
+const StyledChatWrap = styled.div`
+  width: 90%;
+  height: 20%;
+  background-color: white;
+  border-radius: 10px;
+  padding: 1%;
+  border: 1px solid grey;
+ justify-content: center;
+ display: flex;
+ align-items: center;
+`;
+
+function SelectPageComponent({
+  backgroundImage,
+  characterImage,
+  buttonSelects,
+  chatting,
+}) {
   return (
     <StyledBackGround bgImage={backgroundImage}>
       <StyledCharacterBackground>
         <img src={characterImage} alt="Character" />
       </StyledCharacterBackground>
+      <StyledChatWrap>{chatting}</StyledChatWrap>
       <StyledTextWrap>
         {buttonSelects.map((select, index) => (
           <StyledSelectButton key={index}>{select}</StyledSelectButton>
