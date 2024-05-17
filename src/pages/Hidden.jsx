@@ -77,11 +77,9 @@ const DialogueText = styled.p`
   font-weight: bold;
 `;
 
-
-
 const StyledCharacterBackground = styled.div`
-  width: 50rem;
-  height: 80rem;
+  width: 40rem;
+  height: 60rem;
   z-index: 5;
   position: absolute;
   bottom: 0; /* Adjust the position as needed */
