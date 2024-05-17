@@ -9,6 +9,10 @@ const router = createBrowserRouter([
         path: "",
         element: <Home />,
       },
+      {
+        path: "start",
+        element: <Start />,
+      },
     ],
   },
 ]);
