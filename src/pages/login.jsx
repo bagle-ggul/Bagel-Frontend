@@ -96,7 +96,8 @@ function Login() {
       navigate("/main1");
     } catch (error) {
       console.error(error);
-      alert("중복된 이메일입니다");
+      alert("잘못된 계정입니다");
+      // Handle error (e.g., display an error message)
     }
   };
 
