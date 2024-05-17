@@ -7,6 +7,8 @@ function Main1() {
       backgroundImage={"./img/house.png"}
       characterImage={"./img/character.png"}
       storyData={storyData}
+      url={"/main2"}
+      scene={1}
     ></SelectPageComponent>
   );
 }
