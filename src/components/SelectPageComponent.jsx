@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const StyledBackGround = styled.div`
+  padding: 5rem;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
@@ -27,23 +28,33 @@ const StyledCharacterBackground = styled.div`
 
 const StyledTextWrap = styled.div`
   width: 90%;
-  height: 40%;
   background-color: white;
   border-radius: 10px;
-  padding: 1%;
   border: 1px solid grey;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 `;
 
-const StyledSelectButton = styled.div`
+const StyledSelectButton = styled.button`
   height: 30%;
   width: 40%;
   border-radius: 10px;
   border: 1px solid grey;
   margin: 0.3%;
   cursor: pointer;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-in-out;
+  &:hover {
+    background-color: #111;
+    color: white;
+  }
 `;
 
 const StyledChatWrap = styled.div`
@@ -51,11 +62,14 @@ const StyledChatWrap = styled.div`
   height: 20%;
   background-color: white;
   border-radius: 10px;
-  padding: 1%;
+  padding: 2rem;
   border: 1px solid grey;
   justify-content: center;
   display: flex;
   align-items: center;
+  margin: 1rem 0;
+  font-size: 1.5rem;
+  font-weight: 600;
 `;
 
 const NextButton = styled.button`
