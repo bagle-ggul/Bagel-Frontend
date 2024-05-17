@@ -93,15 +93,27 @@ function SelectPageComponent({
   const [subText, setSubText] = useState([]);
   const [subIndex, setSubIndex] = useState(0);
   const [score, setScore] = useRecoilState(scoreAtom);
+  const [base, setBase] = useState(url); // base 상태 추가
   const navigate = useNavigate();
+  if (scene === 1) {
+    setScore(0);
+  }
+
   console.log(score);
 
   const currentScene = storyData.plot[index];
 
-  const onClicked = (option) => {
+  const onClicked = (option, i) => {
+    if (scene === 2) {
+      if (i === 0) {
+        setBase("/main4"); // setBase로 base 상태 업데이트
+      } else {
+        setBase("/main3"); // setBase로 base 상태 업데이트
+      }
+    }
     if (option.error) {
       alert(option.error);
-      navigate("/");
+      window.location.href = "/main1";
     } else {
       setSubText(option.subtext.split("^").map((text) => text.trim()));
       setScore((prevScore) => prevScore + option.score);
@@ -175,11 +187,11 @@ function SelectPageComponent({
 
   return (
     <StyledBackGround bgImage={backgroundImage}>
-      <StyledCharacterBackground>
-        <img src={characterImage} alt="Character" />
-      </StyledCharacterBackground>
       {index < storyData.plot.length ? (
         <>
+          <StyledCharacterBackground>
+            <img src={currentScene.img} alt="Character" />
+          </StyledCharacterBackground>
           <StyledChatWrap>{currentScene.text}</StyledChatWrap>
           <StyledTextWrap>
             {toggle ? (
@@ -188,7 +200,10 @@ function SelectPageComponent({
               </StyledSelectButton>
             ) : (
               currentScene.options.map((option, i) => (
-                <StyledSelectButton key={i} onClick={() => onClicked(option)}>
+                <StyledSelectButton
+                  key={i}
+                  onClick={() => onClicked(option, i)}
+                >
                   {option.ans}
                 </StyledSelectButton>
               ))
@@ -197,7 +212,7 @@ function SelectPageComponent({
         </>
       ) : (
         <NextButton>
-          <Link to={url}>다음 스테이지로...</Link>
+          <Link to={base}>다음 스테이지로...</Link>
         </NextButton>
       )}
     </StyledBackGround>
