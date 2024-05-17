@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import axios from "axios";
 import { useSetRecoilState } from "recoil";
 import SelectPageComponent from "../components/SelectPageComponent";
@@ -8,6 +8,7 @@ import { characterNameAtom } from "../atom/atom";
 function Main1() {
   const refreshToken = localStorage.getItem("refreshToken");
   const setCharacterName = useSetRecoilState(characterNameAtom);
+  const audioRef = useRef(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,14 +32,25 @@ function Main1() {
     fetchData();
   }, [refreshToken, setCharacterName]);
 
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.play().catch((error) => {
+        console.error("Error playing audio:", error);
+      });
+    }
+  }, []);
+
   return (
-    <SelectPageComponent
-      backgroundImage={"./img/house.png"}
-      characterImage={"./img/character.png"}
-      storyData={storyData}
-      url={"/main2"}
-      scene={1}
-    />
+    <>
+      <SelectPageComponent
+        backgroundImage={"./img/house.png"}
+        characterImage={"./img/character.png"}
+        storyData={storyData}
+        url={"/main2"}
+        scene={1}
+      />
+      <audio ref={audioRef} src="./audio/1.mp3" loop />
+    </>
   );
 }
 

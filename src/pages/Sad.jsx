@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled, { keyframes } from "styled-components";
 import { useNavigate } from "react-router-dom";
 
@@ -77,7 +77,6 @@ const scenes = [
   },
 ];
 
-
 const fadeIn = keyframes`
   from {
     opacity: 0;
@@ -126,8 +125,6 @@ const DialogueText = styled.p`
   font-weight: bold;
 `;
 
-
-
 const StyledCharacterBackground = styled.div`
   width: 50rem;
   height: 80rem;
@@ -145,7 +142,14 @@ const StyledCharacterBackground = styled.div`
 function Sad() {
   const [currentScene, setCurrentScene] = useState(0);
   const navigate = useNavigate();
+  const audioRef = useRef(null);
+
   useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.play().catch((error) => {
+        console.error("Error playing audio:", error);
+      });
+    }
     if (currentScene < scenes.length - 1) {
       const timer = setTimeout(() => {
         setCurrentScene(currentScene + 1);
@@ -169,6 +173,7 @@ function Sad() {
         <CharacterName>{character}</CharacterName>
         <DialogueText>{text}</DialogueText>
       </DialogueBox>
+      <audio ref={audioRef} src="/audio/sad.mp3" loop />
     </SceneWrap>
   );
 }
