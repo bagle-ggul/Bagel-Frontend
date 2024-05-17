@@ -4,7 +4,7 @@ import { storyData } from "../utils/data5";
 function Main5() {
   return (
     <SelectPageComponent
-      backgroundImage={"./img/image1.png"}
+      backgroundImage={"./img/beach.png"}
       characterImage={"./img/character.png"}
       storyData={storyData}
       url={"/happy"}
