@@ -1,10 +1,12 @@
-import logo from "./logo.svg";
-import "./App.css";
+import SelectPageComponent from "./components/SelectPageComponent";
 
 function App() {
   return (
-    <div className="App">
-      <span>hello</span>
+    <div>
+      <SelectPageComponent
+        backgroundImage={"./img/Background.png"}
+        characterImage={"./img/character.png"}
+      ></SelectPageComponent>
     </div>
   );
 }
