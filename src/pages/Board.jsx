@@ -22,7 +22,7 @@ const BoardWrapper = styled.div`
 
 const Title = styled.h1`
   font-size: 3em;
-  color: black;
+  color: white;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
   margin-bottom: 20px;
 `;
@@ -32,20 +32,20 @@ const Table = styled.table`
   max-width: 1200px;
   margin: 0 auto;
   border-collapse: collapse;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(173, 216, 230, 0.8); /* 밝은 청록색 배경 */
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
 
 const TableHead = styled.thead`
-  background-color: #333;
+  background-color: #1e3d59; /* 다크 블루 배경 */
   color: white;
 `;
 
 const TableRow = styled.tr`
   &:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: rgba(255, 255, 255, 0.7);
   }
 `;
 
@@ -58,7 +58,8 @@ const TableCell = styled.td`
   padding: 15px;
   font-size: 1em;
   text-align: center;
-  color: #333;
+  color: #1e3d59; /* 다크 블루 텍스트 */
+  font-weight: bold;
 `;
 
 const MenuLink = styled(Link)`
@@ -73,7 +74,7 @@ const ButtonContainer = styled.div`
 `;
 
 const ButtonSpan = styled.span`
-  background-color: #333;
+  background-color: #1e3d59;
   color: white;
   padding: 10px 20px;
   border-radius: 5px;
@@ -83,12 +84,12 @@ const ButtonSpan = styled.span`
   display: inline-block;
   margin-left: 10px;
   &:hover {
-    background-color: #555;
+    background-color: #2a5878;
     transform: translateY(-2px);
   }
 
   &:active {
-    background-color: #444;
+    background-color: #1c486b;
     transform: translateY(0);
   }
 `;
@@ -101,7 +102,7 @@ const PaginationWrapper = styled.div`
 `;
 
 const PaginationButton = styled.button`
-  background-color: #333;
+  background-color: #1e3d59;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -112,7 +113,7 @@ const PaginationButton = styled.button`
   transition: background-color 0.3s ease, transform 0.3s ease;
 
   &:hover {
-    background-color: #555;
+    background-color: #2a5878;
     transform: translateY(-2px);
   }
 
@@ -184,8 +185,7 @@ function Board() {
             <TableHeader>점수</TableHeader>
             <TableHeader>MBTI</TableHeader>
             <TableHeader>날짜</TableHeader>
-            <TableHeader>플레이 시간</TableHeader>
-            <TableHeader>세부 사항</TableHeader>
+
           </TableRow>
         </TableHead>
         <tbody>
@@ -196,8 +196,7 @@ function Board() {
               <TableCell>{item.finalScore}</TableCell>
               <TableCell>{item.mbti}</TableCell>
               <TableCell>{new Date(item.gameDate).toLocaleString()}</TableCell>
-              <TableCell>{item.gamePlaySeconds}초</TableCell>
-              <TableCell>{item.details}</TableCell>
+   
             </TableRow>
           ))}
         </tbody>

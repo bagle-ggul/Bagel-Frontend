@@ -50,6 +50,30 @@ const Config = styled.div`
   }
 `;
 
+const ProfileButton = styled(Link)`
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 1.5rem;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    background-color: #555;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    background-color: #444;
+    transform: translateY(0);
+  }
+`;
+
 function Home() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
@@ -72,7 +96,6 @@ function Home() {
         <Config>
           {isAuthenticated ? (
             <Link to={"/intro"}>
-
               <span>게임 시작</span>
             </Link>
           ) : (
@@ -87,6 +110,11 @@ function Home() {
           )}
         </Config>
       </MainWrapper>
+      {isAuthenticated && (
+        <ProfileButton to={"/profile"}>
+           내 정보
+        </ProfileButton>
+      )}
     </div>
   );
 }
