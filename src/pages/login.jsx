@@ -94,6 +94,7 @@ function Login() {
       console.log(response.data);
       console.log(refreshToken);
       navigate("/");
+
     } catch (error) {
       console.error(error);
       alert("잘못된 계정입니다");
