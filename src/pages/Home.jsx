@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Wrapper = styled.div`
   display: grid;
@@ -53,7 +54,9 @@ function Home() {
       <MainWrapper>
         <h1>SAVE ME</h1>
         <Config>
-          <span>게임시작</span>
+          <Link to={"/start"}>
+            <span>게임시작</span>
+          </Link>
           <span>도움말</span>
         </Config>
       </MainWrapper>
