@@ -77,7 +77,6 @@ const scenes = [
   },
 ];
 
-
 const fadeIn = keyframes`
   from {
     opacity: 0;
@@ -125,8 +124,6 @@ const DialogueText = styled.p`
   font-size: 1.2em;
   font-weight: bold;
 `;
-
-
 
 const StyledCharacterBackground = styled.div`
   width: 50rem;

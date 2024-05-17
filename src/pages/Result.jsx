@@ -7,21 +7,21 @@ import axios from "axios";
 
 const CenteredButton = styled.button`
   position: absolute;
-  top: 60%;
+  top: 90%;
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 1rem 2rem;
   font-size: 1.5rem;
   cursor: pointer;
-  background-color: #4caf50;
+  background-color: saddlebrown;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 15px;
   transition: background-color 0.3s ease;
 
   &:hover {
     transition: all 0.3s;
-    color: black;
+    background-color: #e5792b;
   }
 `;
 
@@ -29,6 +29,14 @@ const CenteredDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  background-image: url("img/cafe.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100vh; /* Full viewport height */
+  img {
+    margin-top: 320px;
+  }
 `;
 
 function Result() {
@@ -78,7 +86,7 @@ function Result() {
 
   return (
     <CenteredDiv>
-      <img src="img/레몬에이드.png" alt="레몬에이드" />
+      <img src="img/rstNukki.png" alt="레몬에이드" />
       <CenteredButton onClick={handleClick}>결과확인</CenteredButton>
     </CenteredDiv>
   );
