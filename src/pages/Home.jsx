@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
@@ -25,10 +26,10 @@ const MainWrapper = styled.div`
   transform: translate(-50%, -50%);
   text-align: center;
   font-size: x-large;
-  color: white; /* 텍스트 색상을 배경과 대조되도록 설정 */
-  background: rgba(0, 0, 0, 0.5); /* 배경을 반투명하게 설정하여 가독성 향상 */
-  padding: 20px; /* 텍스트 주위에 여백 추가 */
-  border-radius: 10px; /* 모서리를 둥글게 설정 */
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 10px;
   width: 50rem;
   h1 {
     font-size: 8rem;
@@ -50,6 +51,15 @@ const Config = styled.div`
 `;
 
 function Home() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("refreshToken");
+    if (token) {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
   return (
     <div>
       <Wrapper>
@@ -60,12 +70,20 @@ function Home() {
       <MainWrapper>
         <h1>SAVE ME</h1>
         <Config>
-          <Link to={"/signup"}>
-            <span>회원가입</span>
-          </Link>
-          <Link to={"/login"}>
-            <span>로그인</span>
-          </Link>
+          {isAuthenticated ? (
+            <Link to={"/main1"}>
+              <span>게임 시작</span>
+            </Link>
+          ) : (
+            <>
+              <Link to={"/signup"}>
+                <span>회원가입</span>
+              </Link>
+              <Link to={"/login"}>
+                <span>로그인</span>
+              </Link>
+            </>
+          )}
         </Config>
       </MainWrapper>
     </div>
