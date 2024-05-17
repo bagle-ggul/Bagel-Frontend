@@ -100,14 +100,15 @@ const DialogueText = styled.p`
 
 const SkipButton = styled.button`
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 30px;
+  right: 30px;
   background-color: #333;
   color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 20px 40px;
   border-radius: 5px;
-  font-size: 1em;
+  font-size: 1.5em;
+  text-align: center;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
