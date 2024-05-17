@@ -110,12 +110,12 @@ export const storyData = {
           score: 0,
           subtext: `(갑자기 동굴이 붕괴하기 시작했다.)`,
           img: "/img/cave_low.png",
+          error: "error",
         },
         {
           ans: `곧바로 동굴을 나간다`,
           score: 0,
           subtext: `주인공: "소리가 불길한데? 여긴 위험할 것 같아. 나가자." ^ (밖에 나오니 비가 그쳐 있고 두 사람은 해변으로 이동한다.)`,
-          error: "error",
           img: "/img/cafe1-1.png",
         },
       ],
