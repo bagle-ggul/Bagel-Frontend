@@ -132,8 +132,7 @@ function SelectPageComponent({
       }
     }
     if (option.error) {
-      alert(option.error);
-      window.location.href = "/main1";
+      window.location.href = "/over";
     } else {
       setSubText(
         option.subtext
