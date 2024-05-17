@@ -15,6 +15,8 @@ import Sad from "./pages/Sad";
 import Profile from "./pages/Profile";
 import Intro from "./pages/Intro";
 import Board from "./pages/Board";
+
+import GameOver from "./pages/GameOver";
 import MyGameResult from "./pages/MyGameResult"; 
 
 const ProtectedRoute = ({ children }) => {
@@ -109,6 +111,7 @@ const router = createBrowserRouter([
         path: "middle",
         element: (
           <ProtectedRoute>
+
             <Middle />
           </ProtectedRoute>
         ),
@@ -117,6 +120,7 @@ const router = createBrowserRouter([
         path: "sad",
         element: (
           <ProtectedRoute>
+
             <Sad />
           </ProtectedRoute>
         ),
@@ -138,10 +142,11 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "gameresult",
+        path: "over",
         element: (
           <ProtectedRoute>
-            <MyGameResult />
+            <GameOver />
+
           </ProtectedRoute>
         ),
       },
