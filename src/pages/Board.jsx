@@ -5,7 +5,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 // 배경 이미지 URL
-const backgroundImageUrl = "/img/Background.png";
+const backgroundImageUrl = "/img/분기2.png";
 
 const BoardWrapper = styled.div`
   background-image: url(${backgroundImageUrl});
@@ -51,7 +51,7 @@ const TableRow = styled.tr`
 
 const TableHeader = styled.th`
   padding: 15px;
-  font-size: 1.2em;
+  font-size: 1em;
 `;
 
 const TableCell = styled.td`
@@ -65,6 +65,13 @@ const MenuLink = styled(Link)`
   text-decoration: none;
 `;
 
+const ButtonContainer = styled.div`
+  display: flex;
+  position: absolute;
+  top: 20px;
+  right: 10px;
+`;
+
 const ButtonSpan = styled.span`
   background-color: #333;
   color: white;
@@ -74,9 +81,7 @@ const ButtonSpan = styled.span`
   transition: background-color 0.3s ease, transform 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: inline-block;
-  position: absolute;
-  top: 20px;
-  right: ${({ position }) => position === 'profile' ? '10px' : '140px'};
+  margin-left: 10px;
   &:hover {
     background-color: #555;
     transform: translateY(-2px);
@@ -206,12 +211,17 @@ function Board() {
           다음
         </PaginationButton>
       </PaginationWrapper>
-      <Link to={"/profile"}>
-        <ButtonSpan position="profile">내 정보</ButtonSpan>
-      </Link>
-      <Link to={"/main1"}>
-        <ButtonSpan position="retry">다시하기</ButtonSpan>
-      </Link>
+      <ButtonContainer>
+        <Link to={"/"}>
+          <ButtonSpan>홈</ButtonSpan>
+        </Link>
+        <Link to={"/profile"}>
+          <ButtonSpan>내 정보</ButtonSpan>
+        </Link>
+        <Link to={"/intro"}>
+          <ButtonSpan>다시하기</ButtonSpan>
+        </Link>
+      </ButtonContainer>
     </BoardWrapper>
   );
 }

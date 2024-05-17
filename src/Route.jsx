@@ -15,6 +15,7 @@ import Sad from "./pages/Sad";
 import Profile from "./pages/Profile";
 import Intro from "./pages/Intro";
 import Board from "./pages/Board";
+import MyGameResult from "./pages/MyGameResult";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -90,6 +91,10 @@ const router = createBrowserRouter([
       {
         path: "board",
         element: <Board />,
+      },
+      {
+        path: "gameresult",
+        element: <MyGameResult />,
       },
     ],
   },

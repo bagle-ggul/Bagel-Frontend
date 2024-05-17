@@ -11,7 +11,7 @@ const ResultsWrapper = styled(motion.div)`
   justify-content: center;
   width: 100vw;
   height: 100vh;
-  background: url("/img/background.png") no-repeat center center;
+  background: url("/img/분기2.png") no-repeat center center;
   background-size: cover;
   padding: 20px;
 `;
@@ -58,16 +58,18 @@ const ResultDetail = styled(motion.p)`
 `;
 
 function MyGameResults() {
+  const accessToken = localStorage.getItem("refreshToken");
   const [results, setResults] = useState([]);
-  
+  console.log(accessToken);
   useEffect(() => {
+    console.log(accessToken);
     const fetchResults = async () => {
       try {
         const response = await axios.get(
           "https://api.she-is-newyork-bagel.co.kr/api/game/my-results",
           {
             headers: {
-              Authorization: `Bearer YOUR_ACCESS_TOKEN`, // 토큰을 적절하게 설정
+              Authorization: `Bearer ${accessToken}`, // 토큰을 적절하게 설정
             },
           }
         );
@@ -86,7 +88,7 @@ function MyGameResults() {
         `https://api.she-is-newyork-bagel.co.kr/api/game/my-results/${gameResultId}`,
         {
           headers: {
-            Authorization: `Bearer YOUR_ACCESS_TOKEN`, // 토큰을 적절하게 설정
+            Authorization: `Bearer ${accessToken}`, // 토큰을 적절하게 설정
           },
         }
       );
@@ -109,7 +111,9 @@ function MyGameResults() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <DeleteButton onClick={() => handleDelete(result.id)}>삭제</DeleteButton>
+          <DeleteButton onClick={() => handleDelete(result.id)}>
+            삭제
+          </DeleteButton>
           <ResultDetail
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
