@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled, { keyframes } from "styled-components";
 import { scoreAtom } from "../atom/atom";
 import axios from "axios";
@@ -66,6 +66,8 @@ function GameOver() {
   const [fadeOutEffect, setFadeOutEffect] = useState(false);
   const navigate = useNavigate();
   const score = useRecoilValue(scoreAtom);
+  const setScore = useSetRecoilState(scoreAtom); // 상태 업데이트를 위한 함수
+  console.log(score);
 
   const refreshToken = localStorage.getItem("refreshToken"); // Retrieve the refresh token from local storage
 
@@ -76,6 +78,7 @@ function GameOver() {
       details: "string",
       gamePlaySeconds: 0,
     };
+    console.log(userData);
 
     try {
       const response = await axios.post(
@@ -84,6 +87,7 @@ function GameOver() {
         {
           headers: {
             Authorization: `Bearer ${refreshToken}`,
+            "Content-Type": "application/json", // 명확하게 JSON으로 전송
           },
         }
       );
@@ -100,6 +104,7 @@ function GameOver() {
   const handleClick = async () => {
     setFadeOutEffect(true);
     setTimeout(() => {
+      setScore(0); // score 초기화
       navigate("/intro");
       handleSubmit();
     }, 1000); // 1초 후에 페이지를 이동합니다.
