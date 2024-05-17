@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const StyledBackGround = styled.div`
@@ -41,6 +43,7 @@ const StyledSelectButton = styled.div`
   border-radius: 10px;
   border: 1px solid grey;
   margin: 0.3%;
+  cursor: pointer;
 `;
 
 const StyledChatWrap = styled.div`
@@ -55,24 +58,49 @@ const StyledChatWrap = styled.div`
   align-items: center;
 `;
 
+const NextButton = styled.button`
+  padding: 5rem 10rem;
+  border-radius: 10px;
+  background-color: red;
+  font-size: 3rem;
+  margin: 0.3%;
+  cursor: pointer;
+`;
+
 function SelectPageComponent({
   backgroundImage,
   characterImage,
   buttonSelects,
   chatting,
 }) {
+  const [index, setIndex] = useState(0);
+  const navigate = useNavigate();
+
+  const onClicked = () => {
+    setIndex((prev) => prev + 1);
+  };
+
   return (
     <StyledBackGround bgImage={backgroundImage}>
       <StyledCharacterBackground>
         <img src={characterImage} alt="Character" />
       </StyledCharacterBackground>
-      <StyledChatWrap>{chatting}</StyledChatWrap>
-      <StyledTextWrap>
-        {/* 인덱스가 분기번호 : 2면 2번째 분기 */}
-        {buttonSelects.plot[2].text.map((text) => (
-          <StyledSelectButton>{text.ans}</StyledSelectButton>
-        ))}
-      </StyledTextWrap>
+      {index <= 2 ? (
+        <>
+          <StyledChatWrap>{chatting.plot[index].text}</StyledChatWrap>
+          <StyledTextWrap>
+            {buttonSelects.plot[index].text.map((text, i) => (
+              <StyledSelectButton key={i} onClick={onClicked}>
+                {text.ans}
+              </StyledSelectButton>
+            ))}
+          </StyledTextWrap>
+        </>
+      ) : (
+        <NextButton>
+          <Link to={"/"}>다음 스테이지로...</Link>
+        </NextButton>
+      )}
     </StyledBackGround>
   );
 }
