@@ -2,9 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 // 배경 이미지 URL
-const backgroundImageUrl = "/img/Background.png";
+const backgroundImageUrl = "/img/community.png";
 
 const BoardWrapper = styled.div`
   background-image: url(${backgroundImageUrl});
@@ -20,62 +21,132 @@ const BoardWrapper = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 2em;
-  color: black; /* 타이틀 텍스트 색상을 흰색으로 설정 */
+  font-size: 3em;
+  color: black;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+  margin-bottom: 20px;
 `;
-const PostWrap = styled.div`
-  display: flex;
-  flex-direction: row;
+
+const Table = styled.table`
+  width: 80%;
+  max-width: 1200px;
+  margin: 0 auto;
+  border-collapse: collapse;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
-const Post = styled.div`
-  background-color: rgba(255, 255, 255, 0.8); /* 투명한 흰색 배경 */
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 100%;
+
+const TableHead = styled.thead`
+  background-color: #333;
+  color: white;
+`;
+
+const TableRow = styled.tr`
+  &:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+`;
+
+const TableHeader = styled.th`
   padding: 15px;
-  margin: 10px 0;
-  display: flex;
-  flex-direction: row;
-  gap: 20px;
-`;
-
-const PostTitle = styled.h2`
-  font-size: 1.5em;
-  margin-bottom: 10px;
-`;
-
-const PostDetail = styled.p`
   font-size: 1em;
-  margin: 5px 0;
-  color: #333; /* 텍스트 색상을 어두운 회색으로 설정 */
+`;
+
+const TableCell = styled.td`
+  padding: 15px;
+  font-size: 1em;
+  text-align: center;
+  color: #333;
+`;
+
+const MenuLink = styled(Link)`
+  text-decoration: none;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  position: absolute;
+  top: 20px;
+  right: 10px;
+`;
+
+const ButtonSpan = styled.span`
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1.2em;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  margin-left: 10px;
+  &:hover {
+    background-color: #555;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    background-color: #444;
+    transform: translateY(0);
+  }
+`;
+
+const PaginationWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+`;
+
+const PaginationButton = styled.button`
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 0 5px;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+    background-color: #555;
+    transform: translateY(-2px);
+  }
+
+  &:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+  }
+`;
+
+const PaginationInfo = styled.span`
+  font-size: 1.2em;
+  color: white;
 `;
 
 function Board() {
-  const [data, setData] = useState([
-    {
-      characterName: "민서",
-      finalScore: 3000,
-      mbti: "mbti",
-      gameDate: "2024-05-17T13:10:56.937Z",
-      gamePlaySeconds: 300,
-      details: "아직 사용계획 없음",
-    },
-    {
-        characterName: "민서",
-        finalScore: 3000,
-        mbti: "mbti",
-        gameDate: "2024-05-17T13:10:56.937Z",
-        gamePlaySeconds: 300,
-        details: "아직 사용계획 없음",
-      },
-  ]);
+  const accessToken = localStorage.getItem("refreshToken");
+  const [data, setData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize] = useState(10);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://api.she-is-newyork-bagel.co.kr/api/signup"
-        ); // 데이터를 가져올 API의 URL을 넣어주세요.
+          "https://api.she-is-newyork-bagel.co.kr/api/game/ranking", {
+            headers: {
+              Authorization: `Bearer ${accessToken}`
+            },
+            params: {
+              page: currentPage - 1, // API 페이지는 0부터 시작
+              size: pageSize,
+            },
+          }
+        );
         console.log(response);
         setData(response.data);
       } catch (error) {
@@ -83,29 +154,79 @@ function Board() {
       }
     };
 
-    // 페이지가 로드될 때와 일정 시간 간격으로 데이터를 가져오도록 설정
     fetchData();
-    const interval = setInterval(fetchData, 5000); // 5초마다 데이터를 가져옴
+  }, [currentPage, pageSize]);
 
-    // Clean-up 함수를 이용하여 컴포넌트가 언마운트 될 때 interval을 정리
-    return () => clearInterval(interval);
-  }, []);
+  const indexOfLastPost = currentPage * pageSize;
+  const indexOfFirstPost = indexOfLastPost - pageSize;
+  const currentData = data.slice(indexOfFirstPost, indexOfLastPost);
+
+  const nextPage = () => {
+    if (currentPage < Math.ceil(data.length / pageSize)) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
   return (
     <BoardWrapper>
       <Title>랭킹 게시판</Title>
-
-      {data.map((item, index) => (
-        <Post key={index}>
-          <PostTitle>{item.characterName}</PostTitle>
-          <PostDetail>점수: {item.finalScore}</PostDetail>
-          <PostDetail>MBTI: {item.mbti}</PostDetail>
-          <PostDetail>
-            게임 날짜: {new Date(item.gameDate).toLocaleString()}
-          </PostDetail>
-          <PostDetail>게임 시간: {item.gamePlaySeconds}초</PostDetail>
-          <PostDetail>세부 사항: {item.details}</PostDetail>
-        </Post>
-      ))}
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableHeader>순위</TableHeader>
+            <TableHeader>캐릭터 이름</TableHeader>
+            <TableHeader>점수</TableHeader>
+            <TableHeader>MBTI</TableHeader>
+            <TableHeader>날짜</TableHeader>
+            <TableHeader>플레이 시간</TableHeader>
+            <TableHeader>세부 사항</TableHeader>
+          </TableRow>
+        </TableHead>
+        <tbody>
+          {currentData.map((item, index) => (
+            <TableRow key={index}>
+              <TableCell>{indexOfFirstPost + index + 1}</TableCell>
+              <TableCell>{item.characterName}</TableCell>
+              <TableCell>{item.finalScore}</TableCell>
+              <TableCell>{item.mbti}</TableCell>
+              <TableCell>{new Date(item.gameDate).toLocaleString()}</TableCell>
+              <TableCell>{item.gamePlaySeconds}초</TableCell>
+              <TableCell>{item.details}</TableCell>
+            </TableRow>
+          ))}
+        </tbody>
+      </Table>
+      <PaginationWrapper>
+        <PaginationButton onClick={prevPage} disabled={currentPage === 1}>
+          이전
+        </PaginationButton>
+        <PaginationInfo>
+          {currentPage} / {Math.ceil(data.length / pageSize)}
+        </PaginationInfo>
+        <PaginationButton
+          onClick={nextPage}
+          disabled={currentPage === Math.ceil(data.length / pageSize)}
+        >
+          다음
+        </PaginationButton>
+      </PaginationWrapper>
+      <ButtonContainer>
+        <Link to={"/"}>
+          <ButtonSpan>홈</ButtonSpan>
+        </Link>
+        <Link to={"/profile"}>
+          <ButtonSpan>내 정보</ButtonSpan>
+        </Link>
+        <Link to={"/intro"}>
+          <ButtonSpan>다시하기</ButtonSpan>
+        </Link>
+      </ButtonContainer>
     </BoardWrapper>
   );
 }

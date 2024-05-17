@@ -72,6 +72,7 @@ function Home() {
         <Config>
           {isAuthenticated ? (
             <Link to={"/intro"}>
+
               <span>게임 시작</span>
             </Link>
           ) : (

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 const Wrapper = styled.div`
   display: grid;
@@ -16,19 +17,19 @@ const Wrapper = styled.div`
   }
 `;
 
-const MainWrapper = styled.div`
+const MainWrapper = styled(motion.div)`
   z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: absolute; /* Position it absolutely within the Wrapper */
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); /* Center the MainWrapper div */
-  color: white; /* Add text color for visibility, adjust as needed */
-  font-size: 3rem; /* Adjust font size as needed */
-  background: rgba(0, 0, 0, 0.5); /* 배경을 반투명하게 설정하여 가독성 향상 */
+  position: absolute;
+  top: 20%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 3rem;
+  background: rgba(0, 0, 0, 0.5);
   h1 {
     font-size: 8rem;
     font-weight: 500;
@@ -44,14 +45,15 @@ const MainWrapper = styled.div`
     width: 400px;
     height: 40px;
     border-radius: 12px;
-    margin-bottom: 15px; /* Add some margin for better spacing */
+    margin-bottom: 15px;
   }
   .title {
     font-size: 60px;
     padding: 12px;
   }
 `;
-const StyledSelectButton = styled.button`
+
+const StyledSelectButton = styled(motion.button)`
   height: 20px;
   width: 40%;
   border-radius: 10px;
@@ -63,9 +65,7 @@ const StyledSelectButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: all;
-  transition-duration: 0.5s;
-  transition-timing-function: ease-in-out;
+  transition: all 0.5s ease-in-out;
   &:hover {
     background-color: skyblue;
     color: white;
@@ -90,11 +90,11 @@ function Login() {
         userData
       );
       const { refreshToken } = response.data;
-      localStorage.setItem("refreshToken", refreshToken); // Store the refresh token
+      localStorage.setItem("refreshToken", refreshToken);
       console.log(response.data);
       console.log(refreshToken);
       navigate("/");
-      // Handle success (e.g., display a success message, redirect to another page, etc.)
+
     } catch (error) {
       console.error(error);
       alert("잘못된 계정입니다");
@@ -108,23 +108,35 @@ function Login() {
         <img src="/img/image1.png" alt="" />
         <img src="/img/image2.png" alt="" />
         <img src="/img/image3.png" alt="" />
-        <MainWrapper>
+        <MainWrapper
+          initial={{ opacity: 0, y: "-100%" }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        >
           <div className="title">로그인</div>
           <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              placeholder="이메일을 입력해주세요"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <input
-              type="password"
-              placeholder="비밀번호를 입력해주세요"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-
-            <StyledSelectButton className="submitBtn" type="submit">
+            <motion.div whileHover={{ scale: 1.1 }}>
+              <input
+                type="text"
+                placeholder="이메일을 입력해주세요"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.1 }}>
+              <input
+                type="password"
+                placeholder="비밀번호를 입력해주세요"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </motion.div>
+            <StyledSelectButton
+              className="submitBtn"
+              type="submit"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
               Submit
             </StyledSelectButton>
           </form>
