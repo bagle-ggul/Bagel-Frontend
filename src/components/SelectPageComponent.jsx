@@ -69,18 +69,33 @@ const StyledChatWrap = styled.div`
   text-align: center;
   display: flex;
   align-items: center;
-  margin: 1rem 0;
+  margin-bottom: 1rem;
   font-size: 1.5rem;
   font-weight: 600;
 `;
 
 const NextButton = styled.button`
-  padding: 5rem 10rem;
-  border-radius: 10px;
-  background-color: red;
-  font-size: 3rem;
-  margin: 0.3%;
+  padding: 2rem 4rem; /* 패딩을 줄여서 더 깔끔하게 */
+  border: none;
+  border-radius: 10px; /* 둥근 모서리 */
+  background-color: #ff4757; /* 부드러운 빨간색 */
+  color: #fff; /* 흰색 텍스트 */
+  font-size: 1.5rem; /* 텍스트 크기 적당히 조정 */
+  margin: 0.5rem;
   cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 효과 */
+  transition: all 0.3s ease; /* 부드러운 전환 효과 */
+
+  &:hover {
+    background-color: #e84118; /* 호버 시 색상 변경 */
+    transform: translateY(-2px); /* 호버 시 살짝 위로 올라가는 효과 */
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.15); /* 호버 시 그림자 효과 강화 */
+  }
+
+  &:active {
+    transform: translateY(0); /* 클릭 시 원래 위치로 */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 클릭 시 원래 그림자 */
+  }
 `;
 
 function SelectPageComponent({
