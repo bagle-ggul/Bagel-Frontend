@@ -13,7 +13,6 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-
         path: "/help",
         element: <Help />,
       },
@@ -24,11 +23,18 @@ const router = createBrowserRouter([
       {
         path: "start",
         element: <Start />,
-
       },
       {
         path: "profile",
         element: <Profile />,
+      },
+      {
+        path: "help",
+        element: <Help />,
+      },
+      {
+        path: "signup",
+        element: <Signup />,
       },
     ],
   },
