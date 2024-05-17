@@ -1,4 +1,4 @@
-// SelectPageComponent.js
+
 import styled from "styled-components";
 
 const StyledBackGround = styled.div`
@@ -15,7 +15,7 @@ const StyledBackGround = styled.div`
 
 const StyledCharacterBackground = styled.div`
   width: 35%;
-  height: 90%;
+  height: 70%;
   img {
     width: 100%;
     height: 100%;
@@ -25,7 +25,7 @@ const StyledCharacterBackground = styled.div`
 
 const StyledTextWrap = styled.div`
   width: 90%;
-  height: 70%;
+  height: 23%;
   background-color: white;
   border: 10px;
   padding: 5%;
