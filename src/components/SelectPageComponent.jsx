@@ -50,9 +50,9 @@ const StyledChatWrap = styled.div`
   border-radius: 10px;
   padding: 1%;
   border: 1px solid grey;
- justify-content: center;
- display: flex;
- align-items: center;
+  justify-content: center;
+  display: flex;
+  align-items: center;
 `;
 
 function SelectPageComponent({
@@ -68,8 +68,9 @@ function SelectPageComponent({
       </StyledCharacterBackground>
       <StyledChatWrap>{chatting}</StyledChatWrap>
       <StyledTextWrap>
-        {buttonSelects.map((select, index) => (
-          <StyledSelectButton key={index}>{select}</StyledSelectButton>
+        {/* 인덱스가 분기번호 : 2면 2번째 분기 */}
+        {buttonSelects.plot[2].text.map((text) => (
+          <StyledSelectButton>{text.ans}</StyledSelectButton>
         ))}
       </StyledTextWrap>
     </StyledBackGround>
