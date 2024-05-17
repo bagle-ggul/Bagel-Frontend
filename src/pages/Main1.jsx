@@ -1,15 +1,15 @@
 import SelectPageComponent from "../components/SelectPageComponent";
 import { Data1, Ans1 } from "../utils/data";
 
-function Start() {
+function Main1() {
   return (
     <SelectPageComponent
       //backgroundImage={"./img/Background.png"}
       characterImage={"./img/character.png"}
       buttonSelects={Ans1}
-      chatting={"야 꺼져"}
+      chatting={Data1}
     ></SelectPageComponent>
   );
 }
 
-export default Start;
+export default Main1;
