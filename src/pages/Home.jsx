@@ -21,6 +21,7 @@ const MainWrapper = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
+  border-radius: 20px;
   transform: translate(-50%, -50%);
   text-align: center;
   font-size: x-large;
@@ -38,8 +39,13 @@ const MainWrapper = styled.div`
 const Config = styled.div`
   display: flex;
   flex-direction: column;
-  span {
+  a {
     font-size: 3rem;
+    margin-top: 15px;
+  }
+  span:hover {
+    transition: all 0.3s;
+    color: skyblue;
   }
 `;
 
@@ -54,10 +60,12 @@ function Home() {
       <MainWrapper>
         <h1>SAVE ME</h1>
         <Config>
-          <Link to={"/main1"}>
-            <span>게임시작</span>
+          <Link to={"/signup"}>
+            <span>회원가입</span>
           </Link>
-          <span>도움말</span>
+          <Link to={"/login"}>
+            <span>로그인</span>
+          </Link>
         </Config>
       </MainWrapper>
     </div>
