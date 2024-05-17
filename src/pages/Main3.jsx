@@ -7,7 +7,7 @@ function Main3() {
       backgroundImage={"./img/cave.png"}
       characterImage={"./img/character.png"}
       storyData={storyData}
-      url={"/main4"}
+      url={"/main5"}
       scene={3}
     ></SelectPageComponent>
   );

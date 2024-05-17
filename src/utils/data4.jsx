@@ -60,7 +60,7 @@ export const storyData = {
         },
         {
           ans: "같이 도망친다.",
-          score: 5,
+          score: 0,
           subtext: `주인공: "뛰어! 도망치자" ^ (두 사람은 뱀을 피해 멀리 도망쳤다.) ^ 이수정: “갑자기 뱀이 나타나서 깜짝 놀랐네…”`,
           img: "/img/road3.png",
         },
