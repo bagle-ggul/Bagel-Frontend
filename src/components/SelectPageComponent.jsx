@@ -115,10 +115,6 @@ function SelectPageComponent({
   const characterName = useRecoilValue(characterNameAtom);
   const navigate = useNavigate();
 
-  if (scene === 1) {
-    setScore(0);
-  }
-
   console.log(score);
 
   const currentScene = storyData.plot[index];
@@ -136,8 +132,7 @@ function SelectPageComponent({
       }
     }
     if (option.error) {
-      alert(option.error);
-      window.location.href = "/main1";
+      window.location.href = "/over";
     } else {
       setSubText(
         option.subtext
