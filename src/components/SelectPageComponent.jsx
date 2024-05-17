@@ -94,6 +94,7 @@ function SelectPageComponent({
   const [subIndex, setSubIndex] = useState(0);
   const [score, setScore] = useRecoilState(scoreAtom);
   const navigate = useNavigate();
+  console.log(score);
 
   const currentScene = storyData.plot[index];
 
@@ -122,12 +123,12 @@ function SelectPageComponent({
           } else if (score < 15) {
             setIndex(2);
           } else {
-            setIndex((prev) => prev + 1);
+            setIndex(3);
           }
-        } else if (index === 2 || index === 3) {
-          setIndex(3);
-        } else {
+        } else if (index !== 1 && index !== 2) {
           setIndex((prev) => prev + 1);
+        } else {
+          setIndex(3);
         }
       } else if (scene === 3) {
         if (index === 1) {
@@ -140,6 +141,22 @@ function SelectPageComponent({
           }
         } else if (index === 2 || index === 3 || index === 4) {
           setIndex(5);
+        } else {
+          setIndex((prev) => prev + 1);
+        }
+      } else if (scene === 4) {
+        if (index === 2) {
+          if (score >= 70) {
+            setIndex(3);
+          } else {
+            setIndex(4);
+          }
+        } else {
+          setIndex((prev) => prev + 1);
+        }
+      } else if (scene === 5) {
+        if (index === 2) {
+          navigate("/result");
         } else {
           setIndex((prev) => prev + 1);
         }
