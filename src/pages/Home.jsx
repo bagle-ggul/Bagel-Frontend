@@ -73,6 +73,15 @@ const ProfileButton = styled(Link)`
     transform: translateY(0);
   }
 `;
+const EmphasizedHeading = styled.h1`
+  font-weight: 400;
+  font-style: normal;
+  font-size: 3rem; /* 큰 폰트 크기 */
+  color: #ff4757; /* 강조된 색상 */
+  text-align: center; /* 가운데 정렬 */
+  margin: 2rem 0; /* 상하 여백 */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* 텍스트 그림자 효과 */
+`;
 
 function Home() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -92,7 +101,7 @@ function Home() {
         <img src="/img/image3.png" alt="" />
       </Wrapper>
       <MainWrapper>
-        <h1>SAVE ME</h1>
+        <EmphasizedHeading>그녀를 구해라</EmphasizedHeading>
         <Config>
           {isAuthenticated ? (
             <Link to={"/intro"}>
@@ -111,9 +120,7 @@ function Home() {
         </Config>
       </MainWrapper>
       {isAuthenticated && (
-        <ProfileButton to={"/profile"}>
-           내 정보
-        </ProfileButton>
+        <ProfileButton to={"/profile"}>내 정보</ProfileButton>
       )}
     </div>
   );
