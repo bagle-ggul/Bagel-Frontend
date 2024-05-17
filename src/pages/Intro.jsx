@@ -1,23 +1,24 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled, { keyframes } from "styled-components";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const scenes = [
   {
     text: "드디어 오늘이네... 그녀와 단둘이 바닷가로 여행! 오늘은 정말 좋아한다고 말해야지.",
-    character: "주인공",
+    character: `나`,
   },
   {
     text: "이 파도 정말 시원해! 어서 와서 같이 놀자!",
-    character: "여자",
+    character: "이수정",
   },
   {
     text: "안 돼! 조심해!",
-    character: "주인공",
+    character: "나",
   },
   {
     text: "아.. 안 돼... 아직... 좋아한다고 말도 못했는데...",
-    character: "주인공",
+    character: "나",
   },
   {
     text: "그녀를 구하고 싶은가?",
@@ -25,7 +26,7 @@ const scenes = [
   },
   {
     text: "누구세요? 대체 어떻게...",
-    character: "주인공",
+    character: "나",
   },
   {
     text: "나는 너에게 시간을 되돌릴 수 있는 능력을 줄 수 있어. 진심으로 그녀를 구하고 싶나?",
@@ -33,7 +34,7 @@ const scenes = [
   },
   {
     text: "시간을 되돌릴 수 있다고요? 무슨 말도 안되는 소리예요?! 장난치지 마세요!",
-    character: "주인공",
+    character: "나",
   },
   {
     text: "그녀를 구하고 싶지 않은 건가?",
@@ -41,7 +42,7 @@ const scenes = [
   },
   {
     text: "…. 구하고 싶어요!",
-    character: "주인공",
+    character: "나",
   },
   {
     text: "그럼 알겠다. 하지만 시간을 돌리는 능력을 무한정 쓸 수 있진 않으니 조심하도록 해.",
@@ -49,7 +50,7 @@ const scenes = [
   },
   {
     text: "여긴... 집이잖아? 정말... 여행 전으로 돌아왔어... 이번엔 꼭 그녀를 구하고 고백할 거야.",
-    character: "주인공",
+    character: "나",
   },
 ];
 
@@ -128,6 +129,32 @@ const SelectPageComponent = () => {
   const [currentScene, setCurrentScene] = useState(0);
   const navigate = useNavigate();
   const audioRef = useRef(null);
+  const accessToken = localStorage.getItem("refreshToken");
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await axios.get(
+          "https://api.she-is-newyork-bagel.co.kr/api/my-page",
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        setData(response?.data);
+        console.log(data);
+        setLoading(false); // 데이터가 성공적으로 로드되면 로딩 상태를 false로 설정
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+        setLoading(false); // 에러가 발생해도 로딩 상태를 false로 설정
+      }
+    };
+
+    fetchProfile();
+  }, [accessToken]);
 
   useEffect(() => {
     if (audioRef.current) {

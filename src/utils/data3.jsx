@@ -66,13 +66,13 @@ export const storyData = {
       img: "/img/cave2.png",
       options: [
         {
-          ans: `주인공: "내 취미는 사실…"`,
+          ans: `"내 취미는 사실…"`,
           score: 0,
           subtext: `(주인공이 자신의 취미에 대해 설명한다.) ^ (수정이가 지루해 하며 표정이 굳는다.)`,
           img: "/img/cave2.png",
         },
         {
-          ans: `주인공: "지금 우리가 해야 할 일은..."`,
+          ans: `"지금 우리가 해야 할 일은..."`,
           score: 0,
           subtext: `(주인공이 현재 동굴 속에서 어떻게 해야 할지 얘기한다.) ^ (믿음직한 모습에 수정이가 미소 짓는다.)`,
           img: "/img/cave1-1.png",
@@ -85,13 +85,13 @@ export const storyData = {
       text: `갑자기 동굴 속에서 쥐가 찍찍 거리며 나타났다.`,
       options: [
         {
-          ans: `주인공: "저리 가!"`,
+          ans: `나 : "저리 가!"`,
           score: 0,
           subtext: `(겁먹은 쥐가 다시 동굴 속으로 돌아갔다.)`,
           img: "/img/cave_low.png",
         },
         {
-          ans: `주인공: "어, 쥐다! 내가 잡아볼게!"`,
+          ans: `나 : "어, 쥐다! 내가 잡아볼게!"`,
           score: 0,
           subtext: `(쥐가 주인공을 피해 도망치다 수정이에게 다가간다.) ^ 이수정: “꺄악! 뭐하는 짓이야!”`,
           img: "/img/cave_low.png",
