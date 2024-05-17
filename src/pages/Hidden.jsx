@@ -28,6 +28,10 @@ const CenteredDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &:hover {
+    background-color: #45a049;
+  }
 `;
 
 function Result() {
