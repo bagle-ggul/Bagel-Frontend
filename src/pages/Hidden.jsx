@@ -46,7 +46,7 @@ const SceneWrap = styled.div`
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: url("/img/weddingbackground.png") no-repeat center center;
+  background: url("/img/hiddenback.png") no-repeat center center;
   background-size: cover;
   padding: 20px;
   text-align: center;
@@ -93,7 +93,7 @@ const StyledCharacterBackground = styled.div`
   }
 `;
 
-function Happy() {
+function Hidden() {
   const [currentScene, setCurrentScene] = useState(0);
   const navigate = useNavigate();
   useEffect(() => {
@@ -114,7 +114,7 @@ function Happy() {
   return (
     <SceneWrap>
       <StyledCharacterBackground>
-        <img src="/img/웨딩누끼.png" alt="여자" />
+        <img src="/img/hidden누끼.png" alt="여자" />
       </StyledCharacterBackground>
       <DialogueBox>
         <CharacterName>{character}</CharacterName>
@@ -124,4 +124,4 @@ function Happy() {
   );
 }
 
-export default Happy;
+export default Hidden;

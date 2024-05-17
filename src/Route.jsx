@@ -15,7 +15,7 @@ import Sad from "./pages/Sad";
 import Profile from "./pages/Profile";
 import Intro from "./pages/Intro";
 import Board from "./pages/Board";
-
+import Hidden from "./pages/Hidden";
 import GameOver from "./pages/GameOver";
 import MyGameResult from "./pages/MyGameResult"; 
 
@@ -122,6 +122,15 @@ const router = createBrowserRouter([
           <ProtectedRoute>
 
             <Sad />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "hidden",
+        element: (
+          <ProtectedRoute>
+
+            <Hidden />
           </ProtectedRoute>
         ),
       },
