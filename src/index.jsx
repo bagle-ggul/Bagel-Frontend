@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createGlobalStyle } from "styled-components";
 import { RouterProvider } from "react-router-dom";
+import { RecoilRoot } from "recoil";
 import router from "./Route";
 
 const GlobalStyle = createGlobalStyle`
@@ -70,7 +71,9 @@ a {
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <>
-    <GlobalStyle />
-    <RouterProvider router={router} />
+    <RecoilRoot>
+      <GlobalStyle />
+      <RouterProvider router={router} />
+    </RecoilRoot>
   </>
 );

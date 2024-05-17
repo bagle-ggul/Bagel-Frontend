@@ -23,12 +23,12 @@ export const Ans1 = {
       index: "1",
       text: [
         {
-          ans: "계획을 준비한다",
-          score: "",
+          ans: "계획을 준비한다.",
+          score: 10,
         },
         {
-          ans: "계획을 준비한다",
-          score: "",
+          ans: "계획을 준비하지 않는다.",
+          score: 0,
         },
       ],
     },
@@ -37,11 +37,12 @@ export const Ans1 = {
       text: [
         {
           ans: "Yes",
-          score: "",
+          score: 5,
         },
         {
           ans: "No",
-          score: "",
+          score: 0,
+          error: "알람을 맞추지 않아서 늦잠을 자버렸다... Game Over",
         },
       ],
     },
@@ -50,11 +51,11 @@ export const Ans1 = {
       text: [
         {
           ans: "자동차",
-          score: "",
+          score: 10,
         },
         {
           ans: "도보",
-          score: "",
+          score: 0,
         },
       ],
     },
