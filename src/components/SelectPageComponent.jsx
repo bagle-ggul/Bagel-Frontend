@@ -21,8 +21,8 @@ const StyledCharacterBackground = styled.div`
   width: 20rem;
   height: 30rem;
   img {
-    width: 100%;
-    height: 100%;
+    width: 20rem;
+    height: 30rem;
     z-index: 10;
     border-radius: 10px;
   }
