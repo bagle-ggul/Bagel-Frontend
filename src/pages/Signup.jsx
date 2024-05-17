@@ -53,7 +53,11 @@ const MainWrapper = styled(motion.div)`
   }
 `;
 
+<<<<<<< HEAD
 const StyledSelectButton = styled(motion.button)`
+=======
+const StyledSelectButton = styled.button`
+>>>>>>> upstream
   height: 20px;
   width: 40%;
   border-radius: 10px;
@@ -79,7 +83,7 @@ function Signup() {
   const [password, setPassword] = useState("");
   const [characterName, setCharacterName] = useState("");
   const [mbti, setMbti] = useState("");
-  const [birth, setBirth] = useState("");
+  const [birthDate, setBirthDate] = useState("");
   const [gender, setGender] = useState("");
 
   const handleSubmit = async (event) => {
@@ -89,7 +93,7 @@ function Signup() {
       password,
       characterName,
       mbti,
-      birth,
+      birthDate,
       gender,
     };
 
@@ -102,6 +106,7 @@ function Signup() {
       // Handle success (e.g., display a success message, redirect to another page, etc.)
     } catch (error) {
       console.error(error);
+      alert("중복된 이메일입니다");
       // Handle error (e.g., display an error message)
     }
   };
@@ -119,6 +124,7 @@ function Signup() {
         >
           <div className="title">회원가입</div>
           <form onSubmit={handleSubmit}>
+<<<<<<< HEAD
             <motion.div whileHover={{ scale: 1.1 }}>
               <input
                 type="email"
@@ -173,6 +179,51 @@ function Signup() {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
+=======
+            <input
+              type="text"
+              placeholder="이메일을 입력해주세요"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <input
+              type="password"
+              placeholder="비밀번호를 입력해주세요"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <input
+              type="text"
+              placeholder="이름을 입력해주세요"
+              value={characterName}
+              onChange={(e) => setCharacterName(e.target.value)}
+              required
+            />
+            <input
+              type="text"
+              placeholder="MBTI를 입력해주세요"
+              value={mbti}
+              onChange={(e) => setMbti(e.target.value)}
+              required
+            />
+            <input
+              type="text"
+              placeholder="생일을 입력해주세요 ex)2000-08-13"
+              value={birthDate}
+              onChange={(e) => setBirthDate(e.target.value)}
+              required
+            />
+            <input
+              type="text"
+              placeholder="성별을 입력해주세요"
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
+              required
+            />
+            <StyledSelectButton className="submitBtn" type="submit">
+>>>>>>> upstream
               Submit
             </StyledSelectButton>
           </form>

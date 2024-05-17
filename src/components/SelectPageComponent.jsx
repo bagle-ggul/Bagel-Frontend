@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
 import styled from "styled-components";
+import { scoreAtom } from "../atom/atom";
 
 const StyledBackGround = styled.div`
   padding: 5rem;
@@ -79,14 +81,21 @@ const NextButton = styled.button`
   cursor: pointer;
 `;
 
-function SelectPageComponent({ backgroundImage, characterImage, storyData }) {
+function SelectPageComponent({
+  backgroundImage,
+  characterImage,
+  storyData,
+  url,
+  scene,
+}) {
   const [index, setIndex] = useState(0);
   const [toggle, setToggle] = useState(false);
   const [subText, setSubText] = useState([]);
   const [subIndex, setSubIndex] = useState(0);
+  const [score, setScore] = useRecoilState(scoreAtom);
   const navigate = useNavigate();
 
-  const currentScene = storyData.home.plot[index];
+  const currentScene = storyData.plot[index];
 
   const onClicked = (option) => {
     if (option.error) {
@@ -94,6 +103,7 @@ function SelectPageComponent({ backgroundImage, characterImage, storyData }) {
       navigate("/");
     } else {
       setSubText(option.subtext.split("^").map((text) => text.trim()));
+      setScore((prevScore) => prevScore + option.score);
       setToggle(true);
       setSubIndex(0);
     }
@@ -104,7 +114,38 @@ function SelectPageComponent({ backgroundImage, characterImage, storyData }) {
       setSubIndex(subIndex + 1);
     } else {
       setToggle(false);
-      setIndex((prev) => prev + 1);
+
+      if (scene === 2) {
+        if (index === 0) {
+          if (score >= 15 && score < 40) {
+            setIndex(1);
+          } else if (score < 15) {
+            setIndex(2);
+          } else {
+            setIndex((prev) => prev + 1);
+          }
+        } else if (index === 2 || index === 3) {
+          setIndex(3);
+        } else {
+          setIndex((prev) => prev + 1);
+        }
+      } else if (scene === 3) {
+        if (index === 1) {
+          if (score >= 60) {
+            setIndex(2);
+          } else if (score >= 20 && score < 60) {
+            setIndex(3);
+          } else {
+            setIndex(4);
+          }
+        } else if (index === 2 || index === 3 || index === 4) {
+          setIndex(5);
+        } else {
+          setIndex((prev) => prev + 1);
+        }
+      } else {
+        setIndex((prev) => prev + 1);
+      }
     }
   };
 
@@ -120,7 +161,7 @@ function SelectPageComponent({ backgroundImage, characterImage, storyData }) {
       <StyledCharacterBackground>
         <img src={characterImage} alt="Character" />
       </StyledCharacterBackground>
-      {index < storyData.home.plot.length ? (
+      {index < storyData.plot.length ? (
         <>
           <StyledChatWrap>{currentScene.text}</StyledChatWrap>
           <StyledTextWrap>
@@ -139,7 +180,7 @@ function SelectPageComponent({ backgroundImage, characterImage, storyData }) {
         </>
       ) : (
         <NextButton>
-          <Link to={"/"}>다음 스테이지로...</Link>
+          <Link to={url}>다음 스테이지로...</Link>
         </NextButton>
       )}
     </StyledBackGround>
