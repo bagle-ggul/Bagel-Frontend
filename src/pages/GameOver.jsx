@@ -1,9 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { scoreAtom } from "../atom/atom";
 import axios from "axios";
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
+const fadeOut = keyframes`
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+`;
 
 const CenteredButton = styled.button`
   position: absolute;
@@ -35,12 +53,17 @@ const CenteredDiv = styled.div`
   background-repeat: no-repeat;
   width: 100%;
   height: 100vh; /* Full viewport height */
+  animation: ${fadeIn} 4s forwards; /* Apply fade-in effect on load */
+  &.fade-out {
+    animation: ${fadeOut} 4s forwards;
+  }
   img {
     margin-top: 170px;
   }
 `;
 
 function GameOver() {
+  const [fadeOutEffect, setFadeOutEffect] = useState(false);
   const navigate = useNavigate();
   const score = useRecoilValue(scoreAtom);
 
@@ -75,12 +98,15 @@ function GameOver() {
   };
 
   const handleClick = async () => {
-    navigate("/intro");
-    handleSubmit();
+    setFadeOutEffect(true);
+    setTimeout(() => {
+      navigate("/intro");
+      handleSubmit();
+    }, 1000); // 1초 후에 페이지를 이동합니다.
   };
 
   return (
-    <CenteredDiv>
+    <CenteredDiv className={fadeOutEffect ? "fade-out" : ""}>
       <img src="img/house3-2.png" alt="레몬에이드" />
       <CenteredButton onClick={handleClick}>회귀하기</CenteredButton>
     </CenteredDiv>

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const scenes = [
   {
     text: "있잖아… 너 덕분에 오늘 하루 정말 재밌었어! 진짜 이렇게 재밌는 하루는 정말 오랜만이야.",
-    character: "여자",
+    character: "이수정",
   },
   {
     text: "그럼 나랑 좀 더 자주 이렇게 놀러 다닐래? 나도 좋아하는 사람이랑 같이 있으면 즐겁거든.",
@@ -13,7 +13,7 @@ const scenes = [
   },
   {
     text: "어? 뭐라고?",
-    character: "여자",
+    character: "이수정",
   },
   {
     text: "나 너 좋아한다고. 네가 나한테 뉴욕 베이글을 사줬을 때부터. 그때부터 쭉 좋아했어.",
@@ -21,7 +21,7 @@ const scenes = [
   },
   {
     text: "나도… 나도 네가 좋아.",
-    character: "여자",
+    character: "이수정",
   },
   {
     text: "그녀는 고백을 받아주고 두 사람은 연인이 된다. 해피 엔딩",
@@ -63,6 +63,8 @@ const DialogueBox = styled.div`
   margin-bottom: 20px;
   text-align: center;
   z-index: 10;
+  opacity: ${(props) => (props.visible ? 1 : 0)};
+  transition: opacity 1s ease-in-out; /* 1초 동안 점차 나타나게 */
 `;
 
 const CharacterName = styled.h2`
@@ -93,11 +95,24 @@ const StyledCharacterBackground = styled.div`
 
 function Hidden() {
   const [currentScene, setCurrentScene] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 1000); // 1초 후에 DialogueBox를 보이게 함
+
+    return () => clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 클리어
+  }, [currentScene]);
+
   useEffect(() => {
     if (currentScene < scenes.length - 1) {
       const timer = setTimeout(() => {
-        setCurrentScene(currentScene + 1);
+        setIsVisible(false);
+        setTimeout(() => {
+          setCurrentScene(currentScene + 1);
+        }, 500); // 1초 동안 DialogueBox를 숨기고 다음 장면으로 전환
       }, 4000); // 4초마다 다음 장면으로 전환
 
       return () => clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 클리어
@@ -114,7 +129,7 @@ function Hidden() {
       <StyledCharacterBackground>
         <img src="/img/hidden누끼.png" alt="여자" />
       </StyledCharacterBackground>
-      <DialogueBox>
+      <DialogueBox visible={isVisible}>
         <CharacterName>{character}</CharacterName>
         <DialogueText>{text}</DialogueText>
       </DialogueBox>
