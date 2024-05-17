@@ -54,7 +54,7 @@ function Home() {
       <MainWrapper>
         <h1>SAVE ME</h1>
         <Config>
-          <Link to={"/start"}>
+          <Link to={"/main1"}>
             <span>게임시작</span>
           </Link>
           <span>도움말</span>
