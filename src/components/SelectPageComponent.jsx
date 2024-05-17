@@ -75,7 +75,7 @@ const StyledChatWrap = styled.div`
 const NextButton = styled.button`
   padding: 5rem 10rem;
   border-radius: 10px;
-  background-color: red;
+  background-color: #f2b3ac;
   font-size: 3rem;
   margin: 0.3%;
   cursor: pointer;
@@ -112,8 +112,7 @@ function SelectPageComponent({
       }
     }
     if (option.error) {
-      alert(option.error);
-      window.location.href = "/main1";
+      window.location.href = "/over";
     } else {
       setSubText(option.subtext.split("^").map((text) => text.trim()));
       setScore((prevScore) => prevScore + option.score);

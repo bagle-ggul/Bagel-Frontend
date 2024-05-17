@@ -7,13 +7,13 @@ import axios from "axios";
 
 const CenteredButton = styled.button`
   position: absolute;
-  top: 60%;
+  top: 90%;
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 1rem 2rem;
   font-size: 1.5rem;
   cursor: pointer;
-  background-color: #4caf50;
+  background-color: skyblue;
   color: white;
   border: none;
   border-radius: 5px;
@@ -29,6 +29,15 @@ const CenteredDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  background-image: url("img/road.png"); /* Update the path if necessary */
+  background-size: cover;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100vh; /* Full viewport height */
+  img {
+    margin-top: 170px;
+  }
 `;
 
 function GameOver() {
@@ -66,14 +75,14 @@ function GameOver() {
   };
 
   const handleClick = async () => {
-    navigate("/main1");
+    navigate("/intro");
     handleSubmit();
   };
 
   return (
     <CenteredDiv>
       <img src="img/house3-2.png" alt="레몬에이드" />
-      <CenteredButton onClick={handleClick}>결과확인</CenteredButton>
+      <CenteredButton onClick={handleClick}>회귀하기</CenteredButton>
     </CenteredDiv>
   );
 }
