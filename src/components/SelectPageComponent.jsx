@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { useRecoilState } from "recoil";
+import atom from "../atom/atom";
 
 const StyledBackGround = styled.div`
   padding: 5rem;
@@ -89,10 +91,19 @@ function SelectPageComponent({
 }) {
   const [index, setIndex] = useState(0);
   const navigate = useNavigate();
+  const [score, setScore] = useRecoilState(atom);
 
-  const onClicked = () => {
-    setIndex((prev) => prev + 1);
+  const onClicked = (error, scoreValue) => {
+    if (error) {
+      alert(error); // 에러 메시지를 사용자에게 알림
+      navigate("/"); // 홈으로 이동
+    } else {
+      setScore((prevScore) => prevScore + scoreValue);
+      setIndex((prev) => prev + 1);
+    }
   };
+
+  console.log(score);
 
   return (
     <StyledBackGround bgImage={backgroundImage}>
@@ -104,7 +115,10 @@ function SelectPageComponent({
           <StyledChatWrap>{chatting.plot[index].text}</StyledChatWrap>
           <StyledTextWrap>
             {buttonSelects.plot[index].text.map((text, i) => (
-              <StyledSelectButton key={i} onClick={onClicked}>
+              <StyledSelectButton
+                key={i}
+                onClick={() => onClicked(text.error, text.score)}
+              >
                 {text.ans}
               </StyledSelectButton>
             ))}
