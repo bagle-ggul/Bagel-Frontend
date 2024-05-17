@@ -10,7 +10,7 @@ export const storyData = {
       options: [
         {
           ans: "계획을 준비한다",
-          score: 5,
+          score: 10,
           subtext: `주인공: “물론이지. 싹 다 계획해 뒀어!” ^ 이수정 : “오오… 웬일이야? 준비성 좋은데?” ^ 주인공 : “이 정도는 기본이지 ㅎㅎ.”`,
           img: "/img/house1-1.png",
         },
@@ -31,7 +31,7 @@ export const storyData = {
       options: [
         {
           ans: "Yes",
-          score: 10,
+          score: 5,
           subtext: `주인공 : “시간 맞춰서 일어나야지!”`,
           img: "/img/house2-1.png",
         },
