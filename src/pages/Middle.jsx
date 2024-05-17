@@ -73,8 +73,6 @@ const DialogueText = styled.p`
   font-weight: bold;
 `;
 
-
-
 const StyledCharacterBackground = styled.div`
   width: 50rem;
   height: 80rem;
@@ -89,7 +87,7 @@ const StyledCharacterBackground = styled.div`
   }
 `;
 
-function Happy() {
+function Middle() {
   const [currentScene, setCurrentScene] = useState(0);
   const navigate = useNavigate();
   useEffect(() => {
@@ -101,7 +99,7 @@ function Happy() {
       return () => clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 클리어
     } else {
       // 모든 장면이 끝나면 Main1 페이지로 이동
-      navigate("/main1");
+      navigate("/profile");
     }
   }, [currentScene, navigate]);
 
@@ -120,4 +118,4 @@ function Happy() {
   );
 }
 
-export default Happy;
+export default Middle;

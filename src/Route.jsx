@@ -17,7 +17,7 @@ import Intro from "./pages/Intro";
 import Board from "./pages/Board";
 import Hidden from "./pages/Hidden";
 import GameOver from "./pages/GameOver";
-import MyGameResult from "./pages/MyGameResult"; 
+import MyGameResult from "./pages/MyGameResult";
 
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem("refreshToken");
@@ -111,7 +111,6 @@ const router = createBrowserRouter([
         path: "middle",
         element: (
           <ProtectedRoute>
-
             <Middle />
           </ProtectedRoute>
         ),
@@ -120,7 +119,6 @@ const router = createBrowserRouter([
         path: "sad",
         element: (
           <ProtectedRoute>
-
             <Sad />
           </ProtectedRoute>
         ),
@@ -129,7 +127,6 @@ const router = createBrowserRouter([
         path: "hidden",
         element: (
           <ProtectedRoute>
-
             <Hidden />
           </ProtectedRoute>
         ),
@@ -143,7 +140,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "board",
+        path: "board/:page",
         element: (
           <ProtectedRoute>
             <Board />
@@ -155,7 +152,6 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <GameOver />
-
           </ProtectedRoute>
         ),
       },
