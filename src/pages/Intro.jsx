@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled, { keyframes } from "styled-components";
 import { useNavigate } from "react-router-dom";
 
@@ -127,6 +127,15 @@ const SkipButton = styled.button`
 const SelectPageComponent = () => {
   const [currentScene, setCurrentScene] = useState(0);
   const navigate = useNavigate();
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.play().catch((error) => {
+        console.error("Error playing audio:", error);
+      });
+    }
+  }, []);
 
   useEffect(() => {
     if (currentScene < scenes.length - 1) {
@@ -154,6 +163,7 @@ const SelectPageComponent = () => {
         <DialogueText>{text}</DialogueText>
       </DialogueBox>
       <SkipButton onClick={handleSkip}>Skip</SkipButton>
+      <audio ref={audioRef} src="/audio/intro.mp3" loop />
     </SceneWrap>
   );
 };

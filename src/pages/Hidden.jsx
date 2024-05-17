@@ -112,13 +112,13 @@ function Hidden() {
         setIsVisible(false);
         setTimeout(() => {
           setCurrentScene(currentScene + 1);
-        }, 500); // 1초 동안 DialogueBox를 숨기고 다음 장면으로 전환
+        }, 2000); // 1초 동안 DialogueBox를 숨기고 다음 장면으로 전환
       }, 4000); // 4초마다 다음 장면으로 전환
 
       return () => clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 클리어
     } else {
       // 모든 장면이 끝나면 Main1 페이지로 이동
-      navigate("/main1");
+      navigate("/profile");
     }
   }, [currentScene, navigate]);
 

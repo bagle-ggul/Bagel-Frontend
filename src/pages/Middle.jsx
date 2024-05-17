@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled, { keyframes } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
@@ -95,7 +95,14 @@ function Middle() {
   const [currentScene, setCurrentScene] = useState(0);
   const navigate = useNavigate();
 
+  const audioRef = useRef(null);
+
   useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.play().catch((error) => {
+        console.error("Error playing audio:", error);
+      });
+    }
     if (currentScene < scenes.length - 1) {
       const timer = setTimeout(() => {
         setCurrentScene((prevScene) => prevScene + 1);
@@ -104,7 +111,7 @@ function Middle() {
       return () => clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 클리어
     } else {
       // 모든 장면이 끝나면 Main1 페이지로 이동
-      navigate("/main1");
+      navigate("/profile");
     }
   }, [currentScene, navigate, scenes.length]);
 
@@ -121,6 +128,7 @@ function Middle() {
         <CharacterName>{character}</CharacterName>
         <DialogueText>{text}</DialogueText>
       </DialogueBox>
+      <audio ref={audioRef} src="./audio/middle.mp3" loop />
     </SceneWrap>
   );
 }
