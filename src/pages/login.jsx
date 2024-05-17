@@ -71,28 +71,20 @@ const StyledSelectButton = styled.button`
   }
 `;
 
-function Signup() {
+function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [characterName, setCharacterName] = useState("");
-  const [mbti, setMbti] = useState("");
-  const [birth, setBirth] = useState("");
-  const [gender, setGender] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const userData = {
       email,
       password,
-      characterName,
-      mbti,
-      birth,
-      gender,
     };
 
     try {
       const response = await axios.post(
-        "https://api.she-is-newyork-bagel.co.kr/api/signup",
+        "https://api.she-is-newyork-bagel.co.kr/api/login",
         userData
       );
       console.log(response.data);
@@ -111,10 +103,10 @@ function Signup() {
         <img src="/img/image2.png" alt="" />
         <img src="/img/image3.png" alt="" />
         <MainWrapper>
-          <div className="title">회원가입</div>
+          <div className="title">로그인</div>
           <form onSubmit={handleSubmit}>
             <input
-              type="text"
+              type="email"
               placeholder="이메일을 입력해주세요"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -124,30 +116,6 @@ function Signup() {
               placeholder="비밀번호를 입력해주세요"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="이름을 입력해주세요"
-              value={characterName}
-              onChange={(e) => setCharacterName(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="MBTI를 입력해주세요"
-              value={mbti}
-              onChange={(e) => setMbti(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="생일을 입력해주세요 ex)2000-08-13"
-              value={birth}
-              onChange={(e) => setBirth(e.target.value)}
-            />
-            <input
-              type="text"
-              placeholder="성별을 입력해주세요"
-              value={gender}
-              onChange={(e) => setGender(e.target.value)}
             />
 
             <StyledSelectButton className="submitBtn" type="submit">
@@ -160,4 +128,4 @@ function Signup() {
   );
 }
 
-export default Signup;
+export default Login;
