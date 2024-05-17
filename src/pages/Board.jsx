@@ -5,7 +5,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 // 배경 이미지 URL
-const backgroundImageUrl = "/img/분기2.png";
+const backgroundImageUrl = "/img/community.png";
 
 const BoardWrapper = styled.div`
   background-image: url(${backgroundImageUrl});
@@ -22,7 +22,7 @@ const BoardWrapper = styled.div`
 
 const Title = styled.h1`
   font-size: 3em;
-  color: white;
+  color: black;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
   margin-bottom: 20px;
 `;
@@ -128,6 +128,7 @@ const PaginationInfo = styled.span`
 `;
 
 function Board() {
+  const accessToken = localStorage.getItem("refreshToken");
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize] = useState(10);
@@ -137,11 +138,15 @@ function Board() {
       try {
         const response = await axios.get(
           "https://api.she-is-newyork-bagel.co.kr/api/game/ranking", {
-          params: {
-            page: currentPage - 1, // API 페이지는 0부터 시작
-            size: pageSize,
-          },
-        });
+            headers: {
+              Authorization: `Bearer ${accessToken}`
+            },
+            params: {
+              page: currentPage - 1, // API 페이지는 0부터 시작
+              size: pageSize,
+            },
+          }
+        );
         console.log(response);
         setData(response.data);
       } catch (error) {
