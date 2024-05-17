@@ -42,36 +42,57 @@ const MainWrapper = styled.div`
   input {
     width: 400px;
     height: 40px;
-    margin-bottom: 10px; /* Add some margin for better spacing */
+    border-radius: 12px;
+    margin-bottom: 15px; /* Add some margin for better spacing */
   }
-  .submitBtn {
-    width: 300px;
-    height: 50px;
+  .title {
+    font-size: 60px;
+    padding: 12px;
+  }
+`;
+const StyledSelectButton = styled.button`
+  height: 20px;
+  width: 40%;
+  border-radius: 10px;
+  font-size: 20px;
+  border: 1px solid grey;
+  margin: 0.3%;
+  cursor: pointer;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-in-out;
+  &:hover {
+    background-color: skyblue;
+    color: white;
   }
 `;
 
 function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [nickname, setNickname] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
-  const [latitude, setLatitude] = useState(0);
-  const [longitude, setLongitude] = useState(0);
+  const [characterName, setCharacterName] = useState("");
+  const [mbti, setMbti] = useState("");
+  const [birth, setBirth] = useState("");
+  const [gender, setGender] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     const userData = {
       email,
       password,
-      nickname,
-      phone,
-      address,
+      characterName,
+      mbti,
+      birth,
+      gender,
     };
 
     try {
       const response = await axios.post(
-        "https://api.she-is-newyork-bagle.co.kr/api/signup",
+        "https://api.she-is-newyork-bagel.co.kr/api/signup",
         userData
       );
       console.log(response.data);
@@ -89,41 +110,48 @@ function Signup() {
         <img src="/img/image2.png" alt="" />
         <img src="/img/image3.png" alt="" />
         <MainWrapper>
+          <div className="title">회원가입</div>
           <form onSubmit={handleSubmit}>
             <input
               type="email"
-              placeholder="Email"
+              placeholder="이메일을 입력해주세요"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
             <input
               type="password"
-              placeholder="Password"
+              placeholder="비밀번호를 입력해주세요"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
             <input
               type="text"
-              placeholder="Nickname"
-              value={nickname}
-              onChange={(e) => setNickname(e.target.value)}
+              placeholder="이름을 입력해주세요"
+              value={characterName}
+              onChange={(e) => setCharacterName(e.target.value)}
             />
             <input
               type="text"
-              placeholder="Phone"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              placeholder="MBTI를 입력해주세요"
+              value={mbti}
+              onChange={(e) => setMbti(e.target.value)}
             />
             <input
               type="text"
-              placeholder="Address"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
+              placeholder="생일을 입력해주세요 ex)2000-08-13"
+              value={birth}
+              onChange={(e) => setBirth(e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="성별을 입력해주세요"
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
             />
 
-            <button className="submitBtn" type="submit">
+            <StyledSelectButton className="submitBtn" type="submit">
               Submit
-            </button>
+            </StyledSelectButton>
           </form>
         </MainWrapper>
       </Wrapper>
