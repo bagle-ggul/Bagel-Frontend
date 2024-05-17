@@ -144,7 +144,7 @@ const SelectPageComponent = () => {
             },
           }
         );
-        setData(response?.data);
+        setData(response.data);
         console.log(data);
         setLoading(false); // 데이터가 성공적으로 로드되면 로딩 상태를 false로 설정
       } catch (error) {
