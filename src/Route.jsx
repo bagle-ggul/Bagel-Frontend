@@ -8,6 +8,7 @@ import Main2 from "./pages/Main2";
 import Main3 from "./pages/Main3";
 import Profile from "./pages/Profile";
 import Intro from "./pages/Intro";
+import Board from "./pages/Board";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
       {
         path: "intro",
         element: <Intro />,
+      },
+      {
+        path: "board",
+        element: <Board />,
       },
     ],
   },
