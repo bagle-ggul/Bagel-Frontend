@@ -15,7 +15,10 @@ import Sad from "./pages/Sad";
 import Profile from "./pages/Profile";
 import Intro from "./pages/Intro";
 import Board from "./pages/Board";
+
 import GameOver from "./pages/GameOver";
+import MyGameResult from "./pages/MyGameResult"; 
+
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem("refreshToken");
   if (!token) {
@@ -108,7 +111,8 @@ const router = createBrowserRouter([
         path: "middle",
         element: (
           <ProtectedRoute>
-            <Middle />,
+
+            <Middle />
           </ProtectedRoute>
         ),
       },
@@ -116,7 +120,8 @@ const router = createBrowserRouter([
         path: "sad",
         element: (
           <ProtectedRoute>
-            <Sad />,
+
+            <Sad />
           </ProtectedRoute>
         ),
       },
@@ -141,6 +146,7 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <GameOver />
+
           </ProtectedRoute>
         ),
       },

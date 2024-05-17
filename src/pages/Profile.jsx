@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const ProfileWrapper = styled(motion.div)`
   display: flex;
@@ -11,7 +12,7 @@ const ProfileWrapper = styled(motion.div)`
   justify-content: center;
   width: 100vw;
   height: 100vh;
-  background: url("/img/background.png") no-repeat center center;
+  background: url("/img/분기2.png") no-repeat center center;
   background-size: cover;
   padding: 20px;
 `;
@@ -35,63 +36,85 @@ const ProfileImage = styled(motion.img)`
 
 const UserName = styled(motion.h2)`
   font-size: 2em;
+  font-weight: bold;
   color: #333;
   margin-bottom: 10px;
 `;
 
-const UserDetail = styled(motion.p)`
-  font-size: 1em;
-  color: #666;
+const UserDetailContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const DetailRow = styled(motion.div)`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
   margin: 5px 0;
 `;
 
-/*
-{
-  "id": 1,
-  "email": "string",
-  "characterName": "string",
-  "role": "USER",
-  "status": "ACTIVE",
-  "profileImageUrl": null,
-  "totalScore": 0,
-  "birthDate": "1999-10-29",
-  "gender": "male",
-  "mbti": "estj",
-  "totalRegressionCount": 0,
-  "gameProgress": "NOT_STARTED",
-  "refreshToken": null
-}
-*/
+const DetailTitle = styled.span`
+  font-weight: bold;
+  color: #333;
+`;
+
+const DetailValue = styled.span`
+  color: black;
+`;
+const ButtonContainer = styled.div`
+  display: flex;
+  position: absolute;
+  top: 20px;
+  right: 10px;
+`;
+
+const ButtonSpan = styled.span`
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 1.2em;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  margin-left: 10px;
+  &:hover {
+    background-color: #555;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    background-color: #444;
+    transform: translateY(0);
+  }
+`;
+
 function Profile() {
-  const [profile, setProfile] = useState({
-    id: 1,
-    email: "string",
-    characterName: "string",
-    role: "USER",
-    status: "ACTIVE",
-    profileImageUrl: null,
-    totalScore: 0,
-    birthDate: "1999-10-29",
-    gender: "male",
-    mbti: "estj",
-    totalRegressionCount: 0,
-  });
+  const accessToken = localStorage.getItem("refreshToken");
+  const [profile, setProfile] = useState(null);
 
-  // Uncomment this block to fetch profile data from an API
-  // useEffect(() => {
-  //   const fetchProfile = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         "https://api.she-is-newyork-bagel.co.kr/api/signup"
-  //       ); // Replace with your API endpoint
-  //       setProfile(response.data);
-  //     } catch (error) {
-  //       console.error("Error fetching profile:", error);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await axios.get(
+          "https://api.she-is-newyork-bagel.co.kr/api/my-page",
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`, // 토큰을 적절하게 설정
+            },
+          }
+        );
+        setProfile(response.data);
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      }
+    };
 
-  //   fetchProfile();
-  // }, []);
+    fetchProfile();
+  }, [accessToken]);
+
+  if (!profile) return <div>Loading...</div>;
 
   return (
     <ProfileWrapper
@@ -99,86 +122,91 @@ function Profile() {
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
-        
       <ProfileCard
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.2 }}
       >
-          <motion.div whileHover={{ scale: 1.1 }}>
-        <ProfileImage
-          src={"/img/character.png"}
-          alt="Profile"
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
-          transition={{ duration: 0.5 }}
-        />
-        <UserName
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
-          {profile.characterName}
-        </UserName>
-        <UserDetail
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-        >
-          Email: {profile.email}
-        </UserDetail>
-        <UserDetail
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-        >
-          Role: {profile.role}
-        </UserDetail>
-        <UserDetail
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 1 }}
-        >
-          Status: {profile.status}
-        </UserDetail>
-        <UserDetail
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 1.2 }}
-        >
-          Total Score: {profile.totalScore}
-        </UserDetail>
-        <UserDetail
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 1.4 }}
-        >
-          Birth Date: {new Date(profile.birthDate).toLocaleDateString()}
-        </UserDetail>
-        <UserDetail
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 1.6 }}
-        >
-          Gender: {profile.gender}
-        </UserDetail>
-        <UserDetail
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 1.8 }}
-        >
-          MBTI: {profile.mbti.toUpperCase()}
-        </UserDetail>
-        <UserDetail
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 2 }}
-        >
-          Total Regression Count: {profile.totalRegressionCount}
-        </UserDetail>
+        <motion.div whileHover={{ scale: 1.1 }}>
+          <ProfileImage
+            src={profile.profileImageUrl || "/img/character.png"}
+            alt="Profile"
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.5 }}
+          />
+          <UserName
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+          >
+            {profile.characterName}
+          </UserName>
+          <UserDetailContainer>
+            <DetailRow
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+            >
+              <DetailTitle>이메일:</DetailTitle>
+              <DetailValue>{profile.email}</DetailValue>
+            </DetailRow>
+            <DetailRow
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 1.4 }}
+            >
+              <DetailTitle>생일:</DetailTitle>
+              <DetailValue>
+                {new Date(profile.birthDate).toLocaleDateString()}
+              </DetailValue>
+            </DetailRow>
+            <DetailRow
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 1.6 }}
+            >
+              <DetailTitle>성별:</DetailTitle>
+              <DetailValue>{profile.gender}</DetailValue>
+            </DetailRow>
+            <DetailRow
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 1.8 }}
+            >
+              <DetailTitle>MBTI:</DetailTitle>
+              <DetailValue>{profile.mbti.toUpperCase()}</DetailValue>
+            </DetailRow>
+            <DetailRow
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 1.2 }}
+            >
+              <DetailTitle>총 획득 호감도:</DetailTitle>
+              <DetailValue>{profile.totalScore}</DetailValue>
+            </DetailRow>
+            <DetailRow
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 2 }}
+            >
+              <DetailTitle>총 회귀수:</DetailTitle>
+              <DetailValue>{profile.totalRegressionCount}</DetailValue>
+            </DetailRow>
+          </UserDetailContainer>
         </motion.div>
       </ProfileCard>
-   
+      <ButtonContainer>
+        <Link to={"/"}>
+          <ButtonSpan>홈</ButtonSpan>
+        </Link>
+        <Link to={"/board"}>
+          <ButtonSpan>랭킹 보기</ButtonSpan>
+        </Link>
+        <Link to={"/intro"}>
+          <ButtonSpan>다시하기</ButtonSpan>
+        </Link>
+      </ButtonContainer>
     </ProfileWrapper>
   );
 }
