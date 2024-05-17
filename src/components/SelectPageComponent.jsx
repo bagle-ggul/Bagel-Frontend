@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { scoreAtom } from "../atom/atom";
+import { scoreAtom, characterNameAtom } from "../atom/atom";
 
 const StyledBackGround = styled.div`
   padding: 5rem;
@@ -37,6 +37,7 @@ const StyledTextWrap = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 2rem;
 `;
 
 const StyledSelectButton = styled.button`
@@ -65,6 +66,7 @@ const StyledChatWrap = styled.div`
   padding: 2rem;
   border: 1px solid grey;
   justify-content: center;
+  text-align: center;
   display: flex;
   align-items: center;
   margin: 1rem 0;
@@ -94,7 +96,9 @@ function SelectPageComponent({
   const [subIndex, setSubIndex] = useState(0);
   const [score, setScore] = useRecoilState(scoreAtom);
   const [base, setBase] = useState(url); // base 상태 추가
+  const characterName = useRecoilValue(characterNameAtom);
   const navigate = useNavigate();
+
   if (scene === 1) {
     setScore(0);
   }
@@ -102,6 +106,10 @@ function SelectPageComponent({
   console.log(score);
 
   const currentScene = storyData.plot[index];
+
+  const replaceCharacterName = (text) => {
+    return text.replace(/주인공/g, characterName);
+  };
 
   const onClicked = (option, i) => {
     if (scene === 2) {
@@ -115,7 +123,11 @@ function SelectPageComponent({
       alert(option.error);
       window.location.href = "/main1";
     } else {
-      setSubText(option.subtext.split("^").map((text) => text.trim()));
+      setSubText(
+        option.subtext
+          .split("^")
+          .map((text) => replaceCharacterName(text).trim())
+      );
       setScore((prevScore) => prevScore + option.score);
       setToggle(true);
       setSubIndex(0);
@@ -192,7 +204,16 @@ function SelectPageComponent({
           <StyledCharacterBackground>
             <img src={currentScene.img} alt="Character" />
           </StyledCharacterBackground>
-          <StyledChatWrap>{currentScene.text}</StyledChatWrap>
+          <StyledChatWrap>
+            {replaceCharacterName(currentScene.text)
+              .split("\n")
+              .map((line, index) => (
+                <React.Fragment key={index}>
+                  {line}
+                  <br />
+                </React.Fragment>
+              ))}
+          </StyledChatWrap>
           <StyledTextWrap>
             {toggle ? (
               <StyledSelectButton onClick={onSubClicked}>
