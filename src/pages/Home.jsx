@@ -71,7 +71,7 @@ function Home() {
         <h1>SAVE ME</h1>
         <Config>
           {isAuthenticated ? (
-            <Link to={"/main1"}>
+            <Link to={"/intro"}>
               <span>게임 시작</span>
             </Link>
           ) : (

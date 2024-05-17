@@ -15,7 +15,7 @@ import Sad from "./pages/Sad";
 import Profile from "./pages/Profile";
 import Intro from "./pages/Intro";
 import Board from "./pages/Board";
-
+import GameOver from "./pages/GameOver";
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem("refreshToken");
   if (!token) {
@@ -133,6 +133,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Board />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "over",
+        element: (
+          <ProtectedRoute>
+            <GameOver />
           </ProtectedRoute>
         ),
       },
