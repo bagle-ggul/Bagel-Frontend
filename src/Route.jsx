@@ -1,8 +1,8 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Help from "./pages/Help";
 import Signup from "./pages/Signup";
-import Login from "./pages/login";
+import Login from "./pages/Login";
 import Main1 from "./pages/Main1";
 import Main2 from "./pages/Main2";
 import Main3 from "./pages/Main3";
@@ -15,6 +15,15 @@ import Sad from "./pages/Sad";
 import Profile from "./pages/Profile";
 import Intro from "./pages/Intro";
 import Board from "./pages/Board";
+
+const ProtectedRoute = ({ children }) => {
+  const token = localStorage.getItem("refreshToken");
+  if (!token) {
+    return <Navigate to="/" />;
+  }
+  return children;
+};
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -24,44 +33,60 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/help",
-        element: <Help />,
-      },
-      {
-        path: "/signup",
-        element: <Signup />,
-      },
-      {
-        path: "main1",
-        element: <Main1 />,
-      },
-      {
-        path: "main2",
-        element: <Main2 />,
-      },
-      {
-        path: "main3",
-        element: <Main3 />,
-      },
-      {
-        path: "main4",
-        element: <Main4 />,
-      },
-      {
-        path: "main5",
-        element: <Main5 />,
-      },
-      {
-        path: "profile",
-        element: <Profile />,
-      },
-      {
         path: "help",
         element: <Help />,
       },
       {
         path: "signup",
         element: <Signup />,
+      },
+      {
+        path: "main1",
+        element: (
+          <ProtectedRoute>
+            <Main1 />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "main2",
+        element: (
+          <ProtectedRoute>
+            <Main2 />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "main3",
+        element: (
+          <ProtectedRoute>
+            <Main3 />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "main4",
+        element: (
+          <ProtectedRoute>
+            <Main4 />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "main5",
+        element: (
+          <ProtectedRoute>
+            <Main5 />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "profile",
+        element: (
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "login",
@@ -73,23 +98,43 @@ const router = createBrowserRouter([
       },
       {
         path: "happy",
-        element: <Happy />,
+        element: (
+          <ProtectedRoute>
+            <Happy />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "middle",
-        element: <Middle />,
+        element: (
+          <ProtectedRoute>
+            <Middle />,
+          </ProtectedRoute>
+        ),
       },
       {
         path: "sad",
-        element: <Sad />,
+        element: (
+          <ProtectedRoute>
+            <Sad />,
+          </ProtectedRoute>
+        ),
       },
       {
         path: "result",
-        element: <Result />,
+        element: (
+          <ProtectedRoute>
+            <Result />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "board",
-        element: <Board />,
+        element: (
+          <ProtectedRoute>
+            <Board />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

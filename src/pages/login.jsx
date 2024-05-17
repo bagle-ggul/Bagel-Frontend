@@ -93,7 +93,7 @@ function Login() {
       localStorage.setItem("refreshToken", refreshToken); // Store the refresh token
       console.log(response.data);
       console.log(refreshToken);
-      navigate("/main1");
+      navigate("/");
       // Handle success (e.g., display a success message, redirect to another page, etc.)
     } catch (error) {
       console.error(error);

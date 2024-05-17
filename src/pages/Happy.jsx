@@ -1,9 +1,6 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+
 import styled from "styled-components";
-import { scoreAtom } from "../atom/atom";
-import axios from "axios";
 
 const CenteredButton = styled.button`
   position: absolute;
@@ -28,14 +25,34 @@ const CenteredDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+  .textDiv {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    background-color: #caeffd;
+    border-radius: 15px;
+    margin-top: 20px;
+    width: 510px;
+    height: 100px;
+  }
+  .imgDiv img {
+    border-radius: 15px;
+  }
 `;
 
-function Result() {
+function Happy() {
   return (
     <CenteredDiv>
-      <img src="img/웨딩.png" alt="레몬에이드" />
+      <div className="imgDiv">
+        <img src="img/웨딩.png" alt="레몬에이드" />
+      </div>
+      <div className="textDiv">
+        <p>안녕하세요 호오옹</p>
+      </div>
     </CenteredDiv>
   );
 }
 
-export default Result;
+export default Happy;
