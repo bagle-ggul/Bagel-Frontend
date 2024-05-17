@@ -1,18 +1,10 @@
 // src/components/Profile.js
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-<<<<<<< HEAD
 import axios from "axios";
 import { motion } from "framer-motion";
 
 const ProfileWrapper = styled(motion.div)`
-=======
-import { useState, useEffect } from "react";
-import axios from "axios";
-const Wrapper = styled.div`
-  height: 100vh;
-  width: 100vw;
->>>>>>> upstream
   display: flex;
   flex-direction: column;
   align-items: center;
