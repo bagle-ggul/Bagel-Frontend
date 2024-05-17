@@ -45,6 +45,7 @@ const StyledSelectButton = styled.button`
   width: 40%;
   border-radius: 10px;
   font-size: 1rem;
+  font-weight: bold;
   border: 1px solid grey;
   margin: 0.3%;
   cursor: pointer;
@@ -63,6 +64,7 @@ const StyledChatWrap = styled.div`
   width: 90%;
   height: 20%;
   background-color: white;
+  opacity: 1;
   border-radius: 10px;
   padding: 2rem;
   border: 1px solid grey;
@@ -86,7 +88,6 @@ const NextButton = styled.button`
   cursor: pointer;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 효과 */
   transition: all 0.3s ease; /* 부드러운 전환 효과 */
-
   &:hover {
     background-color: #e84118; /* 호버 시 색상 변경 */
     transform: translateY(-2px); /* 호버 시 살짝 위로 올라가는 효과 */
