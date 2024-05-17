@@ -21,6 +21,7 @@ const MainWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border-radius: 13px;
   position: absolute; /* Position it absolutely within the Wrapper */
   top: 50%;
   left: 50%;
@@ -50,6 +51,7 @@ const MainWrapper = styled.div`
     padding: 12px;
   }
 `;
+
 const StyledSelectButton = styled.button`
   height: 20px;
   width: 40%;
@@ -76,7 +78,7 @@ function Signup() {
   const [password, setPassword] = useState("");
   const [characterName, setCharacterName] = useState("");
   const [mbti, setMbti] = useState("");
-  const [birth, setBirth] = useState("");
+  const [birthDate, setBirthDate] = useState("");
   const [gender, setGender] = useState("");
 
   const handleSubmit = async (event) => {
@@ -86,7 +88,7 @@ function Signup() {
       password,
       characterName,
       mbti,
-      birth,
+      birthDate,
       gender,
     };
 
@@ -117,38 +119,43 @@ function Signup() {
               placeholder="이메일을 입력해주세요"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
             <input
               type="password"
               placeholder="비밀번호를 입력해주세요"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
             <input
               type="text"
               placeholder="이름을 입력해주세요"
               value={characterName}
               onChange={(e) => setCharacterName(e.target.value)}
+              required
             />
             <input
               type="text"
               placeholder="MBTI를 입력해주세요"
               value={mbti}
               onChange={(e) => setMbti(e.target.value)}
+              required
             />
             <input
               type="text"
               placeholder="생일을 입력해주세요 ex)2000-08-13"
-              value={birth}
-              onChange={(e) => setBirth(e.target.value)}
+              value={birthDate}
+              onChange={(e) => setBirthDate(e.target.value)}
+              required
             />
             <input
               type="text"
               placeholder="성별을 입력해주세요"
               value={gender}
               onChange={(e) => setGender(e.target.value)}
+              required
             />
-
             <StyledSelectButton className="submitBtn" type="submit">
               Submit
             </StyledSelectButton>
