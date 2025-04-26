@@ -59,4 +59,3 @@ jobs:
             echo $PW | sudo -S docker stop bagel-front || true
             echo $PW | sudo -S docker rm bagel-front || true
             echo $PW | sudo -S docker run -d -p 3005:3000 --name bagel-front ${{ secrets.DOCKERHUB_USERNAME }}/bagel-front-container:latest
-```
