@@ -76,7 +76,7 @@ jobs:
             echo "환경변수 설정..."
             export PATH=$PATH:/usr/local/bin
             export PW=${{ secrets.SERVER_PASSWORD }}
-            PORT=3005
+            PORT=3006
             CONTAINER_NAME="bagel-front"
 
             echo "컨테이너 이름: $CONTAINER_NAME"
