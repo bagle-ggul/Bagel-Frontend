@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled, { keyframes } from "styled-components";
 import { scoreAtom } from "../atom/atom";
-import axios from "axios";
+import axios from "../utils/axios";
 
 const fadeIn = keyframes`
   from {
@@ -82,7 +82,7 @@ function GameOver() {
 
     try {
       const response = await axios.post(
-        "https://api.she-is-newyork-bagel.co.kr/api/game/over",
+        "/api/game/over",
         userData,
         {
           headers: {

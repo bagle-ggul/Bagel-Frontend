@@ -1,7 +1,7 @@
 // src/components/MyGameResults.js
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import axios from "axios";
+import axios from "../utils/axios";
 import { motion } from "framer-motion";
 
 const ResultsWrapper = styled(motion.div)`
@@ -66,7 +66,7 @@ function MyGameResults() {
     const fetchResults = async () => {
       try {
         const response = await axios.get(
-          "https://api.she-is-newyork-bagel.co.kr/api/game/my-results",
+          "/api/game/my-results",
           {
             headers: {
               Authorization: `Bearer ${accessToken}`, // 토큰을 적절하게 설정
@@ -85,7 +85,7 @@ function MyGameResults() {
   const handleDelete = async (gameResultId) => {
     try {
       await axios.delete(
-        `https://api.she-is-newyork-bagel.co.kr/api/game/my-results/${gameResultId}`,
+        `/api/game/my-results/${gameResultId}`,
         {
           headers: {
             Authorization: `Bearer ${accessToken}`, // 토큰을 적절하게 설정

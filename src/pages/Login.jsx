@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import axios from "axios";
+import axios from "../utils/axios";
 import { motion } from "framer-motion";
 
 const Wrapper = styled.div`
@@ -86,7 +86,7 @@ function Login() {
 
     try {
       const response = await axios.post(
-        "https://api.she-is-newyork-bagel.co.kr/api/login",
+        "/api/login",
         userData
       );
       const { refreshToken } = response.data;

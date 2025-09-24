@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { scoreAtom } from "../atom/atom";
-import axios from "axios";
+import axios from "../utils/axios";
 
 const CenteredButton = styled.button`
   position: absolute;
@@ -55,7 +55,7 @@ function Result() {
 
     try {
       const response = await axios.post(
-        "https://api.she-is-newyork-bagel.co.kr/api/game/over",
+        "/api/game/over",
         userData,
         {
           headers: {

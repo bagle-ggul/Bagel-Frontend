@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import axios from "axios";
+import axios from "../utils/axios";
 import { useSetRecoilState } from "recoil";
 import SelectPageComponent from "../components/SelectPageComponent";
 import { storyData } from "../utils/data";
@@ -14,7 +14,7 @@ function Main1() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://api.she-is-newyork-bagel.co.kr/api/my-page",
+          "/api/my-page",
           {
             headers: {
               Authorization: `Bearer ${refreshToken}`,

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axios from "../utils/axios";
 import { Link, useParams, useNavigate } from "react-router-dom";
 
 // 배경 이미지 URL
@@ -138,7 +138,7 @@ function Board() {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://api.she-is-newyork-bagel.co.kr/api/game/ranking",
+          "/api/game/ranking",
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,

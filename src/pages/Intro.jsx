@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled, { keyframes } from "styled-components";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../utils/axios";
 
 const scenes = [
   {
@@ -137,7 +137,7 @@ const SelectPageComponent = () => {
     const fetchProfile = async () => {
       try {
         const response = await axios.get(
-          "https://api.she-is-newyork-bagel.co.kr/api/my-page",
+          "/api/my-page",
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,

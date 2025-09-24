@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import axios from "axios";
+import axios from "../utils/axios";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
@@ -99,7 +99,7 @@ function Profile() {
     const fetchProfile = async () => {
       try {
         const response = await axios.get(
-          "https://api.she-is-newyork-bagel.co.kr/api/my-page",
+          "/api/my-page",
           {
             headers: {
               Authorization: `Bearer ${accessToken}`, // 토큰을 적절하게 설정

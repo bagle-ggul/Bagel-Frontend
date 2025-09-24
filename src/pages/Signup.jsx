@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
+import axios from "../utils/axios";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
@@ -114,7 +114,7 @@ function Signup() {
 
     try {
       const response = await axios.post(
-        "https://api.she-is-newyork-bagel.co.kr/api/signup",
+        "/api/signup",
         userData
       );
       console.log(response.data);
