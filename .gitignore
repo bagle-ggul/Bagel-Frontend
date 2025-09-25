@@ -23,3 +23,15 @@ yarn-debug.log*
 yarn-error.log*
 
 .yaml
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### Claude Configuration ###
+.claude
