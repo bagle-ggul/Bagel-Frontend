@@ -61,7 +61,6 @@ const NavigationContainer = styled.div`
   @media (max-width: 480px) {
     width: 100%;
     max-width: 90%;
-    margin: 0 5%;
     padding: 1rem;
     bottom: 4%;
     gap: 0.8rem;

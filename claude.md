@@ -33,12 +33,18 @@ border-radius: 20px;
 - `/signup` - 회원가입
 - `/intro` - 게임 시작
 
-### 배경 이미지
-- 모든 페이지: `/img/image1.png`, `/img/image2.png`, `/img/image3.png`
+### 홈 배경 이미지
+- 홈페이지: `/img/image1.png`, `/img/image2.png`, `/img/image3.png`
 - 3개 이미지가 grid로 배치됨
 
 ### 코딩 컨벤션
 - **Boolean 변수**: `is` 접두사 사용 (예: `isPasswordVisible`, `isLoading`)
+
+### 이미지 명명법
+- **구조**: `{카테고리}_{위치}_{상태}.png`
+- **카테고리**: `bg_` (배경), `her_` (그녀), `mc_` (주인공)
+- **위치**: `house`, `cafe`, `cave`, `beach`, `road`, `underwater` 등
+- **상태**: `main`, `v1/v2/v3`, `high/mid/low`, `happy/sad/normal`
 
 ---
 **⚠️ 업데이트 필요시**: 프로젝트 구조나 디자인 시스템 변경 시 이 문서를 업데이트하세요.
