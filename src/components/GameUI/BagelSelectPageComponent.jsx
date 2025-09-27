@@ -11,7 +11,7 @@ const GameContainer = styled.div`
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: url(${(props) => props.bgImage}) no-repeat center center;
+  background: url(${(props) => props.$bgImage}) no-repeat center center;
   background-size: cover;
   position: relative;
   display: flex;
@@ -164,6 +164,7 @@ const BagelSelectPageComponent = ({
   const [subIndex, setSubIndex] = useState(0);
   const [score, setScore] = useRecoilState(scoreAtom);
   const [base, setBase] = useState(url);
+  const [isTypingComplete, setIsTypingComplete] = useState(false); // 타이핑 완료 상태
   const characterName = useRecoilValue(characterNameAtom);
   const navigate = useNavigate();
 
@@ -172,7 +173,9 @@ const BagelSelectPageComponent = ({
   const currentScene = storyData.plot[index];
 
   const replaceCharacterName = (text) => {
-    return text.replace(/주인공/g, characterName);
+    // 캐릭터명이 비어있으면 기본값 사용
+    const name = characterName || "주인공";
+    return text.replace(/주인공/g, name);
   };
 
   const onClicked = (option, i) => {
@@ -186,6 +189,7 @@ const BagelSelectPageComponent = ({
     if (option.error) {
       navigate("/over");
     } else {
+      // 기존 subtext 구조를 스마트하게 처리
       setSubText(
         option.subtext
           .split("^")
@@ -260,6 +264,11 @@ const BagelSelectPageComponent = ({
     }
   }, [toggle]);
 
+  // 인덱스 변경 시 타이핑 상태 초기화
+  useEffect(() => {
+    setIsTypingComplete(false);
+  }, [index]);
+
   // 스피커 이름 결정 (필요에 따라 수정)
   const getSpeaker = () => {
     // storyData에 speaker 정보가 있다면 사용, 없다면 기본값
@@ -281,7 +290,7 @@ const BagelSelectPageComponent = ({
   };
 
   return (
-    <GameContainer bgImage={backgroundImage}>
+    <GameContainer $bgImage={backgroundImage}>
       {index < storyData.plot.length ? (
         <>
           <CharacterSection>
@@ -301,6 +310,8 @@ const BagelSelectPageComponent = ({
               characterIcon={getCharacterIcon()}
               enableTypewriter={true}
               typingSpeed={50}
+              onTypeComplete={() => setIsTypingComplete(true)}
+              onClick={() => !isTypingComplete && setIsTypingComplete(true)}
             />
 
             <AnimatePresence mode="wait">
@@ -319,7 +330,7 @@ const BagelSelectPageComponent = ({
                     icon="▶"
                   />
                 </ChoicesContainer>
-              ) : (
+              ) : isTypingComplete ? (
                 <ChoicesContainer
                   key="choices"
                   initial={{ opacity: 0 }}
@@ -344,7 +355,12 @@ const BagelSelectPageComponent = ({
                         transition={{ delay: i * 0.1, duration: 0.3 }}
                       >
                         <BagelChoiceButton
-                          text={option.ans}
+                          text={
+                            // 스마트한 선택지 텍스트 처리
+                            option.ans.startsWith('"') && option.ans.endsWith('"')
+                              ? option.ans.slice(1, -1)  // 따옴표 제거
+                              : option.ans  // 그대로 표시
+                          }
                           onClick={() => onClicked(option, i)}
                           index={i}
                           variant={variant}
@@ -354,7 +370,7 @@ const BagelSelectPageComponent = ({
                     );
                   })}
                 </ChoicesContainer>
-              )}
+              ) : null}
             </AnimatePresence>
           </DialogSection>
         </>

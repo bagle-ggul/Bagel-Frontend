@@ -64,38 +64,6 @@ const ChoiceContainer = styled(motion.button)`
   }
 `;
 
-const ChoiceNumber = styled.span`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
-  background: linear-gradient(135deg,
-    rgba(200, 182, 226, 0.8),
-    rgba(200, 182, 226, 0.6)
-  );
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  text-align: center;
-  font-size: 0.9rem;
-  font-weight: 700;
-  flex-shrink: 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
-
-  @media (max-width: 768px) {
-    width: 28px;
-    height: 28px;
-    font-size: 0.85rem;
-  }
-
-  @media (max-width: 480px) {
-    width: 26px;
-    height: 26px;
-    font-size: 0.8rem;
-  }
-`;
-
 const ChoiceText = styled.span`
   flex: 1;
   word-break: keep-all;
@@ -130,20 +98,17 @@ const BagelChoiceButton = ({
       case "important":
         return {
           background: "rgba(0, 0, 0, 0.8)",
-          border: "rgba(255, 215, 0, 0.5)",
-          numberBg: "linear-gradient(135deg, rgba(255, 215, 0, 0.8), rgba(255, 215, 0, 0.6))"
+          border: "rgba(255, 215, 0, 0.5)"
         };
       case "danger":
         return {
           background: "rgba(0, 0, 0, 0.8)",
-          border: "rgba(220, 38, 38, 0.5)",
-          numberBg: "linear-gradient(135deg, rgba(220, 38, 38, 0.8), rgba(220, 38, 38, 0.6))"
+          border: "rgba(220, 38, 38, 0.5)"
         };
       default:
         return {
           background: "rgba(0, 0, 0, 0.7)",
-          border: "rgba(255, 255, 255, 0.15)",
-          numberBg: "linear-gradient(135deg, rgba(200, 182, 226, 0.8), rgba(200, 182, 226, 0.6))"
+          border: "rgba(255, 255, 255, 0.15)"
         };
     }
   };
@@ -203,9 +168,6 @@ const BagelChoiceButton = ({
         borderColor: variantColors.border
       }}
     >
-      <ChoiceNumber style={{ background: variantColors.numberBg }}>
-        {index + 1}
-      </ChoiceNumber>
       <ChoiceText>{text}</ChoiceText>
       <ChoiceIcon>{icon}</ChoiceIcon>
     </ChoiceContainer>
