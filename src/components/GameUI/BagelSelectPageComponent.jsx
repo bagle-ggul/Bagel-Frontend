@@ -164,6 +164,7 @@ const BagelSelectPageComponent = ({
   const [subIndex, setSubIndex] = useState(0);
   const [score, setScore] = useRecoilState(scoreAtom);
   const [base, setBase] = useState(url);
+  const [isTypingComplete, setIsTypingComplete] = useState(false); // 타이핑 완료 상태
   const characterName = useRecoilValue(characterNameAtom);
   const navigate = useNavigate();
 
@@ -261,6 +262,11 @@ const BagelSelectPageComponent = ({
     }
   }, [toggle]);
 
+  // 인덱스 변경 시 타이핑 상태 초기화
+  useEffect(() => {
+    setIsTypingComplete(false);
+  }, [index]);
+
   // 스피커 이름 결정 (필요에 따라 수정)
   const getSpeaker = () => {
     // storyData에 speaker 정보가 있다면 사용, 없다면 기본값
@@ -302,6 +308,8 @@ const BagelSelectPageComponent = ({
               characterIcon={getCharacterIcon()}
               enableTypewriter={true}
               typingSpeed={50}
+              onTypeComplete={() => setIsTypingComplete(true)}
+              onClick={() => !isTypingComplete && setIsTypingComplete(true)}
             />
 
             <AnimatePresence mode="wait">
@@ -320,7 +328,7 @@ const BagelSelectPageComponent = ({
                     icon="▶"
                   />
                 </ChoicesContainer>
-              ) : (
+              ) : isTypingComplete ? (
                 <ChoicesContainer
                   key="choices"
                   initial={{ opacity: 0 }}
@@ -360,7 +368,7 @@ const BagelSelectPageComponent = ({
                     );
                   })}
                 </ChoicesContainer>
-              )}
+              ) : null}
             </AnimatePresence>
           </DialogSection>
         </>
