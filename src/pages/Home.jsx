@@ -91,7 +91,6 @@ const VersionInfo = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
   font-size: 1.2rem;
   opacity: 0.7;
   margin-top: 0.5rem;
@@ -124,6 +123,7 @@ const ChangelogLink = styled.a`
   padding: 0.3rem 0.5rem;
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.1);
+  margin-left: 0.5rem;
 
   &:hover {
     background: rgba(255, 255, 255, 0.2);
