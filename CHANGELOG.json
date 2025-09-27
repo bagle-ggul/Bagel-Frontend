@@ -1,11 +1,50 @@
 {
   "metadata": {
-    "lastUpdated": "2025-09-27T06:29:53Z",
-    "currentVersion": "1.0.6",
-    "projectType": "spring",
-    "totalReleases": 3
+    "lastUpdated": "2025-09-27T08:03:18Z",
+    "currentVersion": "1.1.1",
+    "projectType": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
+    "totalReleases": 4
   },
   "releases": [
+    {
+      "version": "1.1.1",
+      "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
+      "date": "2025-09-27",
+      "pr_number": 62,
+      "raw_summary": "Summary by CodeRabbit\n\n신규 기능\n\n홈 화면에 애니메이션 도입 및 크레딧 모달 추가\n버전 정보와 변경 기록 링크 표시\n로그인 상태에서 로그아웃 버튼 제공\n\n\n스타일\n\n기본 폰트를 Pretendard로 변경 및 전반적 타이포그래피 개선\n반응형 및 접근성 개선(모달 오버레이 닫기 등)\n브라우저 탭 제목을 “Save Her - Game”으로 변경\n\n\n문서\n\nREADME 최신 버전 표기 업데이트\n\n\n기타(Chores)\n\n앱/메타 버전 갱신\nPWA 매니페스트 정리 및 아이콘 구성 단순화\n불필요한 apple-touch-icon 링크 제거",
+      "parsed_changes": {
+        "신규_기능": {
+          "title": "신규 기능",
+          "items": [
+            "홈 화면에 애니메이션 도입 및 크레딧 모달 추가",
+            "버전 정보와 변경 기록 링크 표시",
+            "로그인 상태에서 로그아웃 버튼 제공"
+          ]
+        },
+        "스타일": {
+          "title": "스타일",
+          "items": [
+            "기본 폰트를 Pretendard로 변경 및 전반적 타이포그래피 개선",
+            "반응형 및 접근성 개선(모달 오버레이 닫기 등)",
+            "브라우저 탭 제목을 “Save Her - Game”으로 변경"
+          ]
+        },
+        "문서": {
+          "title": "문서",
+          "items": [
+            "README 최신 버전 표기 업데이트"
+          ]
+        },
+        "기타_chores": {
+          "title": "기타(Chores)",
+          "items": [
+            "앱/메타 버전 갱신",
+            "PWA 매니페스트 정리 및 아이콘 구성 단순화",
+            "불필요한 apple-touch-icon 링크 제거"
+          ]
+        }
+      }
+    },
     {
       "version": "1.0.6",
       "project_type": "spring",
