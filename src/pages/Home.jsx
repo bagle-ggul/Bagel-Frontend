@@ -12,21 +12,10 @@ const Wrapper = styled.div`
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    grid-template-rows: repeat(3, 1fr);
-  }
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    display: block;
-  }
+  background-image: url('/img/bg_home_v4.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 `;
 
 const MainWrapper = styled.div`
@@ -35,8 +24,8 @@ const MainWrapper = styled.div`
   gap: 1.5rem;
   position: absolute;
   top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  right: 10%;
+  transform: translateY(-50%);
   text-align: center;
   color: white;
   background: rgba(0, 0, 0, 0.4);
@@ -45,12 +34,18 @@ const MainWrapper = styled.div`
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
   padding: 3rem 2.5rem;
   border-radius: 20px;
-  width: 50rem;
-  max-width: 90vw;
+  width: 45rem;
+  max-width: 45vw;
+  z-index: 10;
+
+  @media (max-width: 1200px) {
+    right: 8%;
+    width: 40rem;
+    max-width: 50vw;
+  }
 
   @media (max-width: 768px) {
-    gap: 1.2rem;
-    padding: 2rem 1.5rem;
+    display: none; /* 모바일에서는 MobileContainer로 이동 */
   }
 `;
 
@@ -267,13 +262,14 @@ const LogoutButton = styled.button`
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.7);
-  padding: 10px 20px;
-  border-radius: 10px;
-  font-size: 0.9rem;
-  font-weight: 400;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  width: fit-content;
 
   &:hover {
     background: rgba(0, 0, 0, 0.5);
@@ -287,17 +283,125 @@ const LogoutButton = styled.button`
   }
 
   @media (max-width: 768px) {
-    font-size: 0.8rem;
-    padding: 8px 16px;
+    font-size: 0.9rem;
+    padding: 0.8rem 1.2rem;
     bottom: 15px;
     right: 15px;
   }
 
   @media (max-width: 480px) {
-    font-size: 0.75rem;
-    padding: 6px 12px;
+    font-size: 0.8rem;
+    padding: 0.7rem 1rem;
     bottom: 10px;
     right: 10px;
+  }
+`;
+
+const CharacterWrapper = styled.div`
+  position: absolute;
+  left: 5%;
+  bottom: 0;
+  height: 80vh;
+  width: auto;
+  z-index: 15;
+
+  img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+    object-position: bottom;
+    filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.3));
+  }
+
+  @media (max-width: 1200px) {
+    left: 3%;
+    height: 70vh;
+  }
+
+  @media (max-width: 900px) {
+    left: 2%;
+    height: 60vh;
+  }
+
+  @media (max-width: 768px) {
+    display: none; /* 모바일에서는 MobileContainer로 이동 */
+  }
+`;
+
+// 모바일 전용 컨테이너
+const MobileContainer = styled.div`
+  display: none;
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    position: fixed;
+    bottom: 5vh;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    gap: 0;
+  }
+
+  @media (max-width: 480px) {
+    bottom: 9vh;
+    gap: 0;
+  }
+`;
+
+// 모바일 전용 캐릭터 래퍼
+const MobileCharacterWrapper = styled.div`
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  img {
+    width: auto;
+    height: 38vh;
+    object-fit: contain;
+    object-position: bottom;
+    filter: drop-shadow(0 0 20px rgba(0, 0, 0, 0.3));
+  }
+
+  @media (max-width: 480px) {
+    img {
+      height: 33vh;
+    }
+  }
+
+  @media (max-width: 360px) {
+    img {
+      height: 24vh;
+    }
+  }
+`;
+
+// 모바일 전용 메인 래퍼
+const MobileMainWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  text-align: center;
+  color: white;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+  padding: 2rem 1.5rem;
+  border-radius: 20px;
+  width: 45rem;
+  max-width: 90vw;
+  z-index: 10;
+
+  @media (max-width: 480px) {
+    padding: 1.5rem 1.2rem;
+    width: 90vw;
+    max-width: 90vw;
+    gap: 1rem;
   }
 `;
 
@@ -946,6 +1050,7 @@ function Home() {
   const [showCredits, setShowCredits] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
+  const [characterImage, setCharacterImage] = useState("/img/her_home_v1.png");
 
   // 로그인 폼 상태
   const [email, setEmail] = useState("");
@@ -980,6 +1085,26 @@ function Home() {
     if (token) {
       setIsAuthenticated(true);
     }
+  }, []);
+
+  // 화면 크기에 따른 캐릭터 이미지 변경
+  useEffect(() => {
+    const updateCharacterImage = () => {
+      if (window.innerWidth <= 768) {
+        setCharacterImage("/img/her_home_v1_mobile.png");
+      } else {
+        setCharacterImage("/img/her_home_v1.png");
+      }
+    };
+
+    // 초기 설정
+    updateCharacterImage();
+
+    // 리사이즈 이벤트 리스너 추가
+    window.addEventListener('resize', updateCharacterImage);
+
+    // 클린업 함수
+    return () => window.removeEventListener('resize', updateCharacterImage);
   }, []);
 
   // MBTI 자동 조합
@@ -1160,18 +1285,31 @@ function Home() {
 
   return (
     <div>
-      <Wrapper>
-        <img src="/img/bg_home_v1.png" alt="" />
-        <img src="/img/bg_home_v2.png" alt="" />
-        <img src="/img/bg_home_v3.png" alt="" />
-      </Wrapper>
+      <Wrapper />
+
+      {/* 데스크톱용 캐릭터 */}
+      <CharacterWrapper>
+        <motion.img
+          src={characterImage}
+          alt="Save Her - 그녀"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{
+            duration: 1.5,
+            delay: 0.3,
+            ease: "easeOut"
+          }}
+        />
+      </CharacterWrapper>
+
+      {/* 데스크톱용 메인 */}
       <MainWrapper>
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <Title>Save Her</Title>
+          <Title>Re: WAVE</Title>
           <Subtitle>당신의 선택이 그녀의 운명을 결정합니다</Subtitle>
           <VersionInfo>
             <VersionText>v{APP_VERSION}</VersionText>
@@ -1233,6 +1371,92 @@ function Home() {
           )}
         </ButtonGroup>
       </MainWrapper>
+
+      {/* 모바일용 통합 컨테이너 */}
+      <MobileContainer>
+        <MobileCharacterWrapper>
+          <motion.img
+            src={characterImage}
+            alt="Save Her - 그녀"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{
+              duration: 1.5,
+              delay: 0.3,
+              ease: "easeOut"
+            }}
+          />
+        </MobileCharacterWrapper>
+
+        <MobileMainWrapper>
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <Title>Re: WAVE</Title>
+            <Subtitle>당신의 선택이 그녀의 운명을 결정합니다</Subtitle>
+            <VersionInfo>
+              <VersionText>v{APP_VERSION}</VersionText>
+              <ChangelogLink
+                href="https://github.com/bagle-ggul/Bagel-Frontend/blob/main/CHANGELOG.md"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Changelog 확인"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                  />
+                </svg>
+              </ChangelogLink>
+            </VersionInfo>
+          </motion.div>
+          <ButtonGroup>
+            {isAuthenticated ? (
+              <>
+                <ButtonWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <PrimaryButton to="/intro">게임 시작</PrimaryButton>
+                </ButtonWrapper>
+                <ButtonWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <SecondaryButton to="/profile">내 정보</SecondaryButton>
+                </ButtonWrapper>
+                <ButtonWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <CreditsButtonStyled onClick={() => setShowCredits(true)}>
+                    크레딧
+                  </CreditsButtonStyled>
+                </ButtonWrapper>
+              </>
+            ) : (
+              <>
+                <ButtonWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <SecondaryButtonModal onClick={openSignupModal}>
+                    회원가입
+                  </SecondaryButtonModal>
+                </ButtonWrapper>
+                <ButtonWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <SecondaryButtonModal onClick={openLoginModal}>
+                    로그인
+                  </SecondaryButtonModal>
+                </ButtonWrapper>
+                <ButtonWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <CreditsButtonStyled onClick={() => setShowCredits(true)}>
+                    크레딧
+                  </CreditsButtonStyled>
+                </ButtonWrapper>
+              </>
+            )}
+          </ButtonGroup>
+        </MobileMainWrapper>
+      </MobileContainer>
 
       {isAuthenticated && <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>}
 
