@@ -29,7 +29,7 @@ const Wrapper = styled.div`
 const MainWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 2.5rem;
+  gap: 1.5rem;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -46,7 +46,7 @@ const MainWrapper = styled.div`
   max-width: 90vw;
 
   @media (max-width: 768px) {
-    gap: 1.5rem;
+    gap: 1.2rem;
     padding: 2rem 1.5rem;
   }
 `;
@@ -79,6 +79,69 @@ const Subtitle = styled.p`
 
   @media (max-width: 480px) {
     font-size: 0.9rem;
+  }
+`;
+
+const VersionInfo = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 1.2rem;
+  opacity: 0.7;
+  margin-top: 0.5rem;
+  transition: opacity 0.3s ease;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    margin-top: 0.4rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+  }
+`;
+
+const VersionText = styled.span`
+  font-weight: 500;
+`;
+
+const ChangelogLink = styled.a`
+  display: inline-flex;
+  align-items: center;
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.1);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  @media (max-width: 768px) {
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    svg {
+      width: 16px;
+      height: 16px;
+    }
   }
 `;
 
@@ -399,6 +462,7 @@ const CloseButton = styled.button`
 function Home() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showCredits, setShowCredits] = useState(false);
+  const APP_VERSION = "1.0.8";
 
   useEffect(() => {
     const token = localStorage.getItem("refreshToken");
@@ -438,6 +502,29 @@ function Home() {
         >
           <Title>Save Her</Title>
           <Subtitle>당신의 선택이 그녀의 운명을 결정합니다</Subtitle>
+          <VersionInfo>
+            <VersionText>v{APP_VERSION}</VersionText>
+            <ChangelogLink
+              href="https://github.com/bagle-ggul/Bagel-Frontend/blob/main/CHANGELOG.md"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Changelog 확인"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
+              </svg>
+            </ChangelogLink>
+          </VersionInfo>
         </motion.div>
         <ButtonGroup>
           {isAuthenticated ? (
