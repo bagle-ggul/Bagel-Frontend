@@ -4,14 +4,9 @@ import { createGlobalStyle } from "styled-components";
 import { RouterProvider } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import router from "./Route";
-import "./font.css";
 
 const GlobalStyle = createGlobalStyle`
-@font-face {
-  font-family: "Jua";
-  src: url('https://fonts.gstatic.com/s/jua/v11/co3KmW9ljjY2w1U.woff2');
-  font-weight: 400;
-}
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -32,7 +27,7 @@ time, mark, audio, video {
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
-  font-family: 'Jua', sans-serif;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
   line-height: 1.2;
 }
 /* HTML5 display-role reset for older browsers */
