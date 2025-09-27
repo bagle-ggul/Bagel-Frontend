@@ -91,8 +91,20 @@ const ButtonGroup = styled.div`
   width: 100%;
 `;
 
-const ButtonBase = `
+const ButtonWrapper = styled(motion.div)`
   width: 40%;
+
+  @media (max-width: 768px) {
+    width: 60%;
+  }
+
+  @media (max-width: 480px) {
+    width: 80%;
+  }
+`;
+
+const ButtonBase = `
+  width: 100%;
   padding: 1.2rem 2rem;
   font-size: 1.3rem;
   font-weight: 600;
@@ -368,31 +380,31 @@ function Home() {
         <ButtonGroup>
           {isAuthenticated ? (
             <>
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              <ButtonWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                 <PrimaryButton to="/intro">게임 시작</PrimaryButton>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              </ButtonWrapper>
+              <ButtonWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                 <SecondaryButton to="/profile">내 정보</SecondaryButton>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              </ButtonWrapper>
+              <ButtonWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                 <CreditsButtonStyled onClick={() => setShowCredits(true)}>
                   크레딧
                 </CreditsButtonStyled>
-              </motion.div>
+              </ButtonWrapper>
             </>
           ) : (
             <>
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              <ButtonWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                 <SecondaryButton to="/signup">회원가입</SecondaryButton>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              </ButtonWrapper>
+              <ButtonWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                 <SecondaryButton to="/login">로그인</SecondaryButton>
-              </motion.div>
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+              </ButtonWrapper>
+              <ButtonWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                 <CreditsButtonStyled onClick={() => setShowCredits(true)}>
                   크레딧
                 </CreditsButtonStyled>
-              </motion.div>
+              </ButtonWrapper>
             </>
           )}
         </ButtonGroup>
@@ -414,7 +426,7 @@ function Home() {
               exit={{ scale: 0.8, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
             >
-              <ModalTitle>Credits</ModalTitle>
+              <ModalTitle>크레딧</ModalTitle>
               <TeamList>
                 {teamMembers.map((member, index) => (
                   <motion.div
