@@ -1,11 +1,42 @@
 {
   "metadata": {
-    "lastUpdated": "2025-09-27T08:03:18Z",
-    "currentVersion": "1.1.1",
+    "lastUpdated": "2025-09-27T14:16:20Z",
+    "currentVersion": "1.1.3",
     "projectType": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
-    "totalReleases": 4
+    "totalReleases": 5
   },
   "releases": [
+    {
+      "version": "1.1.3",
+      "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
+      "date": "2025-09-27",
+      "pr_number": 64,
+      "raw_summary": "Summary by CodeRabbit\n\n신기능\n\n빌드 시 자동 버전 동기화로 UI의 앱 버전이 최신 상태로 표시됩니다.\n파비콘 시스템 개선: 다양한 해상도 아이콘, Apple Touch Icon, PWA 아이콘 및 매니페스트 연동으로 크로스플랫폼 표시 품질 향상.\n\n\n문서\n\nREADME 최신 버전 배지 업데이트.\n\n\n잡무(Chores)\n\n이슈 템플릿 기본 라벨 공백 수정 및 기본 담당자 추가.\n자동 생성되는 버전 파일을 버전 관리에서 제외.\n앱 버전 1.1.3으로 갱신.\n빌드/시작 전 버전 동기화 스크립트 실행 설정.",
+      "parsed_changes": {
+        "신기능": {
+          "title": "신기능",
+          "items": [
+            "빌드 시 자동 버전 동기화로 UI의 앱 버전이 최신 상태로 표시됩니다.",
+            "파비콘 시스템 개선: 다양한 해상도 아이콘, Apple Touch Icon, PWA 아이콘 및 매니페스트 연동으로 크로스플랫폼 표시 품질 향상."
+          ]
+        },
+        "문서": {
+          "title": "문서",
+          "items": [
+            "README 최신 버전 배지 업데이트."
+          ]
+        },
+        "잡무_chores": {
+          "title": "잡무(Chores)",
+          "items": [
+            "이슈 템플릿 기본 라벨 공백 수정 및 기본 담당자 추가.",
+            "자동 생성되는 버전 파일을 버전 관리에서 제외.",
+            "앱 버전 1.1.3으로 갱신.",
+            "빌드/시작 전 버전 동기화 스크립트 실행 설정."
+          ]
+        }
+      }
+    },
     {
       "version": "1.1.1",
       "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
