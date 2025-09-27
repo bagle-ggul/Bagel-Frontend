@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { APP_VERSION } from "../constants/version";
+import axios from "../utils/axios";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Wrapper = styled.div`
-  display: grid;
-  position: relative;
-  grid-template-columns: repeat(3, 1fr);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
   height: 100vh;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
@@ -17,13 +24,10 @@ const Wrapper = styled.div`
 
   img {
     width: 100%;
-    height: 100vh;
+    height: 100%;
     object-fit: cover;
     object-position: center;
-
-    @media (max-width: 768px) {
-      height: 33.33vh;
-    }
+    display: block;
   }
 `;
 
@@ -87,7 +91,6 @@ const VersionInfo = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
   font-size: 1.2rem;
   opacity: 0.7;
   margin-top: 0.5rem;
@@ -120,6 +123,7 @@ const ChangelogLink = styled.a`
   padding: 0.3rem 0.5rem;
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.1);
+  margin-left: 0.5rem;
 
   &:hover {
     background: rgba(255, 255, 255, 0.2);
@@ -225,6 +229,22 @@ const SecondaryButton = styled(Link)`
   }
 `;
 
+const SecondaryButtonModal = styled.button`
+  ${ButtonBase}
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  }
+`;
+
 const CreditsButtonStyled = styled.button`
   ${ButtonBase}
   background: rgba(255, 255, 255, 0.15);
@@ -298,6 +318,7 @@ const ModalOverlay = styled(motion.div)`
 `;
 
 const ModalContent = styled(motion.div)`
+  position: relative;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -434,35 +455,367 @@ const MemberRole = styled.span`
   }
 `;
 
-const CloseButton = styled.button`
-  margin-top: 2rem;
+const IconCloseButton = styled(motion.button)`
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10;
+
+  &:hover {
+    background: rgba(200, 182, 226, 0.3);
+    border-color: rgba(200, 182, 226, 0.5);
+    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 4px 20px rgba(200, 182, 226, 0.3);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(200, 182, 226, 0.4);
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+    transition: all 0.2s ease;
+  }
+
+  @media (max-width: 768px) {
+    top: 1rem;
+    right: 1rem;
+    width: 44px;
+    height: 44px;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    top: 0.8rem;
+    right: 0.8rem;
+    width: 40px;
+    height: 40px;
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+`;
+
+// 로그인 모달 스타일 컴포넌트들
+const LoginForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   width: 100%;
-  padding: 1rem;
-  background: rgba(255, 255, 255, 0.7);
+`;
+
+const InputWrapper = styled(motion.div)`
+  width: 100%;
+`;
+
+const GlassInput = styled.input`
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  color: white;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: rgba(200, 182, 226, 0.5);
+    box-shadow: 0 0 20px rgba(200, 182, 226, 0.2);
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.9rem 1.2rem;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+  }
+`;
+
+const PasswordInputWrapper = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
+const PasswordToggleButton = styled.button`
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
   border: none;
-  border-radius: 10px;
-  color: #000;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  &:focus {
+    outline: none;
+    color: rgba(200, 182, 226, 0.9);
+    background: rgba(200, 182, 226, 0.1);
+    box-shadow: 0 0 0 2px rgba(200, 182, 226, 0.3);
+  }
+
+  &:active {
+    transform: translateY(-50%) scale(0.95);
+  }
+
+  svg {
+    width: 18px;
+    height: 18px;
+    transition: all 0.2s ease;
+  }
+
+  @media (max-width: 480px) {
+    right: 0.8rem;
+    padding: 0.4rem;
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+`;
+
+const ErrorMessage = styled(motion.div)`
+  width: 100%;
+  padding: 0.8rem 1rem;
+  background: rgba(220, 38, 38, 0.15);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(220, 38, 38, 0.3);
+  border-radius: 8px;
+  color: #ff6b6b;
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: 0.5rem;
+
+  @media (max-width: 768px) {
+    padding: 0.7rem 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.6rem 0.7rem;
+    font-size: 0.8rem;
+  }
+`;
+
+const SubmitButton = styled(motion.button)`
+  width: 100%;
+  padding: 1.2rem 2rem;
+  background: rgba(200, 182, 226, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(200, 182, 226, 0.3);
+  border-radius: 12px;
+  color: white;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  margin-top: 0.5rem;
 
   &:hover {
-    background: rgba(200, 182, 226, 0.8);
-    color: white;
-    transform: scale(1.02);
+    background: rgba(200, 182, 226, 0.9);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(200, 182, 226, 0.4);
+  }
+
+  &:active {
+    transform: scale(0.98);
   }
 
   @media (max-width: 768px) {
-    margin-top: 1.5rem;
-    padding: 0.8rem;
+    padding: 1rem 1.5rem;
     font-size: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.9rem 1.2rem;
+    font-size: 0.95rem;
+  }
+`;
+
+// 회원가입 모달 추가 스타일 컴포넌트들
+const GlassSelect = styled.select`
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  color: white;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+    border-color: rgba(200, 182, 226, 0.5);
+    box-shadow: 0 0 20px rgba(200, 182, 226, 0.2);
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  option {
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.9rem 1.2rem;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+  }
+`;
+
+const DatePickerWrapper = styled.div`
+  width: 100%;
+
+  .react-datepicker-wrapper {
+    width: 100%;
+  }
+
+  .datePickerInput {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    color: white;
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: rgba(200, 182, 226, 0.5);
+      box-shadow: 0 0 20px rgba(200, 182, 226, 0.2);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    @media (max-width: 768px) {
+      padding: 0.9rem 1.2rem;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 480px) {
+      padding: 0.8rem 1rem;
+      font-size: 0.9rem;
+    }
+  }
+`;
+
+const GenderDiv = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+
+  label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: rgba(200, 182, 226, 1);
+    }
+
+    input[type="radio"] {
+      width: auto;
+      height: auto;
+      margin: 0;
+      accent-color: rgba(200, 182, 226, 1);
+    }
+
+    @media (max-width: 480px) {
+      font-size: 0.9rem;
+    }
   }
 `;
 
 function Home() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showCredits, setShowCredits] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
+  const [showSignup, setShowSignup] = useState(false);
+
+  // 로그인 폼 상태
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [error, setError] = useState("");
+
+  // 회원가입 폼 상태
+  const [signupEmail, setSignupEmail] = useState("");
+  const [signupPassword, setSignupPassword] = useState("");
+  const [characterName, setCharacterName] = useState("");
+  const [mbti, setMbti] = useState("");
+  const [birthDate, setBirthDate] = useState(new Date());
+  const [gender, setGender] = useState("");
+  const [signupError, setSignupError] = useState("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("refreshToken");
@@ -476,6 +829,104 @@ function Home() {
     localStorage.removeItem("accessToken");
     setIsAuthenticated(false);
     window.location.reload();
+  };
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    setError(""); // 에러 메시지 초기화
+
+    const userData = {
+      email,
+      password,
+    };
+
+    try {
+      const response = await axios.post("/api/login", userData);
+      const { refreshToken } = response.data;
+      localStorage.setItem("refreshToken", refreshToken);
+      console.log(response.data);
+      console.log(refreshToken);
+      setIsAuthenticated(true);
+      setShowLogin(false);
+      // 폼 초기화
+      setEmail("");
+      setPassword("");
+      setError("");
+    } catch (error) {
+      console.error(error);
+      setError("아이디 또는 비밀번호를 확인해주세요");
+    }
+  };
+
+  const openLoginModal = () => {
+    setShowLogin(true);
+    setError("");
+    setEmail("");
+    setPassword("");
+    setIsPasswordVisible(false);
+  };
+
+  const closeLoginModal = () => {
+    setShowLogin(false);
+    setError("");
+    setEmail("");
+    setPassword("");
+    setIsPasswordVisible(false);
+  };
+
+  const handleSignup = async (event) => {
+    event.preventDefault();
+    setSignupError(""); // 에러 메시지 초기화
+
+    const userData = {
+      email: signupEmail,
+      password: signupPassword,
+      characterName,
+      mbti,
+      birthDate: birthDate.toISOString().split("T")[0],
+      gender,
+    };
+
+    try {
+      const response = await axios.post("/api/signup", userData);
+      console.log(response.data);
+      setShowSignup(false);
+      // 회원가입 성공 후 로그인 모달 열기
+      setShowLogin(true);
+      // 폼 초기화
+      setSignupEmail("");
+      setSignupPassword("");
+      setCharacterName("");
+      setMbti("");
+      setBirthDate(new Date());
+      setGender("");
+      setSignupError("");
+    } catch (error) {
+      console.error(error);
+      setSignupError("회원가입에 실패했습니다. 다시 시도해주세요.");
+    }
+  };
+
+  const openSignupModal = () => {
+    setShowSignup(true);
+    setSignupError("");
+    setSignupEmail("");
+    setSignupPassword("");
+    setCharacterName("");
+    setMbti("");
+    setBirthDate(new Date());
+    setGender("");
+  };
+
+  const closeSignupModal = () => {
+    setShowSignup(false);
+    setSignupError("");
+    setSignupEmail("");
+    setSignupPassword("");
+    setCharacterName("");
+    setMbti("");
+    setBirthDate(new Date());
+    setGender("");
   };
 
   const teamMembers = [
@@ -544,10 +995,14 @@ function Home() {
           ) : (
             <>
               <ButtonWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <SecondaryButton to="/signup">회원가입</SecondaryButton>
+                <SecondaryButtonModal onClick={openSignupModal}>
+                  회원가입
+                </SecondaryButtonModal>
               </ButtonWrapper>
               <ButtonWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <SecondaryButton to="/login">로그인</SecondaryButton>
+                <SecondaryButtonModal onClick={openLoginModal}>
+                  로그인
+                </SecondaryButtonModal>
               </ButtonWrapper>
               <ButtonWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                 <CreditsButtonStyled onClick={() => setShowCredits(true)}>
@@ -602,7 +1057,266 @@ function Home() {
                   </motion.div>
                 ))}
               </TeamList>
-              <CloseButton onClick={() => setShowCredits(false)}>닫기</CloseButton>
+              <IconCloseButton
+                onClick={() => setShowCredits(false)}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                aria-label="크레딧 모달 닫기"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </IconCloseButton>
+            </ModalContent>
+          </ModalOverlay>
+        )}
+
+        {showSignup && (
+          <ModalOverlay
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={closeSignupModal}
+          >
+            <ModalContent
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <ModalTitle>회원가입</ModalTitle>
+              <LoginForm onSubmit={handleSignup}>
+                <InputWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <GlassInput
+                    type="email"
+                    placeholder="이메일을 입력해주세요"
+                    value={signupEmail}
+                    onChange={(e) => setSignupEmail(e.target.value)}
+                    required
+                  />
+                </InputWrapper>
+
+                <InputWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <GlassInput
+                    type="password"
+                    placeholder="비밀번호를 입력해주세요"
+                    value={signupPassword}
+                    onChange={(e) => setSignupPassword(e.target.value)}
+                    required
+                  />
+                </InputWrapper>
+
+                <InputWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <GlassInput
+                    type="text"
+                    placeholder="이름을 입력해주세요"
+                    value={characterName}
+                    onChange={(e) => setCharacterName(e.target.value)}
+                    required
+                  />
+                </InputWrapper>
+
+                <InputWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <GlassSelect
+                    value={mbti}
+                    onChange={(e) => setMbti(e.target.value)}
+                    required
+                  >
+                    <option value="" disabled>
+                      MBTI를 선택해주세요
+                    </option>
+                    {[
+                      "INTJ", "INTP", "ENTJ", "ENTP",
+                      "INFJ", "INFP", "ENFJ", "ENFP",
+                      "ISTJ", "ISFJ", "ESTJ", "ESFJ",
+                      "ISTP", "ISFP", "ESTP", "ESFP",
+                    ].map((type) => (
+                      <option key={type} value={type}>
+                        {type}
+                      </option>
+                    ))}
+                  </GlassSelect>
+                </InputWrapper>
+
+                <InputWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <DatePickerWrapper>
+                    <DatePicker
+                      selected={birthDate}
+                      onChange={(date) => setBirthDate(date)}
+                      dateFormat="yyyy-MM-dd"
+                      placeholderText="생일을 선택해주세요"
+                      className="datePickerInput"
+                      required
+                    />
+                  </DatePickerWrapper>
+                </InputWrapper>
+
+                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <GenderDiv>
+                    <label>
+                      <input
+                        type="radio"
+                        value="남성"
+                        checked={gender === "남성"}
+                        onChange={(e) => setGender(e.target.value)}
+                        required
+                      />
+                      남성
+                    </label>
+                    <label>
+                      <input
+                        type="radio"
+                        value="여성"
+                        checked={gender === "여성"}
+                        onChange={(e) => setGender(e.target.value)}
+                        required
+                      />
+                      여성
+                    </label>
+                  </GenderDiv>
+                </motion.div>
+
+                <SubmitButton
+                  type="submit"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  회원가입
+                </SubmitButton>
+                {signupError && (
+                  <ErrorMessage
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {signupError}
+                  </ErrorMessage>
+                )}
+              </LoginForm>
+              <IconCloseButton
+                onClick={closeSignupModal}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                aria-label="회원가입 모달 닫기"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </IconCloseButton>
+            </ModalContent>
+          </ModalOverlay>
+        )}
+
+        {showLogin && (
+          <ModalOverlay
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={closeLoginModal}
+          >
+            <ModalContent
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <ModalTitle>로그인</ModalTitle>
+              <LoginForm onSubmit={handleLogin}>
+                <InputWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <GlassInput
+                    type="email"
+                    placeholder="이메일을 입력해주세요"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </InputWrapper>
+                <InputWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <PasswordInputWrapper>
+                    <GlassInput
+                      type={isPasswordVisible ? "text" : "password"}
+                      placeholder="비밀번호를 입력해주세요"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                    <PasswordToggleButton
+                      type="button"
+                      onClick={() => setIsPasswordVisible(!isPasswordVisible)}
+                    >
+                      {isPasswordVisible ? (
+                        // Eye Open (보기)
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                          <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                      ) : (
+                        // Eye Closed (숨기기)
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                          <line x1="1" y1="1" x2="23" y2="23"/>
+                        </svg>
+                      )}
+                    </PasswordToggleButton>
+                  </PasswordInputWrapper>
+                </InputWrapper>
+                <SubmitButton
+                  type="submit"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  로그인
+                </SubmitButton>
+                {error && (
+                  <ErrorMessage
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {error}
+                  </ErrorMessage>
+                )}
+              </LoginForm>
+              <IconCloseButton
+                onClick={closeLoginModal}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                aria-label="로그인 모달 닫기"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </IconCloseButton>
             </ModalContent>
           </ModalOverlay>
         )}

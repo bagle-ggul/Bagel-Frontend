@@ -1,8 +1,6 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Help from "./pages/Help";
-import Signup from "./pages/Signup";
-import Login from "./pages/Login";
 import Main1 from "./pages/Main1";
 import Main2 from "./pages/Main2";
 import Main3 from "./pages/Main3";
@@ -38,10 +36,6 @@ const router = createBrowserRouter([
       {
         path: "help",
         element: <Help />,
-      },
-      {
-        path: "signup",
-        element: <Signup />,
       },
       {
         path: "main1",
@@ -90,10 +84,6 @@ const router = createBrowserRouter([
             <Profile />
           </ProtectedRoute>
         ),
-      },
-      {
-        path: "login",
-        element: <Login />,
       },
       {
         path: "intro",

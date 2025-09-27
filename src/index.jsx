@@ -39,8 +39,17 @@ footer, header, hgroup, main, menu, nav, section {
 *[hidden] {
     display: none;
 }
+html {
+  height: 100%;
+  overflow-x: hidden;
+}
+
 body {
   line-height: 1;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #000;
 }
 menu, ol, ul {
   list-style: none;
