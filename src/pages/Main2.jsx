@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import SelectPageComponent from "../components/SelectPageComponent";
+import BagelSelectPageComponent from "../components/GameUI/BagelSelectPageComponent";
 import { storyData } from "../utils/data2";
 
 function Main2() {
@@ -15,7 +15,7 @@ function Main2() {
 
   return (
     <>
-      <SelectPageComponent
+      <BagelSelectPageComponent
         backgroundImage={"./img/cafe.png"}
         characterImage={"./img/character.png"}
         storyData={storyData}

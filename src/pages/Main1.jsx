@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import axios from "../utils/axios";
 import { useSetRecoilState } from "recoil";
-import SelectPageComponent from "../components/SelectPageComponent";
+import BagelSelectPageComponent from "../components/GameUI/BagelSelectPageComponent";
 import { storyData } from "../utils/data";
 import { characterNameAtom } from "../atom/atom";
 
@@ -42,7 +42,7 @@ function Main1() {
 
   return (
     <>
-      <SelectPageComponent
+      <BagelSelectPageComponent
         backgroundImage={"./img/house.png"}
         characterImage={"./img/character.png"}
         storyData={storyData}
