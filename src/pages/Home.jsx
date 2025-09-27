@@ -318,6 +318,7 @@ const ModalOverlay = styled(motion.div)`
 `;
 
 const ModalContent = styled(motion.div)`
+  position: relative;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -454,29 +455,69 @@ const MemberRole = styled.span`
   }
 `;
 
-const CloseButton = styled.button`
-  margin-top: 2rem;
-  width: 100%;
-  padding: 1rem;
-  background: rgba(255, 255, 255, 0.7);
-  border: none;
-  border-radius: 10px;
-  color: #000;
-  font-size: 1.1rem;
-  font-weight: 600;
+const IconCloseButton = styled(motion.button)`
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.8);
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: all 0.3s ease;
+  z-index: 10;
 
   &:hover {
-    background: rgba(200, 182, 226, 0.8);
+    background: rgba(200, 182, 226, 0.3);
+    border-color: rgba(200, 182, 226, 0.5);
     color: white;
-    transform: scale(1.02);
+    transform: scale(1.1);
+    box-shadow: 0 4px 20px rgba(200, 182, 226, 0.3);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(200, 182, 226, 0.4);
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+    transition: all 0.2s ease;
   }
 
   @media (max-width: 768px) {
-    margin-top: 1.5rem;
-    padding: 0.8rem;
-    font-size: 1rem;
+    top: 1rem;
+    right: 1rem;
+    width: 44px;
+    height: 44px;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    top: 0.8rem;
+    right: 0.8rem;
+    width: 40px;
+    height: 40px;
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
   }
 `;
 
@@ -1016,7 +1057,26 @@ function Home() {
                   </motion.div>
                 ))}
               </TeamList>
-              <CloseButton onClick={() => setShowCredits(false)}>닫기</CloseButton>
+              <IconCloseButton
+                onClick={() => setShowCredits(false)}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                aria-label="크레딧 모달 닫기"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </IconCloseButton>
             </ModalContent>
           </ModalOverlay>
         )}
@@ -1143,7 +1203,26 @@ function Home() {
                   </ErrorMessage>
                 )}
               </LoginForm>
-              <CloseButton onClick={closeSignupModal}>닫기</CloseButton>
+              <IconCloseButton
+                onClick={closeSignupModal}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                aria-label="회원가입 모달 닫기"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </IconCloseButton>
             </ModalContent>
           </ModalOverlay>
         )}
@@ -1218,7 +1297,26 @@ function Home() {
                   </ErrorMessage>
                 )}
               </LoginForm>
-              <CloseButton onClick={closeLoginModal}>닫기</CloseButton>
+              <IconCloseButton
+                onClick={closeLoginModal}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                aria-label="로그인 모달 닫기"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </IconCloseButton>
             </ModalContent>
           </ModalOverlay>
         )}
