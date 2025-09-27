@@ -1,11 +1,38 @@
 {
   "metadata": {
-    "lastUpdated": "2025-09-27T18:55:30Z",
-    "currentVersion": "1.2.7",
+    "lastUpdated": "2025-09-27T19:09:59Z",
+    "currentVersion": "1.2.8",
     "projectType": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
-    "totalReleases": 10
+    "totalReleases": 11
   },
   "releases": [
+    {
+      "version": "1.2.8",
+      "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
+      "date": "2025-09-27",
+      "pr_number": 75,
+      "raw_summary": "Summary by CodeRabbit\n\nRefactor\n\n앱 전역에 표준화된 이미지 명명 규칙 적용(bg_/her_/mc_), 다수 페이지의 배경·캐릭터 자산 경로 일괄 갱신. 스토리 데이터의 씬/옵션 이미지도 동일 규칙으로 교체. 시각적 일관성 향상, 기능 변화 없음.\n\n\nDocumentation\n\n이미지 명명법 개선 가이드와 배치 적용/검증 절차 문서 추가.\n\n\nChores\n\n버전 v1.2.7 → v1.2.8 업데이트, README 배지 최신화, 버전 메타데이터 갱신.",
+      "parsed_changes": {
+        "refactor": {
+          "title": "Refactor",
+          "items": [
+            "앱 전역에 표준화된 이미지 명명 규칙 적용(bg_/her_/mc_), 다수 페이지의 배경·캐릭터 자산 경로 일괄 갱신. 스토리 데이터의 씬/옵션 이미지도 동일 규칙으로 교체. 시각적 일관성 향상, 기능 변화 없음."
+          ]
+        },
+        "documentation": {
+          "title": "Documentation",
+          "items": [
+            "이미지 명명법 개선 가이드와 배치 적용/검증 절차 문서 추가."
+          ]
+        },
+        "chores": {
+          "title": "Chores",
+          "items": [
+            "버전 v1.2.7 → v1.2.8 업데이트, README 배지 최신화, 버전 메타데이터 갱신."
+          ]
+        }
+      }
+    },
     {
       "version": "1.2.7",
       "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
