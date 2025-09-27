@@ -254,13 +254,75 @@ const ModalContent = styled(motion.div)`
 const ModalTitle = styled.h2`
   font-size: 2.5rem;
   font-weight: 700;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   text-align: center;
   text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 
   @media (max-width: 768px) {
     font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+`;
+
+const TeamInfo = styled.div`
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  @media (max-width: 768px) {
+    padding: 1.2rem;
     margin-bottom: 1.5rem;
+  }
+`;
+
+const TeamName = styled.h3`
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+  color: rgba(200, 182, 226, 1);
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+`;
+
+const TeamSubName = styled.p`
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 1.2rem;
+  opacity: 0.8;
+
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+`;
+
+const TeamDetails = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 1rem;
+  opacity: 0.85;
+  line-height: 1.6;
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
+`;
+
+const DetailRow = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+
+  strong {
+    opacity: 1;
+    font-weight: 600;
   }
 `;
 
@@ -427,6 +489,17 @@ function Home() {
               onClick={(e) => e.stopPropagation()}
             >
               <ModalTitle>크레딧</ModalTitle>
+              <TeamInfo>
+                <TeamName>그녀가사다준 뉴욕 베이글 (그뉴베)</TeamName>
+                <TeamDetails>
+                  <DetailRow>
+                    <span>날짜: 2024.05.17 | 주제: 파도, 시간, 미로</span>
+                  </DetailRow>
+                  <DetailRow>
+                    <span>세종대학교 소프트웨어융합대학 해커톤</span>
+                  </DetailRow>
+                </TeamDetails>
+              </TeamInfo>
               <TeamList>
                 {teamMembers.map((member, index) => (
                   <motion.div
