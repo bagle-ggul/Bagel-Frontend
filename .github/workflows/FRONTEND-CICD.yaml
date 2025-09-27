@@ -3,7 +3,7 @@ name: BAGEL-FE-CICD
 on:
   push:
     branches:
-      - main
+      - deploy
   workflow_dispatch:
 
 jobs:
