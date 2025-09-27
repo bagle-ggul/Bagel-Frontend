@@ -11,7 +11,7 @@ const GameContainer = styled.div`
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: url(${(props) => props.bgImage}) no-repeat center center;
+  background: url(${(props) => props.$bgImage}) no-repeat center center;
   background-size: cover;
   position: relative;
   display: flex;
@@ -186,6 +186,7 @@ const BagelSelectPageComponent = ({
     if (option.error) {
       navigate("/over");
     } else {
+      // 기존 subtext 구조를 스마트하게 처리
       setSubText(
         option.subtext
           .split("^")
@@ -281,7 +282,7 @@ const BagelSelectPageComponent = ({
   };
 
   return (
-    <GameContainer bgImage={backgroundImage}>
+    <GameContainer $bgImage={backgroundImage}>
       {index < storyData.plot.length ? (
         <>
           <CharacterSection>
@@ -344,7 +345,12 @@ const BagelSelectPageComponent = ({
                         transition={{ delay: i * 0.1, duration: 0.3 }}
                       >
                         <BagelChoiceButton
-                          text={option.ans}
+                          text={
+                            // 스마트한 선택지 텍스트 처리
+                            option.ans.startsWith('"') && option.ans.endsWith('"')
+                              ? option.ans.slice(1, -1)  // 따옴표 제거
+                              : option.ans  // 그대로 표시
+                          }
                           onClick={() => onClicked(option, i)}
                           index={i}
                           variant={variant}
