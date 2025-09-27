@@ -21,7 +21,7 @@ const SceneWrap = styled.div`
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: url("/img/middle.png") no-repeat center center;
+  background: url("/img/bg_middle_main.png") no-repeat center center;
   background-size: cover;
   padding: 20px;
   text-align: center;
@@ -122,7 +122,7 @@ function Middle() {
   return (
     <SceneWrap>
       <StyledCharacterBackground>
-        <img src="/img/middle누끼.png" alt="여자" />
+        <img src="/img/her_middle_main.png" alt="여자" />
       </StyledCharacterBackground>
       <DialogueBox>
         <CharacterName>{character}</CharacterName>

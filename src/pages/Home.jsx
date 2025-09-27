@@ -1161,9 +1161,9 @@ function Home() {
   return (
     <div>
       <Wrapper>
-        <img src="/img/image1.png" alt="" />
-        <img src="/img/image2.png" alt="" />
-        <img src="/img/image3.png" alt="" />
+        <img src="/img/bg_home_v1.png" alt="" />
+        <img src="/img/bg_home_v2.png" alt="" />
+        <img src="/img/bg_home_v3.png" alt="" />
       </Wrapper>
       <MainWrapper>
         <motion.div

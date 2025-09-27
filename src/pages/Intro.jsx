@@ -70,7 +70,7 @@ const SceneWrap = styled.div`
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background: url("/img/introN.png") no-repeat center center;
+  background: url("/img/bg_intro_main.png") no-repeat center center;
   background-size: cover;
   padding: 20px;
   text-align: center;

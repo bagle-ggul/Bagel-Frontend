@@ -4,38 +4,38 @@ export const storyData = {
     {
       index: "1",
       text: `(두 사람은 드디어 바다에 도착한다. 그녀는 기뻐하며 바다를 향해 뛰어간다. 주인공은 그녀를 바라보며 무엇을 할지 고민한다) `,
-      img: "/img/beach1-1.png",
+      img: "/img/bg_beach_scene1.png",
       options: [
         {
           ans: "함께 바다로 뛰어간다.",
           score: 10,
           subtext: `주인공: "나도 같이 가!" ^ 이수정: “빨리 와!” ^ (두 사람은 바다에서 함께 즐거운 시간을 보낸다.)`,
-          img: "/img/beach1-1.png",
+          img: "/img/bg_beach_scene1.png",
         },
         {
           ans: "해변에 앉아 기다린다.",
           score: 0,
           subtext: `주인공: "난 피곤해서 여기서 좀 쉴게." ^ 이수정: “아 뭐야.. 재미없게…” ^ (그녀는 혼자 노는 동안 주인공은 그녀를 보고만 있다.)`,
-          img: "/img/cafe1-1.png",
+          img: "/img/bg_cafe_scene1.png",
         },
       ],
     },
     {
       index: "2",
       text: `(바다에서 놀고 난 후 그녀는 주인공에게 뭘 할지 물어본다.)`,
-      img: "/img/beach2.png",
+      img: "/img/bg_beach_scene2.png",
       options: [
         {
           ans: "모래성 쌓기",
           score: 10,
           subtext: `주인공: "모래성 쌓기 어때?" ^ 이수정: “모래성 쌓기? 좋아! 재밌겠다!” ^ (두 사람은 함께 모래성을 쌓으며 즐거운 시간을 보낸다.)`,
-          img: "/img/beach1-1.png",
+          img: "/img/bg_beach_scene1.png",
         },
         {
           ans: "해변 산책",
           score: 10,
           subtext: `주인공: "해변을 따라 산책할래?” ^ 이수정: “그래! 좋아.” ^ 주인공: “가자” ^ (두 사람은 손을 잡고 산책하며 이야기를 나눈다.)`,
-          img: "/img/beach2.png",
+          img: "/img/bg_beach_scene2.png",
         },
         {
           ans: "해변에서 책 읽기",
@@ -47,20 +47,20 @@ export const storyData = {
     {
       index: "3",
       text: `(주인공은 그녀가 파도에 휩쓸렸던 기억에 불안해 한다.)`,
-      img: "/img/road3.png",
+      img: "/img/bg_road_scene3.png",
       options: [
         {
           ans: "안전한 곳으로 이동",
           score: 10,
           subtext: `주인공: "아니야… 곧 해지는데 위험해… 바다에 너무 가까이 가진 말자." ^ 이수정: “시간이 벌써 이렇게 지났네. 시간이 진짜 금방 가는 것 같아.”`,
-          img: "/img/road3.png",
+          img: "/img/bg_road_scene3.png",
         },
         {
           ans: "그냥 같이 간다.",
           score: 0,
           subtext: `주인공: "그래 가자." ^ 이수정: “우와! 파도 엄청 세다!” ^ 주인공: “좀 위험한 거 아니야?” ^ (그녀가 강한 바닷바람에 중심을 잃고 넘어진다.) ^ 주인공: “어어! 위험해!” ^ (그녀는 파도에 휩쓸리며, 주인공은 다시 회귀 한다.)`,
           error: "error",
-          img: "/img/road3.png",
+          img: "/img/bg_road_scene3.png",
         },
       ],
     },

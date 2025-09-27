@@ -11,7 +11,7 @@ const ProfileWrapper = styled(motion.div)`
   justify-content: center;
   width: 100vw;
   height: 100vh;
-  background: url("/img/community.png") no-repeat center center;
+  background: url("/img/bg_community_main.png") no-repeat center center;
   background-size: cover;
   padding: 20px;
 `;
@@ -129,7 +129,7 @@ function Profile() {
       >
         <motion.div whileHover={{ scale: 1.1 }}>
           <ProfileImage
-            src={"/img/profile.png"}
+            src={"/img/mc_profile_main.png"}
             alt="Profile"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
