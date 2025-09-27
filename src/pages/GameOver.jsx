@@ -23,23 +23,77 @@ const fadeOut = keyframes`
   }
 `;
 
-const CenteredButton = styled.button`
+const NavigationContainer = styled.div`
   position: absolute;
-  top: 90%;
+  bottom: 10%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 1rem 2rem;
-  font-size: 1.5rem;
+  transform: translateX(-50%);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  width: 300px;
+`;
+
+const PrimaryNavButton = styled.button`
+  padding: 1.2rem 2rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  border-radius: 12px;
   cursor: pointer;
-  background-color: skyblue;
-  color: white;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  text-align: center;
+  display: block;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.85);
+  color: #000;
   border: none;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
 
   &:hover {
-    transition: all 0.3s;
-    color: black;
+    background: rgba(200, 182, 226, 0.9);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(200, 182, 226, 0.4);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+`;
+
+const SecondaryNavButton = styled.button`
+  padding: 1.2rem 2rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  text-align: center;
+  display: block;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  &:active {
+    transform: scale(0.97);
   }
 `;
 
@@ -64,10 +118,20 @@ const CenteredDiv = styled.div`
 
 function GameOver() {
   const [fadeOutEffect, setFadeOutEffect] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const score = useRecoilValue(scoreAtom);
   const setScore = useSetRecoilState(scoreAtom); // 상태 업데이트를 위한 함수
   console.log(score);
+
+  useEffect(() => {
+    // 2초 후에 모달 표시
+    const timer = setTimeout(() => {
+      setShowModal(true);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   const refreshToken = localStorage.getItem("refreshToken"); // Retrieve the refresh token from local storage
 
@@ -101,19 +165,31 @@ function GameOver() {
     }
   };
 
-  const handleClick = async () => {
+  const handleNavigation = async (path) => {
     setFadeOutEffect(true);
     setTimeout(() => {
       setScore(0); // score 초기화
-      navigate("/intro");
+      navigate(path);
       handleSubmit();
     }, 1000); // 1초 후에 페이지를 이동합니다.
   };
 
+  const handleHome = () => handleNavigation("/");
+  const handleRankings = () => handleNavigation("/board/1");
+  const handleProfile = () => handleNavigation("/profile");
+  const handlePlayAgain = () => handleNavigation("/intro");
+
   return (
     <CenteredDiv className={fadeOutEffect ? "fade-out" : ""}>
       <img src="img/house3-2.png" alt="레몬에이드" />
-      <CenteredButton onClick={handleClick}>회귀하기</CenteredButton>
+      {showModal && (
+        <NavigationContainer>
+          <PrimaryNavButton onClick={handlePlayAgain}>회귀 하기</PrimaryNavButton>
+          <SecondaryNavButton onClick={handleHome}>홈</SecondaryNavButton>
+          <SecondaryNavButton onClick={handleRankings}>랭킹 확인</SecondaryNavButton>
+          <SecondaryNavButton onClick={handleProfile}>마이페이지</SecondaryNavButton>
+        </NavigationContainer>
+      )}
     </CenteredDiv>
   );
 }

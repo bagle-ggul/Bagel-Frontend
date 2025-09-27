@@ -173,7 +173,9 @@ const BagelSelectPageComponent = ({
   const currentScene = storyData.plot[index];
 
   const replaceCharacterName = (text) => {
-    return text.replace(/주인공/g, characterName);
+    // 캐릭터명이 비어있으면 기본값 사용
+    const name = characterName || "주인공";
+    return text.replace(/주인공/g, name);
   };
 
   const onClicked = (option, i) => {
