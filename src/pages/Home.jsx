@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { APP_VERSION } from "../constants/version";
 
 const Wrapper = styled.div`
   display: grid;
@@ -462,7 +463,6 @@ const CloseButton = styled.button`
 function Home() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [showCredits, setShowCredits] = useState(false);
-  const APP_VERSION = "1.0.8";
 
   useEffect(() => {
     const token = localStorage.getItem("refreshToken");
