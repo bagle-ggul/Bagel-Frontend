@@ -4,8 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { APP_VERSION } from "../constants/version";
 import axios from "../utils/axios";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 
 const Wrapper = styled.div`
   position: fixed;
@@ -717,80 +715,229 @@ const GlassSelect = styled.select`
   }
 `;
 
-const DatePickerWrapper = styled.div`
-  width: 100%;
 
-  .react-datepicker-wrapper {
-    width: 100%;
-  }
-
-  .datePickerInput {
-    width: 100%;
-    padding: 1rem 1.5rem;
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
-    color: white;
-    font-size: 1rem;
-    box-sizing: border-box;
-    transition: all 0.3s ease;
-
-    &::placeholder {
-      color: rgba(255, 255, 255, 0.7);
-    }
-
-    &:focus {
-      outline: none;
-      border-color: rgba(200, 182, 226, 0.5);
-      box-shadow: 0 0 20px rgba(200, 182, 226, 0.2);
-      background: rgba(255, 255, 255, 0.15);
-    }
-
-    @media (max-width: 768px) {
-      padding: 0.9rem 1.2rem;
-      font-size: 0.95rem;
-    }
-
-    @media (max-width: 480px) {
-      padding: 0.8rem 1rem;
-      font-size: 0.9rem;
-    }
-  }
-`;
-
-const GenderDiv = styled.div`
+// 성별 선택 컴포넌트
+const GenderContainer = styled.div`
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  gap: 1rem;
   width: 100%;
-  padding: 1rem;
+  padding: 1.2rem;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 12px;
+`;
 
-  label {
-    display: flex;
-    align-items: center;
+const GenderTitle = styled.h4`
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: rgba(200, 182, 226, 1);
+  text-align: center;
+
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+  }
+`;
+
+const GenderButtonGroup = styled.div`
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+`;
+
+const GenderButton = styled.button`
+  flex: 1;
+  max-width: 150px;
+  padding: 1rem 1.5rem;
+  background: ${props => props.selected ? 'rgba(200, 182, 226, 0.8)' : 'rgba(255, 255, 255, 0.1)'};
+  border: 1px solid ${props => props.selected ? 'rgba(200, 182, 226, 1)' : 'rgba(255, 255, 255, 0.2)'};
+  border-radius: 12px;
+  color: ${props => props.selected ? 'white' : 'rgba(255, 255, 255, 0.9)'};
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(200, 182, 226, 0.6);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(200, 182, 226, 0.3);
+  }
+
+  @media (max-width: 480px) {
+    max-width: none;
+    padding: 0.9rem 1.2rem;
+    font-size: 0.9rem;
+  }
+`;
+
+// MBTI 컴팩트 선택 컴포넌트
+const MbtiCompactContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  width: 100%;
+  padding: 1.2rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+`;
+
+const MbtiTitle = styled.h4`
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.8rem 0;
+  color: rgba(200, 182, 226, 1);
+  text-align: center;
+
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+  }
+`;
+
+const MbtiRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
     gap: 0.5rem;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  }
+`;
 
-    &:hover {
-      color: rgba(200, 182, 226, 1);
-    }
+const MbtiLabel = styled.span`
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+  min-width: 60px;
 
-    input[type="radio"] {
-      width: auto;
-      height: auto;
-      margin: 0;
-      accent-color: rgba(200, 182, 226, 1);
-    }
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+    min-width: auto;
+  }
+`;
 
-    @media (max-width: 480px) {
-      font-size: 0.9rem;
-    }
+const MbtiButtonGroup = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  flex: 1;
+  max-width: 200px;
+`;
+
+const MbtiButton = styled.button`
+  min-width: 80px;
+  padding: 0.6rem 1rem;
+  background: ${props => props.selected ? 'rgba(200, 182, 226, 0.8)' : 'rgba(255, 255, 255, 0.1)'};
+  border: 1px solid ${props => props.selected ? 'rgba(200, 182, 226, 1)' : 'rgba(255, 255, 255, 0.2)'};
+  border-radius: 8px;
+  color: ${props => props.selected ? 'white' : 'rgba(255, 255, 255, 0.9)'};
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(200, 182, 226, 0.6);
+    color: white;
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.5rem 0.8rem;
+    font-size: 0.8rem;
+  }
+`;
+
+const MbtiResult = styled.div`
+  text-align: center;
+  margin-top: 0.5rem;
+  padding: 0.8rem;
+  background: rgba(200, 182, 226, 0.2);
+  border-radius: 8px;
+  border: 1px solid rgba(200, 182, 226, 0.4);
+
+  span {
+    color: rgba(200, 182, 226, 1);
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: 0.1em;
+  }
+`;
+
+// 생일 선택 컴포넌트
+const BirthDateContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  padding: 1.2rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+`;
+
+const BirthDateTitle = styled.h4`
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: rgba(200, 182, 226, 1);
+  text-align: center;
+
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+  }
+`;
+
+const BirthDateRow = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+`;
+
+const BirthSelect = styled.select`
+  flex: 1;
+  padding: 1rem 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: rgba(200, 182, 226, 0.5);
+    box-shadow: 0 0 20px rgba(200, 182, 226, 0.2);
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  option {
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.9rem 1.2rem;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.6rem 0.6rem;
+    font-size: 0.9rem;
   }
 `;
 
@@ -809,9 +956,20 @@ function Home() {
   // 회원가입 폼 상태
   const [signupEmail, setSignupEmail] = useState("");
   const [signupPassword, setSignupPassword] = useState("");
+  const [signupPasswordConfirm, setSignupPasswordConfirm] = useState("");
+  const [isSignupPasswordVisible, setIsSignupPasswordVisible] = useState(false);
+  const [isSignupPasswordConfirmVisible, setIsSignupPasswordConfirmVisible] = useState(false);
   const [characterName, setCharacterName] = useState("");
   const [mbti, setMbti] = useState("");
-  const [birthDate, setBirthDate] = useState(new Date());
+  // MBTI 단계별 선택 상태
+  const [mbtiE, setMbtiE] = useState(""); // E/I
+  const [mbtiS, setMbtiS] = useState(""); // S/N
+  const [mbtiT, setMbtiT] = useState(""); // T/F
+  const [mbtiJ, setMbtiJ] = useState(""); // J/P
+  // 생일 개별 선택 상태
+  const [birthYear, setBirthYear] = useState("");
+  const [birthMonth, setBirthMonth] = useState("");
+  const [birthDay, setBirthDay] = useState("");
   const [gender, setGender] = useState("");
   const [signupError, setSignupError] = useState("");
 
@@ -823,6 +981,23 @@ function Home() {
       setIsAuthenticated(true);
     }
   }, []);
+
+  // MBTI 자동 조합
+  useEffect(() => {
+    if (mbtiE && mbtiS && mbtiT && mbtiJ) {
+      setMbti(mbtiE + mbtiS + mbtiT + mbtiJ);
+    } else {
+      setMbti("");
+    }
+  }, [mbtiE, mbtiS, mbtiT, mbtiJ]);
+
+  // 생일 자동 조합 (년도, 월, 일이 모두 선택되면)
+  useEffect(() => {
+    if (birthYear && birthMonth && birthDay) {
+      const formattedDate = `${birthYear}-${birthMonth.padStart(2, '0')}-${birthDay.padStart(2, '0')}`;
+      // birthDate는 더 이상 사용하지 않지만 호환성을 위해 유지
+    }
+  }, [birthYear, birthMonth, birthDay]);
 
   const handleLogout = () => {
     localStorage.removeItem("refreshToken");
@@ -878,12 +1053,30 @@ function Home() {
     event.preventDefault();
     setSignupError(""); // 에러 메시지 초기화
 
+    // 비밀번호 확인 검증
+    if (signupPassword !== signupPasswordConfirm) {
+      setSignupError("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+
+    // MBTI 검증
+    if (!mbtiE || !mbtiS || !mbtiT || !mbtiJ) {
+      setSignupError("MBTI를 모두 선택해주세요.");
+      return;
+    }
+
+    // 생일 검증
+    if (!birthYear || !birthMonth || !birthDay) {
+      setSignupError("생년월일을 모두 선택해주세요.");
+      return;
+    }
+
     const userData = {
       email: signupEmail,
       password: signupPassword,
       characterName,
       mbti,
-      birthDate: birthDate.toISOString().split("T")[0],
+      birthDate: `${birthYear}-${birthMonth.padStart(2, '0')}-${birthDay.padStart(2, '0')}`,
       gender,
     };
 
@@ -896,9 +1089,18 @@ function Home() {
       // 폼 초기화
       setSignupEmail("");
       setSignupPassword("");
+      setSignupPasswordConfirm("");
+      setIsSignupPasswordVisible(false);
+      setIsSignupPasswordConfirmVisible(false);
       setCharacterName("");
       setMbti("");
-      setBirthDate(new Date());
+      setMbtiE("");
+      setMbtiS("");
+      setMbtiT("");
+      setMbtiJ("");
+      setBirthYear("");
+      setBirthMonth("");
+      setBirthDay("");
       setGender("");
       setSignupError("");
     } catch (error) {
@@ -912,9 +1114,18 @@ function Home() {
     setSignupError("");
     setSignupEmail("");
     setSignupPassword("");
+    setSignupPasswordConfirm("");
+    setIsSignupPasswordVisible(false);
+    setIsSignupPasswordConfirmVisible(false);
     setCharacterName("");
     setMbti("");
-    setBirthDate(new Date());
+    setMbtiE("");
+    setMbtiS("");
+    setMbtiT("");
+    setMbtiJ("");
+    setBirthYear("");
+    setBirthMonth("");
+    setBirthDay("");
     setGender("");
   };
 
@@ -923,9 +1134,18 @@ function Home() {
     setSignupError("");
     setSignupEmail("");
     setSignupPassword("");
+    setSignupPasswordConfirm("");
+    setIsSignupPasswordVisible(false);
+    setIsSignupPasswordConfirmVisible(false);
     setCharacterName("");
     setMbti("");
-    setBirthDate(new Date());
+    setMbtiE("");
+    setMbtiS("");
+    setMbtiT("");
+    setMbtiJ("");
+    setBirthYear("");
+    setBirthMonth("");
+    setBirthDay("");
     setGender("");
   };
 
@@ -1107,13 +1327,68 @@ function Home() {
                 </InputWrapper>
 
                 <InputWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <GlassInput
-                    type="password"
-                    placeholder="비밀번호를 입력해주세요"
-                    value={signupPassword}
-                    onChange={(e) => setSignupPassword(e.target.value)}
-                    required
-                  />
+                  <PasswordInputWrapper>
+                    <GlassInput
+                      type={isSignupPasswordVisible ? "text" : "password"}
+                      placeholder="비밀번호를 입력해주세요"
+                      value={signupPassword}
+                      onChange={(e) => setSignupPassword(e.target.value)}
+                      required
+                    />
+                    <PasswordToggleButton
+                      type="button"
+                      onClick={() => setIsSignupPasswordVisible(!isSignupPasswordVisible)}
+                    >
+                      {isSignupPasswordVisible ? (
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                          <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                      ) : (
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                          <line x1="1" y1="1" x2="23" y2="23"/>
+                        </svg>
+                      )}
+                    </PasswordToggleButton>
+                  </PasswordInputWrapper>
+                </InputWrapper>
+
+                <InputWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                  <PasswordInputWrapper>
+                    <GlassInput
+                      type={isSignupPasswordConfirmVisible ? "text" : "password"}
+                      placeholder="비밀번호를 다시 입력해주세요"
+                      value={signupPasswordConfirm}
+                      onChange={(e) => setSignupPasswordConfirm(e.target.value)}
+                      required
+                    />
+                    <PasswordToggleButton
+                      type="button"
+                      onClick={() => setIsSignupPasswordConfirmVisible(!isSignupPasswordConfirmVisible)}
+                    >
+                      {isSignupPasswordConfirmVisible ? (
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                          <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                      ) : (
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                          <line x1="1" y1="1" x2="23" y2="23"/>
+                        </svg>
+                      )}
+                    </PasswordToggleButton>
+                  </PasswordInputWrapper>
+                  {signupPasswordConfirm && signupPassword !== signupPasswordConfirm && (
+                    <ErrorMessage
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      비밀번호가 일치하지 않습니다
+                    </ErrorMessage>
+                  )}
                 </InputWrapper>
 
                 <InputWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
@@ -1127,63 +1402,163 @@ function Home() {
                 </InputWrapper>
 
                 <InputWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <GlassSelect
-                    value={mbti}
-                    onChange={(e) => setMbti(e.target.value)}
-                    required
-                  >
-                    <option value="" disabled>
-                      MBTI를 선택해주세요
-                    </option>
-                    {[
-                      "INTJ", "INTP", "ENTJ", "ENTP",
-                      "INFJ", "INFP", "ENFJ", "ENFP",
-                      "ISTJ", "ISFJ", "ESTJ", "ESFJ",
-                      "ISTP", "ISFP", "ESTP", "ESFP",
-                    ].map((type) => (
-                      <option key={type} value={type}>
-                        {type}
-                      </option>
-                    ))}
-                  </GlassSelect>
+                  <MbtiCompactContainer>
+                    <MbtiTitle>성격 유형 (MBTI)</MbtiTitle>
+
+                    <MbtiRow>
+                      <MbtiLabel>에너지</MbtiLabel>
+                      <MbtiButtonGroup>
+                        <MbtiButton
+                          selected={mbtiE === "E"}
+                          onClick={() => setMbtiE("E")}
+                          type="button"
+                        >
+                          E 외향
+                        </MbtiButton>
+                        <MbtiButton
+                          selected={mbtiE === "I"}
+                          onClick={() => setMbtiE("I")}
+                          type="button"
+                        >
+                          I 내향
+                        </MbtiButton>
+                      </MbtiButtonGroup>
+                    </MbtiRow>
+
+                    <MbtiRow>
+                      <MbtiLabel>인식</MbtiLabel>
+                      <MbtiButtonGroup>
+                        <MbtiButton
+                          selected={mbtiS === "S"}
+                          onClick={() => setMbtiS("S")}
+                          type="button"
+                        >
+                          S 감각
+                        </MbtiButton>
+                        <MbtiButton
+                          selected={mbtiS === "N"}
+                          onClick={() => setMbtiS("N")}
+                          type="button"
+                        >
+                          N 직관
+                        </MbtiButton>
+                      </MbtiButtonGroup>
+                    </MbtiRow>
+
+                    <MbtiRow>
+                      <MbtiLabel>판단</MbtiLabel>
+                      <MbtiButtonGroup>
+                        <MbtiButton
+                          selected={mbtiT === "T"}
+                          onClick={() => setMbtiT("T")}
+                          type="button"
+                        >
+                          T 사고
+                        </MbtiButton>
+                        <MbtiButton
+                          selected={mbtiT === "F"}
+                          onClick={() => setMbtiT("F")}
+                          type="button"
+                        >
+                          F 감정
+                        </MbtiButton>
+                      </MbtiButtonGroup>
+                    </MbtiRow>
+
+                    <MbtiRow>
+                      <MbtiLabel>생활</MbtiLabel>
+                      <MbtiButtonGroup>
+                        <MbtiButton
+                          selected={mbtiJ === "J"}
+                          onClick={() => setMbtiJ("J")}
+                          type="button"
+                        >
+                          J 계획
+                        </MbtiButton>
+                        <MbtiButton
+                          selected={mbtiJ === "P"}
+                          onClick={() => setMbtiJ("P")}
+                          type="button"
+                        >
+                          P 자율
+                        </MbtiButton>
+                      </MbtiButtonGroup>
+                    </MbtiRow>
+
+                    {mbti && (
+                      <MbtiResult>
+                        <span>{mbti}</span>
+                      </MbtiResult>
+                    )}
+                  </MbtiCompactContainer>
                 </InputWrapper>
 
                 <InputWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <DatePickerWrapper>
-                    <DatePicker
-                      selected={birthDate}
-                      onChange={(date) => setBirthDate(date)}
-                      dateFormat="yyyy-MM-dd"
-                      placeholderText="생일을 선택해주세요"
-                      className="datePickerInput"
-                      required
-                    />
-                  </DatePickerWrapper>
+                  <BirthDateContainer>
+                    <BirthDateTitle>생년월일</BirthDateTitle>
+                    <BirthDateRow>
+                      <BirthSelect
+                        value={birthYear}
+                        onChange={(e) => setBirthYear(e.target.value)}
+                        required
+                      >
+                        <option value="" disabled>년도</option>
+                        {Array.from({ length: 50 }, (_, i) => new Date().getFullYear() - i).map((year) => (
+                          <option key={year} value={year}>
+                            {year}년
+                          </option>
+                        ))}
+                      </BirthSelect>
+
+                      <BirthSelect
+                        value={birthMonth}
+                        onChange={(e) => setBirthMonth(e.target.value)}
+                        required
+                      >
+                        <option value="" disabled>월</option>
+                        {Array.from({ length: 12 }, (_, i) => i + 1).map((month) => (
+                          <option key={month} value={month}>
+                            {month}월
+                          </option>
+                        ))}
+                      </BirthSelect>
+
+                      <BirthSelect
+                        value={birthDay}
+                        onChange={(e) => setBirthDay(e.target.value)}
+                        required
+                      >
+                        <option value="" disabled>일</option>
+                        {Array.from({ length: 31 }, (_, i) => i + 1).map((day) => (
+                          <option key={day} value={day}>
+                            {day}일
+                          </option>
+                        ))}
+                      </BirthSelect>
+                    </BirthDateRow>
+                  </BirthDateContainer>
                 </InputWrapper>
 
                 <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <GenderDiv>
-                    <label>
-                      <input
-                        type="radio"
-                        value="남성"
-                        checked={gender === "남성"}
-                        onChange={(e) => setGender(e.target.value)}
-                        required
-                      />
-                      남성
-                    </label>
-                    <label>
-                      <input
-                        type="radio"
-                        value="여성"
-                        checked={gender === "여성"}
-                        onChange={(e) => setGender(e.target.value)}
-                        required
-                      />
-                      여성
-                    </label>
-                  </GenderDiv>
+                  <GenderContainer>
+                    <GenderTitle>성별</GenderTitle>
+                    <GenderButtonGroup>
+                      <GenderButton
+                        selected={gender === "남성"}
+                        onClick={() => setGender("남성")}
+                        type="button"
+                      >
+                        남성
+                      </GenderButton>
+                      <GenderButton
+                        selected={gender === "여성"}
+                        onClick={() => setGender("여성")}
+                        type="button"
+                      >
+                        여성
+                      </GenderButton>
+                    </GenderButtonGroup>
+                  </GenderContainer>
                 </motion.div>
 
                 <SubmitButton
