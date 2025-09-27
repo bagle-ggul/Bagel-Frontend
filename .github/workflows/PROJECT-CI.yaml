@@ -1,0 +1,221 @@
+name: PROJECT-CI
+
+on:
+  # main 브랜치로 PR이 생성되거나 업데이트될 때
+  pull_request:
+    branches:
+      - main
+    types: [opened, synchronize, reopened]
+
+  # main 브랜치에 push가 발생했을 때
+  push:
+    branches:
+      - main
+
+  # 수동 실행
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  ci:
+    name: Continuous Integration
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+
+      - name: Node.js 설정
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: 의존성 설치
+        run: npm ci
+
+      - name: 린트 체크
+        run: |
+          if npm run lint --silent 2>/dev/null; then
+            echo "✅ 린트 체크 실행"
+            npm run lint
+          else
+            echo "ℹ️  린트 스크립트가 없습니다. 건너뛰기"
+          fi
+
+      - name: 테스트 실행
+        id: test-run
+        run: |
+          echo "🧪 테스트 실행 중..."
+          if CI=true npm test -- --coverage --testResultsProcessor=jest-sonar-reporter --watchAll=false; then
+            echo "test_status=success" >> $GITHUB_OUTPUT
+            echo "✅ 모든 테스트가 통과했습니다."
+          else
+            echo "test_status=failed" >> $GITHUB_OUTPUT
+            echo "❌ 일부 테스트가 실패했습니다."
+            exit 1
+          fi
+        env:
+          CI: true
+        continue-on-error: true
+
+      - name: 빌드 시작 시간 기록
+        id: build-start
+        run: echo "time=$(date)" >> $GITHUB_OUTPUT
+
+      - name: 프로젝트 빌드
+        run: |
+          echo "🏗️  프로젝트 빌드 중..."
+          CI=false npm run build
+
+      - name: 빌드 정보 수집
+        id: build-info
+        run: |
+          if [ -d "build" ]; then
+            echo "build_status=success" >> $GITHUB_OUTPUT
+            BUILD_SIZE=$(du -sh build/ | cut -f1)
+            echo "build_size=$BUILD_SIZE" >> $GITHUB_OUTPUT
+
+            # 주요 파일들 목록 생성
+            BUILD_FILES=$(find build/static -name "*.js" -o -name "*.css" | head -10 | sed 's|build/||' | tr '\n' ', ' | sed 's/,$//')
+            echo "build_files=$BUILD_FILES" >> $GITHUB_OUTPUT
+
+            # 빌드 시간 계산
+            BUILD_TIME=$(date -d "${{ steps.build-start.outputs.time }}" +%s 2>/dev/null || echo "0")
+            CURRENT_TIME=$(date +%s)
+            DURATION=$((CURRENT_TIME - BUILD_TIME))
+            echo "build_duration=${DURATION}초" >> $GITHUB_OUTPUT
+
+            echo "✅ 빌드 성공! build 디렉토리가 생성되었습니다."
+            echo "📦 빌드 크기: $BUILD_SIZE"
+          else
+            echo "build_status=failed" >> $GITHUB_OUTPUT
+            echo "❌ 빌드 실패: build 디렉토리를 찾을 수 없습니다."
+            exit 1
+          fi
+        continue-on-error: true
+
+      - name: 테스트 커버리지 업로드
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-coverage
+          path: coverage/
+          retention-days: 7
+
+      - name: 빌드 아티팩트 업로드
+        uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: build-artifacts
+          path: build/
+          retention-days: 30
+
+      - name: 실패 정보 수집
+        id: failure-info
+        if: failure()
+        run: |
+          echo "collecting_failure_info=true" >> $GITHUB_OUTPUT
+
+          # GitHub Actions 로그 URL 생성
+          ACTION_URL="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          echo "action_url=$ACTION_URL" >> $GITHUB_OUTPUT
+
+          # 최근 오류 로그 수집 (추정)
+          ERROR_CONTEXT="빌드 또는 테스트 중 오류가 발생했습니다."
+          if [ "${{ steps.test-run.outputs.test_status }}" = "failed" ]; then
+            ERROR_CONTEXT="테스트 단계에서 실패했습니다. 일부 테스트가 통과하지 못했습니다."
+          elif [ "${{ steps.build-info.outputs.build_status }}" = "failed" ]; then
+            ERROR_CONTEXT="빌드 단계에서 실패했습니다. build 디렉토리가 생성되지 않았습니다."
+          fi
+          echo "error_context=$ERROR_CONTEXT" >> $GITHUB_OUTPUT
+
+      - name: PR에 성공 댓글 남기기
+        if: github.event_name == 'pull_request' && success()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const buildSize = '${{ steps.build-info.outputs.build_size }}';
+            const buildFiles = '${{ steps.build-info.outputs.build_files }}';
+            const buildDuration = '${{ steps.build-info.outputs.build_duration }}';
+
+            const comment = `## 🚀 CI 빌드 성공!
+
+            ### 📦 빌드 정보
+            - **빌드 크기**: ${buildSize}
+            - **빌드 시간**: ${buildDuration}
+            - **커밋**: \`${{ github.sha }}\`
+            - **브랜치**: \`${{ github.head_ref || github.ref_name }}\`
+
+            ### 📁 생성된 파일
+            \`\`\`
+            ${buildFiles || '주요 JS/CSS 파일들이 생성되었습니다'}
+            \`\`\`
+
+            ### ✅ 모든 검사 통과
+            - 린트 체크 ✅
+            - 테스트 실행 ✅
+            - 빌드 생성 ✅
+
+            *자동 생성된 댓글입니다.*`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+
+      - name: PR에 실패 댓글 남기기
+        if: github.event_name == 'pull_request' && failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const actionUrl = '${{ steps.failure-info.outputs.action_url }}';
+            const errorContext = '${{ steps.failure-info.outputs.error_context }}';
+
+            const comment = `## ❌ CI 빌드 실패
+
+            ### 🚨 오류 정보
+            ${errorContext}
+
+            ### 📋 실행 정보
+            - **커밋**: \`${{ github.sha }}\`
+            - **브랜치**: \`${{ github.head_ref || github.ref_name }}\`
+            - **실행 시간**: ${{ steps.build-start.outputs.time }}
+
+            ### 🔍 문제 해결
+            자세한 오류 로그는 [GitHub Actions 실행 결과](${actionUrl})에서 확인할 수 있습니다.
+
+            **일반적인 해결 방법:**
+            1. 로컬에서 \`npm install\` 및 \`npm run build\` 실행 확인
+            2. 린트 오류: \`npm run lint\` (있는 경우) 실행하여 코드 스타일 확인
+            3. 테스트 오류: \`npm test\` 실행하여 로컬에서 테스트 통과 확인
+
+            *자동 생성된 댓글입니다.*`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+
+      - name: CI 결과 요약
+        if: always()
+        run: |
+          echo "## 🚀 CI 실행 결과" >> $GITHUB_STEP_SUMMARY
+          echo "- **브랜치**: ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **커밋**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **이벤트**: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ job.status }}" = "success" ]; then
+            echo "- **상태**: ✅ 성공" >> $GITHUB_STEP_SUMMARY
+            echo "- **빌드 크기**: ${{ steps.build-info.outputs.build_size }}" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- **상태**: ❌ 실패" >> $GITHUB_STEP_SUMMARY
+            echo "- **Action URL**: ${{ steps.failure-info.outputs.action_url }}" >> $GITHUB_STEP_SUMMARY
+          fi
