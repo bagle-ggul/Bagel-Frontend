@@ -1,11 +1,47 @@
 {
   "metadata": {
-    "lastUpdated": "2025-09-27T17:30:37Z",
-    "currentVersion": "1.2.4",
+    "lastUpdated": "2025-09-27T18:17:04Z",
+    "currentVersion": "1.2.5",
     "projectType": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
-    "totalReleases": 7
+    "totalReleases": 8
   },
   "releases": [
+    {
+      "version": "1.2.5",
+      "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
+      "date": "2025-09-27",
+      "pr_number": 70,
+      "raw_summary": "Summary by CodeRabbit\n\n\nNew Features\n\n게임 오버 후 모달형 내비게이션 도입: 회귀, 홈, 랭킹, 마이페이지 등 선택지를 2초 후 제공\n\n\n\nEnhancements\n\n타이핑 완료 감지로 선택지 표시 시점 개선\n캐릭터 이름 미입력 시 기본값 적용 및 대사 내 이름 치환 정확도 향상\n선택지 텍스트의 불필요한 따옴표 제거\n선택 버튼의 숫자 배지 제거로 UI 간결화\n\n\n\nDocumentation\n\nREADME 최신 버전 배지 업데이트\n\n\n\nChores\n\n앱 버전 1.2.5로 상향 및 메타데이터 갱신",
+      "parsed_changes": {
+        "new_features": {
+          "title": "New Features",
+          "items": [
+            "게임 오버 후 모달형 내비게이션 도입: 회귀, 홈, 랭킹, 마이페이지 등 선택지를 2초 후 제공"
+          ]
+        },
+        "enhancements": {
+          "title": "Enhancements",
+          "items": [
+            "타이핑 완료 감지로 선택지 표시 시점 개선",
+            "캐릭터 이름 미입력 시 기본값 적용 및 대사 내 이름 치환 정확도 향상",
+            "선택지 텍스트의 불필요한 따옴표 제거",
+            "선택 버튼의 숫자 배지 제거로 UI 간결화"
+          ]
+        },
+        "documentation": {
+          "title": "Documentation",
+          "items": [
+            "README 최신 버전 배지 업데이트"
+          ]
+        },
+        "chores": {
+          "title": "Chores",
+          "items": [
+            "앱 버전 1.2.5로 상향 및 메타데이터 갱신"
+          ]
+        }
+      }
+    },
     {
       "version": "1.2.4",
       "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
