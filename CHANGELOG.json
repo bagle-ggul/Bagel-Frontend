@@ -1,0 +1,34 @@
+{
+  "metadata": {
+    "lastUpdated": "2025-09-27T05:40:49Z",
+    "currentVersion": "1.0.2",
+    "projectType": "spring",
+    "totalReleases": 1
+  },
+  "releases": [
+    {
+      "version": "1.0.2",
+      "project_type": "spring",
+      "date": "2025-09-27",
+      "pr_number": 56,
+      "raw_summary": "Summary by CodeRabbit\n\n문서(Documentation)\n\n프로젝트 제목을 “BAGEL - 그녀를 구하라”로 업데이트하고 브랜딩을 일관화했습니다.\n소개 문구를 간결화하고, 선택에 따른 분기/엔딩 등 게임 특징 설명을 정리했습니다.\n강조 서식과 도입부 문장을 다듬어 가독성을 개선했습니다.\n\n\n작업(Chores)\n\n애플리케이션 버전을 1.0.1에서 1.0.2로 상향했습니다.\n메타데이터 최신화(갱신 시각) 및 예시 안내의 소폭 포맷 조정을 반영했습니다.",
+      "parsed_changes": {
+        "문서_documentation": {
+          "title": "문서(Documentation)",
+          "items": [
+            "프로젝트 제목을 “BAGEL - 그녀를 구하라”로 업데이트하고 브랜딩을 일관화했습니다.",
+            "소개 문구를 간결화하고, 선택에 따른 분기/엔딩 등 게임 특징 설명을 정리했습니다.",
+            "강조 서식과 도입부 문장을 다듬어 가독성을 개선했습니다."
+          ]
+        },
+        "작업_chores": {
+          "title": "작업(Chores)",
+          "items": [
+            "애플리케이션 버전을 1.0.1에서 1.0.2로 상향했습니다.",
+            "메타데이터 최신화(갱신 시각) 및 예시 안내의 소폭 포맷 조정을 반영했습니다."
+          ]
+        }
+      }
+    }
+  ]
+}
