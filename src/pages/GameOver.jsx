@@ -23,9 +23,20 @@ const fadeOut = keyframes`
   }
 `;
 
+const modalFadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+`;
+
 const NavigationContainer = styled.div`
   position: absolute;
-  bottom: 10%;
+  bottom: 8%;
   left: 50%;
   transform: translateX(-50%);
   display: grid;
@@ -38,6 +49,25 @@ const NavigationContainer = styled.div`
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
   border-radius: 20px;
   width: 300px;
+  z-index: 2;
+  animation: ${modalFadeIn} 0.8s ease-out forwards;
+
+  @media (max-width: 768px) {
+    width: 280px;
+    padding: 1.5rem;
+    bottom: 6%;
+  }
+
+  @media (max-width: 480px) {
+    width: 100%;
+    max-width: 90%;
+    margin: 0 5%;
+    padding: 1rem;
+    bottom: 4%;
+    gap: 0.8rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
 `;
 
 const PrimaryNavButton = styled.button`
@@ -65,6 +95,11 @@ const PrimaryNavButton = styled.button`
 
   &:active {
     transform: scale(0.97);
+  }
+
+  @media (max-width: 480px) {
+    padding: 1rem 1.5rem;
+    font-size: 1.1rem;
   }
 `;
 
@@ -95,6 +130,11 @@ const SecondaryNavButton = styled.button`
   &:active {
     transform: scale(0.97);
   }
+
+  @media (max-width: 480px) {
+    padding: 1rem 1.5rem;
+    font-size: 1.1rem;
+  }
 `;
 
 const CenteredDiv = styled.div`
@@ -102,17 +142,38 @@ const CenteredDiv = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-  background-image: url("img/road.png"); /* Update the path if necessary */
+  background-image: url("img/background_underwater.png");
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: center;
   width: 100%;
   height: 100vh; /* Full viewport height */
   animation: ${fadeIn} 4s forwards; /* Apply fade-in effect on load */
   &.fade-out {
     animation: ${fadeOut} 4s forwards;
   }
+
   img {
-    margin-top: 170px;
+    max-width: 90%;
+    max-height: 70vh;
+    object-fit: contain;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+    z-index: 1;
+
+    @media (max-width: 768px) {
+      max-width: 85%;
+      max-height: 60vh;
+      transform: translate(-50%, -55%);
+    }
+
+    @media (max-width: 480px) {
+      max-width: 120%;
+      max-height: 50vh;
+      transform: translate(-50%, -50%);
+    }
   }
 `;
 
@@ -181,7 +242,7 @@ function GameOver() {
 
   return (
     <CenteredDiv className={fadeOutEffect ? "fade-out" : ""}>
-      <img src="img/house3-2.png" alt="레몬에이드" />
+      <img src="img/her_game_over_giving_her_hand_underwater.png" alt="게임오버 캐릭터" />
       {showModal && (
         <NavigationContainer>
           <PrimaryNavButton onClick={handlePlayAgain}>회귀 하기</PrimaryNavButton>
