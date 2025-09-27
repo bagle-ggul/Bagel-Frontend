@@ -5,10 +5,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { APP_VERSION } from "../constants/version";
 
 const Wrapper = styled.div`
-  display: grid;
-  position: relative;
-  grid-template-columns: repeat(3, 1fr);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
   height: 100vh;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
@@ -17,13 +21,10 @@ const Wrapper = styled.div`
 
   img {
     width: 100%;
-    height: 100vh;
+    height: 100%;
     object-fit: cover;
     object-position: center;
-
-    @media (max-width: 768px) {
-      height: 33.33vh;
-    }
+    display: block;
   }
 `;
 
