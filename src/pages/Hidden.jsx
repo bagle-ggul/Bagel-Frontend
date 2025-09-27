@@ -46,7 +46,7 @@ const SceneWrap = styled.div`
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: url("/img/hiddenback.png") no-repeat center center;
+  background: url("/img/bg_hidden_main.png") no-repeat center center;
   background-size: cover;
   padding: 20px;
   text-align: center;
@@ -127,7 +127,7 @@ function Hidden() {
   return (
     <SceneWrap>
       <StyledCharacterBackground>
-        <img src="/img/hidden누끼.png" alt="여자" />
+        <img src="/img/her_hidden_main.png" alt="여자" />
       </StyledCharacterBackground>
       <DialogueBox visible={isVisible}>
         <CharacterName>{character}</CharacterName>

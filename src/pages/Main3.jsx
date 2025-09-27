@@ -16,8 +16,8 @@ function Main3() {
   return (
     <>
       <BagelSelectPageComponent
-        backgroundImage={"./img/cave.png"}
-        characterImage={"./img/character.png"}
+        backgroundImage={"./img/bg_cave_main.png"}
+        characterImage={"./img/mc_normal_main.png"}
         storyData={storyData}
         url={"/main5"}
         scene={3}

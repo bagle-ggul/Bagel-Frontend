@@ -5,7 +5,7 @@ import axios from "../utils/axios";
 import { Link, useParams, useNavigate } from "react-router-dom";
 
 // 배경 이미지 URL
-const backgroundImageUrl = "/img/community.png";
+const backgroundImageUrl = "/img/bg_community_main.png";
 
 const BoardWrapper = styled.div`
   background-image: url(${backgroundImageUrl});

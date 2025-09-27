@@ -141,7 +141,7 @@ const CenteredDiv = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
-  background-image: url("img/background_underwater.png");
+  background-image: url("img/bg_underwater_main.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -241,7 +241,7 @@ function GameOver() {
 
   return (
     <CenteredDiv className={fadeOutEffect ? "fade-out" : ""}>
-      <img src="img/her_game_over_giving_her_hand_underwater.png" alt="게임오버 캐릭터" />
+      <img src="img/her_underwater_gameover.png" alt="게임오버 캐릭터" />
       {showModal && (
         <NavigationContainer>
           <PrimaryNavButton onClick={handlePlayAgain}>회귀 하기</PrimaryNavButton>
