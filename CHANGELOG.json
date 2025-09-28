@@ -1,11 +1,43 @@
 {
   "metadata": {
-    "lastUpdated": "2025-09-27T20:21:29Z",
-    "currentVersion": "1.3.1",
+    "lastUpdated": "2025-09-28T22:17:52Z",
+    "currentVersion": "1.3.2",
     "projectType": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
-    "totalReleases": 12
+    "totalReleases": 13
   },
   "releases": [
+    {
+      "version": "1.3.2",
+      "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
+      "date": "2025-09-28",
+      "pr_number": 79,
+      "raw_summary": "Summary by CodeRabbit\n\n\nNew Features\n\n랭킹 경로 추가(“/ranking” → 첫 게시판으로 이동).\n게시판 UI 전면 개편: 글래스모픽 스타일, 순위 아이콘, 모바일 카드 뷰, 사용자 상세 모달, 개선된 페이지네이션, 상대 시간 표기.\n프로필 페이지 개선: 반응형 레이아웃, 로딩 스켈레톤, 애니메이션 전환, 통계/상세 정보 블록 강화.\nPretendard 폰트 적용.\n\n\n\nDocumentation\n\n최신 버전 표기 업데이트.\n아이콘 사용 가이드 추가/명확화.\n\n\n\nChores\n\n버전 업데이트(1.3.2).\n아이콘 라이브러리 의존성 추가.",
+      "parsed_changes": {
+        "new_features": {
+          "title": "New Features",
+          "items": [
+            "랭킹 경로 추가(“/ranking” → 첫 게시판으로 이동).",
+            "게시판 UI 전면 개편: 글래스모픽 스타일, 순위 아이콘, 모바일 카드 뷰, 사용자 상세 모달, 개선된 페이지네이션, 상대 시간 표기.",
+            "프로필 페이지 개선: 반응형 레이아웃, 로딩 스켈레톤, 애니메이션 전환, 통계/상세 정보 블록 강화.",
+            "Pretendard 폰트 적용."
+          ]
+        },
+        "documentation": {
+          "title": "Documentation",
+          "items": [
+            "최신 버전 표기 업데이트.",
+            "아이콘 사용 가이드 추가/명확화."
+          ]
+        },
+        "chores": {
+          "title": "Chores",
+          "items": [
+            "버전 업데이트(1.3.2).",
+            "아이콘 라이브러리 의존성 추가."
+          ]
+        }
+      }
+    },
     {
       "version": "1.3.1",
       "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
