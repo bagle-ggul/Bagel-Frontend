@@ -238,21 +238,6 @@ const SecondaryButtonModal = styled.button`
   }
 `;
 
-const CreditsButtonStyled = styled.button`
-  ${ButtonBase}
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.25);
-    border-color: rgba(255, 255, 255, 0.5);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-  }
-`;
 
 const BottomRightButtonGroup = styled.div`
   position: absolute;
