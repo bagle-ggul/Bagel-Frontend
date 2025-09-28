@@ -235,7 +235,7 @@ function GameOver() {
   };
 
   const handleHome = () => handleNavigation("/");
-  const handleRankings = () => handleNavigation("/board/1");
+  const handleRankings = () => handleNavigation("/board");
   const handleProfile = () => handleNavigation("/profile");
   const handlePlayAgain = () => handleNavigation("/intro");
 

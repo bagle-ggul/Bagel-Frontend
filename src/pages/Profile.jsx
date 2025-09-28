@@ -3,6 +3,7 @@ import styled from "styled-components";
 import axios from "../utils/axios";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
+import { House, Trophy, Controller } from "react-bootstrap-icons";
 
 const ProfileWrapper = styled(motion.div)`
   position: fixed;
@@ -26,6 +27,7 @@ const DesktopContainer = styled.div`
   justify-content: center;
   max-width: 1400px;
   margin: 0 auto;
+  padding-top: 76px; /* 버튼(44px) + 여백(16px) + 패딩(16px) */
 
   @media (max-width: 768px) {
     display: none;
@@ -44,6 +46,11 @@ const MobileContainer = styled.div`
     align-items: center;
     justify-content: center;
     padding: 1rem;
+    padding-top: 71px; /* 버튼(39px) + 여백(16px) + 패딩(16px) */
+  }
+
+  @media (max-width: 480px) {
+    padding-top: 66px; /* 버튼(34px) + 여백(16px) + 패딩(16px) */
   }
 `;
 
@@ -360,66 +367,61 @@ const DetailValue = styled.span`
   }
 `;
 
+
 const ButtonContainer = styled.div`
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  gap: 10px;
   z-index: 100;
 
   @media (max-width: 768px) {
-    bottom: 20px;
-    right: 20px;
-    gap: 0.8rem;
+    top: 15px;
+    right: 15px;
   }
 
   @media (max-width: 480px) {
-    bottom: 15px;
-    right: 15px;
-    gap: 0.6rem;
+    top: 10px;
+    right: 10px;
   }
 `;
 
 const ButtonSpan = styled.span`
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  padding: 1rem 1.5rem;
+  padding: 10px 20px;
   border-radius: 12px;
   font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
+  font-weight: 500;
   transition: all 0.3s ease;
-  text-decoration: none;
-  display: block;
-  text-align: center;
-  min-width: 100px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.25);
-    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(200, 182, 226, 0.3);
+    border-color: rgba(200, 182, 226, 0.5);
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 6px 20px rgba(200, 182, 226, 0.3);
   }
 
   &:active {
-    transform: scale(0.98);
+    transform: translateY(0);
   }
 
   @media (max-width: 768px) {
-    padding: 0.8rem 1.2rem;
+    padding: 8px 16px;
     font-size: 0.9rem;
-    min-width: 80px;
   }
 
   @media (max-width: 480px) {
-    padding: 0.7rem 1rem;
+    padding: 6px 12px;
     font-size: 0.8rem;
-    min-width: 70px;
   }
 `;
 
@@ -675,12 +677,14 @@ function Profile() {
                       </DetailValue>
                     </DetailRow>
                     <DetailRow variants={itemVariants} whileHover={{ scale: 1.02 }}>
-                      <DetailTitle>성별</DetailTitle>
-                      <DetailValue>{profile?.gender}</DetailValue>
-                    </DetailRow>
-                    <DetailRow variants={itemVariants} whileHover={{ scale: 1.02 }}>
-                      <DetailTitle>MBTI</DetailTitle>
-                      <DetailValue>{profile?.mbti}</DetailValue>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: 1, justifyContent: 'flex-start' }}>
+                        <DetailTitle>성별</DetailTitle>
+                        <DetailValue>{profile?.gender}</DetailValue>
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: 1, justifyContent: 'flex-end' }}>
+                        <DetailTitle>MBTI</DetailTitle>
+                        <DetailValue>{profile?.mbti}</DetailValue>
+                      </div>
                     </DetailRow>
                   </UserDetailContainer>
                 </motion.div>
@@ -770,12 +774,14 @@ function Profile() {
                       </DetailValue>
                     </DetailRow>
                     <DetailRow variants={itemVariants} whileHover={{ scale: 1.02 }}>
-                      <DetailTitle>성별</DetailTitle>
-                      <DetailValue>{profile?.gender}</DetailValue>
-                    </DetailRow>
-                    <DetailRow variants={itemVariants} whileHover={{ scale: 1.02 }}>
-                      <DetailTitle>MBTI</DetailTitle>
-                      <DetailValue>{profile?.mbti}</DetailValue>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: 1, justifyContent: 'flex-start' }}>
+                        <DetailTitle>성별</DetailTitle>
+                        <DetailValue>{profile?.gender}</DetailValue>
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: 1, justifyContent: 'flex-end' }}>
+                        <DetailTitle>MBTI</DetailTitle>
+                        <DetailValue>{profile?.mbti}</DetailValue>
+                      </div>
                     </DetailRow>
                   </UserDetailContainer>
                 </motion.div>
@@ -826,19 +832,22 @@ function Profile() {
       >
         <ButtonContainer>
           <Link to={"/"}>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <ButtonSpan>홈</ButtonSpan>
-            </motion.div>
+            <ButtonSpan>
+              <House size={16} />
+              홈
+            </ButtonSpan>
           </Link>
-          <Link to={"/board/1"}>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <ButtonSpan>랭킹 보기</ButtonSpan>
-            </motion.div>
+          <Link to={"/board"}>
+            <ButtonSpan>
+              <Trophy size={16} />
+              랭킹 보기
+            </ButtonSpan>
           </Link>
           <Link to={"/intro"}>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <ButtonSpan>다시하기</ButtonSpan>
-            </motion.div>
+            <ButtonSpan>
+              <Controller size={16} />
+              다시하기
+            </ButtonSpan>
           </Link>
         </ButtonContainer>
       </motion.div>

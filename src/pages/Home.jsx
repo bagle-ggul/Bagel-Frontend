@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { APP_VERSION } from "../constants/version";
 import axios from "../utils/axios";
@@ -254,10 +254,27 @@ const CreditsButtonStyled = styled.button`
   }
 `;
 
-const LogoutButton = styled.button`
+const BottomRightButtonGroup = styled.div`
   position: absolute;
   bottom: 20px;
   right: 20px;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  z-index: 100;
+
+  @media (max-width: 768px) {
+    bottom: 15px;
+    right: 15px;
+  }
+
+  @media (max-width: 480px) {
+    bottom: 10px;
+    right: 10px;
+  }
+`;
+
+const BottomCreditsButton = styled.button`
   background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -285,15 +302,47 @@ const LogoutButton = styled.button`
   @media (max-width: 768px) {
     font-size: 0.9rem;
     padding: 0.8rem 1.2rem;
-    bottom: 15px;
-    right: 15px;
   }
 
   @media (max-width: 480px) {
     font-size: 0.8rem;
     padding: 0.7rem 1rem;
-    bottom: 10px;
-    right: 10px;
+  }
+`;
+
+const LogoutButton = styled.button`
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  width: fit-content;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+    padding: 0.8rem 1.2rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+    padding: 0.7rem 1rem;
   }
 `;
 
@@ -476,17 +525,6 @@ const TeamName = styled.h3`
   }
 `;
 
-const TeamSubName = styled.p`
-  font-size: 1.2rem;
-  font-weight: 500;
-  margin-bottom: 1.2rem;
-  opacity: 0.8;
-
-  @media (max-width: 768px) {
-    font-size: 1rem;
-    margin-bottom: 1rem;
-  }
-`;
 
 const TeamDetails = styled.div`
   display: flex;
@@ -782,42 +820,6 @@ const SubmitButton = styled(motion.button)`
   }
 `;
 
-// 회원가입 모달 추가 스타일 컴포넌트들
-const GlassSelect = styled.select`
-  width: 100%;
-  padding: 1rem 1.5rem;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
-  color: white;
-  font-size: 1rem;
-  box-sizing: border-box;
-  transition: all 0.3s ease;
-  cursor: pointer;
-
-  &:focus {
-    outline: none;
-    border-color: rgba(200, 182, 226, 0.5);
-    box-shadow: 0 0 20px rgba(200, 182, 226, 0.2);
-    background: rgba(255, 255, 255, 0.15);
-  }
-
-  option {
-    background: rgba(0, 0, 0, 0.9);
-    color: white;
-  }
-
-  @media (max-width: 768px) {
-    padding: 0.9rem 1.2rem;
-    font-size: 0.95rem;
-  }
-
-  @media (max-width: 480px) {
-    padding: 0.8rem 1rem;
-    font-size: 0.9rem;
-  }
-`;
 
 
 // 성별 선택 컴포넌트
@@ -1078,8 +1080,6 @@ function Home() {
   const [gender, setGender] = useState("");
   const [signupError, setSignupError] = useState("");
 
-  const navigate = useNavigate();
-
   useEffect(() => {
     const token = localStorage.getItem("refreshToken");
     if (token) {
@@ -1116,13 +1116,6 @@ function Home() {
     }
   }, [mbtiE, mbtiS, mbtiT, mbtiJ]);
 
-  // 생일 자동 조합 (년도, 월, 일이 모두 선택되면)
-  useEffect(() => {
-    if (birthYear && birthMonth && birthDay) {
-      const formattedDate = `${birthYear}-${birthMonth.padStart(2, '0')}-${birthDay.padStart(2, '0')}`;
-      // birthDate는 더 이상 사용하지 않지만 호환성을 위해 유지
-    }
-  }, [birthYear, birthMonth, birthDay]);
 
   const handleLogout = () => {
     localStorage.removeItem("refreshToken");
@@ -1345,9 +1338,7 @@ function Home() {
                 <SecondaryButton to="/profile">내 정보</SecondaryButton>
               </ButtonWrapper>
               <ButtonWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <CreditsButtonStyled onClick={() => setShowCredits(true)}>
-                  크레딧
-                </CreditsButtonStyled>
+                <SecondaryButton to="/board">랭킹 보기</SecondaryButton>
               </ButtonWrapper>
             </>
           ) : (
@@ -1363,9 +1354,7 @@ function Home() {
                 </SecondaryButtonModal>
               </ButtonWrapper>
               <ButtonWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <CreditsButtonStyled onClick={() => setShowCredits(true)}>
-                  크레딧
-                </CreditsButtonStyled>
+                <SecondaryButton to="/board">랭킹 보기</SecondaryButton>
               </ButtonWrapper>
             </>
           )}
@@ -1430,9 +1419,7 @@ function Home() {
                   <SecondaryButton to="/profile">내 정보</SecondaryButton>
                 </ButtonWrapper>
                 <ButtonWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <CreditsButtonStyled onClick={() => setShowCredits(true)}>
-                    크레딧
-                  </CreditsButtonStyled>
+                  <SecondaryButton to="/board">랭킹 보기</SecondaryButton>
                 </ButtonWrapper>
               </>
             ) : (
@@ -1448,9 +1435,7 @@ function Home() {
                   </SecondaryButtonModal>
                 </ButtonWrapper>
                 <ButtonWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <CreditsButtonStyled onClick={() => setShowCredits(true)}>
-                    크레딧
-                  </CreditsButtonStyled>
+                  <SecondaryButton to="/board">랭킹 보기</SecondaryButton>
                 </ButtonWrapper>
               </>
             )}
@@ -1458,7 +1443,20 @@ function Home() {
         </MobileMainWrapper>
       </MobileContainer>
 
-      {isAuthenticated && <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>}
+      {isAuthenticated ? (
+        <BottomRightButtonGroup>
+          <BottomCreditsButton onClick={() => setShowCredits(true)}>
+            크레딧
+          </BottomCreditsButton>
+          <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
+        </BottomRightButtonGroup>
+      ) : (
+        <BottomRightButtonGroup>
+          <BottomCreditsButton onClick={() => setShowCredits(true)}>
+            크레딧
+          </BottomCreditsButton>
+        </BottomRightButtonGroup>
+      )}
 
       <AnimatePresence>
         {showCredits && (
