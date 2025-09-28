@@ -1,11 +1,52 @@
 {
   "metadata": {
-    "lastUpdated": "2025-09-28T22:17:52Z",
-    "currentVersion": "1.3.2",
+    "lastUpdated": "2025-09-28T23:30:25Z",
+    "currentVersion": "1.3.3",
     "projectType": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
-    "totalReleases": 13
+    "totalReleases": 14
   },
   "releases": [
+    {
+      "version": "1.3.3",
+      "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
+      "date": "2025-09-28",
+      "pr_number": 80,
+      "raw_summary": "Summary by CodeRabbit\n\nNew Features\n\n랭킹 보드에 무한 스크롤, 스크롤 진행바, 상단 이동 버튼 추가\n프로필/통계 화면에 Glass 카드형 UI와 전용 콘텐츠 컴포넌트 도입\n홈 화면에 하단 우측 버튼 그룹(크레딧, 로그인 상태 시 로그아웃) 추가\n\n\nRefactor\n\n보드 경로 단순화: /board로 이동 통일, 로딩/에러 UI 및 사용자 피드백 개선\n\n\nStyle\n\n통합 테마 시스템 도입으로 색상·버튼·애니메이션·반응형 스타일 일원화\n\n\nDocumentation\n\nREADME 최신 버전 표기 업데이트\n\n\nChores\n\n앱 버전 1.3.3으로 업데이트",
+      "parsed_changes": {
+        "new_features": {
+          "title": "New Features",
+          "items": [
+            "랭킹 보드에 무한 스크롤, 스크롤 진행바, 상단 이동 버튼 추가",
+            "프로필/통계 화면에 Glass 카드형 UI와 전용 콘텐츠 컴포넌트 도입",
+            "홈 화면에 하단 우측 버튼 그룹(크레딧, 로그인 상태 시 로그아웃) 추가"
+          ]
+        },
+        "refactor": {
+          "title": "Refactor",
+          "items": [
+            "보드 경로 단순화: /board로 이동 통일, 로딩/에러 UI 및 사용자 피드백 개선"
+          ]
+        },
+        "style": {
+          "title": "Style",
+          "items": [
+            "통합 테마 시스템 도입으로 색상·버튼·애니메이션·반응형 스타일 일원화"
+          ]
+        },
+        "documentation": {
+          "title": "Documentation",
+          "items": [
+            "README 최신 버전 표기 업데이트"
+          ]
+        },
+        "chores": {
+          "title": "Chores",
+          "items": [
+            "앱 버전 1.3.3으로 업데이트"
+          ]
+        }
+      }
+    },
     {
       "version": "1.3.2",
       "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
