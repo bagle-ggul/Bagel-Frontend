@@ -38,6 +38,7 @@ const BoardWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding: 20px;
   box-sizing: border-box;
 
@@ -54,7 +55,7 @@ const Title = styled.h1`
   font-size: 3em;
   color: white;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-  margin-bottom: 20px;
+  margin: 60px 0 20px 0;
   display: flex;
   align-items: center;
   gap: 15px;
@@ -62,13 +63,13 @@ const Title = styled.h1`
 
   @media (max-width: 768px) {
     font-size: 2.2em;
-    margin-bottom: 15px;
+    margin: 50px 0 15px 0;
     gap: 10px;
   }
 
   @media (max-width: 480px) {
     font-size: 1.8em;
-    margin-bottom: 10px;
+    margin: 40px 0 10px 0;
     gap: 8px;
   }
 `;
@@ -498,11 +499,11 @@ function Board() {
 
   // 랭킹 아이콘 렌더링 함수
   const getRankIcon = (rank) => {
-    if (rank === 1) return <TrophyFill size={24} />;
-    if (rank === 2) return <Award size={20} />;
-    if (rank === 3) return <Award size={20} />;
-    if (rank <= 5) return <StarFill size={18} />;
-    return <Star size={16} />;
+    if (rank === 1) return <TrophyFill size={24} color="white" />;
+    if (rank === 2) return <Award size={20} color="white" />;
+    if (rank === 3) return <Award size={20} color="white" />;
+    if (rank <= 5) return <StarFill size={18} color="white" />;
+    return <Star size={16} color="white" />;
   };
 
   useEffect(() => {
@@ -556,7 +557,6 @@ function Board() {
   return (
     <BoardWrapper>
       <Title>
-        <Trophy size={40} />
         랭킹 보드
       </Title>
 
@@ -825,11 +825,11 @@ function UserDetailModal({ show, user, onClose }) {
   if (!show || !user) return null;
 
   const getRankIcon = (rank) => {
-    if (rank === 1) return <TrophyFill size={24} />;
-    if (rank === 2) return <Award size={20} />;
-    if (rank === 3) return <Award size={20} />;
-    if (rank <= 5) return <StarFill size={18} />;
-    return <Star size={16} />;
+    if (rank === 1) return <TrophyFill size={24} color="white" />;
+    if (rank === 2) return <Award size={20} color="white" />;
+    if (rank === 3) return <Award size={20} color="white" />;
+    if (rank <= 5) return <StarFill size={18} color="white" />;
+    return <Star size={16} color="white" />;
   };
 
   return (
@@ -861,7 +861,7 @@ function UserDetailModal({ show, user, onClose }) {
             <ModalUserInfo>
               <ModalUserName>{user.characterName}</ModalUserName>
               <ModalUserRank>
-                <Trophy size={18} />
+                <Trophy size={18} color="white" />
                 {user.rank}위 • {user.finalScore}점
               </ModalUserRank>
             </ModalUserInfo>
