@@ -21,7 +21,6 @@ function Main1() {
             },
           }
         );
-        console.log(response.data);
         setCharacterName(response.data.characterName);
       } catch (error) {
         console.error("Error fetching data:", error);

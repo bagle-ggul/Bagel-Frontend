@@ -116,8 +116,6 @@ function SelectPageComponent({
   const characterName = useRecoilValue(characterNameAtom);
   const navigate = useNavigate();
 
-  console.log(score);
-
   const currentScene = storyData.plot[index];
 
   const replaceCharacterName = (text) => {

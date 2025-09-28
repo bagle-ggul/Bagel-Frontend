@@ -168,8 +168,6 @@ const BagelSelectPageComponent = ({
   const characterName = useRecoilValue(characterNameAtom);
   const navigate = useNavigate();
 
-  console.log("현재 스코어:", score);
-
   const currentScene = storyData.plot[index];
 
   const replaceCharacterName = (text) => {

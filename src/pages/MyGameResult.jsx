@@ -60,9 +60,8 @@ const ResultDetail = styled(motion.p)`
 function MyGameResults() {
   const accessToken = localStorage.getItem("refreshToken");
   const [results, setResults] = useState([]);
-  console.log(accessToken);
+
   useEffect(() => {
-    console.log(accessToken);
     const fetchResults = async () => {
       try {
         const response = await axios.get(

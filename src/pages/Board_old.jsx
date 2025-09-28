@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
@@ -75,23 +75,6 @@ const Title = styled.h1`
   }
 `;
 
-// 스크롤 진행 표시기
-const ScrollProgressBar = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: ${props => props.progress}%;
-  height: 3px;
-  background: linear-gradient(
-    90deg,
-    rgba(200, 182, 226, 0.9),
-    rgba(200, 182, 226, 0.6)
-  );
-  z-index: 1000;
-  transition: width 0.3s ease;
-  box-shadow: 0 2px 10px rgba(200, 182, 226, 0.3);
-`;
-
 // 글라스모피즘 컨테이너
 const GlassContainer = styled.div`
   width: 90%;
@@ -103,49 +86,20 @@ const GlassContainer = styled.div`
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
   border-radius: 20px;
   overflow: hidden;
-  max-height: 75vh;
+  max-height: 70vh;
   display: flex;
   flex-direction: column;
 
   @media (max-width: 768px) {
     width: 95%;
-    max-height: 80vh;
+    max-height: 75vh;
     border-radius: 15px;
   }
 
   @media (max-width: 480px) {
     width: 100%;
-    max-height: 85vh;
+    max-height: 80vh;
     border-radius: 12px;
-  }
-`;
-
-// 스크롤 가능한 테이블 컨테이너
-const ScrollableTableContainer = styled.div`
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-
-  &::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: rgba(200, 182, 226, 0.5);
-    border-radius: 4px;
-  }
-
-  &::-webkit-scrollbar-thumb:hover {
-    background: rgba(200, 182, 226, 0.8);
-  }
-
-  @media (max-width: 768px) {
-    display: none;
   }
 `;
 
@@ -154,6 +108,10 @@ const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
   background: transparent;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const TableHead = styled.thead`
@@ -270,10 +228,6 @@ const MobileCardContainer = styled.div`
   &::-webkit-scrollbar-thumb {
     background: rgba(200, 182, 226, 0.5);
     border-radius: 3px;
-  }
-
-  &::-webkit-scrollbar-thumb:hover {
-    background: rgba(200, 182, 226, 0.8);
   }
 `;
 
@@ -396,122 +350,6 @@ const MobileScoreLabel = styled.div`
   color: rgba(255, 255, 255, 0.6);
 `;
 
-// 로딩 인디케이터
-const LoadingMoreIndicator = styled(motion.div)`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 30px;
-  gap: 15px;
-  background: rgba(0, 0, 0, 0.2);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-`;
-
-const LoadingSpinner = styled(motion.div)`
-  width: 40px;
-  height: 40px;
-  border: 3px solid rgba(200, 182, 226, 0.2);
-  border-top: 3px solid rgba(200, 182, 226, 0.9);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-`;
-
-const LoadingText = styled.span`
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 1rem;
-  font-weight: 500;
-`;
-
-// 에러 상태
-const ErrorContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-  padding: 30px;
-  background: rgba(220, 53, 69, 0.1);
-  border: 1px solid rgba(220, 53, 69, 0.3);
-  border-radius: 15px;
-  margin: 20px;
-`;
-
-const ErrorText = styled.span`
-  color: rgba(220, 53, 69, 0.9);
-  font-size: 1rem;
-  text-align: center;
-`;
-
-const RetryButton = styled(motion.button)`
-  background: rgba(200, 182, 226, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: white;
-  padding: 12px 24px;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 500;
-
-  &:hover {
-    background: rgba(200, 182, 226, 1);
-    transform: translateY(-2px);
-  }
-`;
-
-// 맨 위로 버튼
-const ScrollToTopButton = styled(motion.button)`
-  position: fixed;
-  bottom: 80px;
-  right: 20px;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: rgba(200, 182, 226, 0.9);
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  color: white;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 100;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 8px 32px rgba(200, 182, 226, 0.3);
-
-  &:hover {
-    background: rgba(200, 182, 226, 1);
-    transform: translateY(-2px);
-    box-shadow: 0 12px 40px rgba(200, 182, 226, 0.4);
-  }
-
-  @media (max-width: 768px) {
-    bottom: 70px;
-    right: 15px;
-    width: 48px;
-    height: 48px;
-  }
-
-  @media (max-width: 480px) {
-    bottom: 60px;
-    right: 10px;
-    width: 44px;
-    height: 44px;
-  }
-`;
-
-// 로딩 트리거 요소
-const LoadMoreTrigger = styled.div`
-  height: 1px;
-  width: 100%;
-`;
-
 const ButtonContainer = styled.div`
   display: flex;
   position: absolute;
@@ -568,6 +406,86 @@ const ButtonSpan = styled.span`
   }
 `;
 
+const PaginationWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  gap: 15px;
+
+  @media (max-width: 768px) {
+    padding: 15px;
+    gap: 10px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 10px;
+    gap: 8px;
+  }
+`;
+
+const PaginationButton = styled.button`
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-size: 1em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  &:hover:not(:disabled) {
+    background: rgba(200, 182, 226, 0.3);
+    border-color: rgba(200, 182, 226, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(200, 182, 226, 0.2);
+  }
+
+  &:disabled {
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.3);
+    cursor: not-allowed;
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  @media (max-width: 768px) {
+    padding: 8px 16px;
+    font-size: 0.9em;
+  }
+
+  @media (max-width: 480px) {
+    padding: 6px 12px;
+    font-size: 0.8em;
+  }
+`;
+
+const PaginationInfo = styled.span`
+  font-size: 1.2em;
+  color: white;
+  font-weight: 500;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  min-width: 80px;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 1em;
+    min-width: 60px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 0.9em;
+    min-width: 50px;
+  }
+`;
+
 function Board() {
   const [selectedUser, setSelectedUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -586,62 +504,61 @@ function Board() {
   );
 
   // 랭킹 아이콘 렌더링 함수
-  const getRankIcon = useCallback((rank) => {
+  const getRankIcon = (rank) => {
     if (rank === 1) return <TrophyFill size={24} color="white" />;
     if (rank === 2) return <Award size={20} color="white" />;
     if (rank === 3) return <Award size={20} color="white" />;
     if (rank <= 5) return <StarFill size={18} color="white" />;
     return <Star size={16} color="white" />;
-  }, []);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "/api/game/ranking",
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+            params: {
+              page: currentPage - 1, // API 페이지는 0부터 시작
+              size: pageSize,
+            },
+          }
+        );
+        setData(response.data.rankings || []);
+        setTotalPages(response.data.totalPages || 1);
+        setTotalItems(response.data.totalItems || 0);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [currentPage, accessToken, pageSize]);
 
   // 사용자 상세 정보 모달 열기
-  const openUserModal = useCallback((userData, rank) => {
+  const openUserModal = (userData, rank) => {
     setSelectedUser({ ...userData, rank });
     setShowModal(true);
-  }, []);
+  };
 
   // 모달 닫기
-  const closeModal = useCallback(() => {
+  const closeModal = () => {
     setShowModal(false);
     setSelectedUser(null);
-  }, []);
+  };
 
-  // 터치 제스처 (모바일용)
-  const { handleTouchStart, handleTouchMove, handleTouchEnd } = useTouchSwipe(
-    () => {
-      if (data.hasNextPage && !data.isLoading) {
-        loadNextPage();
-      }
-    },
-    80
-  );
+  const nextPage = () => {
+    navigate(`/board/${currentPage + 1}`);
+  };
 
-  // 메모이제이션된 렌더링 함수들
-  const renderDesktopRow = useCallback((item, index) => {
-    const rank = index + 1;
-    return (
-      <MemoizedTableRow
-        key={`${item.memberEmail}-${index}`}
-        item={item}
-        rank={rank}
-        onClick={openUserModal}
-        getRankIcon={getRankIcon}
-      />
-    );
-  }, [openUserModal, getRankIcon]);
-
-  const renderMobileCard = useCallback((item, index) => {
-    const rank = index + 1;
-    return (
-      <MemoizedRankCard
-        key={`${item.memberEmail}-${index}`}
-        item={item}
-        rank={rank}
-        onClick={openUserModal}
-        getRankIcon={getRankIcon}
-      />
-    );
-  }, [openUserModal, getRankIcon]);
+  const prevPage = () => {
+    if (currentPage > 1) {
+      navigate(`/board/${currentPage - 1}`);
+    }
+  };
 
   return (
     <BoardWrapper>
@@ -651,112 +568,129 @@ function Board() {
 
       <GlassContainer>
         {/* 데스크톱 테이블 */}
-        <ScrollableTableContainer>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableHeader>순위</TableHeader>
-                <TableHeader>점수</TableHeader>
-                <TableHeader>캐릭터 이름</TableHeader>
-                <TableHeader>MBTI</TableHeader>
-                <TableHeader>이메일</TableHeader>
-                <TableHeader>날짜</TableHeader>
-              </TableRow>
-            </TableHead>
-            <tbody>
-              {data.rankings.map(renderDesktopRow)}
-            </tbody>
-          </Table>
-
-          {/* 데스크톱 로딩 트리거 */}
-          <LoadMoreTrigger ref={loadMoreRef} />
-        </ScrollableTableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableHeader>순위</TableHeader>
+              <TableHeader>점수</TableHeader>
+              <TableHeader>캐릭터 이름</TableHeader>
+              <TableHeader>MBTI</TableHeader>
+              <TableHeader>이메일</TableHeader>
+              <TableHeader>날짜</TableHeader>
+            </TableRow>
+          </TableHead>
+          <tbody>
+            {data.map((item, index) => {
+              const rank = (currentPage - 1) * pageSize + index + 1;
+              return (
+                <TableRow
+                  key={index}
+                  onClick={() => openUserModal(item, rank)}
+                >
+                  <RankCell rank={rank}>
+                    {getRankIcon(rank)}
+                    {rank}
+                  </RankCell>
+                  <ScoreCell>{item.finalScore}점</ScoreCell>
+                  <TableCell>{item.characterName}</TableCell>
+                  <TableCell>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px' }}>
+                      <PersonCircle size={16} />
+                      {item.mbti}
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px' }}>
+                      <Envelope size={14} />
+                      {item.memberEmail}
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px' }}>
+                      <Clock size={14} />
+                      {TimeUtil.getRelativeTime(item.gameDate)}
+                    </div>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
+          </tbody>
+        </Table>
 
         {/* 모바일 카드 리스트 */}
-        <MobileCardContainer
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        >
-          {data.rankings.map(renderMobileCard)}
+        <MobileCardContainer>
+          {data.map((item, index) => {
+            const rank = (currentPage - 1) * pageSize + index + 1;
+            return (
+              <RankCard
+                key={index}
+                rank={rank}
+                onClick={() => openUserModal(item, rank)}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <MobileRankDisplay>
+                  {getRankIcon(rank)}
+                  <MobileRankNumber rank={rank}>
+                    {rank}위
+                  </MobileRankNumber>
+                </MobileRankDisplay>
 
-          {/* 모바일 로딩 트리거 */}
-          <LoadMoreTrigger ref={loadMoreRef} />
+                <MobileUserInfo>
+                  <MobileUserName>{item.characterName}</MobileUserName>
+                  <MobileMetaInfo>
+                    <MobileMetaItem>
+                      <PersonCircle size={14} />
+                      {item.mbti}
+                    </MobileMetaItem>
+                    <MobileMetaItem>
+                      <Clock size={14} />
+                      {TimeUtil.getRelativeTime(item.gameDate)}
+                    </MobileMetaItem>
+                  </MobileMetaInfo>
+                </MobileUserInfo>
+
+                <MobileScore>
+                  <MobileScoreValue>{item.finalScore}</MobileScoreValue>
+                  <MobileScoreLabel>점</MobileScoreLabel>
+                </MobileScore>
+              </RankCard>
+            );
+          })}
         </MobileCardContainer>
 
-        {/* 로딩 상태 표시 */}
-        {(isLoadingMore || data.isLoading) && (
-          <LoadingMoreIndicator
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
+        <PaginationWrapper>
+          <PaginationButton onClick={prevPage} disabled={currentPage === 1}>
+            <ChevronLeft size={16} />
+            이전
+          </PaginationButton>
+          <PaginationInfo>
+            {currentPage} / {totalPages}
+          </PaginationInfo>
+          <PaginationButton
+            onClick={nextPage}
+            disabled={currentPage === totalPages}
           >
-            <LoadingSpinner />
-            <LoadingText>
-              {data.isInitialLoading ? '랭킹을 불러오는 중...' : '더 많은 랭킹을 불러오는 중...'}
-            </LoadingText>
-          </LoadingMoreIndicator>
-        )}
-
-        {/* 에러 상태 표시 */}
-        {data.error && (
-          <ErrorContainer>
-            <ErrorText>{data.error}</ErrorText>
-            <RetryButton
-              onClick={retryLoad}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <ArrowRepeat size={16} />
-              다시 시도
-            </RetryButton>
-          </ErrorContainer>
-        )}
-
-        {/* 데이터 끝 표시 */}
-        {!data.hasNextPage && data.rankings.length > 0 && !data.isInitialLoading && (
-          <div style={{
-            textAlign: 'center',
-            padding: '20px',
-            color: 'rgba(255, 255, 255, 0.6)',
-            borderTop: '1px solid rgba(255, 255, 255, 0.1)'
-          }}>
-            모든 랭킹을 확인했습니다 ({data.rankings.length}명)
-          </div>
-        )}
+            다음
+            <ChevronRight size={16} />
+          </PaginationButton>
+        </PaginationWrapper>
       </GlassContainer>
 
-      {/* 스크롤 진행 표시기 */}
-      <ScrollProgressBar progress={scrollProgress} />
-
-      {/* 맨 위로 버튼 */}
-      {showScrollTop && (
-        <ScrollToTopButton
-          onClick={scrollToTop}
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.8 }}
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-        >
-          <ChevronUp size={20} />
-        </ScrollToTopButton>
-      )}
-
       <ButtonContainer>
-        <Link to={'/'}>
+        <Link to={"/"}>
           <ButtonSpan>
             <House size={16} />
             홈
           </ButtonSpan>
         </Link>
-        <Link to={'/profile'}>
+        <Link to={"/profile"}>
           <ButtonSpan>
             <Person size={16} />
             내 정보
           </ButtonSpan>
         </Link>
-        <Link to={'/intro'}>
+        <Link to={"/intro"}>
           <ButtonSpan>
             <Controller size={16} />
             다시하기
@@ -769,76 +703,10 @@ function Board() {
         show={showModal}
         user={selectedUser}
         onClose={closeModal}
-        getRankIcon={getRankIcon}
       />
     </BoardWrapper>
   );
 }
-
-// 메모이제이션된 컴포넌트들
-const MemoizedTableRow = React.memo(({ item, rank, onClick, getRankIcon }) => (
-  <TableRow onClick={() => onClick(item, rank)}>
-    <RankCell rank={rank}>
-      {getRankIcon(rank)}
-      {rank}
-    </RankCell>
-    <ScoreCell>{item.finalScore}점</ScoreCell>
-    <TableCell>{item.characterName}</TableCell>
-    <TableCell>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px' }}>
-        <PersonCircle size={16} />
-        {item.mbti}
-      </div>
-    </TableCell>
-    <TableCell>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px' }}>
-        <Envelope size={14} />
-        {item.memberEmail}
-      </div>
-    </TableCell>
-    <TableCell>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px' }}>
-        <Clock size={14} />
-        {TimeUtil.getRelativeTime(item.gameDate)}
-      </div>
-    </TableCell>
-  </TableRow>
-));
-
-const MemoizedRankCard = React.memo(({ item, rank, onClick, getRankIcon }) => (
-  <RankCard
-    rank={rank}
-    onClick={() => onClick(item, rank)}
-    whileHover={{ scale: 1.02 }}
-    whileTap={{ scale: 0.98 }}
-  >
-    <MobileRankDisplay>
-      {getRankIcon(rank)}
-      <MobileRankNumber rank={rank}>
-        {rank}위
-      </MobileRankNumber>
-    </MobileRankDisplay>
-
-    <MobileUserInfo>
-      <MobileUserName>{item.characterName}</MobileUserName>
-      <MobileMetaInfo>
-        <MobileMetaItem>
-          <PersonCircle size={14} />
-          {item.mbti}
-        </MobileMetaItem>
-        <MobileMetaItem>
-          <Clock size={14} />
-          {TimeUtil.getRelativeTime(item.gameDate)}
-        </MobileMetaItem>
-      </MobileMetaInfo>
-    </MobileUserInfo>
-
-    <MobileScore>
-      <MobileScoreValue>{item.finalScore}</MobileScoreValue>
-      <MobileScoreLabel>점</MobileScoreLabel>
-    </MobileScore>
-  </RankCard>
-));
 
 // 사용자 상세 정보 모달 컴포넌트
 const ModalOverlay = styled(motion.div)`
@@ -959,8 +827,16 @@ const CloseButton = styled(motion.button)`
   }
 `;
 
-function UserDetailModal({ show, user, onClose, getRankIcon }) {
+function UserDetailModal({ show, user, onClose }) {
   if (!show || !user) return null;
+
+  const getRankIcon = (rank) => {
+    if (rank === 1) return <TrophyFill size={24} color="white" />;
+    if (rank === 2) return <Award size={20} color="white" />;
+    if (rank === 3) return <Award size={20} color="white" />;
+    if (rank <= 5) return <StarFill size={18} color="white" />;
+    return <Star size={16} color="white" />;
+  };
 
   return (
     <AnimatePresence>
