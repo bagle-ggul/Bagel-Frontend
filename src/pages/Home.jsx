@@ -1122,8 +1122,6 @@ function Home() {
       const response = await axios.post("/api/login", userData);
       const { refreshToken } = response.data;
       localStorage.setItem("refreshToken", refreshToken);
-      console.log(response.data);
-      console.log(refreshToken);
       setIsAuthenticated(true);
       setShowLogin(false);
       // 폼 초기화
@@ -1185,7 +1183,6 @@ function Home() {
 
     try {
       const response = await axios.post("/api/signup", userData);
-      console.log(response.data);
       setShowSignup(false);
       // 회원가입 성공 후 로그인 모달 열기
       setShowLogin(true);

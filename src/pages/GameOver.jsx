@@ -182,7 +182,6 @@ function GameOver() {
   const navigate = useNavigate();
   const score = useRecoilValue(scoreAtom);
   const setScore = useSetRecoilState(scoreAtom); // 상태 업데이트를 위한 함수
-  console.log(score);
 
   useEffect(() => {
     // 2초 후에 모달 표시
@@ -202,7 +201,6 @@ function GameOver() {
       details: "string",
       gamePlaySeconds: 0,
     };
-    console.log(userData);
 
     try {
       const response = await axios.post(
@@ -216,7 +214,6 @@ function GameOver() {
         }
       );
 
-      console.log(response.data);
       // Handle success (e.g., display a success message, redirect to another page, etc.)
     } catch (error) {
       console.error(error);

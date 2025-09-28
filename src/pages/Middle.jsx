@@ -117,8 +117,6 @@ function Middle() {
 
   const { text, character } = scenes[currentScene];
 
-  console.log(character);
-
   return (
     <SceneWrap>
       <StyledCharacterBackground>

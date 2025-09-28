@@ -4,6 +4,10 @@ import axios from "../utils/axios";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { House, Trophy, Controller } from "react-bootstrap-icons";
+import { getAuthToken } from "../utils/auth";
+import GlassCard from "../components/GlassCard";
+import ProfileContent from "../components/ProfileContent";
+import StatsContent from "../components/StatsContent";
 
 const ProfileWrapper = styled(motion.div)`
   position: fixed;
@@ -54,105 +58,9 @@ const MobileContainer = styled.div`
   }
 `;
 
-const ProfileCard = styled(motion.div)`
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-  border-radius: 20px;
-  padding: 3rem 2.5rem;
-  text-align: center;
-  color: white;
-  max-width: 500px;
-  width: 100%;
-  cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 
-  &:hover {
-    background: rgba(0, 0, 0, 0.5);
-    border-color: rgba(200, 182, 226, 0.4);
-    box-shadow:
-      0 12px 40px rgba(0, 0, 0, 0.6),
-      0 0 0 1px rgba(200, 182, 226, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    transform: translateY(-4px);
-  }
 
-  @media (max-width: 768px) {
-    padding: 2rem 1.5rem;
-    max-width: 90vw;
-  }
 
-  @media (max-width: 480px) {
-    padding: 1.5rem 1.2rem;
-    max-width: 95vw;
-    &:hover {
-      transform: translateY(-2px);
-    }
-  }
-`;
-
-const StatsCard = styled(motion.div)`
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-  border-radius: 20px;
-  padding: 3rem 2.5rem;
-  color: white;
-  max-width: 500px;
-  width: 100%;
-  cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-
-  &:hover {
-    background: rgba(0, 0, 0, 0.5);
-    border-color: rgba(200, 182, 226, 0.4);
-    box-shadow:
-      0 12px 40px rgba(0, 0, 0, 0.6),
-      0 0 0 1px rgba(200, 182, 226, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    transform: translateY(-4px);
-  }
-
-  @media (max-width: 768px) {
-    padding: 2rem 1.5rem;
-    max-width: 90vw;
-  }
-
-  @media (max-width: 480px) {
-    padding: 1.5rem 1.2rem;
-    max-width: 95vw;
-    &:hover {
-      transform: translateY(-2px);
-    }
-  }
-`;
-
-const StatsTitle = styled.h3`
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: rgba(200, 182, 226, 1);
-  margin-bottom: 2rem;
-  text-align: center;
-  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-
-  @media (max-width: 768px) {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 1.3rem;
-    margin-bottom: 1rem;
-  }
-`;
-
-const StatsContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-`;
 
 // 로딩 상태를 위한 스켈레톤 컴포넌트
 const SkeletonCard = styled(motion.div)`
@@ -235,137 +143,11 @@ const SkeletonTitle = styled(SkeletonElement)`
   }
 `;
 
-const ProfileImage = styled(motion.img)`
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  margin-bottom: 1.5rem;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
 
-  &:hover {
-    border-color: rgba(200, 182, 226, 0.6);
-    box-shadow: 0 12px 30px rgba(200, 182, 226, 0.2);
-    transform: scale(1.05);
-  }
 
-  @media (max-width: 768px) {
-    width: 120px;
-    height: 120px;
-  }
 
-  @media (max-width: 480px) {
-    width: 100px;
-    height: 100px;
-    margin-bottom: 1rem;
-  }
-`;
 
-const UserName = styled(motion.h2)`
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: white;
-  margin-bottom: 1.5rem;
-  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-  letter-spacing: -0.02em;
 
-  @media (max-width: 768px) {
-    font-size: 2rem;
-    margin-bottom: 1.2rem;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-  }
-`;
-
-const UserDetailContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.8rem;
-  width: 100%;
-`;
-
-const DetailRow = styled(motion.div)`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 0.8rem 1.2rem;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
-  overflow: hidden;
-  position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(200, 182, 226, 0.1),
-      transparent
-    );
-    transition: left 0.6s ease;
-  }
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(200, 182, 226, 0.4);
-    transform: translateX(3px) scale(1.01);
-    box-shadow: 0 4px 15px rgba(200, 182, 226, 0.15);
-
-    &::before {
-      left: 100%;
-    }
-  }
-
-  &:active {
-    transform: translateX(1px) scale(0.99);
-  }
-
-  @media (max-width: 480px) {
-    padding: 0.6rem 1rem;
-    flex-direction: column;
-    gap: 0.3rem;
-    text-align: center;
-
-    &:hover {
-      transform: translateY(-2px) scale(1.01);
-    }
-  }
-`;
-
-const DetailTitle = styled.span`
-  font-weight: 600;
-  color: rgba(200, 182, 226, 1);
-  font-size: 1rem;
-
-  @media (max-width: 480px) {
-    font-size: 0.9rem;
-  }
-`;
-
-const DetailValue = styled.span`
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: 500;
-  font-size: 1rem;
-
-  @media (max-width: 480px) {
-    font-size: 0.9rem;
-  }
-`;
 
 
 const ButtonContainer = styled.div`
@@ -426,9 +208,7 @@ const ButtonSpan = styled.span`
 `;
 
 function Profile() {
-  const accessToken = localStorage.getItem("refreshToken");
   const [profile, setProfile] = useState(null);
-  console.log(accessToken);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -437,19 +217,18 @@ function Profile() {
           "/api/my-page",
           {
             headers: {
-              Authorization: `Bearer ${accessToken}`, // 토큰을 적절하게 설정
+              Authorization: `Bearer ${getAuthToken()}`,
             },
           }
         );
         setProfile(response?.data);
-        console.log(profile);
       } catch (error) {
-        console.error("Error fetching profile:", error);
+        // 프로필 로딩 실패 시 처리 (로그는 제거)
       }
     };
 
     fetchProfile();
-  }, [accessToken]);
+  }, []);
 
   // 스태거 애니메이션을 위한 variants
   const containerVariants = {
@@ -630,7 +409,7 @@ function Profile() {
           >
             {/* 데스크톱 레이아웃 */}
             <DesktopContainer>
-              <ProfileCard
+              <GlassCard
                 variants={cardVariants}
                 initial="hidden"
                 animate="visible"
@@ -639,65 +418,16 @@ function Profile() {
                   rotate: [0, -0.5, 0.5, 0],
                   transition: { duration: 0.3 },
                 }}
+                center
               >
-                <ProfileImage
-                  src={"/img/mc_profile_main.png"}
-                  alt="Profile"
-                  initial={{ scale: 0, rotate: -180 }}
-                  animate={{ scale: 1, rotate: 0 }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 200,
-                    damping: 20,
-                    delay: 0.3,
-                  }}
+                <ProfileContent
+                  profile={profile}
+                  itemVariants={itemVariants}
+                  containerVariants={containerVariants}
                 />
-                <UserName
-                  initial={{ y: -30, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.6, delay: 0.5 }}
-                >
-                  {profile?.characterName}
-                </UserName>
-                <motion.div
-                  variants={containerVariants}
-                  initial="hidden"
-                  animate="visible"
-                  style={{ width: '100%' }}
-                >
-                  <UserDetailContainer>
-                    <DetailRow variants={itemVariants} whileHover={{ scale: 1.02 }}>
-                      <DetailTitle>이메일</DetailTitle>
-                      <DetailValue>{profile?.email}</DetailValue>
-                    </DetailRow>
-                    <DetailRow variants={itemVariants} whileHover={{ scale: 1.02 }}>
-                      <DetailTitle>생일</DetailTitle>
-                      <DetailValue>
-                        {new Date(profile?.birthDate).toLocaleDateString()}
-                      </DetailValue>
-                    </DetailRow>
-                    <motion.div
-                      variants={itemVariants}
-                      style={{
-                        display: 'flex',
-                        gap: '12px',
-                        width: '100%'
-                      }}
-                    >
-                      <DetailRow style={{ flex: 1 }} whileHover={{ scale: 1.02 }}>
-                        <DetailTitle>성별</DetailTitle>
-                        <DetailValue>{profile?.gender}</DetailValue>
-                      </DetailRow>
-                      <DetailRow style={{ flex: 1 }} whileHover={{ scale: 1.02 }}>
-                        <DetailTitle>MBTI</DetailTitle>
-                        <DetailValue>{profile?.mbti}</DetailValue>
-                      </DetailRow>
-                    </motion.div>
-                  </UserDetailContainer>
-                </motion.div>
-              </ProfileCard>
+              </GlassCard>
 
-              <StatsCard
+              <GlassCard
                 variants={cardVariants}
                 initial="hidden"
                 animate="visible"
@@ -708,132 +438,43 @@ function Profile() {
                   transition: { duration: 0.3 },
                 }}
               >
-                <StatsTitle
-                  initial={{ y: -20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                >
-                  게임 통계
-                </StatsTitle>
-                <motion.div
-                  variants={containerVariants}
-                  initial="hidden"
-                  animate="visible"
-                  transition={{ delay: 0.3 }}
-                  style={{ width: '100%' }}
-                >
-                  <StatsContainer>
-                    <DetailRow variants={itemVariants} whileHover={{ scale: 1.02 }}>
-                      <DetailTitle>총 획득 호감도</DetailTitle>
-                      <DetailValue>{profile?.totalScore || 0}</DetailValue>
-                    </DetailRow>
-                    <DetailRow variants={itemVariants} whileHover={{ scale: 1.02 }}>
-                      <DetailTitle>총 회귀수</DetailTitle>
-                      <DetailValue>{profile?.totalRegressionCount || 0}</DetailValue>
-                    </DetailRow>
-                  </StatsContainer>
-                </motion.div>
-              </StatsCard>
+                <StatsContent
+                  profile={profile}
+                  itemVariants={itemVariants}
+                  containerVariants={containerVariants}
+                />
+              </GlassCard>
             </DesktopContainer>
 
             {/* 모바일 레이아웃 */}
             <MobileContainer>
-              <ProfileCard
+              <GlassCard
                 variants={cardVariants}
                 initial="hidden"
                 animate="visible"
                 whileHover={{ scale: 1.02 }}
+                center
               >
-                <ProfileImage
-                  src={"/img/mc_profile_main.png"}
-                  alt="Profile"
-                  initial={{ scale: 0, rotate: -180 }}
-                  animate={{ scale: 1, rotate: 0 }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 200,
-                    damping: 20,
-                    delay: 0.3,
-                  }}
+                <ProfileContent
+                  profile={profile}
+                  itemVariants={itemVariants}
+                  containerVariants={containerVariants}
                 />
-                <UserName
-                  initial={{ y: -30, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.6, delay: 0.5 }}
-                >
-                  {profile?.characterName}
-                </UserName>
-                <motion.div
-                  variants={containerVariants}
-                  initial="hidden"
-                  animate="visible"
-                  style={{ width: '100%' }}
-                >
-                  <UserDetailContainer>
-                    <DetailRow variants={itemVariants} whileHover={{ scale: 1.02 }}>
-                      <DetailTitle>이메일</DetailTitle>
-                      <DetailValue>{profile?.email}</DetailValue>
-                    </DetailRow>
-                    <DetailRow variants={itemVariants} whileHover={{ scale: 1.02 }}>
-                      <DetailTitle>생일</DetailTitle>
-                      <DetailValue>
-                        {new Date(profile?.birthDate).toLocaleDateString()}
-                      </DetailValue>
-                    </DetailRow>
-                    <motion.div
-                      variants={itemVariants}
-                      style={{
-                        display: 'flex',
-                        gap: '12px',
-                        width: '100%'
-                      }}
-                    >
-                      <DetailRow style={{ flex: 1 }} whileHover={{ scale: 1.02 }}>
-                        <DetailTitle>성별</DetailTitle>
-                        <DetailValue>{profile?.gender}</DetailValue>
-                      </DetailRow>
-                      <DetailRow style={{ flex: 1 }} whileHover={{ scale: 1.02 }}>
-                        <DetailTitle>MBTI</DetailTitle>
-                        <DetailValue>{profile?.mbti}</DetailValue>
-                      </DetailRow>
-                    </motion.div>
-                  </UserDetailContainer>
-                </motion.div>
-              </ProfileCard>
+              </GlassCard>
 
-              <StatsCard
+              <GlassCard
                 variants={cardVariants}
                 initial="hidden"
                 animate="visible"
                 transition={{ delay: 0.2 }}
                 whileHover={{ scale: 1.02 }}
               >
-                <StatsTitle
-                  initial={{ y: -20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ duration: 0.6, delay: 0.4 }}
-                >
-                  게임 통계
-                </StatsTitle>
-                <motion.div
-                  variants={containerVariants}
-                  initial="hidden"
-                  animate="visible"
-                  transition={{ delay: 0.3 }}
-                  style={{ width: '100%' }}
-                >
-                  <StatsContainer>
-                    <DetailRow variants={itemVariants} whileHover={{ scale: 1.02 }}>
-                      <DetailTitle>총 획득 호감도</DetailTitle>
-                      <DetailValue>{profile?.totalScore || 0}</DetailValue>
-                    </DetailRow>
-                    <DetailRow variants={itemVariants} whileHover={{ scale: 1.02 }}>
-                      <DetailTitle>총 회귀수</DetailTitle>
-                      <DetailValue>{profile?.totalRegressionCount || 0}</DetailValue>
-                    </DetailRow>
-                  </StatsContainer>
-                </motion.div>
-              </StatsCard>
+                <StatsContent
+                  profile={profile}
+                  itemVariants={itemVariants}
+                  containerVariants={containerVariants}
+                />
+              </GlassCard>
             </MobileContainer>
           </motion.div>
         )}

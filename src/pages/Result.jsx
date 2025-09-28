@@ -64,7 +64,6 @@ function Result() {
         }
       );
 
-      console.log(response.data);
       // Handle success (e.g., display a success message, redirect to another page, etc.)
     } catch (error) {
       console.error(error);
