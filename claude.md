@@ -39,6 +39,7 @@ border-radius: 20px;
 
 ### 코딩 컨벤션
 - **Boolean 변수**: `is` 접두사 사용 (예: `isPasswordVisible`, `isLoading`)
+- **아이콘**: Bootstrap Icons SVG 우선 사용 (`react-bootstrap-icons` 패키지)
 
 ### 이미지 명명법
 - **구조**: `{카테고리}_{위치}_{상태}.png`
