@@ -676,16 +676,23 @@ function Profile() {
                         {new Date(profile?.birthDate).toLocaleDateString()}
                       </DetailValue>
                     </DetailRow>
-                    <DetailRow variants={itemVariants} whileHover={{ scale: 1.02 }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: 1, justifyContent: 'flex-start' }}>
+                    <motion.div
+                      variants={itemVariants}
+                      style={{
+                        display: 'flex',
+                        gap: '12px',
+                        width: '100%'
+                      }}
+                    >
+                      <DetailRow style={{ flex: 1 }} whileHover={{ scale: 1.02 }}>
                         <DetailTitle>성별</DetailTitle>
                         <DetailValue>{profile?.gender}</DetailValue>
-                      </div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: 1, justifyContent: 'flex-end' }}>
+                      </DetailRow>
+                      <DetailRow style={{ flex: 1 }} whileHover={{ scale: 1.02 }}>
                         <DetailTitle>MBTI</DetailTitle>
                         <DetailValue>{profile?.mbti}</DetailValue>
-                      </div>
-                    </DetailRow>
+                      </DetailRow>
+                    </motion.div>
                   </UserDetailContainer>
                 </motion.div>
               </ProfileCard>
@@ -773,16 +780,23 @@ function Profile() {
                         {new Date(profile?.birthDate).toLocaleDateString()}
                       </DetailValue>
                     </DetailRow>
-                    <DetailRow variants={itemVariants} whileHover={{ scale: 1.02 }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: 1, justifyContent: 'flex-start' }}>
+                    <motion.div
+                      variants={itemVariants}
+                      style={{
+                        display: 'flex',
+                        gap: '12px',
+                        width: '100%'
+                      }}
+                    >
+                      <DetailRow style={{ flex: 1 }} whileHover={{ scale: 1.02 }}>
                         <DetailTitle>성별</DetailTitle>
                         <DetailValue>{profile?.gender}</DetailValue>
-                      </div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: 1, justifyContent: 'flex-end' }}>
+                      </DetailRow>
+                      <DetailRow style={{ flex: 1 }} whileHover={{ scale: 1.02 }}>
                         <DetailTitle>MBTI</DetailTitle>
                         <DetailValue>{profile?.mbti}</DetailValue>
-                      </div>
-                    </DetailRow>
+                      </DetailRow>
+                    </motion.div>
                   </UserDetailContainer>
                 </motion.div>
               </ProfileCard>

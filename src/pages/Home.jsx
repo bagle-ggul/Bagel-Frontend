@@ -259,7 +259,7 @@ const BottomRightButtonGroup = styled.div`
   bottom: 20px;
   right: 20px;
   display: flex;
-  gap: 1rem;
+  gap: 0.5rem;
   align-items: center;
   z-index: 100;
 
