@@ -130,6 +130,10 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "ranking",
+        element: <Navigate to="/board/1" />,
+      },
+      {
         path: "board/:page",
         element: (
           <ProtectedRoute>
