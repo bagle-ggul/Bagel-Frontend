@@ -1,0 +1,145 @@
+{
+  "story": {
+    "id": "intro",
+    "title": "첫 만남의 시작",
+    "metadata": {
+      "version": "1.0",
+      "author": "SaveHer Team",
+      "lastModified": "2025-01-15"
+    },
+    "characters": {
+      "mc": {
+        "id": "mc",
+        "name": "나",
+        "displayName": "주인공",
+        "color": "#6B73FF",
+        "position": "left",
+        "avatar": "/img/mc_main.png"
+      },
+      "sujung": {
+        "id": "sujung",
+        "name": "이수정",
+        "displayName": "수정",
+        "color": "#FF69B4",
+        "position": "right",
+        "avatar": "/img/her_main_happy.png"
+      },
+      "mystery_man": {
+        "id": "mystery_man",
+        "name": "신비한 남자",
+        "displayName": "???",
+        "color": "#8A2BE2",
+        "position": "center",
+        "avatar": "/img/mystery_man.png"
+      }
+    },
+    "settings": {
+      "defaultBackground": "bg_intro_main",
+      "defaultBgm": "intro.mp3",
+      "defaultDuration": 4000,
+      "autoProgress": true
+    },
+    "scenes": [
+      {
+        "id": 1,
+        "speaker": "mc",
+        "text": "드디어 오늘이네... 그녀와 단둘이 바닷가로 여행! 오늘은 정말 좋아한다고 말해야지.",
+        "emotion": "excited",
+        "background": "bg_house_main",
+        "duration": 4000,
+        "effects": ["fadeIn"]
+      },
+      {
+        "id": 2,
+        "speaker": "sujung",
+        "text": "이 파도 정말 시원해! 어서 와서 같이 놀자!",
+        "emotion": "happy",
+        "background": "bg_beach_main",
+        "duration": 3500
+      },
+      {
+        "id": 3,
+        "speaker": "mc",
+        "text": "안 돼! 조심해!",
+        "emotion": "worried",
+        "background": "bg_beach_main",
+        "duration": 2500
+      },
+      {
+        "id": 4,
+        "speaker": "mc",
+        "text": "아.. 안 돼... 아직... 좋아한다고 말도 못했는데...",
+        "emotion": "sad",
+        "background": "bg_beach_dark",
+        "duration": 4500
+      },
+      {
+        "id": 5,
+        "speaker": "mystery_man",
+        "text": "그녀를 구하고 싶은가?",
+        "emotion": "mysterious",
+        "background": "bg_beach_dark",
+        "duration": 3000,
+        "effects": ["mysterious_appear"]
+      },
+      {
+        "id": 6,
+        "speaker": "mc",
+        "text": "누구세요? 대체 어떻게...",
+        "emotion": "surprised",
+        "background": "bg_beach_dark",
+        "duration": 3000
+      },
+      {
+        "id": 7,
+        "speaker": "mystery_man",
+        "text": "나는 너에게 시간을 되돌릴 수 있는 능력을 줄 수 있어. 진심으로 그녀를 구하고 싶나?",
+        "emotion": "serious",
+        "background": "bg_beach_dark",
+        "duration": 5000
+      },
+      {
+        "id": 8,
+        "speaker": "mc",
+        "text": "시간을 되돌릴 수 있다고요? 무슨 말도 안되는 소리예요?! 장난치지 마세요!",
+        "emotion": "angry",
+        "background": "bg_beach_dark",
+        "duration": 4500
+      },
+      {
+        "id": 9,
+        "speaker": "mystery_man",
+        "text": "그녀를 구하고 싶지 않은 건가?",
+        "emotion": "calm",
+        "background": "bg_beach_dark",
+        "duration": 3000
+      },
+      {
+        "id": 10,
+        "speaker": "mc",
+        "text": "…. 구하고 싶어요!",
+        "emotion": "determined",
+        "background": "bg_beach_dark",
+        "duration": 3000
+      },
+      {
+        "id": 11,
+        "speaker": "mystery_man",
+        "text": "그럼 알겠다. 하지만 시간을 돌리는 능력을 무한정 쓸 수 있진 않으니 조심하도록 해.",
+        "emotion": "warning",
+        "background": "bg_beach_dark",
+        "duration": 5000,
+        "effects": ["power_transfer"]
+      },
+      {
+        "id": 12,
+        "speaker": "mc",
+        "text": "여긴... 집이잖아? 정말... 여행 전으로 돌아왔어... 이번엔 꼭 그녀를 구하고 고백할 거야.",
+        "emotion": "hopeful",
+        "background": "bg_house_main",
+        "duration": 5000,
+        "effects": ["time_rewind", "fadeOut"]
+      }
+    ]
+  }
+}
