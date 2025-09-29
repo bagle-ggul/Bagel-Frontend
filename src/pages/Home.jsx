@@ -363,38 +363,49 @@ const LogoutButton = styled.button`
   }
 `;
 
-const BottomVersionInfo = styled.div`
+const BottomVersionInfo = styled.a`
   position: fixed;
-  bottom: 15px;
-  left: 15px;
-  background: rgba(0, 0, 0, 0.2);
+  bottom: 20px;
+  left: 20px;
+  background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.6);
-  padding: 0.5rem 0.8rem;
-  border-radius: 8px;
-  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  font-size: 1rem;
   font-weight: 500;
+  cursor: pointer;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  width: fit-content;
+  text-decoration: none;
+  display: block;
   z-index: 100;
 
   &:hover {
-    background: rgba(0, 0, 0, 0.3);
-    color: rgba(255, 255, 255, 0.8);
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  }
+
+  &:active {
+    transform: translateY(0);
   }
 
   @media (max-width: 768px) {
-    bottom: 10px;
-    left: 10px;
-    font-size: 0.75rem;
-    padding: 0.4rem 0.6rem;
+    font-size: 0.9rem;
+    padding: 0.8rem 1.2rem;
+    bottom: 15px;
+    left: 15px;
   }
 
   @media (max-width: 480px) {
-    bottom: 8px;
-    left: 8px;
-    font-size: 0.7rem;
-    padding: 0.3rem 0.5rem;
+    font-size: 0.8rem;
+    padding: 0.7rem 1rem;
+    bottom: 10px;
+    left: 10px;
   }
 `;
 
@@ -2141,7 +2152,12 @@ function Home() {
       </AnimatePresence>
 
       {/* 왼쪽 아래 버전 정보 */}
-      <BottomVersionInfo>
+      <BottomVersionInfo
+        href="https://github.com/bagle-ggul/Bagel-Frontend/blob/main/CHANGELOG.md"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="Changelog 확인"
+      >
         v{APP_VERSION}
       </BottomVersionInfo>
     </div>
