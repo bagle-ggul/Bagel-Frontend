@@ -15,7 +15,7 @@ import Intro from "./pages/Intro";
 import Board from "./pages/Board";
 import Hidden from "./pages/Hidden";
 import GameOver from "./pages/GameOver";
-import MyGameResult from "./pages/MyGameResult";
+// import MyGameResult from "./pages/MyGameResult"; // 현재 사용하지 않음
 
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem("refreshToken");
