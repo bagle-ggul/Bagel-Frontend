@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 import { colors, glassmorphism, media } from '../styles/theme';
 import { Play, Pause, ChevronLeft, ChevronRight, Check } from 'react-bootstrap-icons';
-import { personalizeDialogue } from '../utils/nameUtils';
 
 // 애니메이션 키프레임
 const fadeIn = keyframes`
@@ -30,10 +29,43 @@ const DialogueContainer = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  padding: 0 2rem 6rem 2rem;
+  padding: 0 2rem;
+  padding-bottom: calc(33vh - 100px); /* 100px 더 내림 */
 
   ${media.mobile} {
-    padding: 0 1rem 5rem 1rem;
+    padding: 0 1rem;
+    padding-bottom: calc(33vh - 100px);
+  }
+`;
+
+// 대화창 위에 떠있는 캐릭터 컨테이너 (메인화면 스타일)
+const CharacterContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 1rem;
+
+  ${media.mobile} {
+    gap: 0;
+    margin-bottom: 0.5rem;
+  }
+`;
+
+const CharacterImage = styled.div`
+  width: 600px; /* 1200px의 절반 */
+  height: 400px; /* 800px의 절반 */
+  background-image: url(${props => props.src});
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  animation: ${fadeIn} 0.8s ease-out;
+  margin-bottom: -20px; /* 큰 화면에서 더 가깝게 */
+
+  ${media.mobile} {
+    width: 500px; /* 1000px의 절반 */
+    height: 320px; /* 640px의 절반 */
+    margin-bottom: -10px; /* 모바일에서는 -10px */
   }
 `;
 
@@ -256,6 +288,13 @@ const DialogueSystem = ({
 
   return (
     <DialogueContainer>
+      {/* 캐릭터 이미지 - 대화창 위에 떠있도록 */}
+      {currentScene.characterImage && (
+        <CharacterContainer>
+          <CharacterImage src={currentScene.characterImage} />
+        </CharacterContainer>
+      )}
+
       {/* 대화창 */}
       <DialogueBox onClick={handleDialogueClick}>
         {/* 캐릭터 네임플레이트 */}
@@ -267,7 +306,7 @@ const DialogueSystem = ({
 
         {/* 대화 텍스트 */}
         <DialogueText isTyping={isTyping}>
-          {personalizeDialogue(currentScene.text, userData)}
+          {currentScene.text}
         </DialogueText>
 
         {/* 진행바 */}
