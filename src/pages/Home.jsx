@@ -50,7 +50,7 @@ const MainWrapper = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 7rem;
+  font-size: 6rem;
   font-weight: 800;
   letter-spacing: -0.02em;
   margin: 0 0 10px 0;
@@ -86,7 +86,6 @@ const VersionInfo = styled.div`
   justify-content: center;
   font-size: 1.2rem;
   opacity: 0.7;
-  margin-top: 0.5rem;
   transition: opacity 0.3s ease;
 
   &:hover {
@@ -95,7 +94,6 @@ const VersionInfo = styled.div`
 
   @media (max-width: 768px) {
     font-size: 1rem;
-    margin-top: 0.4rem;
   }
 
   @media (max-width: 480px) {
@@ -107,9 +105,33 @@ const VersionText = styled.span`
   font-weight: 500;
 `;
 
-const ChangelogLink = styled.a`
+const IconControlGroup = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  @media (max-width: 768px) {
+    margin-top: 0.4rem;
+  }
+
+  @media (max-width: 480px) {
+    margin-top: 0.3rem;
+  }
+`;
+
+// 공유 스타일 상수 - ChangelogLink와 MusicControlButton이 동일한 스타일 사용
+const sharedLinkButtonStyles = `
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   color: inherit;
   text-decoration: none;
   transition: all 0.3s ease;
@@ -117,10 +139,16 @@ const ChangelogLink = styled.a`
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.1);
   margin-left: 0.5rem;
+  border: none;
+  cursor: pointer;
 
   &:hover {
     background: rgba(255, 255, 255, 0.2);
     transform: translateY(-1px);
+  }
+
+  &:focus {
+    outline: none;
   }
 
   svg {
@@ -141,6 +169,10 @@ const ChangelogLink = styled.a`
       height: 16px;
     }
   }
+`;
+
+const ChangelogLink = styled.a`
+  ${sharedLinkButtonStyles}
 `;
 
 const ButtonGroup = styled.div`
@@ -328,6 +360,41 @@ const LogoutButton = styled.button`
   @media (max-width: 480px) {
     font-size: 0.8rem;
     padding: 0.7rem 1rem;
+  }
+`;
+
+const BottomVersionInfo = styled.div`
+  position: fixed;
+  bottom: 15px;
+  left: 15px;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.6);
+  padding: 0.5rem 0.8rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  z-index: 100;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.3);
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  @media (max-width: 768px) {
+    bottom: 10px;
+    left: 10px;
+    font-size: 0.75rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  @media (max-width: 480px) {
+    bottom: 8px;
+    left: 8px;
+    font-size: 0.7rem;
+    padding: 0.3rem 0.5rem;
   }
 `;
 
@@ -966,6 +1033,27 @@ const MbtiResult = styled.div`
   }
 `;
 
+// 음악 컨트롤 관련 스타일 컴포넌트
+const VersionControlGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.5rem;
+
+  @media (max-width: 768px) {
+    margin-top: 0.4rem;
+  }
+
+  @media (max-width: 480px) {
+    margin-top: 0.3rem;
+  }
+`;
+
+const MusicControlButton = styled.button`
+  ${sharedLinkButtonStyles}
+`;
+
 // 생일 선택 컴포넌트
 const BirthDateContainer = styled.div`
   display: flex;
@@ -1037,6 +1125,7 @@ function Home() {
   const [showCredits, setShowCredits] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
+  const [showLoginRequired, setShowLoginRequired] = useState(false);
   const [characterImage, setCharacterImage] = useState("/img/her_home_v1.png");
 
   // 로그인 폼 상태
@@ -1065,12 +1154,41 @@ function Home() {
   const [gender, setGender] = useState("");
   const [signupError, setSignupError] = useState("");
 
+  // 배경음악 컨트롤 상태
+  const [isMuted, setIsMuted] = useState(() => {
+    return localStorage.getItem('musicMuted') === 'true';
+  });
+  const [audioRef] = useState(new Audio('/audio/main_once-again.m4a'));
+
   useEffect(() => {
     const token = localStorage.getItem("refreshToken");
     if (token) {
       setIsAuthenticated(true);
     }
   }, []);
+
+  // 배경음악 초기 설정 및 정리
+  useEffect(() => {
+    audioRef.loop = true;
+    audioRef.volume = 0.3;
+
+    // 음소거 상태가 아니면 재생 시도
+    if (!isMuted) {
+      const playPromise = audioRef.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // 자동재생이 차단된 경우 음소거 상태로 설정
+          setIsMuted(true);
+          localStorage.setItem('musicMuted', 'true');
+        });
+      }
+    }
+
+    return () => {
+      audioRef.pause();
+      audioRef.currentTime = 0;
+    };
+  }, [audioRef, isMuted]);
 
   // 화면 크기에 따른 캐릭터 이미지 변경
   useEffect(() => {
@@ -1249,6 +1367,35 @@ function Home() {
     setGender("");
   };
 
+  const handleRankingClick = () => {
+    if (isAuthenticated) {
+      window.location.href = "/board";
+    } else {
+      setShowLoginRequired(true);
+    }
+  };
+
+  const closeLoginRequiredModal = () => {
+    setShowLoginRequired(false);
+  };
+
+  // 배경음악 토글 함수
+  const toggleMusic = () => {
+    const newMutedState = !isMuted;
+    setIsMuted(newMutedState);
+    localStorage.setItem('musicMuted', newMutedState.toString());
+
+    if (newMutedState) {
+      audioRef.pause();
+    } else {
+      audioRef.play().catch(() => {
+        // 재생 실패시 다시 음소거 상태로
+        setIsMuted(true);
+        localStorage.setItem('musicMuted', 'true');
+      });
+    }
+  };
+
   const teamMembers = [
     { name: "서새찬", role: "Backend, Frontend, 발표 및 Document 문서화" },
     { name: "이창규", role: "Frontend, 이미지 생성" },
@@ -1285,30 +1432,36 @@ function Home() {
           transition={{ duration: 0.6 }}
         >
           <Title>Re: WAVE</Title>
-          <Subtitle>당신의 선택이 그녀의 운명을 결정합니다</Subtitle>
-          <VersionInfo>
-            <VersionText>v{APP_VERSION}</VersionText>
+          <Subtitle>선택의 순간, 그녀의 운명이 갈린다.</Subtitle>
+          <IconControlGroup>
             <ChangelogLink
-              href="https://github.com/bagle-ggul/Bagel-Frontend/blob/main/CHANGELOG.md"
+              href="https://github.com/bagle-ggul"
               target="_blank"
               rel="noopener noreferrer"
-              title="Changelog 확인"
+              title="GitHub 저장소"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                />
+              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
               </svg>
             </ChangelogLink>
-          </VersionInfo>
+            <MusicControlButton
+              onClick={toggleMusic}
+              aria-label={isMuted ? "배경음악 켜기" : "배경음악 끄기"}
+              title={isMuted ? "배경음악 켜기" : "배경음악 끄기"}
+            >
+              {isMuted ? (
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06zM6 5.04 4.312 6.39A.5.5 0 0 1 4 6.5H2v3h2a.5.5 0 0 1 .312.11L6 10.96V5.04zm7.854.606a.5.5 0 0 1 0 .708L12.207 8l1.647 1.646a.5.5 0 0 1-.708.708L11.5 8.707l-1.646 1.647a.5.5 0 0 1-.708-.708L10.793 8 9.146 6.354a.5.5 0 1 1 .708-.708L11.5 7.293l1.646-1.647a.5.5 0 0 1 .708 0z"/>
+                </svg>
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.473 8.473 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707z"/>
+                  <path d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.483 5.483 0 0 1 11.025 8a5.483 5.483 0 0 1-1.61 3.89l.706.706z"/>
+                  <path d="M8.707 11.182A4.486 4.486 0 0 0 10.025 8a4.486 4.486 0 0 0-1.318-3.182L8 5.525A3.489 3.489 0 0 1 9.025 8 3.49 3.49 0 0 1 8 10.475l.707.707zM6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06z"/>
+                </svg>
+              )}
+            </MusicControlButton>
+          </IconControlGroup>
         </motion.div>
         <ButtonGroup>
           {isAuthenticated ? (
@@ -1336,7 +1489,9 @@ function Home() {
                 </SecondaryButtonModal>
               </ButtonWrapper>
               <ButtonWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <SecondaryButton to="/board">랭킹 보기</SecondaryButton>
+                <SecondaryButtonModal onClick={handleRankingClick}>
+                  랭킹 보기
+                </SecondaryButtonModal>
               </ButtonWrapper>
             </>
           )}
@@ -1366,30 +1521,36 @@ function Home() {
             transition={{ duration: 0.6 }}
           >
             <Title>Re: WAVE</Title>
-            <Subtitle>당신의 선택이 그녀의 운명을 결정합니다</Subtitle>
-            <VersionInfo>
-              <VersionText>v{APP_VERSION}</VersionText>
+            <Subtitle>선택의 순간, 그녀의 운명이 갈린다.</Subtitle>
+            <IconControlGroup>
               <ChangelogLink
-                href="https://github.com/bagle-ggul/Bagel-Frontend/blob/main/CHANGELOG.md"
+                href="https://github.com/bagle-ggul"
                 target="_blank"
                 rel="noopener noreferrer"
-                title="Changelog 확인"
+                title="GitHub 저장소"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                  />
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
                 </svg>
               </ChangelogLink>
-            </VersionInfo>
+              <MusicControlButton
+                onClick={toggleMusic}
+                aria-label={isMuted ? "배경음악 켜기" : "배경음악 끄기"}
+                title={isMuted ? "배경음악 켜기" : "배경음악 끄기"}
+              >
+                {isMuted ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06zM6 5.04 4.312 6.39A.5.5 0 0 1 4 6.5H2v3h2a.5.5 0 0 1 .312.11L6 10.96V5.04zm7.854.606a.5.5 0 0 1 0 .708L12.207 8l1.647 1.646a.5.5 0 0 1-.708.708L11.5 8.707l-1.646 1.647a.5.5 0 0 1-.708-.708L10.793 8 9.146 6.354a.5.5 0 1 1 .708-.708L11.5 7.293l1.646-1.647a.5.5 0 0 1 .708 0z"/>
+                  </svg>
+                ) : (
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.473 8.473 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707z"/>
+                    <path d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.483 5.483 0 0 1 11.025 8a5.483 5.483 0 0 1-1.61 3.89l.706.706z"/>
+                    <path d="M8.707 11.182A4.486 4.486 0 0 0 10.025 8a4.486 4.486 0 0 0-1.318-3.182L8 5.525A3.489 3.489 0 0 1 9.025 8 3.49 3.49 0 0 1 8 10.475l.707.707zM6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06z"/>
+                  </svg>
+                )}
+              </MusicControlButton>
+            </IconControlGroup>
           </motion.div>
           <ButtonGroup>
             {isAuthenticated ? (
@@ -1417,7 +1578,9 @@ function Home() {
                   </SecondaryButtonModal>
                 </ButtonWrapper>
                 <ButtonWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <SecondaryButton to="/board">랭킹 보기</SecondaryButton>
+                  <SecondaryButtonModal onClick={handleRankingClick}>
+                    랭킹 보기
+                  </SecondaryButtonModal>
                 </ButtonWrapper>
               </>
             )}
@@ -1899,7 +2062,88 @@ function Home() {
             </ModalContent>
           </ModalOverlay>
         )}
+
+        {showLoginRequired && (
+          <ModalOverlay
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={closeLoginRequiredModal}
+          >
+            <ModalContent
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <ModalTitle>로그인 필요</ModalTitle>
+              <TeamInfo>
+                <TeamDetails>
+                  <DetailRow>
+                    <span>랭킹 보기는 로그인 후 이용할 수 있습니다.</span>
+                  </DetailRow>
+                  <DetailRow>
+                    <span>로그인하여 다른 플레이어들과 점수를 비교해보세요!</span>
+                  </DetailRow>
+                </TeamDetails>
+              </TeamInfo>
+              <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '1.5rem' }}>
+                <SubmitButton
+                  type="button"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => {
+                    setShowLoginRequired(false);
+                    setShowLogin(true);
+                  }}
+                >
+                  로그인하기
+                </SubmitButton>
+                <SubmitButton
+                  type="button"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => {
+                    setShowLoginRequired(false);
+                    setShowSignup(true);
+                  }}
+                  style={{
+                    background: 'rgba(255, 255, 255, 0.15)',
+                    border: '1px solid rgba(255, 255, 255, 0.3)'
+                  }}
+                >
+                  회원가입하기
+                </SubmitButton>
+              </div>
+              <IconCloseButton
+                onClick={closeLoginRequiredModal}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                aria-label="모달 닫기"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </IconCloseButton>
+            </ModalContent>
+          </ModalOverlay>
+        )}
       </AnimatePresence>
+
+      {/* 왼쪽 아래 버전 정보 */}
+      <BottomVersionInfo>
+        v{APP_VERSION}
+      </BottomVersionInfo>
     </div>
   );
 }
