@@ -138,7 +138,7 @@ const sharedLinkButtonStyles = `
   padding: 0.3rem 0.5rem;
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.1);
-  margin-left: 0.5rem;
+  margin-top: 0.4rem;
   border: none;
   cursor: pointer;
 
@@ -502,7 +502,7 @@ const MobileMainWrapper = styled.div`
     padding: 1.5rem 1.2rem;
     width: 90vw;
     max-width: 90vw;
-    gap: 1rem;
+    gap: 0.5rem;
   }
 `;
 
