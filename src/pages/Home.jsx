@@ -363,6 +363,41 @@ const LogoutButton = styled.button`
   }
 `;
 
+const BottomVersionInfo = styled.div`
+  position: fixed;
+  bottom: 15px;
+  left: 15px;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.6);
+  padding: 0.5rem 0.8rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  z-index: 100;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.3);
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  @media (max-width: 768px) {
+    bottom: 10px;
+    left: 10px;
+    font-size: 0.75rem;
+    padding: 0.4rem 0.6rem;
+  }
+
+  @media (max-width: 480px) {
+    bottom: 8px;
+    left: 8px;
+    font-size: 0.7rem;
+    padding: 0.3rem 0.5rem;
+  }
+`;
+
 const CharacterWrapper = styled.div`
   position: absolute;
   left: 5%;
@@ -1398,30 +1433,17 @@ function Home() {
         >
           <Title>Re: WAVE</Title>
           <Subtitle>선택의 순간, 그녀의 운명이 갈린다.</Subtitle>
-          <VersionControlGroup>
-            <VersionInfo>
-              <VersionText>v{APP_VERSION}</VersionText>
-              <ChangelogLink
-                href="https://github.com/bagle-ggul/Bagel-Frontend/blob/main/CHANGELOG.md"
-                target="_blank"
-                rel="noopener noreferrer"
-                title="Changelog 확인"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                  />
-                </svg>
-              </ChangelogLink>
-            </VersionInfo>
+          <IconControlGroup>
+            <ChangelogLink
+              href="https://github.com/bagle-ggul"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="GitHub 저장소"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+              </svg>
+            </ChangelogLink>
             <MusicControlButton
               onClick={toggleMusic}
               aria-label={isMuted ? "배경음악 켜기" : "배경음악 끄기"}
@@ -1439,7 +1461,7 @@ function Home() {
                 </svg>
               )}
             </MusicControlButton>
-          </VersionControlGroup>
+          </IconControlGroup>
         </motion.div>
         <ButtonGroup>
           {isAuthenticated ? (
@@ -1500,30 +1522,17 @@ function Home() {
           >
             <Title>Re: WAVE</Title>
             <Subtitle>선택의 순간, 그녀의 운명이 갈린다.</Subtitle>
-            <VersionControlGroup>
-              <VersionInfo>
-                <VersionText>v{APP_VERSION}</VersionText>
-                <ChangelogLink
-                  href="https://github.com/bagle-ggul/Bagel-Frontend/blob/main/CHANGELOG.md"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  title="Changelog 확인"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                    />
-                  </svg>
-                </ChangelogLink>
-              </VersionInfo>
+            <IconControlGroup>
+              <ChangelogLink
+                href="https://github.com/bagle-ggul"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="GitHub 저장소"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                </svg>
+              </ChangelogLink>
               <MusicControlButton
                 onClick={toggleMusic}
                 aria-label={isMuted ? "배경음악 켜기" : "배경음악 끄기"}
@@ -1541,7 +1550,7 @@ function Home() {
                   </svg>
                 )}
               </MusicControlButton>
-            </VersionControlGroup>
+            </IconControlGroup>
           </motion.div>
           <ButtonGroup>
             {isAuthenticated ? (
@@ -2130,6 +2139,11 @@ function Home() {
           </ModalOverlay>
         )}
       </AnimatePresence>
+
+      {/* 왼쪽 아래 버전 정보 */}
+      <BottomVersionInfo>
+        v{APP_VERSION}
+      </BottomVersionInfo>
     </div>
   );
 }
