@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
-import { Images, Download, X, ChevronLeft, ChevronRight } from "react-bootstrap-icons";
+import { Download, X, ChevronLeft, ChevronRight } from "react-bootstrap-icons";
 
 // 프로젝트 이미지 목록 (01부터 순서대로)
 const PROJECT_IMAGES = [

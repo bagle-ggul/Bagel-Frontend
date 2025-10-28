@@ -1,11 +1,34 @@
 {
   "metadata": {
-    "lastUpdated": "2025-09-29T15:51:10Z",
-    "currentVersion": "1.4.1",
+    "lastUpdated": "2025-10-28T00:38:09Z",
+    "currentVersion": "1.4.3",
     "projectType": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
-    "totalReleases": 18
+    "totalReleases": 19
   },
   "releases": [
+    {
+      "version": "1.4.3",
+      "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
+      "date": "2025-10-28",
+      "pr_number": 90,
+      "raw_summary": "Summary by CodeRabbit\n릴리스 노트\n\n\nDocumentation\n\n포괄적인 개발 워크플로우 가이드 추가 (분석, 빌드, 설계, 테스트, 리팩토링 등)\n프로젝트 유형별 맞춤형 구현 지침 및 참고 자료 제공\n\n\n\nChores\n\n버전 1.4.1에서 1.4.3으로 업데이트\n내부 코드 정리 및 최적화",
+      "parsed_changes": {
+        "documentation": {
+          "title": "Documentation",
+          "items": [
+            "포괄적인 개발 워크플로우 가이드 추가 (분석, 빌드, 설계, 테스트, 리팩토링 등)",
+            "프로젝트 유형별 맞춤형 구현 지침 및 참고 자료 제공"
+          ]
+        },
+        "chores": {
+          "title": "Chores",
+          "items": [
+            "버전 1.4.1에서 1.4.3으로 업데이트",
+            "내부 코드 정리 및 최적화"
+          ]
+        }
+      }
+    },
     {
       "version": "1.4.1",
       "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
