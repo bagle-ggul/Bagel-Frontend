@@ -1,6 +1,8 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 
 import RequireAuth from "./components/RequireAuth";
+import RequireProgress from "./components/RequireProgress";
+import { ROUTES } from "./constants/routes";
 import Board from "./pages/Board";
 import GameOver from "./pages/GameOver";
 import Happy from "./pages/Happy";
@@ -14,135 +16,66 @@ import Main3 from "./pages/Main3";
 import Main4 from "./pages/Main4";
 import Main5 from "./pages/Main5";
 import Middle from "./pages/Middle";
+import NotFound from "./pages/NotFound";
 import Profile from "./pages/Profile";
 import Result from "./pages/Result";
 import Sad from "./pages/Sad";
-// import MyGameResult from "./pages/MyGameResult"; // 현재 사용하지 않음
+
+/** 로그인만 필요한 화면 */
+const authOnly = (element) => <RequireAuth>{element}</RequireAuth>;
+
+/** 로그인 + 해당 스테이지까지 진행했어야 하는 화면 */
+const stageGuarded = (element, stage) => (
+  <RequireAuth>
+    <RequireProgress stage={stage}>{element}</RequireProgress>
+  </RequireAuth>
+);
+
+/** 로그인 + 게임을 끝냈어야 하는 화면 (결과·엔딩) */
+const completedOnly = (element) => (
+  <RequireAuth>
+    <RequireProgress requireCompleted>{element}</RequireProgress>
+  </RequireAuth>
+);
+
+/** 로그인 + 게임을 시작했어야 하는 화면 (게임오버는 플레이 도중 발생한다) */
+const startedOnly = (element) => (
+  <RequireAuth>
+    <RequireProgress requireStarted>{element}</RequireProgress>
+  </RequireAuth>
+);
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: ROUTES.HOME,
+    // 정의되지 않은 주소는 여기서 404 화면으로 처리한다
+    errorElement: <NotFound />,
     children: [
-      {
-        path: "",
-        element: <Home />,
-      },
-      {
-        path: "help",
-        element: <Help />,
-      },
-      {
-        path: "main1",
-        element: (
-          <RequireAuth>
-            <Main1 />
-          </RequireAuth>
-        ),
-      },
-      {
-        path: "main2",
-        element: (
-          <RequireAuth>
-            <Main2 />
-          </RequireAuth>
-        ),
-      },
-      {
-        path: "main3",
-        element: (
-          <RequireAuth>
-            <Main3 />
-          </RequireAuth>
-        ),
-      },
-      {
-        path: "main4",
-        element: (
-          <RequireAuth>
-            <Main4 />
-          </RequireAuth>
-        ),
-      },
-      {
-        path: "main5",
-        element: (
-          <RequireAuth>
-            <Main5 />
-          </RequireAuth>
-        ),
-      },
-      {
-        path: "profile",
-        element: (
-          <RequireAuth>
-            <Profile />
-          </RequireAuth>
-        ),
-      },
-      {
-        path: "intro",
-        element: <Intro />,
-      },
-      {
-        path: "happy",
-        element: (
-          <RequireAuth>
-            <Happy />
-          </RequireAuth>
-        ),
-      },
-      {
-        path: "middle",
-        element: (
-          <RequireAuth>
-            <Middle />
-          </RequireAuth>
-        ),
-      },
-      {
-        path: "sad",
-        element: (
-          <RequireAuth>
-            <Sad />
-          </RequireAuth>
-        ),
-      },
-      {
-        path: "hidden",
-        element: (
-          <RequireAuth>
-            <Hidden />
-          </RequireAuth>
-        ),
-      },
-      {
-        path: "result",
-        element: (
-          <RequireAuth>
-            <Result />
-          </RequireAuth>
-        ),
-      },
-      {
-        path: "ranking",
-        element: <Navigate to="/board" />,
-      },
-      {
-        path: "board",
-        element: (
-          <RequireAuth>
-            <Board />
-          </RequireAuth>
-        ),
-      },
-      {
-        path: "over",
-        element: (
-          <RequireAuth>
-            <GameOver />
-          </RequireAuth>
-        ),
-      },
+      { path: "", element: <Home /> },
+      { path: "help", element: <Help /> },
+      { path: "intro", element: <Intro /> },
+
+      // 게임 스테이지 — 직전 스테이지까지 진행해야 진입할 수 있다
+      { path: "main1", element: stageGuarded(<Main1 />, 1) },
+      { path: "main2", element: stageGuarded(<Main2 />, 2) },
+      { path: "main3", element: stageGuarded(<Main3 />, 3) },
+      { path: "main4", element: stageGuarded(<Main4 />, 4) },
+      { path: "main5", element: stageGuarded(<Main5 />, 5) },
+
+      // 결과·엔딩 — 게임을 끝내야 볼 수 있다
+      { path: "result", element: completedOnly(<Result />) },
+      { path: "happy", element: completedOnly(<Happy />) },
+      { path: "middle", element: completedOnly(<Middle />) },
+      { path: "sad", element: completedOnly(<Sad />) },
+      { path: "hidden", element: completedOnly(<Hidden />) },
+      { path: "over", element: startedOnly(<GameOver />) },
+
+      // 부가 화면
+      { path: "board", element: authOnly(<Board />) },
+      { path: "profile", element: authOnly(<Profile />) },
+
+      // 위에 걸리지 않는 모든 경로
+      { path: "*", element: <NotFound /> },
     ],
   },
 ]);
