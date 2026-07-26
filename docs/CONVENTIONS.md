@@ -64,6 +64,15 @@
 
 ## 개발 환경 주의사항
 
+### 자동 생성 파일은 포맷 대상이 아니다
+
+`CHANGELOG.json`, `CHANGELOG.md`, `README.md`는 GitHub Actions가 자동으로 수정한다.
+Prettier를 적용하면 워크플로우가 다시 쓸 때 포맷이 어긋나 **CI 포맷 체크가 실패**한다.
+`.prettierignore`에 등록되어 있으니 빼지 않는다.
+
+(Phase 0에서 README를 "라인 단위 치환이라 안전하다"고 판단해 포함했다가, 실제로
+배포 후 CI가 깨지는 것을 확인하고 제외했다.)
+
 ### 린트와 빌드는 분리되어 있다
 
 `npm run build`와 `npm start`는 `DISABLE_ESLINT_PLUGIN=true`로 실행된다. CRA가 webpack

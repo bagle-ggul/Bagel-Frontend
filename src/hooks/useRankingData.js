@@ -96,7 +96,9 @@ export const useRankingData = (pageSize = 20) => {
           ...prev,
           isLoading: false,
           isInitialLoading: false,
-          error: error.message || "데이터를 불러오는 중 오류가 발생했습니다.",
+          // 원본 메시지(axios의 영문 문구)를 그대로 보여주면 사용자가 이해할 수 없다.
+          // 상세 내용은 위 logger.error로만 남긴다.
+          error: "랭킹을 불러오지 못했습니다. 잠시 후 다시 시도해주세요.",
         }));
       }
     }
