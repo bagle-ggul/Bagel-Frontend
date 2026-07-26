@@ -100,14 +100,19 @@ describe("useRankingData 에러 처리", () => {
     jest.clearAllMocks();
   });
 
-  it("요청이 실패하면 에러 메시지를 상태에 담는다", async () => {
-    axios.get.mockRejectedValue(new Error("서버 오류"));
+  // axios의 영문 원본 메시지를 사용자에게 그대로 보여주면 안 된다.
+  // 상세 내용은 로거로만 남기고 화면에는 한국어 안내를 띄운다.
+  it("요청이 실패하면 사용자용 한국어 안내를 상태에 담는다", async () => {
+    axios.get.mockRejectedValue(new Error("Request failed with status code 403"));
 
     const { result } = renderHook(() => useRankingData());
 
     await waitFor(() => expect(result.current.data.error).toBeTruthy());
 
-    expect(result.current.data.error).toBe("서버 오류");
+    expect(result.current.data.error).toBe(
+      "랭킹을 불러오지 못했습니다. 잠시 후 다시 시도해주세요."
+    );
+    expect(result.current.data.error).not.toContain("status code");
     expect(result.current.data.isLoading).toBe(false);
     expect(result.current.data.isInitialLoading).toBe(false);
   });
