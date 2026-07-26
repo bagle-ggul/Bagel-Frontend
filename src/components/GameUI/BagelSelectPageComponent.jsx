@@ -1,11 +1,13 @@
+import { motion, AnimatePresence } from "framer-motion";
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
-import { motion, AnimatePresence } from "framer-motion";
+
 import { scoreAtom, characterNameAtom } from "../../atom/atom";
-import BagelDialogBox from "./BagelDialogBox";
+
 import BagelChoiceButton from "./BagelChoiceButton";
+import BagelDialogBox from "./BagelDialogBox";
 
 const GameContainer = styled.div`
   width: 100vw;

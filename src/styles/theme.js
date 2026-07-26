@@ -182,7 +182,8 @@ export const componentStyles = {
   },
 };
 
-export default {
+// 익명 객체 export는 import 측에서 이름 추적이 어렵다
+const theme = {
   colors,
   glassmorphism,
   glassCard,
@@ -193,3 +194,5 @@ export default {
   media,
   componentStyles,
 };
+
+export default theme;

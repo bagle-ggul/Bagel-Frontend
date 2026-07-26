@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import styled, { keyframes, css } from "styled-components";
-import { colors, glassmorphism, media } from "../styles/theme";
 import { Play, Pause, ChevronLeft, ChevronRight, Check } from "react-bootstrap-icons";
+import styled, { keyframes, css } from "styled-components";
+
+import { colors, glassmorphism, media } from "../styles/theme";
 
 // 애니메이션 키프레임
 const fadeIn = keyframes`
@@ -12,12 +13,6 @@ const fadeIn = keyframes`
 const typewriterEffect = keyframes`
   from { width: 0; }
   to { width: 100%; }
-`;
-
-const mysteriousAppear = keyframes`
-  0% { opacity: 0; transform: scale(0.8) rotate(-5deg); }
-  50% { opacity: 0.5; transform: scale(1.1) rotate(2deg); }
-  100% { opacity: 1; transform: scale(1) rotate(0deg); }
 `;
 
 // 스타일 컴포넌트들
@@ -210,7 +205,8 @@ const DialogueSystem = ({
   enableControls = true,
 }) => {
   const [currentSceneIndex, setCurrentSceneIndex] = useState(0);
-  const [isTyping, setIsTyping] = useState(false);
+  // setIsTyping이 호출되는 곳이 없어 타이핑 효과가 항상 비활성 상태다 (별도 확인 필요)
+  const [isTyping] = useState(false);
   const [progress, setProgress] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const timerRef = useRef(null);
@@ -270,6 +266,10 @@ const DialogueSystem = ({
       if (timerRef.current) clearTimeout(timerRef.current);
       if (progressTimerRef.current) clearInterval(progressTimerRef.current);
     };
+    // nextScene을 의존성에 넣으려면 부모(Intro)의 onComplete까지 useCallback으로
+    // 안정화해야 한다. 그렇지 않으면 매 렌더마다 타이머가 리셋되어 씬이 진행되지 않는다.
+    // 인트로는 게임 시작 경로라 회귀 위험이 커, 컴포넌트 리팩토링 단계에서 함께 정리한다.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentSceneIndex, autoProgress, isPaused, currentScene, storyData]);
 
   // 클릭으로 다음 진행

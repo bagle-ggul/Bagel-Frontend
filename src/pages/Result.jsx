@@ -2,8 +2,10 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+
 import { scoreAtom } from "../atom/atom";
 import axios from "../utils/axios";
+import { logger } from "../utils/logger";
 
 const CenteredButton = styled.button`
   position: absolute;
@@ -43,8 +45,6 @@ function Result() {
   const navigate = useNavigate();
   const score = useRecoilValue(scoreAtom);
 
-  const refreshToken = localStorage.getItem("refreshToken"); // Retrieve the refresh token from local storage
-
   const handleSubmit = async () => {
     const userData = {
       finalScore: score,
@@ -54,17 +54,12 @@ function Result() {
     };
 
     try {
-      const response = await axios.post("/api/game/over", userData, {
-        headers: {
-          Authorization: `Bearer ${refreshToken}`,
-        },
-      });
-
-      // Handle success (e.g., display a success message, redirect to another page, etc.)
+      // 토큰은 axios 인터셉터가 주입한다
+      await axios.post("/api/game/over", userData);
     } catch (error) {
-      console.error(error);
-      alert("중복된 이메일입니다");
-      // Handle error (e.g., display an error message)
+      // 전송에 실패해도 엔딩은 그대로 보여준다. 기록만 남지 않을 뿐이다.
+      // (이전에는 회원가입 쪽 문구인 "중복된 이메일입니다"를 띄우고 있었다)
+      logger.error("게임 결과 전송 실패:", error);
     }
   };
 

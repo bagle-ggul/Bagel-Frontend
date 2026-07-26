@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import styled, { keyframes } from "styled-components";
 import { useNavigate } from "react-router-dom";
-import axios from "../utils/axios";
+import styled, { keyframes } from "styled-components";
+
 import DialogueSystem from "../components/DialogueSystem";
 import introStory from "../data/stories/intro.json";
+import axios from "../utils/axios";
+import { logger } from "../utils/logger";
 
 const fadeIn = keyframes`
   from {
@@ -67,33 +69,29 @@ const SkipButton = styled.button`
 const SelectPageComponent = () => {
   const navigate = useNavigate();
   const audioRef = useRef(null);
-  const accessToken = localStorage.getItem("refreshToken");
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  // loading 값을 참조하는 곳이 없다 — 로딩 UI 미구현 (별도 확인 필요)
+  const [, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get("/api/my-page", {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
+        const response = await axios.get("/api/my-page");
         setData(response.data);
         setLoading(false);
       } catch (error) {
-        // console.error("Error fetching profile:", error);
+        logger.error("프로필 조회 실패:", error);
         setLoading(false);
       }
     };
 
     fetchProfile();
-  }, [accessToken]);
+  }, []);
 
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.play().catch((error) => {
-        // console.error("Error playing audio:", error);
+        logger.warn("배경음 재생 실패:", error);
       });
     }
   }, []);

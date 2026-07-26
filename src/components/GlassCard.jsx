@@ -1,6 +1,7 @@
+import { motion } from "framer-motion";
 import React from "react";
 import styled from "styled-components";
-import { motion } from "framer-motion";
+
 import { glassCard } from "../styles/theme";
 
 const BaseCard = styled(motion.div)`
