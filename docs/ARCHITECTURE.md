@@ -64,17 +64,16 @@ src/
 **`/login`과 `/signup`은 존재하지 않는다.** 로그인과 회원가입은 `src/pages/Home.jsx` 내부의
 모달로 처리된다.
 
-> 이 사실이 문서화되지 않아 여러 곳에서 오해를 낳았다. `src/utils/axios.jsx`의 401 처리는
-> 존재하지 않는 `/login`으로 리다이렉트하며, 기존 `claude.md`에도 두 페이지가 있다고
-> 기술되어 있었다. Phase 1에서 axios 쪽을 정정한다.
+> 이 사실이 문서화되지 않아 여러 곳에서 오해를 낳았다. axios의 401 처리가 존재하지 않는
+> `/login`으로 리다이렉트했고, 기존 `claude.md`에도 두 페이지가 있다고 기술되어 있었다.
+> 둘 다 Phase 1에서 정정했다.
 
 ### 인증 보호 방식
 
-`src/Route.jsx` 안에 인라인으로 정의된 `ProtectedRoute`가 `refreshToken`의 **존재 여부만**
-확인한다. 만료·유효성 검증은 하지 않는다.
+`src/components/RequireAuth.jsx`가 보호 라우트 13개를 감싼다. `auth.js`의
+`isAuthenticated()`로 토큰 존재 여부를 확인하며, 미인증 시 `/`로 이동한다.
 
-`src/components/RequireAuth.jsx`라는 별도 컴포넌트가 있으나 **어디에서도 import되지 않는
-데드 코드**다. Phase 1에서 이쪽으로 일원화한다.
+만료 검증은 하지 않는다. 만료된 토큰은 API 401 응답 시 axios 인터셉터가 정리한다.
 
 ### 없는 페이지 처리
 
@@ -98,31 +97,31 @@ Recoil을 쓴다. atom은 `src/atom/atom.js`에 2개뿐이다.
 
 ## API 통신
 
-`src/utils/axios.jsx`가 axios 인스턴스를 만들어 export한다. 모든 호출부가 이 인스턴스를
+`src/utils/axios.js`가 axios 인스턴스를 만들어 export한다. 모든 호출부가 이 인스턴스를
 import한다(전수 확인됨).
 
-- Base URL: 하드코딩 (`https://api.bagel.suhsaechan.kr`)
+- Base URL: `REACT_APP_API_BASE_URL` 환경변수. 미설정 시 운영 주소로 폴백
 - 타임아웃: 10초
 - `withCredentials: true`
 
-### 현재 인터셉터가 동작하지 않는다
+### 인터셉터
 
-요청 인터셉터는 `localStorage`에서 `authToken` 키를 읽는데, **이 키는 프로젝트 어디에서도
-저장되지 않는다.** 실제 저장 키는 `refreshToken`이다.
+- **요청**: `auth.js`의 `getAuthToken()`으로 토큰을 자동 주입한다. **호출부는 `Authorization`
+  헤더를 붙이지 않는다.**
+- **응답**: 401이면 토큰을 정리하고 `/`(홈)로 이동한다. 로그인은 별도 라우트가 아니라 홈의
+  모달이기 때문이다.
 
-결과적으로 인터셉터는 항상 토큰 없이 통과하고, **각 호출부가 `Authorization` 헤더를
-수동으로 다시 붙이고 있다.** Phase 1에서 인터셉터를 정상화하고 수동 헤더를 제거한다.
-
-응답 인터셉터의 401 처리도 존재하지 않는 `/login`으로 리다이렉트한다.
+> **확인 필요**: 실측 결과 서버는 잘못된 토큰에 **403**을 반환한다. 인터셉터는 401만
+> 처리하므로, 만료 토큰의 자동 로그아웃이 동작하지 않을 수 있다. 백엔드의 401/403 응답
+> 규약을 확인한 뒤 처리 범위를 조정해야 한다.
 
 ## 인증
 
-`src/utils/auth.js`가 토큰 관리 유틸을 제공한다. 완성도 있게 작성되어 있으나
-**`src/pages/Profile.jsx` 한 곳에서만 사용된다.** 나머지 9개 파일은 `localStorage`에
-직접 접근한다(16곳).
+`src/utils/auth.js`가 토큰 관리를 전담한다. **`localStorage` 직접 접근은 0건**이며,
+ESLint `no-restricted-properties` 룰이 재발을 막는다.
 
-ESLint `no-restricted-properties` 룰이 이 직접 접근을 막고 있으며, Phase 1에서 전부
-`auth.js` 경유로 바꾼다.
+UI 설정(배경음 음소거)은 `src/utils/storage.js`가 별도로 담당한다. 토큰과 설정은 보안·만료
+정책이 다르므로 같은 저장소를 쓰더라도 모듈을 분리했다.
 
 | 토큰 키        | 용도                                 |
 | -------------- | ------------------------------------ |
