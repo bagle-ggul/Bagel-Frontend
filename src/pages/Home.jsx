@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect } from "react";
 import { Images } from "react-bootstrap-icons";
-import { APP_VERSION } from "../constants/version";
-import axios from "../utils/axios";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+
 import ImageGallery from "../components/ImageGallery";
+import { APP_VERSION } from "../constants/version";
+import { clearTokens, isAuthenticated as checkAuthenticated, setRefreshToken } from "../utils/auth";
+import axios from "../utils/axios";
+import { logger } from "../utils/logger";
+import { isMusicMuted, setMusicMuted } from "../utils/storage";
 
 const Wrapper = styled.div`
   position: fixed;
@@ -82,31 +86,6 @@ const Subtitle = styled.p`
   @media (max-width: 480px) {
     font-size: 0.9rem;
   }
-`;
-
-const VersionInfo = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2rem;
-  opacity: 0.7;
-  transition: opacity 0.3s ease;
-
-  &:hover {
-    opacity: 0.9;
-  }
-
-  @media (max-width: 768px) {
-    font-size: 1rem;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 0.9rem;
-  }
-`;
-
-const VersionText = styled.span`
-  font-weight: 500;
 `;
 
 const IconControlGroup = styled.div`
@@ -1049,22 +1028,6 @@ const MbtiResult = styled.div`
 `;
 
 // 음악 컨트롤 관련 스타일 컴포넌트
-const VersionControlGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 0.5rem;
-
-  @media (max-width: 768px) {
-    margin-top: 0.4rem;
-  }
-
-  @media (max-width: 480px) {
-    margin-top: 0.3rem;
-  }
-`;
-
 const MusicControlButton = styled.button`
   ${sharedLinkButtonStyles}
 `;
@@ -1176,13 +1139,12 @@ function Home() {
 
   // 배경음악 컨트롤 상태
   const [isMuted, setIsMuted] = useState(() => {
-    return localStorage.getItem("musicMuted") === "true";
+    return isMusicMuted();
   });
   const [audioRef] = useState(new Audio("/audio/main_once-again.m4a"));
 
   useEffect(() => {
-    const token = localStorage.getItem("refreshToken");
-    if (token) {
+    if (checkAuthenticated()) {
       setIsAuthenticated(true);
     }
   }, []);
@@ -1199,7 +1161,7 @@ function Home() {
         playPromise.catch(() => {
           // 자동재생이 차단된 경우 음소거 상태로 설정
           setIsMuted(true);
-          localStorage.setItem("musicMuted", "true");
+          setMusicMuted(true);
         });
       }
     }
@@ -1240,8 +1202,7 @@ function Home() {
   }, [mbtiE, mbtiS, mbtiT, mbtiJ]);
 
   const handleLogout = () => {
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("accessToken");
+    clearTokens();
     setIsAuthenticated(false);
     window.location.reload();
   };
@@ -1258,7 +1219,7 @@ function Home() {
     try {
       const response = await axios.post("/api/login", userData);
       const { refreshToken } = response.data;
-      localStorage.setItem("refreshToken", refreshToken);
+      setRefreshToken(refreshToken);
       setIsAuthenticated(true);
       setShowLogin(false);
       // 폼 초기화
@@ -1266,7 +1227,7 @@ function Home() {
       setPassword("");
       setError("");
     } catch (error) {
-      console.error(error);
+      logger.error("로그인 실패:", error);
       setError("아이디 또는 비밀번호를 확인해주세요");
     }
   };
@@ -1319,7 +1280,7 @@ function Home() {
     };
 
     try {
-      const response = await axios.post("/api/signup", userData);
+      await axios.post("/api/signup", userData);
       setShowSignup(false);
       // 회원가입 성공 후 로그인 모달 열기
       setShowLogin(true);
@@ -1341,7 +1302,7 @@ function Home() {
       setGender("");
       setSignupError("");
     } catch (error) {
-      console.error(error);
+      logger.error("회원가입 실패:", error);
       setSignupError("회원가입에 실패했습니다. 다시 시도해주세요.");
     }
   };
@@ -1402,7 +1363,7 @@ function Home() {
   const toggleMusic = () => {
     const newMutedState = !isMuted;
     setIsMuted(newMutedState);
-    localStorage.setItem("musicMuted", newMutedState.toString());
+    setMusicMuted(newMutedState);
 
     if (newMutedState) {
       audioRef.pause();
@@ -1410,7 +1371,7 @@ function Home() {
       audioRef.play().catch(() => {
         // 재생 실패시 다시 음소거 상태로
         setIsMuted(true);
-        localStorage.setItem("musicMuted", "true");
+        setMusicMuted(true);
       });
     }
   };

@@ -1,37 +1,35 @@
 import React, { useEffect, useRef } from "react";
-import axios from "../utils/axios";
 import { useSetRecoilState } from "recoil";
-import BagelSelectPageComponent from "../components/GameUI/BagelSelectPageComponent";
-import { storyData } from "../utils/data";
+
 import { characterNameAtom } from "../atom/atom";
+import BagelSelectPageComponent from "../components/GameUI/BagelSelectPageComponent";
+import axios from "../utils/axios";
+import { storyData } from "../utils/data";
+import { logger } from "../utils/logger";
 
 function Main1() {
-  const refreshToken = localStorage.getItem("refreshToken");
   const setCharacterName = useSetRecoilState(characterNameAtom);
   const audioRef = useRef(null);
 
   useEffect(() => {
+    // 토큰은 axios 인터셉터가 자동으로 붙인다
     const fetchData = async () => {
       try {
-        const response = await axios.get("/api/my-page", {
-          headers: {
-            Authorization: `Bearer ${refreshToken}`,
-          },
-        });
+        const response = await axios.get("/api/my-page");
         setCharacterName(response.data.characterName);
       } catch (error) {
-        console.error("Error fetching data:", error);
-        alert("Error");
+        logger.error("캐릭터 정보 조회 실패:", error);
       }
     };
 
     fetchData();
-  }, [refreshToken, setCharacterName]);
+  }, [setCharacterName]);
 
   useEffect(() => {
     if (audioRef.current) {
+      // 브라우저 자동재생 정책상 실패할 수 있으나 게임 진행에는 영향이 없다
       audioRef.current.play().catch((error) => {
-        console.error("Error playing audio:", error);
+        logger.warn("배경음 재생 실패:", error);
       });
     }
   }, []);

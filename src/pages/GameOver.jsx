@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled, { keyframes } from "styled-components";
+
 import { scoreAtom } from "../atom/atom";
 import axios from "../utils/axios";
+import { logger } from "../utils/logger";
 
 const fadeIn = keyframes`
   from {
@@ -192,8 +194,6 @@ function GameOver() {
     return () => clearTimeout(timer);
   }, []);
 
-  const refreshToken = localStorage.getItem("refreshToken"); // Retrieve the refresh token from local storage
-
   const handleSubmit = async () => {
     const userData = {
       finalScore: score,
@@ -203,18 +203,10 @@ function GameOver() {
     };
 
     try {
-      const response = await axios.post("/api/game/over", userData, {
-        headers: {
-          Authorization: `Bearer ${refreshToken}`,
-          "Content-Type": "application/json", // 명확하게 JSON으로 전송
-        },
-      });
-
-      // Handle success (e.g., display a success message, redirect to another page, etc.)
+      // 토큰과 Content-Type은 axios 인터셉터가 처리한다
+      await axios.post("/api/game/over", userData);
     } catch (error) {
-      console.error(error);
-
-      // Handle error (e.g., display an error message)
+      logger.error("게임 결과 전송 실패:", error);
     }
   };
 

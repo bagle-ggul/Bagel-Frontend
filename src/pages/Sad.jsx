@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import styled, { keyframes } from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
+import styled, { keyframes } from "styled-components";
+
 import { characterNameAtom } from "../atom/atom";
+import { logger } from "../utils/logger";
 
 const fadeIn = keyframes`
   from {
@@ -152,7 +154,7 @@ function Sad() {
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.play().catch((error) => {
-        console.error("Error playing audio:", error);
+        logger.warn("배경음 재생 실패:", error);
       });
     }
     if (currentScene < scenes.length - 1) {
@@ -165,7 +167,7 @@ function Sad() {
       // 모든 장면이 끝나면 Main1 페이지로 이동
       navigate("/profile");
     }
-  }, [currentScene, navigate]);
+  }, [currentScene, navigate, scenes.length]);
 
   const { text, character } = scenes[currentScene];
 

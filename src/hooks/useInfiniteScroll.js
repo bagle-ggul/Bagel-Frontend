@@ -1,5 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
+import { logger } from "../utils/logger";
+
 /**
  * 무한스크롤을 위한 Intersection Observer 기반 커스텀 훅
  * @param {Function} loadMore - 더 많은 데이터를 로드하는 함수
@@ -21,7 +23,7 @@ export const useInfiniteScrollObserver = (loadMore, hasNextPage, options = {}) =
         try {
           await loadMore();
         } catch (error) {
-          console.error("데이터 로딩 오류:", error);
+          logger.error("데이터 로딩 오류:", error);
         } finally {
           setIsLoading(false);
         }

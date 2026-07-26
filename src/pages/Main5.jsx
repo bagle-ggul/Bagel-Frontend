@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from "react";
+
 import BagelSelectPageComponent from "../components/GameUI/BagelSelectPageComponent";
 import { storyData } from "../utils/data5";
+import { logger } from "../utils/logger";
 
 function Main5() {
   const audioRef = useRef(null);
@@ -8,7 +10,7 @@ function Main5() {
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.play().catch((error) => {
-        console.error("Error playing audio:", error);
+        logger.warn("배경음 재생 실패:", error);
       });
     }
   }, []);
