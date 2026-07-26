@@ -1,0 +1,6 @@
+node_modules
+build
+coverage
+
+# 자동 생성 파일 (scripts/sync-version.js)
+src/constants/version.js

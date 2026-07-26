@@ -14,7 +14,7 @@ const Wrapper = styled.div`
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background-image: url('/img/bg_home_v4.png');
+  background-image: url("/img/bg_home_v4.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -56,7 +56,9 @@ const Title = styled.h1`
   font-weight: 800;
   letter-spacing: -0.02em;
   margin: 0 0 10px 0;
-  text-shadow: 0 6px 20px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 255, 255, 0.3);
+  text-shadow:
+    0 6px 20px rgba(0, 0, 0, 0.8),
+    0 0 40px rgba(255, 255, 255, 0.3);
 
   @media (max-width: 768px) {
     font-size: 3.5rem;
@@ -271,7 +273,6 @@ const SecondaryButtonModal = styled.button`
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
   }
 `;
-
 
 const BottomRightButtonGroup = styled.div`
   position: absolute;
@@ -590,7 +591,6 @@ const TeamName = styled.h3`
   }
 `;
 
-
 const TeamDetails = styled.div`
   display: flex;
   flex-direction: column;
@@ -885,8 +885,6 @@ const SubmitButton = styled(motion.button)`
   }
 `;
 
-
-
 // 성별 선택 컴포넌트
 const GenderContainer = styled.div`
   display: flex;
@@ -927,10 +925,12 @@ const GenderButton = styled.button`
   flex: 1;
   max-width: 150px;
   padding: 1rem 1.5rem;
-  background: ${props => props.selected ? 'rgba(200, 182, 226, 0.8)' : 'rgba(255, 255, 255, 0.1)'};
-  border: 1px solid ${props => props.selected ? 'rgba(200, 182, 226, 1)' : 'rgba(255, 255, 255, 0.2)'};
+  background: ${(props) =>
+    props.selected ? "rgba(200, 182, 226, 0.8)" : "rgba(255, 255, 255, 0.1)"};
+  border: 1px solid
+    ${(props) => (props.selected ? "rgba(200, 182, 226, 1)" : "rgba(255, 255, 255, 0.2)")};
   border-radius: 12px;
-  color: ${props => props.selected ? 'white' : 'rgba(255, 255, 255, 0.9)'};
+  color: ${(props) => (props.selected ? "white" : "rgba(255, 255, 255, 0.9)")};
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -1009,10 +1009,12 @@ const MbtiButtonGroup = styled.div`
 const MbtiButton = styled.button`
   min-width: 80px;
   padding: 0.6rem 1rem;
-  background: ${props => props.selected ? 'rgba(200, 182, 226, 0.8)' : 'rgba(255, 255, 255, 0.1)'};
-  border: 1px solid ${props => props.selected ? 'rgba(200, 182, 226, 1)' : 'rgba(255, 255, 255, 0.2)'};
+  background: ${(props) =>
+    props.selected ? "rgba(200, 182, 226, 0.8)" : "rgba(255, 255, 255, 0.1)"};
+  border: 1px solid
+    ${(props) => (props.selected ? "rgba(200, 182, 226, 1)" : "rgba(255, 255, 255, 0.2)")};
   border-radius: 8px;
-  color: ${props => props.selected ? 'white' : 'rgba(255, 255, 255, 0.9)'};
+  color: ${(props) => (props.selected ? "white" : "rgba(255, 255, 255, 0.9)")};
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
@@ -1174,9 +1176,9 @@ function Home() {
 
   // 배경음악 컨트롤 상태
   const [isMuted, setIsMuted] = useState(() => {
-    return localStorage.getItem('musicMuted') === 'true';
+    return localStorage.getItem("musicMuted") === "true";
   });
-  const [audioRef] = useState(new Audio('/audio/main_once-again.m4a'));
+  const [audioRef] = useState(new Audio("/audio/main_once-again.m4a"));
 
   useEffect(() => {
     const token = localStorage.getItem("refreshToken");
@@ -1197,7 +1199,7 @@ function Home() {
         playPromise.catch(() => {
           // 자동재생이 차단된 경우 음소거 상태로 설정
           setIsMuted(true);
-          localStorage.setItem('musicMuted', 'true');
+          localStorage.setItem("musicMuted", "true");
         });
       }
     }
@@ -1222,10 +1224,10 @@ function Home() {
     updateCharacterImage();
 
     // 리사이즈 이벤트 리스너 추가
-    window.addEventListener('resize', updateCharacterImage);
+    window.addEventListener("resize", updateCharacterImage);
 
     // 클린업 함수
-    return () => window.removeEventListener('resize', updateCharacterImage);
+    return () => window.removeEventListener("resize", updateCharacterImage);
   }, []);
 
   // MBTI 자동 조합
@@ -1236,7 +1238,6 @@ function Home() {
       setMbti("");
     }
   }, [mbtiE, mbtiS, mbtiT, mbtiJ]);
-
 
   const handleLogout = () => {
     localStorage.removeItem("refreshToken");
@@ -1313,7 +1314,7 @@ function Home() {
       password: signupPassword,
       characterName,
       mbti,
-      birthDate: `${birthYear}-${birthMonth.padStart(2, '0')}-${birthDay.padStart(2, '0')}`,
+      birthDate: `${birthYear}-${birthMonth.padStart(2, "0")}-${birthDay.padStart(2, "0")}`,
       gender,
     };
 
@@ -1401,7 +1402,7 @@ function Home() {
   const toggleMusic = () => {
     const newMutedState = !isMuted;
     setIsMuted(newMutedState);
-    localStorage.setItem('musicMuted', newMutedState.toString());
+    localStorage.setItem("musicMuted", newMutedState.toString());
 
     if (newMutedState) {
       audioRef.pause();
@@ -1409,7 +1410,7 @@ function Home() {
       audioRef.play().catch(() => {
         // 재생 실패시 다시 음소거 상태로
         setIsMuted(true);
-        localStorage.setItem('musicMuted', 'true');
+        localStorage.setItem("musicMuted", "true");
       });
     }
   };
@@ -1437,7 +1438,7 @@ function Home() {
           transition={{
             duration: 1.5,
             delay: 0.3,
-            ease: "easeOut"
+            ease: "easeOut",
           }}
         />
       </CharacterWrapper>
@@ -1459,7 +1460,7 @@ function Home() {
               title="GitHub 저장소"
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
-                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
               </svg>
             </ChangelogLink>
             <ImageGalleryButton
@@ -1476,13 +1477,13 @@ function Home() {
             >
               {isMuted ? (
                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
-                  <path d="M6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06zM6 5.04 4.312 6.39A.5.5 0 0 1 4 6.5H2v3h2a.5.5 0 0 1 .312.11L6 10.96V5.04zm7.854.606a.5.5 0 0 1 0 .708L12.207 8l1.647 1.646a.5.5 0 0 1-.708.708L11.5 8.707l-1.646 1.647a.5.5 0 0 1-.708-.708L10.793 8 9.146 6.354a.5.5 0 1 1 .708-.708L11.5 7.293l1.646-1.647a.5.5 0 0 1 .708 0z"/>
+                  <path d="M6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06zM6 5.04 4.312 6.39A.5.5 0 0 1 4 6.5H2v3h2a.5.5 0 0 1 .312.11L6 10.96V5.04zm7.854.606a.5.5 0 0 1 0 .708L12.207 8l1.647 1.646a.5.5 0 0 1-.708.708L11.5 8.707l-1.646 1.647a.5.5 0 0 1-.708-.708L10.793 8 9.146 6.354a.5.5 0 1 1 .708-.708L11.5 7.293l1.646-1.647a.5.5 0 0 1 .708 0z" />
                 </svg>
               ) : (
                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
-                  <path d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.473 8.473 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707z"/>
-                  <path d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.483 5.483 0 0 1 11.025 8a5.483 5.483 0 0 1-1.61 3.89l.706.706z"/>
-                  <path d="M8.707 11.182A4.486 4.486 0 0 0 10.025 8a4.486 4.486 0 0 0-1.318-3.182L8 5.525A3.489 3.489 0 0 1 9.025 8 3.49 3.49 0 0 1 8 10.475l.707.707zM6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06z"/>
+                  <path d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.473 8.473 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707z" />
+                  <path d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.483 5.483 0 0 1 11.025 8a5.483 5.483 0 0 1-1.61 3.89l.706.706z" />
+                  <path d="M8.707 11.182A4.486 4.486 0 0 0 10.025 8a4.486 4.486 0 0 0-1.318-3.182L8 5.525A3.489 3.489 0 0 1 9.025 8 3.49 3.49 0 0 1 8 10.475l.707.707zM6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06z" />
                 </svg>
               )}
             </MusicControlButton>
@@ -1504,19 +1505,13 @@ function Home() {
           ) : (
             <>
               <ButtonWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <SecondaryButtonModal onClick={openSignupModal}>
-                  회원가입
-                </SecondaryButtonModal>
+                <SecondaryButtonModal onClick={openSignupModal}>회원가입</SecondaryButtonModal>
               </ButtonWrapper>
               <ButtonWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <SecondaryButtonModal onClick={openLoginModal}>
-                  로그인
-                </SecondaryButtonModal>
+                <SecondaryButtonModal onClick={openLoginModal}>로그인</SecondaryButtonModal>
               </ButtonWrapper>
               <ButtonWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <SecondaryButtonModal onClick={handleRankingClick}>
-                  랭킹 보기
-                </SecondaryButtonModal>
+                <SecondaryButtonModal onClick={handleRankingClick}>랭킹 보기</SecondaryButtonModal>
               </ButtonWrapper>
             </>
           )}
@@ -1534,7 +1529,7 @@ function Home() {
             transition={{
               duration: 1.5,
               delay: 0.3,
-              ease: "easeOut"
+              ease: "easeOut",
             }}
           />
         </MobileCharacterWrapper>
@@ -1555,7 +1550,7 @@ function Home() {
                 title="GitHub 저장소"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
-                  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                  <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
                 </svg>
               </ChangelogLink>
               <ImageGalleryButton
@@ -1572,13 +1567,13 @@ function Home() {
               >
                 {isMuted ? (
                   <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06zM6 5.04 4.312 6.39A.5.5 0 0 1 4 6.5H2v3h2a.5.5 0 0 1 .312.11L6 10.96V5.04zm7.854.606a.5.5 0 0 1 0 .708L12.207 8l1.647 1.646a.5.5 0 0 1-.708.708L11.5 8.707l-1.646 1.647a.5.5 0 0 1-.708-.708L10.793 8 9.146 6.354a.5.5 0 1 1 .708-.708L11.5 7.293l1.646-1.647a.5.5 0 0 1 .708 0z"/>
+                    <path d="M6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06zM6 5.04 4.312 6.39A.5.5 0 0 1 4 6.5H2v3h2a.5.5 0 0 1 .312.11L6 10.96V5.04zm7.854.606a.5.5 0 0 1 0 .708L12.207 8l1.647 1.646a.5.5 0 0 1-.708.708L11.5 8.707l-1.646 1.647a.5.5 0 0 1-.708-.708L10.793 8 9.146 6.354a.5.5 0 1 1 .708-.708L11.5 7.293l1.646-1.647a.5.5 0 0 1 .708 0z" />
                   </svg>
                 ) : (
                   <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
-                    <path d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.473 8.473 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707z"/>
-                    <path d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.483 5.483 0 0 1 11.025 8a5.483 5.483 0 0 1-1.61 3.89l.706.706z"/>
-                    <path d="M8.707 11.182A4.486 4.486 0 0 0 10.025 8a4.486 4.486 0 0 0-1.318-3.182L8 5.525A3.489 3.489 0 0 1 9.025 8 3.49 3.49 0 0 1 8 10.475l.707.707zM6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06z"/>
+                    <path d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.473 8.473 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707z" />
+                    <path d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.483 5.483 0 0 1 11.025 8a5.483 5.483 0 0 1-1.61 3.89l.706.706z" />
+                    <path d="M8.707 11.182A4.486 4.486 0 0 0 10.025 8a4.486 4.486 0 0 0-1.318-3.182L8 5.525A3.489 3.489 0 0 1 9.025 8 3.49 3.49 0 0 1 8 10.475l.707.707zM6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06z" />
                   </svg>
                 )}
               </MusicControlButton>
@@ -1600,14 +1595,10 @@ function Home() {
             ) : (
               <>
                 <ButtonWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <SecondaryButtonModal onClick={openSignupModal}>
-                    회원가입
-                  </SecondaryButtonModal>
+                  <SecondaryButtonModal onClick={openSignupModal}>회원가입</SecondaryButtonModal>
                 </ButtonWrapper>
                 <ButtonWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <SecondaryButtonModal onClick={openLoginModal}>
-                    로그인
-                  </SecondaryButtonModal>
+                  <SecondaryButtonModal onClick={openLoginModal}>로그인</SecondaryButtonModal>
                 </ButtonWrapper>
                 <ButtonWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                   <SecondaryButtonModal onClick={handleRankingClick}>
@@ -1622,16 +1613,12 @@ function Home() {
 
       {isAuthenticated ? (
         <BottomRightButtonGroup>
-          <BottomCreditsButton onClick={() => setShowCredits(true)}>
-            크레딧
-          </BottomCreditsButton>
+          <BottomCreditsButton onClick={() => setShowCredits(true)}>크레딧</BottomCreditsButton>
           <LogoutButton onClick={handleLogout}>로그아웃</LogoutButton>
         </BottomRightButtonGroup>
       ) : (
         <BottomRightButtonGroup>
-          <BottomCreditsButton onClick={() => setShowCredits(true)}>
-            크레딧
-          </BottomCreditsButton>
+          <BottomCreditsButton onClick={() => setShowCredits(true)}>크레딧</BottomCreditsButton>
         </BottomRightButtonGroup>
       )}
 
@@ -1739,14 +1726,28 @@ function Home() {
                       onClick={() => setIsSignupPasswordVisible(!isSignupPasswordVisible)}
                     >
                       {isSignupPasswordVisible ? (
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                          <circle cx="12" cy="12" r="3"/>
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        >
+                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                          <circle cx="12" cy="12" r="3" />
                         </svg>
                       ) : (
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
-                          <line x1="1" y1="1" x2="23" y2="23"/>
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        >
+                          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                          <line x1="1" y1="1" x2="23" y2="23" />
                         </svg>
                       )}
                     </PasswordToggleButton>
@@ -1764,17 +1765,33 @@ function Home() {
                     />
                     <PasswordToggleButton
                       type="button"
-                      onClick={() => setIsSignupPasswordConfirmVisible(!isSignupPasswordConfirmVisible)}
+                      onClick={() =>
+                        setIsSignupPasswordConfirmVisible(!isSignupPasswordConfirmVisible)
+                      }
                     >
                       {isSignupPasswordConfirmVisible ? (
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                          <circle cx="12" cy="12" r="3"/>
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        >
+                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                          <circle cx="12" cy="12" r="3" />
                         </svg>
                       ) : (
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
-                          <line x1="1" y1="1" x2="23" y2="23"/>
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        >
+                          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                          <line x1="1" y1="1" x2="23" y2="23" />
                         </svg>
                       )}
                     </PasswordToggleButton>
@@ -1901,12 +1918,16 @@ function Home() {
                         onChange={(e) => setBirthYear(e.target.value)}
                         required
                       >
-                        <option value="" disabled>년도</option>
-                        {Array.from({ length: 50 }, (_, i) => new Date().getFullYear() - i).map((year) => (
-                          <option key={year} value={year}>
-                            {year}년
-                          </option>
-                        ))}
+                        <option value="" disabled>
+                          년도
+                        </option>
+                        {Array.from({ length: 50 }, (_, i) => new Date().getFullYear() - i).map(
+                          (year) => (
+                            <option key={year} value={year}>
+                              {year}년
+                            </option>
+                          )
+                        )}
                       </BirthSelect>
 
                       <BirthSelect
@@ -1914,7 +1935,9 @@ function Home() {
                         onChange={(e) => setBirthMonth(e.target.value)}
                         required
                       >
-                        <option value="" disabled>월</option>
+                        <option value="" disabled>
+                          월
+                        </option>
                         {Array.from({ length: 12 }, (_, i) => i + 1).map((month) => (
                           <option key={month} value={month}>
                             {month}월
@@ -1927,7 +1950,9 @@ function Home() {
                         onChange={(e) => setBirthDay(e.target.value)}
                         required
                       >
-                        <option value="" disabled>일</option>
+                        <option value="" disabled>
+                          일
+                        </option>
                         {Array.from({ length: 31 }, (_, i) => i + 1).map((day) => (
                           <option key={day} value={day}>
                             {day}일
@@ -1960,11 +1985,7 @@ function Home() {
                   </GenderContainer>
                 </motion.div>
 
-                <SubmitButton
-                  type="submit"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
+                <SubmitButton type="submit" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                   회원가입
                 </SubmitButton>
                 {signupError && (
@@ -2040,25 +2061,35 @@ function Home() {
                     >
                       {isPasswordVisible ? (
                         // Eye Open (보기)
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                          <circle cx="12" cy="12" r="3"/>
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        >
+                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                          <circle cx="12" cy="12" r="3" />
                         </svg>
                       ) : (
                         // Eye Closed (숨기기)
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
-                          <line x1="1" y1="1" x2="23" y2="23"/>
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        >
+                          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
+                          <line x1="1" y1="1" x2="23" y2="23" />
                         </svg>
                       )}
                     </PasswordToggleButton>
                   </PasswordInputWrapper>
                 </InputWrapper>
-                <SubmitButton
-                  type="submit"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
+                <SubmitButton type="submit" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                   로그인
                 </SubmitButton>
                 {error && (
@@ -2119,7 +2150,14 @@ function Home() {
                   </DetailRow>
                 </TeamDetails>
               </TeamInfo>
-              <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginTop: '1.5rem' }}>
+              <div
+                style={{
+                  display: "flex",
+                  gap: "1rem",
+                  justifyContent: "center",
+                  marginTop: "1.5rem",
+                }}
+              >
                 <SubmitButton
                   type="button"
                   whileHover={{ scale: 1.02 }}
@@ -2140,8 +2178,8 @@ function Home() {
                     setShowSignup(true);
                   }}
                   style={{
-                    background: 'rgba(255, 255, 255, 0.15)',
-                    border: '1px solid rgba(255, 255, 255, 0.3)'
+                    background: "rgba(255, 255, 255, 0.15)",
+                    border: "1px solid rgba(255, 255, 255, 0.3)",
                   }}
                 >
                   회원가입하기
@@ -2173,10 +2211,7 @@ function Home() {
       </AnimatePresence>
 
       {/* 이미지 갤러리 모달 */}
-      <ImageGallery
-        isOpen={showImageGallery}
-        onClose={() => setShowImageGallery(false)}
-      />
+      <ImageGallery isOpen={showImageGallery} onClose={() => setShowImageGallery(false)} />
 
       {/* 왼쪽 아래 버전 정보 */}
       <BottomVersionInfo

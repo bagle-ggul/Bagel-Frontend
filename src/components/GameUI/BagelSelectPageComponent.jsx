@@ -22,7 +22,7 @@ const GameContainer = styled.div`
 
   /* 배경에 약간의 오버레이 추가 */
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -151,13 +151,7 @@ const NextStageLink = styled(Link)`
   }
 `;
 
-const BagelSelectPageComponent = ({
-  backgroundImage,
-  characterImage,
-  storyData,
-  url,
-  scene,
-}) => {
+const BagelSelectPageComponent = ({ backgroundImage, characterImage, storyData, url, scene }) => {
   const [index, setIndex] = useState(0);
   const [toggle, setToggle] = useState(false);
   const [subText, setSubText] = useState([]);
@@ -188,11 +182,7 @@ const BagelSelectPageComponent = ({
       navigate("/over");
     } else {
       // 기존 subtext 구조를 스마트하게 처리
-      setSubText(
-        option.subtext
-          .split("^")
-          .map((text) => replaceCharacterName(text).trim())
-      );
+      setSubText(option.subtext.split("^").map((text) => replaceCharacterName(text).trim()));
       setScore((prevScore) => prevScore + option.score);
       setToggle(true);
       setSubIndex(0);
@@ -356,8 +346,8 @@ const BagelSelectPageComponent = ({
                           text={
                             // 스마트한 선택지 텍스트 처리
                             option.ans.startsWith('"') && option.ans.endsWith('"')
-                              ? option.ans.slice(1, -1)  // 따옴표 제거
-                              : option.ans  // 그대로 표시
+                              ? option.ans.slice(1, -1) // 따옴표 제거
+                              : option.ans // 그대로 표시
                           }
                           onClick={() => onClicked(option, i)}
                           index={i}
@@ -378,9 +368,7 @@ const BagelSelectPageComponent = ({
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <NextStageLink to={base}>
-            다음 스테이지로... ✨
-          </NextStageLink>
+          <NextStageLink to={base}>다음 스테이지로... ✨</NextStageLink>
         </NextStageButton>
       )}
     </GameContainer>

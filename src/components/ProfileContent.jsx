@@ -1,7 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
-import { motion } from 'framer-motion';
-import { componentStyles } from '../styles/theme';
+import React from "react";
+import styled from "styled-components";
+import { motion } from "framer-motion";
+import { componentStyles } from "../styles/theme";
 
 const ProfileImage = styled(motion.img)`
   width: 150px;
@@ -62,7 +62,11 @@ const UserDetailContainer = styled.div`
 `;
 
 const DetailRow = styled(motion.div)`
-  ${({ theme }) => theme && Object.entries(theme).map(([key, value]) => `${key}: ${value};`).join(' ')}
+  ${({ theme }) =>
+    theme &&
+    Object.entries(theme)
+      .map(([key, value]) => `${key}: ${value};`)
+      .join(" ")}
 
   @media (max-width: 480px) {
     padding: 0.6rem 1rem;
@@ -120,7 +124,7 @@ const ProfileContent = ({ profile, itemVariants, containerVariants }) => {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        style={{ width: '100%' }}
+        style={{ width: "100%" }}
       >
         <UserDetailContainer>
           <DetailRow
@@ -137,16 +141,14 @@ const ProfileContent = ({ profile, itemVariants, containerVariants }) => {
             whileHover={{ scale: 1.02 }}
           >
             <DetailTitle>생일</DetailTitle>
-            <DetailValue>
-              {new Date(profile?.birthDate).toLocaleDateString()}
-            </DetailValue>
+            <DetailValue>{new Date(profile?.birthDate).toLocaleDateString()}</DetailValue>
           </DetailRow>
           <motion.div
             variants={itemVariants}
             style={{
-              display: 'flex',
-              gap: '12px',
-              width: '100%'
+              display: "flex",
+              gap: "12px",
+              width: "100%",
             }}
           >
             <DetailRow

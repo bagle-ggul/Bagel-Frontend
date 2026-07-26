@@ -38,7 +38,9 @@ const DeleteButton = styled(motion.button)`
   border-radius: 5px;
   padding: 5px 10px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
 
   &:hover {
     background-color: #c0392b;
@@ -64,14 +66,11 @@ function MyGameResults() {
   useEffect(() => {
     const fetchResults = async () => {
       try {
-        const response = await axios.get(
-          "/api/game/my-results",
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`, // 토큰을 적절하게 설정
-            },
-          }
-        );
+        const response = await axios.get("/api/game/my-results", {
+          headers: {
+            Authorization: `Bearer ${accessToken}`, // 토큰을 적절하게 설정
+          },
+        });
         setResults(response.data);
       } catch (error) {
         console.error("Error fetching game results:", error);
@@ -83,14 +82,11 @@ function MyGameResults() {
 
   const handleDelete = async (gameResultId) => {
     try {
-      await axios.delete(
-        `/api/game/my-results/${gameResultId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`, // 토큰을 적절하게 설정
-          },
-        }
-      );
+      await axios.delete(`/api/game/my-results/${gameResultId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`, // 토큰을 적절하게 설정
+        },
+      });
       setResults(results.filter((result) => result.id !== gameResultId));
     } catch (error) {
       console.error("Error deleting game result:", error);
@@ -98,11 +94,7 @@ function MyGameResults() {
   };
 
   return (
-    <ResultsWrapper
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1 }}
-    >
+    <ResultsWrapper initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
       {results.map((result) => (
         <ResultCard
           key={result.id}
@@ -110,9 +102,7 @@ function MyGameResults() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <DeleteButton onClick={() => handleDelete(result.id)}>
-            삭제
-          </DeleteButton>
+          <DeleteButton onClick={() => handleDelete(result.id)}>삭제</DeleteButton>
           <ResultDetail
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

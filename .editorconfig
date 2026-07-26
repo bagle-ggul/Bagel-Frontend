@@ -1,0 +1,18 @@
+# 에디터 레벨 기본 규약
+# src/utils/axios.jsx 인코딩 손상(BOM + 모지바케) 같은 사고의 재발 방지가 존재 이유다
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+# 마크다운은 줄 끝 공백 2개가 줄바꿈 문법이라 제거하면 안 된다
+[*.md]
+trim_trailing_whitespace = false
+
+[*.{yml,yaml}]
+indent_size = 2

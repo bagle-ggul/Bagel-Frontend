@@ -5,15 +5,15 @@ import { Download, X, ChevronLeft, ChevronRight } from "react-bootstrap-icons";
 
 // 프로젝트 이미지 목록 (01부터 순서대로)
 const PROJECT_IMAGES = [
-  '/img/bagel_team_01.jpg',
-  '/img/bagel_team_02.jpg',
-  '/img/bagel_team_03.jpg',
-  '/img/bagel_team_04.jpg',
-  '/img/bagel_team_05.jpg',
-  '/img/bagel_team_06.jpg',
-  '/img/bagel_team_07.jpg',
-  '/img/bagel_team_08.jpg',
-  '/img/bagel_team_09.jpg'
+  "/img/bagel_team_01.jpg",
+  "/img/bagel_team_02.jpg",
+  "/img/bagel_team_03.jpg",
+  "/img/bagel_team_04.jpg",
+  "/img/bagel_team_05.jpg",
+  "/img/bagel_team_06.jpg",
+  "/img/bagel_team_07.jpg",
+  "/img/bagel_team_08.jpg",
+  "/img/bagel_team_09.jpg",
 ];
 
 // 갤러리 모달 오버레이
@@ -408,7 +408,7 @@ function ImageGallery({ isOpen, onClose }) {
 
   const handleDownload = () => {
     if (selectedImage) {
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = selectedImage;
       link.download = `bagel-project-${Date.now()}.jpg`;
       document.body.appendChild(link);
@@ -463,17 +463,17 @@ function ImageGallery({ isOpen, onClose }) {
     const handleKeyPress = (e) => {
       if (!selectedImage) return;
 
-      if (e.key === 'ArrowLeft') {
+      if (e.key === "ArrowLeft") {
         goToPrevImage();
-      } else if (e.key === 'ArrowRight') {
+      } else if (e.key === "ArrowRight") {
         goToNextImage();
-      } else if (e.key === 'Escape') {
+      } else if (e.key === "Escape") {
         handleCloseViewer();
       }
     };
 
-    document.addEventListener('keydown', handleKeyPress);
-    return () => document.removeEventListener('keydown', handleKeyPress);
+    document.addEventListener("keydown", handleKeyPress);
+    return () => document.removeEventListener("keydown", handleKeyPress);
   }, [selectedImage, currentImageIndex]);
 
   return (
@@ -511,7 +511,7 @@ function ImageGallery({ isOpen, onClose }) {
                       duration: 0.3,
                       delay: index * 0.05,
                       type: "spring",
-                      damping: 20
+                      damping: 20,
                     }}
                   />
                 ))}

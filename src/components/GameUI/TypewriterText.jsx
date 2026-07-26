@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 const TypewriterText = ({
   text,
@@ -7,15 +7,15 @@ const TypewriterText = ({
   onComplete = () => {},
   showCursor = true,
   className = "",
-  style = {}
+  style = {},
 }) => {
-  const [displayText, setDisplayText] = useState('');
+  const [displayText, setDisplayText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
     // 텍스트가 변경될 때마다 초기화
-    setDisplayText('');
+    setDisplayText("");
     setCurrentIndex(0);
     setIsComplete(false);
   }, [text]);
@@ -23,8 +23,8 @@ const TypewriterText = ({
   useEffect(() => {
     if (currentIndex < text.length) {
       const timer = setTimeout(() => {
-        setDisplayText(prev => prev + text[currentIndex]);
-        setCurrentIndex(prev => prev + 1);
+        setDisplayText((prev) => prev + text[currentIndex]);
+        setCurrentIndex((prev) => prev + 1);
       }, speed);
       return () => clearTimeout(timer);
     } else if (!isComplete && currentIndex === text.length) {
@@ -50,16 +50,15 @@ const TypewriterText = ({
       transition={{ duration: 0.3 }}
       onClick={handleSkip}
       style={{
-        cursor: isComplete ? 'default' : 'pointer',
+        cursor: isComplete ? "default" : "pointer",
         lineHeight: 1.6,
-        ...style
+        ...style,
       }}
       className={className}
     >
-      {text.split('\n').map((line, lineIndex) => {
-        const lineStartIndex = text.split('\n')
-          .slice(0, lineIndex)
-          .join('\n').length + (lineIndex > 0 ? 1 : 0);
+      {text.split("\n").map((line, lineIndex) => {
+        const lineStartIndex =
+          text.split("\n").slice(0, lineIndex).join("\n").length + (lineIndex > 0 ? 1 : 0);
         const lineEndIndex = lineStartIndex + line.length;
 
         const lineDisplayText = displayText.slice(
@@ -68,20 +67,20 @@ const TypewriterText = ({
         );
 
         return (
-          <div key={lineIndex} style={{ minHeight: '1.6em' }}>
+          <div key={lineIndex} style={{ minHeight: "1.6em" }}>
             {lineDisplayText}
             {!isComplete &&
-             currentIndex >= lineStartIndex &&
-             currentIndex <= lineEndIndex &&
-             showCursor && (
-              <motion.span
-                animate={{ opacity: [1, 0] }}
-                transition={{ repeat: Infinity, duration: 0.8 }}
-                style={{ color: 'rgba(200, 182, 226, 0.8)' }}
-              >
-                ▋
-              </motion.span>
-            )}
+              currentIndex >= lineStartIndex &&
+              currentIndex <= lineEndIndex &&
+              showCursor && (
+                <motion.span
+                  animate={{ opacity: [1, 0] }}
+                  transition={{ repeat: Infinity, duration: 0.8 }}
+                  style={{ color: "rgba(200, 182, 226, 0.8)" }}
+                >
+                  ▋
+                </motion.span>
+              )}
           </div>
         );
       })}
@@ -94,13 +93,13 @@ const TypewriterText = ({
           transition={{
             repeat: Infinity,
             duration: 2,
-            delay: 1
+            delay: 1,
           }}
           style={{
-            fontSize: '0.8rem',
-            color: 'rgba(255, 255, 255, 0.5)',
-            marginTop: '0.5rem',
-            textAlign: 'right'
+            fontSize: "0.8rem",
+            color: "rgba(255, 255, 255, 0.5)",
+            marginTop: "0.5rem",
+            textAlign: "right",
           }}
         >
           클릭하여 스킵 →
