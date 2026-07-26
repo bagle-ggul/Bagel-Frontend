@@ -1,5 +1,7 @@
 import { useState, useCallback, useRef, useEffect } from "react";
+
 import axios from "../utils/axios";
+import { logger } from "../utils/logger";
 
 /**
  * 랭킹 데이터 관리를 위한 커스텀 훅
@@ -19,7 +21,6 @@ export const useRankingData = (pageSize = 20) => {
   });
 
   const abortControllerRef = useRef();
-  const accessToken = localStorage.getItem("refreshToken");
 
   // 메모리 관리를 위한 최대 아이템 수
   const MAX_ITEMS_IN_MEMORY = 1000;
@@ -63,9 +64,6 @@ export const useRankingData = (pageSize = 20) => {
     try {
       const response = await axios.get("/api/game/ranking", {
         signal: abortControllerRef.current.signal,
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
         params: {
           page: data.currentPage,
           size: pageSize,
@@ -93,7 +91,7 @@ export const useRankingData = (pageSize = 20) => {
       });
     } catch (error) {
       if (error.name !== "AbortError") {
-        console.error("랭킹 데이터 로딩 오류:", error);
+        logger.error("랭킹 데이터 로딩 오류:", error);
         setData((prev) => ({
           ...prev,
           isLoading: false,
@@ -102,7 +100,7 @@ export const useRankingData = (pageSize = 20) => {
         }));
       }
     }
-  }, [data.currentPage, data.hasNextPage, data.isLoading, pageSize, accessToken, manageMemory]);
+  }, [data.currentPage, data.hasNextPage, data.isLoading, pageSize, manageMemory]);
 
   /**
    * 데이터 새로고침 (처음부터 다시 로드)

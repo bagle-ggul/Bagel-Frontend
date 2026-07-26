@@ -103,16 +103,8 @@ export const createApiHeaders = (additionalHeaders = {}) => {
   };
 };
 
-// 로깅 유틸리티 (개발 환경에서만 동작)
-export const logger = {
-  log: process.env.NODE_ENV === "development" ? console.log : () => {},
-  warn: process.env.NODE_ENV === "development" ? console.warn : () => {},
-  error: console.error, // 에러는 항상 로깅
-  info: process.env.NODE_ENV === "development" ? console.info : () => {},
-  debug: process.env.NODE_ENV === "development" ? console.debug : () => {},
-};
-
-export default {
+// 익명 객체를 그대로 export하면 import 측에서 이름 추적이 어렵다 (import/no-anonymous-default-export)
+const auth = {
   AUTH_TOKENS,
   getAccessToken,
   getRefreshToken,
@@ -124,5 +116,6 @@ export default {
   isAuthenticated,
   getAuthHeaders,
   createApiHeaders,
-  logger,
 };
+
+export default auth;

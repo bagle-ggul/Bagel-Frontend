@@ -1,6 +1,6 @@
 {
   "name": "bagle",
-  "version": "1.4.5",
+  "version": "1.4.6",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
@@ -45,10 +45,16 @@
     ]
   },
   "jest": {
+    "moduleNameMapper": {
+      "^react-native$": "react-native-web",
+      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
+      "^axios$": "axios/dist/node/axios.cjs"
+    },
     "collectCoverageFrom": [
       "src/utils/**/*.{js,jsx}",
       "src/hooks/**/*.{js,jsx}",
-      "!src/constants/version.js"
+      "!src/constants/version.js",
+      "!src/utils/data*.jsx"
     ],
     "coverageThreshold": {
       "./src/utils/": {

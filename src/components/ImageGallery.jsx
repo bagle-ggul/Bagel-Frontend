@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect, useCallback } from "react";
 import { Download, X, ChevronLeft, ChevronRight } from "react-bootstrap-icons";
+import styled from "styled-components";
 
 // 프로젝트 이미지 목록 (01부터 순서대로)
 const PROJECT_IMAGES = [
@@ -423,17 +423,19 @@ function ImageGallery({ isOpen, onClose }) {
   };
 
   // 이미지 네비게이션 함수들
-  const goToPrevImage = () => {
+  // 키보드 이벤트 이펙트의 의존성이므로 useCallback으로 안정화한다.
+  // currentImageIndex에만 의존하므로 이펙트 재실행 조건은 기존과 동일하다.
+  const goToPrevImage = useCallback(() => {
     const prevIndex = currentImageIndex > 0 ? currentImageIndex - 1 : PROJECT_IMAGES.length - 1;
     setCurrentImageIndex(prevIndex);
     setSelectedImage(PROJECT_IMAGES[prevIndex]);
-  };
+  }, [currentImageIndex]);
 
-  const goToNextImage = () => {
+  const goToNextImage = useCallback(() => {
     const nextIndex = currentImageIndex < PROJECT_IMAGES.length - 1 ? currentImageIndex + 1 : 0;
     setCurrentImageIndex(nextIndex);
     setSelectedImage(PROJECT_IMAGES[nextIndex]);
-  };
+  }, [currentImageIndex]);
 
   // 터치/스와이프 핸들러들
   const handleTouchStart = (e) => {
@@ -474,7 +476,7 @@ function ImageGallery({ isOpen, onClose }) {
 
     document.addEventListener("keydown", handleKeyPress);
     return () => document.removeEventListener("keydown", handleKeyPress);
-  }, [selectedImage, currentImageIndex]);
+  }, [selectedImage, goToNextImage, goToPrevImage]);
 
   return (
     <>

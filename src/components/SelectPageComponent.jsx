@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
+
 import { scoreAtom, characterNameAtom } from "../atom/atom";
 
 const StyledBackGround = styled.div`

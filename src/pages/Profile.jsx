@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import axios from "../utils/axios";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import { House, Trophy, Controller } from "react-bootstrap-icons";
-import { getAuthToken } from "../utils/auth";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+
 import GlassCard from "../components/GlassCard";
 import ProfileContent from "../components/ProfileContent";
 import StatsContent from "../components/StatsContent";
+import { getAuthToken } from "../utils/auth";
+import axios from "../utils/axios";
 
 const ProfileWrapper = styled(motion.div)`
   position: fixed;

@@ -1,29 +1,23 @@
 import { createBrowserRouter, Navigate } from "react-router-dom";
-import Home from "./pages/Home";
+
+import RequireAuth from "./components/RequireAuth";
+import Board from "./pages/Board";
+import GameOver from "./pages/GameOver";
+import Happy from "./pages/Happy";
 import Help from "./pages/Help";
+import Hidden from "./pages/Hidden";
+import Home from "./pages/Home";
+import Intro from "./pages/Intro";
 import Main1 from "./pages/Main1";
 import Main2 from "./pages/Main2";
 import Main3 from "./pages/Main3";
 import Main4 from "./pages/Main4";
 import Main5 from "./pages/Main5";
-import Happy from "./pages/Happy";
 import Middle from "./pages/Middle";
+import Profile from "./pages/Profile";
 import Result from "./pages/Result";
 import Sad from "./pages/Sad";
-import Profile from "./pages/Profile";
-import Intro from "./pages/Intro";
-import Board from "./pages/Board";
-import Hidden from "./pages/Hidden";
-import GameOver from "./pages/GameOver";
 // import MyGameResult from "./pages/MyGameResult"; // 현재 사용하지 않음
-
-const ProtectedRoute = ({ children }) => {
-  const token = localStorage.getItem("refreshToken");
-  if (!token) {
-    return <Navigate to="/" />;
-  }
-  return children;
-};
 
 const router = createBrowserRouter([
   {
@@ -40,49 +34,49 @@ const router = createBrowserRouter([
       {
         path: "main1",
         element: (
-          <ProtectedRoute>
+          <RequireAuth>
             <Main1 />
-          </ProtectedRoute>
+          </RequireAuth>
         ),
       },
       {
         path: "main2",
         element: (
-          <ProtectedRoute>
+          <RequireAuth>
             <Main2 />
-          </ProtectedRoute>
+          </RequireAuth>
         ),
       },
       {
         path: "main3",
         element: (
-          <ProtectedRoute>
+          <RequireAuth>
             <Main3 />
-          </ProtectedRoute>
+          </RequireAuth>
         ),
       },
       {
         path: "main4",
         element: (
-          <ProtectedRoute>
+          <RequireAuth>
             <Main4 />
-          </ProtectedRoute>
+          </RequireAuth>
         ),
       },
       {
         path: "main5",
         element: (
-          <ProtectedRoute>
+          <RequireAuth>
             <Main5 />
-          </ProtectedRoute>
+          </RequireAuth>
         ),
       },
       {
         path: "profile",
         element: (
-          <ProtectedRoute>
+          <RequireAuth>
             <Profile />
-          </ProtectedRoute>
+          </RequireAuth>
         ),
       },
       {
@@ -92,41 +86,41 @@ const router = createBrowserRouter([
       {
         path: "happy",
         element: (
-          <ProtectedRoute>
+          <RequireAuth>
             <Happy />
-          </ProtectedRoute>
+          </RequireAuth>
         ),
       },
       {
         path: "middle",
         element: (
-          <ProtectedRoute>
+          <RequireAuth>
             <Middle />
-          </ProtectedRoute>
+          </RequireAuth>
         ),
       },
       {
         path: "sad",
         element: (
-          <ProtectedRoute>
+          <RequireAuth>
             <Sad />
-          </ProtectedRoute>
+          </RequireAuth>
         ),
       },
       {
         path: "hidden",
         element: (
-          <ProtectedRoute>
+          <RequireAuth>
             <Hidden />
-          </ProtectedRoute>
+          </RequireAuth>
         ),
       },
       {
         path: "result",
         element: (
-          <ProtectedRoute>
+          <RequireAuth>
             <Result />
-          </ProtectedRoute>
+          </RequireAuth>
         ),
       },
       {
@@ -136,17 +130,17 @@ const router = createBrowserRouter([
       {
         path: "board",
         element: (
-          <ProtectedRoute>
+          <RequireAuth>
             <Board />
-          </ProtectedRoute>
+          </RequireAuth>
         ),
       },
       {
         path: "over",
         element: (
-          <ProtectedRoute>
+          <RequireAuth>
             <GameOver />
-          </ProtectedRoute>
+          </RequireAuth>
         ),
       },
     ],

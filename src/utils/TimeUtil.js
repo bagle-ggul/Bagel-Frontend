@@ -1,3 +1,5 @@
+import { logger } from "./logger";
+
 /**
  * 시간 관련 유틸리티 함수들
  */
@@ -38,7 +40,7 @@ export class TimeUtil {
         return "방금 전";
       }
     } catch (error) {
-      console.error("시간 변환 오류:", error);
+      logger.error("시간 변환 오류:", error);
       return "알 수 없음";
     }
   }
@@ -62,7 +64,7 @@ export class TimeUtil {
 
       return `${year}년 ${month}월 ${day}일`;
     } catch (error) {
-      console.error("날짜 형식 변환 오류:", error);
+      logger.error("날짜 형식 변환 오류:", error);
       return "알 수 없음";
     }
   }
@@ -88,7 +90,7 @@ export class TimeUtil {
 
       return `${year}년 ${month}월 ${day}일 ${hours}시 ${minutes.toString().padStart(2, "0")}분`;
     } catch (error) {
-      console.error("상세 시간 변환 오류:", error);
+      logger.error("상세 시간 변환 오류:", error);
       return "알 수 없음";
     }
   }

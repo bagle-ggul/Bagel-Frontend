@@ -1,6 +1,6 @@
+import { motion } from "framer-motion";
 import React from "react";
 import styled from "styled-components";
-import { motion } from "framer-motion";
 
 const ChoiceContainer = styled(motion.button)`
   background: rgba(0, 0, 0, 0.7);

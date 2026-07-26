@@ -41,23 +41,16 @@ jobs:
       - name: 포맷 체크
         id: format
         run: npm run format:check
-        continue-on-error: true
 
       - name: 린트 체크
         id: lint
         run: npm run lint
-        # Phase 0: 위반이 다수 남아 있어 결과만 보고한다.
-        # Phase 1에서 위반을 0으로 만든 뒤 이 줄을 제거해 차단 게이트로 전환한다.
-        continue-on-error: true
 
       - name: 테스트 실행
         id: test-run
         run: npm run test:ci
         env:
           CI: true
-        # Phase 0: utils/hooks 커버리지 임계치(80%) 미달 상태.
-        # Phase 1에서 테스트를 채운 뒤 이 줄을 제거한다.
-        continue-on-error: true
 
       - name: 빌드 시작 시간 기록
         id: build-start
@@ -139,12 +132,6 @@ jobs:
             const buildFiles = '${{ steps.build-info.outputs.build_files }}';
             const buildDuration = '${{ steps.build-info.outputs.build_duration }}';
 
-            // 린트·테스트는 Phase 0 동안 continue-on-error 상태다.
-            // 실제 결과를 반영하지 않으면 실패해도 "통과"로 표시되어 거짓 보고가 된다.
-            const formatMark = '${{ steps.format.outcome }}' === 'success' ? '✅' : '⚠️';
-            const lintMark = '${{ steps.lint.outcome }}' === 'success' ? '✅' : '⚠️';
-            const testMark = '${{ steps.test-run.outcome }}' === 'success' ? '✅' : '⚠️';
-
             const comment = `## 🚀 CI 빌드 성공!
 
             ### 📦 빌드 정보
@@ -158,14 +145,13 @@ jobs:
             ${buildFiles || '주요 JS/CSS 파일들이 생성되었습니다'}
             \`\`\`
 
-            ### 검사 결과
-            - 포맷 체크 ${formatMark}
-            - 린트 체크 ${lintMark}
-            - 테스트 실행 ${testMark}
+            ### ✅ 모든 검사 통과
+            - 포맷 체크 ✅
+            - 린트 체크 ✅
+            - 테스트 실행 ✅
             - 빌드 생성 ✅
 
-            > ⚠️ 는 Phase 0 기준으로 아직 정리되지 않은 항목입니다 (빌드를 차단하지 않음).
-            > Phase 1에서 위반을 해소한 뒤 차단 게이트로 전환합니다.
+            > 이 댓글은 모든 단계가 통과했을 때만 생성됩니다.
 
             *자동 생성된 댓글입니다.*`;
 

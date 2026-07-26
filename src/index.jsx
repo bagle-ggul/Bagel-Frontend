@@ -1,8 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createGlobalStyle } from "styled-components";
 import { RouterProvider } from "react-router-dom";
 import { RecoilRoot } from "recoil";
+import { createGlobalStyle } from "styled-components";
+
 import router from "./Route";
 
 const GlobalStyle = createGlobalStyle`

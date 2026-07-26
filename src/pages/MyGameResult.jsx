@@ -1,8 +1,10 @@
 // src/components/MyGameResults.js
+import { motion } from "framer-motion";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+
 import axios from "../utils/axios";
-import { motion } from "framer-motion";
+import { logger } from "../utils/logger";
 
 const ResultsWrapper = styled(motion.div)`
   display: flex;
@@ -60,20 +62,15 @@ const ResultDetail = styled(motion.p)`
 `;
 
 function MyGameResults() {
-  const accessToken = localStorage.getItem("refreshToken");
   const [results, setResults] = useState([]);
 
   useEffect(() => {
     const fetchResults = async () => {
       try {
-        const response = await axios.get("/api/game/my-results", {
-          headers: {
-            Authorization: `Bearer ${accessToken}`, // 토큰을 적절하게 설정
-          },
-        });
+        const response = await axios.get("/api/game/my-results", {});
         setResults(response.data);
       } catch (error) {
-        console.error("Error fetching game results:", error);
+        logger.error("게임 기록 조회 실패:", error);
       }
     };
 
@@ -82,14 +79,10 @@ function MyGameResults() {
 
   const handleDelete = async (gameResultId) => {
     try {
-      await axios.delete(`/api/game/my-results/${gameResultId}`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`, // 토큰을 적절하게 설정
-        },
-      });
+      await axios.delete(`/api/game/my-results/${gameResultId}`, {});
       setResults(results.filter((result) => result.id !== gameResultId));
     } catch (error) {
-      console.error("Error deleting game result:", error);
+      logger.error("게임 기록 삭제 실패:", error);
     }
   };
 

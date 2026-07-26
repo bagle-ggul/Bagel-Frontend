@@ -1,7 +1,5 @@
-import React, { useState, useCallback } from "react";
-import styled from "styled-components";
-import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useCallback } from "react";
 import {
   Trophy,
   TrophyFill,
@@ -19,14 +17,17 @@ import {
   ChevronUp,
   ArrowRepeat,
 } from "react-bootstrap-icons";
-import TimeUtil from "../utils/TimeUtil";
-import { useRankingData } from "../hooks/useRankingData";
+import { Link } from "react-router-dom";
+import styled from "styled-components";
+
 import {
   useInfiniteScrollObserver,
   useScrollProgress,
   useScrollToTop,
   useTouchSwipe,
 } from "../hooks/useInfiniteScroll";
+import { useRankingData } from "../hooks/useRankingData";
+import TimeUtil from "../utils/TimeUtil";
 
 // 배경 이미지 URL
 const backgroundImageUrl = "/img/bg_community_main.png";
