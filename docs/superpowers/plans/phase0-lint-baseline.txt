@@ -1,0 +1,228 @@
+
+> bagle@1.4.3 lint
+> eslint src --ext .js,.jsx --max-warnings=0
+
+[baseline-browser-mapping] The data in this module is over two months old.  To ensure accurate Baseline data, please update: `npm i baseline-browser-mapping@latest -D`
+Browserslist: browsers data (caniuse-lite) is 10 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/Route.jsx
+   1:1   error  There should be at least one empty line between import groups                                                  import/order
+   3:1   error  `./pages/Help` import should occur before import of `./pages/Home`                                             import/order
+   9:1   error  `./pages/Happy` import should occur before import of `./pages/Home`                                            import/order
+  13:1   error  `./pages/Profile` import should occur before import of `./pages/Result`                                        import/order
+  14:1   error  `./pages/Intro` import should occur before import of `./pages/Main1`                                           import/order
+  15:1   error  `./pages/Board` import should occur before import of `./pages/Home`                                            import/order
+  16:1   error  `./pages/Hidden` import should occur before import of `./pages/Home`                                           import/order
+  17:1   error  `./pages/GameOver` import should occur before import of `./pages/Home`                                         import/order
+  21:17  error  'localStorage.getItem' is restricted from being used. localStorage에 직접 접근하지 마세요. src/utils/auth.js의 함수를 사용하세요  no-restricted-properties
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/components/DialogueSystem.jsx
+    2:1   error  There should be at least one empty line between import groups                                                 import/order
+    3:1   error  There should be at least one empty line between import groups                                                 import/order
+    4:1   error  `react-bootstrap-icons` import should occur before import of `styled-components`                              import/order
+   17:7   error  'mysteriousAppear' is assigned a value but never used                                                         no-unused-vars
+  213:20  error  'setIsTyping' is assigned a value but never used                                                              no-unused-vars
+  273:6   error  React Hook useEffect has a missing dependency: 'nextScene'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/components/GameUI/BagelChoiceButton.jsx
+  3:1  error  `framer-motion` import should occur before import of `react`  import/order
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/components/GameUI/BagelDialogBox.jsx
+  3:1  error  There should be at least one empty line between import groups  import/order
+  3:1  error  `framer-motion` import should occur before import of `react`   import/order
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/components/GameUI/BagelSelectPageComponent.jsx
+  5:1  error  There should be at least one empty line between import groups                  import/order
+  5:1  error  `framer-motion` import should occur before import of `react`                   import/order
+  6:1  error  There should be at least one empty line between import groups                  import/order
+  8:1  error  `./BagelChoiceButton` import should occur before import of `./BagelDialogBox`  import/order
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/components/GameUI/TypewriterText.jsx
+  2:1  error  `framer-motion` import should occur before import of `react`  import/order
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/components/GlassCard.jsx
+  3:1  error  There should be at least one empty line between import groups  import/order
+  3:1  error  `framer-motion` import should occur before import of `react`   import/order
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/components/ImageGallery.jsx
+    3:1  error  `framer-motion` import should occur before import of `react`                                                                            import/order
+    4:1  error  `react-bootstrap-icons` import should occur before import of `styled-components`                                                        import/order
+  477:6  error  React Hook useEffect has missing dependencies: 'goToNextImage' and 'goToPrevImage'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/components/ProfileContent.jsx
+  3:1  error  There should be at least one empty line between import groups  import/order
+  3:1  error  `framer-motion` import should occur before import of `react`   import/order
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/components/RequireAuth.jsx
+  5:17  error  'localStorage.getItem' is restricted from being used. localStorage에 직접 접근하지 마세요. src/utils/auth.js의 함수를 사용하세요  no-restricted-properties
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/components/SelectPageComponent.jsx
+  2:16  error  'Navigate' is defined but never used                           no-unused-vars
+  4:1   error  There should be at least one empty line between import groups  import/order
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/components/StatsContent.jsx
+  3:1  error  There should be at least one empty line between import groups  import/order
+  3:1  error  `framer-motion` import should occur before import of `react`   import/order
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/hooks/useInfiniteScroll.js
+  24:11  error  Unexpected console statement  no-console
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/hooks/useRankingData.js
+   1:1   error  There should be at least one empty line between import groups                                                  import/order
+  22:23  error  'localStorage.getItem' is restricted from being used. localStorage에 직접 접근하지 마세요. src/utils/auth.js의 함수를 사용하세요  no-restricted-properties
+  96:9   error  Unexpected console statement                                                                                   no-console
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/index.jsx
+  3:1  error  `styled-components` import should occur after import of `recoil`  import/order
+  5:1  error  There should be at least one empty line between import groups     import/order
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/pages/Board.jsx
+   3:1  error  `react-router-dom` import should occur before import of `styled-components`            import/order
+   4:1  error  `framer-motion` import should occur before import of `react`                           import/order
+   5:1  error  There should be at least one empty line between import groups                          import/order
+   5:1  error  `react-bootstrap-icons` import should occur before import of `styled-components`       import/order
+  23:1  error  `../hooks/useRankingData` import should occur before import of `../utils/TimeUtil`     import/order
+  24:1  error  `../hooks/useInfiniteScroll` import should occur before import of `../utils/TimeUtil`  import/order
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/pages/GameOver.jsx
+    4:1   error  There should be at least one empty line between import groups                                                  import/order
+  195:24  error  'localStorage.getItem' is restricted from being used. localStorage에 직접 접근하지 마세요. src/utils/auth.js의 함수를 사용하세요  no-restricted-properties
+  206:13  error  'response' is assigned a value but never used                                                                  no-unused-vars
+  215:7   error  Unexpected console statement                                                                                   no-console
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/pages/Happy.jsx
+    2:1  error  `styled-components` import should occur after import of `recoil`                                                  import/order
+    4:1  error  There should be at least one empty line between import groups                                                     import/order
+  107:9  error  Unexpected console statement                                                                                      no-console
+  120:6  error  React Hook useEffect has a missing dependency: 'scenes.length'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/pages/Hidden.jsx
+  3:1  error  `react-router-dom` import should occur before import of `styled-components`  import/order
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/pages/Home.jsx
+     3:1   error  `react-router-dom` import should occur before import of `styled-components`                                       import/order
+     4:1   error  `framer-motion` import should occur before import of `react`                                                      import/order
+     5:1   error  There should be at least one empty line between import groups                                                     import/order
+     5:1   error  `react-bootstrap-icons` import should occur before import of `styled-components`                                  import/order
+     8:1   error  `../components/ImageGallery` import should occur before import of `../constants/version`                          import/order
+    87:7   error  'VersionInfo' is assigned a value but never used                                                                  no-unused-vars
+   108:7   error  'VersionText' is assigned a value but never used                                                                  no-unused-vars
+  1052:7   error  'VersionControlGroup' is assigned a value but never used                                                          no-unused-vars
+  1179:12  error  'localStorage.getItem' is restricted from being used. localStorage에 직접 접근하지 마세요. src/utils/auth.js의 함수를 사용하세요     no-restricted-properties
+  1184:19  error  'localStorage.getItem' is restricted from being used. localStorage에 직접 접근하지 마세요. src/utils/auth.js의 함수를 사용하세요     no-restricted-properties
+  1202:11  error  'localStorage.setItem' is restricted from being used. localStorage에 직접 접근하지 마세요. src/utils/auth.js의 함수를 사용하세요     no-restricted-properties
+  1243:5   error  'localStorage.removeItem' is restricted from being used. localStorage에 직접 접근하지 마세요. src/utils/auth.js의 함수를 사용하세요  no-restricted-properties
+  1244:5   error  'localStorage.removeItem' is restricted from being used. localStorage에 직접 접근하지 마세요. src/utils/auth.js의 함수를 사용하세요  no-restricted-properties
+  1261:7   error  'localStorage.setItem' is restricted from being used. localStorage에 직접 접근하지 마세요. src/utils/auth.js의 함수를 사용하세요     no-restricted-properties
+  1269:7   error  Unexpected console statement                                                                                      no-console
+  1322:13  error  'response' is assigned a value but never used                                                                     no-unused-vars
+  1344:7   error  Unexpected console statement                                                                                      no-console
+  1405:5   error  'localStorage.setItem' is restricted from being used. localStorage에 직접 접근하지 마세요. src/utils/auth.js의 함수를 사용하세요     no-restricted-properties
+  1413:9   error  'localStorage.setItem' is restricted from being used. localStorage에 직접 접근하지 마세요. src/utils/auth.js의 함수를 사용하세요     no-restricted-properties
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/pages/Intro.jsx
+   2:1   error  `styled-components` import should occur after import of `react-router-dom`                                     import/order
+   3:1   error  There should be at least one empty line between import groups                                                  import/order
+   4:1   error  `../utils/axios` import should occur after import of `../data/stories/intro.json`                              import/order
+  70:23  error  'localStorage.getItem' is restricted from being used. localStorage에 직접 접근하지 마세요. src/utils/auth.js의 함수를 사용하세요  no-restricted-properties
+  72:10  error  'loading' is assigned a value but never used                                                                   no-unused-vars
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/pages/Main1.jsx
+   1:1   error  There should be at least one empty line between import groups                                                  import/order
+   2:1   error  There should be at least one empty line between import groups                                                  import/order
+   3:1   error  There should be at least one empty line between import groups                                                  import/order
+   3:1   error  `recoil` import should occur before import of `../utils/axios`                                                 import/order
+   4:1   error  `../components/GameUI/BagelSelectPageComponent` import should occur before import of `../utils/axios`          import/order
+   6:1   error  `../atom/atom` import should occur before import of `../utils/axios`                                           import/order
+   9:24  error  'localStorage.getItem' is restricted from being used. localStorage에 직접 접근하지 마세요. src/utils/auth.js의 함수를 사용하세요  no-restricted-properties
+  23:9   error  Unexpected console statement                                                                                   no-console
+  34:9   error  Unexpected console statement                                                                                   no-console
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/pages/Main2.jsx
+   1:1  error  There should be at least one empty line between import groups  import/order
+  11:9  error  Unexpected console statement                                   no-console
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/pages/Main3.jsx
+   1:1  error  There should be at least one empty line between import groups  import/order
+  11:9  error  Unexpected console statement                                   no-console
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/pages/Main4.jsx
+   1:1  error  There should be at least one empty line between import groups  import/order
+  11:9  error  Unexpected console statement                                   no-console
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/pages/Main5.jsx
+   1:1  error  There should be at least one empty line between import groups  import/order
+  11:9  error  Unexpected console statement                                   no-console
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/pages/Middle.jsx
+    2:1  error  `styled-components` import should occur after import of `recoil`  import/order
+    4:1  error  There should be at least one empty line between import groups     import/order
+  103:9  error  Unexpected console statement                                      no-console
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/pages/MyGameResult.jsx
+   3:1   error  There should be at least one empty line between import groups                                                   import/order
+   4:1   error  There should be at least one empty line between import groups                                                   import/order
+   5:1   error  `framer-motion` import should occur before import of `react`                                                    import/order
+  63:23  error  'localStorage.getItem' is restricted from being used. localStorage에 직접 접근하지 마세요. src/utils/auth.js의 함수를 사용하세요   no-restricted-properties
+  76:9   error  Unexpected console statement                                                                                    no-console
+  81:6   error  React Hook useEffect has a missing dependency: 'accessToken'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  92:7   error  Unexpected console statement                                                                                    no-console
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/pages/Profile.jsx
+  1:1  error  `react` import should occur after import of `framer-motion`                        import/order
+  2:1  error  There should be at least one empty line between import groups                      import/order
+  2:1  error  `styled-components` import should occur after import of `react-bootstrap-icons`    import/order
+  3:1  error  There should be at least one empty line between import groups                      import/order
+  3:1  error  `../utils/axios` import should occur after import of `../components/StatsContent`  import/order
+  5:1  error  `react-router-dom` import should occur after import of `react-bootstrap-icons`     import/order
+  6:1  error  There should be at least one empty line between import groups                      import/order
+  7:1  error  `../utils/auth` import should occur after import of `../components/StatsContent`   import/order
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/pages/Result.jsx
+   4:1   error  There should be at least one empty line between import groups                                                  import/order
+  46:24  error  'localStorage.getItem' is restricted from being used. localStorage에 직접 접근하지 마세요. src/utils/auth.js의 함수를 사용하세요  no-restricted-properties
+  57:13  error  'response' is assigned a value but never used                                                                  no-unused-vars
+  65:7   error  Unexpected console statement                                                                                   no-console
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/pages/Sad.jsx
+    2:1  error  `styled-components` import should occur after import of `recoil`                                                  import/order
+    4:1  error  There should be at least one empty line between import groups                                                     import/order
+  155:9  error  Unexpected console statement                                                                                      no-console
+  168:6  error  React Hook useEffect has a missing dependency: 'scenes.length'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/styles/theme.js
+  185:1  warning  Assign object to a variable before exporting as module default  import/no-anonymous-default-export
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/utils/TimeUtil.js
+  41:7  error  Unexpected console statement  no-console
+  65:7  error  Unexpected console statement  no-console
+  91:7  error  Unexpected console statement  no-console
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/utils/auth.js
+  108:49  error    Unexpected console statement                                    no-console
+  109:50  error    Unexpected console statement                                    no-console
+  110:10  error    Unexpected console statement                                    no-console
+  111:50  error    Unexpected console statement                                    no-console
+  112:51  error    Unexpected console statement                                    no-console
+  115:1   warning  Assign object to a variable before exporting as module default  import/no-anonymous-default-export
+
+/Users/suhsaechan/Desktop/Programming/project/Bagel-Frontend/src/utils/axios.jsx
+  1:1  warning  Unexpected Unicode BOM (Byte Order Mark)  unicode-bom
+
+✖ 134 problems (131 errors, 3 warnings)
+  75 errors and 1 warning potentially fixable with the `--fix` option.
+
+[0;33mOne of your dependencies, babel-preset-react-app, is importing the
+"@babel/plugin-proposal-private-property-in-object" package without
+declaring it in its dependencies. This is currently working because
+"@babel/plugin-proposal-private-property-in-object" is already in your
+node_modules folder for unrelated reasons, but it [1mmay break at any time[0;33m.
+
+babel-preset-react-app is part of the create-react-app project, [1mwhich
+is not maintianed anymore[0;33m. It is thus unlikely that this bug will
+ever be fixed. Add "@babel/plugin-proposal-private-property-in-object" to
+your devDependencies to work around this error. This will make this message
+go away.[0m
+  

@@ -551,13 +551,39 @@ Expected: 컴파일 성공(경고/에러 오버레이는 뜰 수 있음). 앱이
 
 확인 후 `Ctrl+C`.
 
-- [ ] **Step 6: 프로덕션 빌드가 되는지 확인**
+- [ ] **Step 6: 빌드와 린트의 책임 분리 (실행 중 발견 — 계획 수정)**
+
+**실측 결과, 강제 룰을 켜면 `CI=false npm run build`가 `Failed to compile`로 실패한다.**
+CRA는 webpack ESLintPlugin을 통합해 **ESLint `error`를 컴파일 실패로 처리**한다.
+`CI=false`는 warning을 error로 승격시키지 않을 뿐, 진짜 error는 여전히 빌드를 막는다.
+
+이 상태를 방치하면 Phase 1이 끝날 때까지 **빌드도 배포도 불가능**해진다.
+
+따라서 빌드와 린트의 책임을 분리한다. `package.json`의 두 스크립트를 수정한다.
+
+```json
+"start": "DISABLE_ESLINT_PLUGIN=true react-scripts start",
+"build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
+```
+
+**영구 조치로 두는 이유** (Phase 1까지의 임시 우회가 아니다)
+
+- 빌드 도구가 린트를 겸하는 것은 관심사 혼합이다. 린트는 `npm run lint`가 전담하고
+  CI의 독립된 lint 단계가 게이트한다 — 품질 게이트는 그대로 유지된다.
+- 린트 실패가 곧 배포 불가가 되는 결합은 위험하다. 긴급 핫픽스가 무관한 린트 위반
+  하나에 막힌다.
+- `npm start`의 ESLint 오버레이가 화면을 덮으면 Phase 3의 3해상도 전수 캡처가 불가능해진다.
+
+> **Windows 주의**: `VAR=value cmd`는 유닉스 셸 문법이다. Windows에서 개발해야 할 경우
+> `cross-env`를 devDependency로 추가해 `cross-env DISABLE_ESLINT_PLUGIN=true ...` 형태로
+> 바꿔야 한다. 현재 개발 환경(macOS)과 CI(ubuntu)에서는 그대로 동작한다.
 
 Run: `CI=false npm run build`
+Expected: `Compiled successfully`
 
-Expected: `Compiled successfully` 또는 경고 동반 성공.
-
-> CI 워크플로우도 `CI=false npm run build`를 사용한다(경고를 에러로 승격시키지 않기 위함). 기존 CI 설정과 동일하게 유지한다.
+Run: `npm run lint`
+Expected: 위반이 **여전히 검출된다**(exit 1). 빌드에서 분리했을 뿐 린트를 끈 것이 아님을
+반드시 확인한다.
 
 - [ ] **Step 7: 커밋**
 

@@ -21,9 +21,9 @@
   },
   "scripts": {
     "prestart": "node scripts/sync-version.js",
-    "start": "react-scripts start",
+    "start": "DISABLE_ESLINT_PLUGIN=true react-scripts start",
     "prebuild": "node scripts/sync-version.js",
-    "build": "react-scripts build",
+    "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint src --ext .js,.jsx --max-warnings=0",

@@ -2,5 +2,78 @@
   "root": true,
   "extends": ["react-app", "react-app/jest", "prettier"],
   "plugins": ["import"],
-  "rules": {}
+  "rules": {
+    "no-console": "error",
+    "no-unused-vars": "error",
+    "react-hooks/exhaustive-deps": "error",
+    "no-restricted-properties": [
+      "error",
+      {
+        "object": "localStorage",
+        "property": "getItem",
+        "message": "localStorage에 직접 접근하지 마세요. src/utils/auth.js의 함수를 사용하세요."
+      },
+      {
+        "object": "localStorage",
+        "property": "setItem",
+        "message": "localStorage에 직접 접근하지 마세요. src/utils/auth.js의 함수를 사용하세요."
+      },
+      {
+        "object": "localStorage",
+        "property": "removeItem",
+        "message": "localStorage에 직접 접근하지 마세요. src/utils/auth.js의 함수를 사용하세요."
+      },
+      {
+        "object": "localStorage",
+        "property": "clear",
+        "message": "localStorage에 직접 접근하지 마세요. src/utils/auth.js의 clearTokens()를 사용하세요."
+      }
+    ],
+    "no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "axios",
+            "message": "axios를 직접 import하지 마세요. src/utils/axios 인스턴스를 사용하세요."
+          }
+        ]
+      }
+    ],
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+        "newlines-between": "always",
+        "alphabetize": { "order": "asc", "caseInsensitive": true }
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["src/utils/auth.js"],
+      "rules": {
+        "no-restricted-properties": "off"
+      }
+    },
+    {
+      "files": ["src/utils/axios.jsx", "src/utils/axios.js"],
+      "rules": {
+        "no-restricted-imports": "off",
+        "no-restricted-properties": "off"
+      }
+    },
+    {
+      "files": ["src/utils/logger.js"],
+      "rules": {
+        "no-console": "off"
+      }
+    },
+    {
+      "files": ["**/*.test.js", "**/*.test.jsx", "src/setupTests.js"],
+      "rules": {
+        "no-restricted-properties": "off"
+      }
+    }
+  ]
 }
