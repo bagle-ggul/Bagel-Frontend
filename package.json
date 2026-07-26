@@ -25,7 +25,9 @@
     "prebuild": "node scripts/sync-version.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "format": "prettier --write \"src/**/*.{js,jsx,json,css}\" \"docs/**/*.md\" \"*.{json,md}\"",
+    "format:check": "prettier --check \"src/**/*.{js,jsx,json,css}\" \"docs/**/*.md\" \"*.{json,md}\""
   },
   "eslintConfig": {
     "extends": [
@@ -46,6 +48,9 @@
     ]
   },
   "devDependencies": {
+    "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-import": "2.29.1",
+    "prettier": "3.3.3",
     "webpack": "^5.91.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.0.4"
