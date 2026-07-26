@@ -86,7 +86,7 @@ export class TimeUtil {
       const hours = date.getHours();
       const minutes = date.getMinutes();
 
-      return `${year}년 ${month}월 ${day}일 ${hours}시 ${minutes.toString().padStart(2, '0')}분`;
+      return `${year}년 ${month}월 ${day}일 ${hours}시 ${minutes.toString().padStart(2, "0")}분`;
     } catch (error) {
       console.error("상세 시간 변환 오류:", error);
       return "알 수 없음";
@@ -99,7 +99,7 @@ export class TimeUtil {
    * @returns {string} - "MM분 SS초" 형태의 문자열
    */
   static formatPlayTime(seconds) {
-    if (typeof seconds !== 'number' || seconds < 0) {
+    if (typeof seconds !== "number" || seconds < 0) {
       return "0초";
     }
 

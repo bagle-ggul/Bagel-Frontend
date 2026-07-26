@@ -1,11 +1,39 @@
 {
   "metadata": {
-    "lastUpdated": "2025-10-28T00:38:09Z",
-    "currentVersion": "1.4.3",
+    "lastUpdated": "2026-07-26T16:00:42Z",
+    "currentVersion": "1.4.5",
     "projectType": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
-    "totalReleases": 19
+    "totalReleases": 20
   },
   "releases": [
+    {
+      "version": "1.4.5",
+      "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
+      "date": "2026-07-26",
+      "pr_number": 93,
+      "raw_summary": "Summary by CodeRabbit\n릴리스 노트\n\n\n버그 수정\n\n변경된 주소로 접속되지 않던 문제 해결\n\n\n\n개선\n\n코드 품질 자동 검사 체계 도입\n빌드 안정성 개선\n\n\n\n문서\n\n개발 문서 체계 정비",
+      "parsed_changes": {
+        "버그_수정": {
+          "title": "버그 수정",
+          "items": [
+            "변경된 주소로 접속되지 않던 문제 해결"
+          ]
+        },
+        "개선": {
+          "title": "개선",
+          "items": [
+            "코드 품질 자동 검사 체계 도입",
+            "빌드 안정성 개선"
+          ]
+        },
+        "문서": {
+          "title": "문서",
+          "items": [
+            "개발 문서 체계 정비"
+          ]
+        }
+      }
+    },
     {
       "version": "1.4.3",
       "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",

@@ -1,5 +1,5 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
-import axios from '../utils/axios';
+import { useState, useCallback, useRef, useEffect } from "react";
+import axios from "../utils/axios";
 
 /**
  * 랭킹 데이터 관리를 위한 커스텀 훅
@@ -15,7 +15,7 @@ export const useRankingData = (pageSize = 20) => {
     hasNextPage: true,
     isLoading: false,
     isInitialLoading: true,
-    error: null
+    error: null,
   });
 
   const abortControllerRef = useRef();
@@ -54,14 +54,14 @@ export const useRankingData = (pageSize = 20) => {
     // 새 AbortController 생성
     abortControllerRef.current = new AbortController();
 
-    setData(prev => ({
+    setData((prev) => ({
       ...prev,
       isLoading: true,
-      error: null
+      error: null,
     }));
 
     try {
-      const response = await axios.get('/api/game/ranking', {
+      const response = await axios.get("/api/game/ranking", {
         signal: abortControllerRef.current.signal,
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -76,7 +76,7 @@ export const useRankingData = (pageSize = 20) => {
       const totalPages = response.data.totalPages || 1;
       const totalItems = response.data.totalItems || 0;
 
-      setData(prev => {
+      setData((prev) => {
         const managedRankings = manageMemory(prev.rankings, newRankings);
 
         return {
@@ -88,18 +88,17 @@ export const useRankingData = (pageSize = 20) => {
           hasNextPage: prev.currentPage + 1 < totalPages,
           isLoading: false,
           isInitialLoading: false,
-          error: null
+          error: null,
         };
       });
-
     } catch (error) {
-      if (error.name !== 'AbortError') {
-        console.error('랭킹 데이터 로딩 오류:', error);
-        setData(prev => ({
+      if (error.name !== "AbortError") {
+        console.error("랭킹 데이터 로딩 오류:", error);
+        setData((prev) => ({
           ...prev,
           isLoading: false,
           isInitialLoading: false,
-          error: error.message || '데이터를 불러오는 중 오류가 발생했습니다.'
+          error: error.message || "데이터를 불러오는 중 오류가 발생했습니다.",
         }));
       }
     }
@@ -117,7 +116,7 @@ export const useRankingData = (pageSize = 20) => {
       hasNextPage: true,
       isLoading: false,
       isInitialLoading: true,
-      error: null
+      error: null,
     });
   }, []);
 
@@ -125,7 +124,7 @@ export const useRankingData = (pageSize = 20) => {
    * 에러 재시도
    */
   const retryLoad = useCallback(() => {
-    setData(prev => ({ ...prev, error: null }));
+    setData((prev) => ({ ...prev, error: null }));
     loadNextPage();
   }, [loadNextPage]);
 
@@ -149,7 +148,7 @@ export const useRankingData = (pageSize = 20) => {
     data,
     loadNextPage,
     refreshData,
-    retryLoad
+    retryLoad,
   };
 };
 
@@ -160,7 +159,7 @@ export const usePerformanceMonitor = () => {
   const [metrics, setMetrics] = useState({
     renderTime: 0,
     itemsRendered: 0,
-    memoryUsed: 0
+    memoryUsed: 0,
   });
 
   const measureRender = useCallback((itemCount) => {
@@ -168,19 +167,19 @@ export const usePerformanceMonitor = () => {
 
     requestAnimationFrame(() => {
       const endTime = performance.now();
-      setMetrics(prev => ({
+      setMetrics((prev) => ({
         ...prev,
         renderTime: Math.round(endTime - startTime),
-        itemsRendered: itemCount
+        itemsRendered: itemCount,
       }));
     });
   }, []);
 
   const measureMemory = useCallback(() => {
-    if ('memory' in performance) {
-      setMetrics(prev => ({
+    if ("memory" in performance) {
+      setMetrics((prev) => ({
         ...prev,
-        memoryUsed: Math.round(performance.memory.usedJSHeapSize / 1024 / 1024) // MB
+        memoryUsed: Math.round(performance.memory.usedJSHeapSize / 1024 / 1024), // MB
       }));
     }
   }, []);

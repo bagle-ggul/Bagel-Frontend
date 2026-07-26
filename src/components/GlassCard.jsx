@@ -1,7 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
-import { motion } from 'framer-motion';
-import { glassCard } from '../styles/theme';
+import React from "react";
+import styled from "styled-components";
+import { motion } from "framer-motion";
+import { glassCard } from "../styles/theme";
 
 const BaseCard = styled(motion.div)`
   ${({ theme }) => theme.background && `background: ${theme.background};`}
@@ -43,8 +43,8 @@ const GlassCard = ({ children, center = false, ...props }) => {
     <BaseCard
       theme={glassCard}
       style={{
-        textAlign: center ? 'center' : 'left',
-        ...props.style
+        textAlign: center ? "center" : "left",
+        ...props.style,
       }}
       {...props}
     >

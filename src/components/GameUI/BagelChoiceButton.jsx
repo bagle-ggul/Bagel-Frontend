@@ -1,6 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
-import { motion } from 'framer-motion';
+import React from "react";
+import styled from "styled-components";
+import { motion } from "framer-motion";
 
 const ChoiceContainer = styled(motion.button)`
   background: rgba(0, 0, 0, 0.7);
@@ -26,17 +26,13 @@ const ChoiceContainer = styled(motion.button)`
 
   /* 호버 시 슬라이딩 효과 */
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg,
-      transparent,
-      rgba(200, 182, 226, 0.2),
-      transparent
-    );
+    background: linear-gradient(90deg, transparent, rgba(200, 182, 226, 0.2), transparent);
     transition: left 0.5s ease;
   }
 
@@ -91,24 +87,24 @@ const BagelChoiceButton = ({
   index = 0,
   disabled = false,
   icon = "▶",
-  variant = "default" // default, important, danger
+  variant = "default", // default, important, danger
 }) => {
   const getVariantColors = () => {
     switch (variant) {
       case "important":
         return {
           background: "rgba(0, 0, 0, 0.8)",
-          border: "rgba(255, 215, 0, 0.5)"
+          border: "rgba(255, 215, 0, 0.5)",
         };
       case "danger":
         return {
           background: "rgba(0, 0, 0, 0.8)",
-          border: "rgba(220, 38, 38, 0.5)"
+          border: "rgba(220, 38, 38, 0.5)",
         };
       default:
         return {
           background: "rgba(0, 0, 0, 0.7)",
-          border: "rgba(255, 255, 255, 0.15)"
+          border: "rgba(255, 255, 255, 0.15)",
         };
     }
   };
@@ -120,20 +116,22 @@ const BagelChoiceButton = ({
       scale: 1,
       background: variantColors.background,
       borderColor: variantColors.border,
-      y: 0
+      y: 0,
     },
     hover: {
       scale: 1.02,
-      background: variant === "default"
-        ? "rgba(0, 0, 0, 0.9)"
-        : variant === "important"
+      background:
+        variant === "default"
           ? "rgba(0, 0, 0, 0.9)"
-          : "rgba(0, 0, 0, 0.9)",
-      borderColor: variant === "default"
-        ? "rgba(200, 182, 226, 0.5)"
-        : variant === "important"
-          ? "rgba(255, 215, 0, 0.7)"
-          : "rgba(220, 38, 38, 0.7)",
+          : variant === "important"
+            ? "rgba(0, 0, 0, 0.9)"
+            : "rgba(0, 0, 0, 0.9)",
+      borderColor:
+        variant === "default"
+          ? "rgba(200, 182, 226, 0.5)"
+          : variant === "important"
+            ? "rgba(255, 215, 0, 0.7)"
+            : "rgba(220, 38, 38, 0.7)",
       y: -2,
       boxShadow: [
         "0 10px 25px rgba(0, 0, 0, 0.4)",
@@ -141,13 +139,13 @@ const BagelChoiceButton = ({
           ? "0 0 20px rgba(200, 182, 226, 0.1)"
           : variant === "important"
             ? "0 0 20px rgba(255, 215, 0, 0.1)"
-            : "0 0 20px rgba(220, 38, 38, 0.1)"
-      ]
+            : "0 0 20px rgba(220, 38, 38, 0.1)",
+      ],
     },
     tap: {
       scale: 0.98,
-      y: 0
-    }
+      y: 0,
+    },
   };
 
   return (
@@ -161,11 +159,11 @@ const BagelChoiceButton = ({
       transition={{
         type: "spring",
         stiffness: 300,
-        damping: 20
+        damping: 20,
       }}
       style={{
         background: variantColors.background,
-        borderColor: variantColors.border
+        borderColor: variantColors.border,
       }}
     >
       <ChoiceText>{text}</ChoiceText>

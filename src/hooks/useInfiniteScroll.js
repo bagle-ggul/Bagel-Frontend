@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from "react";
 
 /**
  * 무한스크롤을 위한 Intersection Observer 기반 커스텀 훅
@@ -21,7 +21,7 @@ export const useInfiniteScrollObserver = (loadMore, hasNextPage, options = {}) =
         try {
           await loadMore();
         } catch (error) {
-          console.error('데이터 로딩 오류:', error);
+          console.error("데이터 로딩 오류:", error);
         } finally {
           setIsLoading(false);
         }
@@ -34,17 +34,14 @@ export const useInfiniteScrollObserver = (loadMore, hasNextPage, options = {}) =
     const targetElement = loadMoreRef.current;
 
     // Intersection Observer 지원 확인
-    if ('IntersectionObserver' in window && targetElement) {
+    if ("IntersectionObserver" in window && targetElement) {
       const defaultOptions = {
         threshold: 0.1,
-        rootMargin: '100px',
-        ...options
+        rootMargin: "100px",
+        ...options,
       };
 
-      observerRef.current = new IntersectionObserver(
-        handleIntersection,
-        defaultOptions
-      );
+      observerRef.current = new IntersectionObserver(handleIntersection, defaultOptions);
 
       observerRef.current.observe(targetElement);
 
@@ -64,8 +61,8 @@ export const useInfiniteScrollObserver = (loadMore, hasNextPage, options = {}) =
         }
       };
 
-      window.addEventListener('scroll', handleScroll);
-      return () => window.removeEventListener('scroll', handleScroll);
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
     }
   }, [handleIntersection, hasNextPage, isLoading, options]);
 
@@ -89,11 +86,11 @@ export const useScrollProgress = () => {
 
     const throttledCalculateScrollProgress = throttle(calculateScrollProgress, 16);
 
-    window.addEventListener('scroll', throttledCalculateScrollProgress);
+    window.addEventListener("scroll", throttledCalculateScrollProgress);
     calculateScrollProgress(); // 초기값 설정
 
     return () => {
-      window.removeEventListener('scroll', throttledCalculateScrollProgress);
+      window.removeEventListener("scroll", throttledCalculateScrollProgress);
     };
   }, []);
 
@@ -111,7 +108,7 @@ export const useScrollToTop = (threshold = 300) => {
   const scrollToTop = useCallback(() => {
     window.scrollTo({
       top: 0,
-      behavior: 'smooth'
+      behavior: "smooth",
     });
   }, []);
 
@@ -122,11 +119,11 @@ export const useScrollToTop = (threshold = 300) => {
 
     const throttledHandleScroll = throttle(handleScroll, 100);
 
-    window.addEventListener('scroll', throttledHandleScroll);
+    window.addEventListener("scroll", throttledHandleScroll);
     handleScroll(); // 초기값 설정
 
     return () => {
-      window.removeEventListener('scroll', throttledHandleScroll);
+      window.removeEventListener("scroll", throttledHandleScroll);
     };
   }, [threshold]);
 
@@ -166,20 +163,20 @@ export const useTouchSwipe = (onSwipeUp, minSwipeDistance = 50) => {
   return {
     handleTouchStart,
     handleTouchMove,
-    handleTouchEnd
+    handleTouchEnd,
   };
 };
 
 // 유틸리티 함수들
 const throttle = (func, limit) => {
   let inThrottle;
-  return function() {
+  return function () {
     const args = arguments;
     const context = this;
     if (!inThrottle) {
       func.apply(context, args);
       inThrottle = true;
-      setTimeout(() => inThrottle = false, limit);
+      setTimeout(() => (inThrottle = false), limit);
     }
   };
 };

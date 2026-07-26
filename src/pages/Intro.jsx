@@ -28,7 +28,6 @@ const SceneWrap = styled.div`
   animation: ${fadeIn} 2s ease-in-out;
 `;
 
-
 const SkipButton = styled.button`
   position: absolute;
   top: 30px;
@@ -75,14 +74,11 @@ const SelectPageComponent = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get(
-          "/api/my-page",
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
+        const response = await axios.get("/api/my-page", {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
         setData(response.data);
         setLoading(false);
       } catch (error) {

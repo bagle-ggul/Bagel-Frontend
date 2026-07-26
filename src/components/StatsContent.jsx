@@ -1,7 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
-import { motion } from 'framer-motion';
-import { componentStyles } from '../styles/theme';
+import React from "react";
+import styled from "styled-components";
+import { motion } from "framer-motion";
+import { componentStyles } from "../styles/theme";
 
 const StatsTitle = styled.h3`
   font-size: 1.8rem;
@@ -29,7 +29,11 @@ const StatsContainer = styled.div`
 `;
 
 const DetailRow = styled(motion.div)`
-  ${({ theme }) => theme && Object.entries(theme).map(([key, value]) => `${key}: ${value};`).join(' ')}
+  ${({ theme }) =>
+    theme &&
+    Object.entries(theme)
+      .map(([key, value]) => `${key}: ${value};`)
+      .join(" ")}
 
   @media (max-width: 480px) {
     padding: 0.6rem 1rem;
@@ -78,7 +82,7 @@ const StatsContent = ({ profile, itemVariants, containerVariants }) => {
         initial="hidden"
         animate="visible"
         transition={{ delay: 0.3 }}
-        style={{ width: '100%' }}
+        style={{ width: "100%" }}
       >
         <StatsContainer>
           <DetailRow

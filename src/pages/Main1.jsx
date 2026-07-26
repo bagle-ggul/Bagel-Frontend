@@ -13,14 +13,11 @@ function Main1() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          "/api/my-page",
-          {
-            headers: {
-              Authorization: `Bearer ${refreshToken}`,
-            },
-          }
-        );
+        const response = await axios.get("/api/my-page", {
+          headers: {
+            Authorization: `Bearer ${refreshToken}`,
+          },
+        });
         setCharacterName(response.data.characterName);
       } catch (error) {
         console.error("Error fetching data:", error);

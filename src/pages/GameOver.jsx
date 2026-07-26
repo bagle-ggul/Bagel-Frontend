@@ -203,16 +203,12 @@ function GameOver() {
     };
 
     try {
-      const response = await axios.post(
-        "/api/game/over",
-        userData,
-        {
-          headers: {
-            Authorization: `Bearer ${refreshToken}`,
-            "Content-Type": "application/json", // 명확하게 JSON으로 전송
-          },
-        }
-      );
+      const response = await axios.post("/api/game/over", userData, {
+        headers: {
+          Authorization: `Bearer ${refreshToken}`,
+          "Content-Type": "application/json", // 명확하게 JSON으로 전송
+        },
+      });
 
       // Handle success (e.g., display a success message, redirect to another page, etc.)
     } catch (error) {

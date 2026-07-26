@@ -1,7 +1,7 @@
-import React from 'react';
-import styled from 'styled-components';
-import { motion } from 'framer-motion';
-import TypewriterText from './TypewriterText';
+import React from "react";
+import styled from "styled-components";
+import { motion } from "framer-motion";
+import TypewriterText from "./TypewriterText";
 
 const DialogContainer = styled(motion.div)`
   background: rgba(0, 0, 0, 0.85);
@@ -24,13 +24,14 @@ const DialogContainer = styled(motion.div)`
 
   /* 상단 그라데이션 라인 */
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     top: -1px;
     left: 2rem;
     right: 2rem;
     height: 4px;
-    background: linear-gradient(90deg,
+    background: linear-gradient(
+      90deg,
       rgba(200, 182, 226, 0.8),
       rgba(200, 182, 226, 0.2),
       rgba(200, 182, 226, 0.8)
@@ -40,17 +41,13 @@ const DialogContainer = styled(motion.div)`
 
   /* 화자 표시를 위한 좌측 강조선 */
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     left: 0;
     top: 20%;
     bottom: 20%;
     width: 4px;
-    background: linear-gradient(180deg,
-      transparent,
-      rgba(200, 182, 226, 0.6),
-      transparent
-    );
+    background: linear-gradient(180deg, transparent, rgba(200, 182, 226, 0.6), transparent);
     border-radius: 0 2px 2px 0;
   }
 
@@ -147,7 +144,7 @@ const BagelDialogBox = ({
   enableTypewriter = true,
   typingSpeed = 50,
   onTypeComplete = () => {},
-  onClick = () => {}
+  onClick = () => {},
 }) => {
   return (
     <DialogContainer
@@ -161,15 +158,11 @@ const BagelDialogBox = ({
 
       <DialogContent>
         {enableTypewriter ? (
-          <TypewriterText
-            text={text}
-            speed={typingSpeed}
-            onComplete={onTypeComplete}
-          />
+          <TypewriterText text={text} speed={typingSpeed} onComplete={onTypeComplete} />
         ) : (
           <div>
-            {text.split('\n').map((line, index) => (
-              <div key={index} style={{ minHeight: '1.6em' }}>
+            {text.split("\n").map((line, index) => (
+              <div key={index} style={{ minHeight: "1.6em" }}>
                 {line}
               </div>
             ))}
