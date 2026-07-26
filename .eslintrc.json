@@ -51,13 +51,13 @@
   },
   "overrides": [
     {
-      "files": ["src/utils/auth.js"],
+      "files": ["src/utils/auth.js", "src/utils/storage.js"],
       "rules": {
         "no-restricted-properties": "off"
       }
     },
     {
-      "files": ["src/utils/axios.jsx", "src/utils/axios.js"],
+      "files": ["src/utils/axios.js"],
       "rules": {
         "no-restricted-imports": "off",
         "no-restricted-properties": "off"
