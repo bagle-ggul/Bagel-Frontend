@@ -27,38 +27,39 @@
 
 **생성**
 
-| 경로 | 책임 |
-|---|---|
-| `.editorconfig` | 에디터 레벨 기본 규약(인코딩·개행·들여쓰기). 인코딩 손상 재발 방지 |
-| `.prettierrc.json` | 포맷 규칙 단일 출처 |
-| `.prettierignore` | 포맷 제외 대상(빌드 산출물, 손상된 `axios.jsx`) |
-| `.eslintrc.json` | 린트 규칙 단일 출처. `package.json`의 `eslintConfig`에서 이전 |
-| `.eslintignore` | 린트 제외 대상(빌드 산출물, 자동 생성 `version.js`) |
-| `.git-blame-ignore-revs` | 전체 포맷 커밋을 blame에서 제외 |
-| `.env.example` | 환경 변수 문서화(Phase 1의 `.env` 도입 준비) |
-| `src/setupTests.js` | 테스트 전역 설정(jest-dom matcher 등록) |
-| `src/utils/TimeUtil.test.js` | 테스트 인프라 동작 검증 겸 첫 유닛 테스트 |
-| `docs/README.md` | 문서 인덱스 |
-| `docs/ARCHITECTURE.md` | 디렉토리 구조·데이터 흐름·상태 관리 |
-| `docs/CONVENTIONS.md` | 린트로 강제 못 하는 규칙 |
-| `docs/TESTING.md` | 테스트 3계층 작성 가이드 |
-| `docs/DESIGN-SYSTEM.md` | 디자인 토큰 규격 (Phase 3에서 확정, Phase 0에서는 골격) |
-| `docs/GAME-FLOW.md` | 스토리 분기 구조 (Phase 4에서 확정, Phase 0에서는 현행 기록) |
+| 경로                         | 책임                                                               |
+| ---------------------------- | ------------------------------------------------------------------ |
+| `.editorconfig`              | 에디터 레벨 기본 규약(인코딩·개행·들여쓰기). 인코딩 손상 재발 방지 |
+| `.prettierrc.json`           | 포맷 규칙 단일 출처                                                |
+| `.prettierignore`            | 포맷 제외 대상(빌드 산출물, 손상된 `axios.jsx`)                    |
+| `.eslintrc.json`             | 린트 규칙 단일 출처. `package.json`의 `eslintConfig`에서 이전      |
+| `.eslintignore`              | 린트 제외 대상(빌드 산출물, 자동 생성 `version.js`)                |
+| `.git-blame-ignore-revs`     | 전체 포맷 커밋을 blame에서 제외                                    |
+| `.env.example`               | 환경 변수 문서화(Phase 1의 `.env` 도입 준비)                       |
+| `src/setupTests.js`          | 테스트 전역 설정(jest-dom matcher 등록)                            |
+| `src/utils/TimeUtil.test.js` | 테스트 인프라 동작 검증 겸 첫 유닛 테스트                          |
+| `docs/README.md`             | 문서 인덱스                                                        |
+| `docs/ARCHITECTURE.md`       | 디렉토리 구조·데이터 흐름·상태 관리                                |
+| `docs/CONVENTIONS.md`        | 린트로 강제 못 하는 규칙                                           |
+| `docs/TESTING.md`            | 테스트 3계층 작성 가이드                                           |
+| `docs/DESIGN-SYSTEM.md`      | 디자인 토큰 규격 (Phase 3에서 확정, Phase 0에서는 골격)            |
+| `docs/GAME-FLOW.md`          | 스토리 분기 구조 (Phase 4에서 확정, Phase 0에서는 현행 기록)       |
 
 **수정**
 
-| 경로 | 변경 내용 |
-|---|---|
-| `package.json` | `eslintConfig` 제거, devDependencies 추가, scripts 추가, `jest.coverageThreshold` 추가 |
-| `.github/workflows/PROJECT-CI.yaml` | 린트 실제 실행, 순서 정리, 커버리지 리포트 |
-| `claude.md` | 실제 코드와 일치하도록 전면 재작성 + 작업 파이프라인 명문화 |
-| `.gitignore` | `.env` 항목 보강 |
+| 경로                                | 변경 내용                                                                              |
+| ----------------------------------- | -------------------------------------------------------------------------------------- |
+| `package.json`                      | `eslintConfig` 제거, devDependencies 추가, scripts 추가, `jest.coverageThreshold` 추가 |
+| `.github/workflows/PROJECT-CI.yaml` | 린트 실제 실행, 순서 정리, 커버리지 리포트                                             |
+| `claude.md`                         | 실제 코드와 일치하도록 전면 재작성 + 작업 파이프라인 명문화                            |
+| `.gitignore`                        | `.env` 항목 보강                                                                       |
 
 ---
 
 ### Task 1: 개발 환경 부트스트랩 및 포맷터 도입
 
 **Files:**
+
 - Create: `.editorconfig`
 - Create: `.prettierrc.json`
 - Create: `.prettierignore`
@@ -66,6 +67,7 @@
 - Modify: `.gitignore`
 
 **Interfaces:**
+
 - Consumes: 없음 (첫 작업)
 - Produces: `npm run format`, `npm run format:check` 스크립트. Task 3이 이를 사용한다.
 
@@ -188,11 +190,13 @@ Expected: 포맷이 맞지 않는 파일 목록이 출력되고 **exit code 1로
 ### Task 2: ESLint 설정 분리 및 lint 스크립트 도입
 
 **Files:**
+
 - Create: `.eslintrc.json`
 - Create: `.eslintignore`
 - Modify: `package.json` (`eslintConfig` 제거, scripts 추가)
 
 **Interfaces:**
+
 - Consumes: Task 1의 `eslint-config-prettier`, `eslint-plugin-import`
 - Produces: `npm run lint`, `npm run lint:fix` 스크립트. Task 3·5·6이 사용한다.
 
@@ -279,10 +283,12 @@ Expected: 컴파일 성공. 브라우저에서 앱이 뜬다. 터미널에 린�
 ### Task 3: 전체 포맷 적용 및 blame 보호
 
 **Files:**
+
 - Create: `.git-blame-ignore-revs`
 - Modify: `src/**/*` (공백·따옴표만 — 로직 불변)
 
 **Interfaces:**
+
 - Consumes: Task 1의 `npm run format`
 - Produces: 포맷이 통일된 코드베이스. 이후 모든 Phase의 diff가 로직 변경만 담게 된다.
 
@@ -353,6 +359,7 @@ git rev-parse HEAD >> .git-blame-ignore-revs
 - [ ] **Step 7: blame 설정 적용 및 동작 확인**
 
 Run:
+
 ```bash
 git config blame.ignoreRevsFile .git-blame-ignore-revs
 git blame -L 1,5 src/utils/auth.js
@@ -371,9 +378,11 @@ Expected: 포맷 커밋이 아니라 원래 작성 커밋이 표시된다.
 ### Task 4: 프로젝트 강제 룰 활성화
 
 **Files:**
+
 - Modify: `.eslintrc.json`
 
 **Interfaces:**
+
 - Consumes: Task 2의 `.eslintrc.json` 골격, `npm run lint`
 - Produces: 위반 목록. 이 목록이 Phase 1~4의 작업 지시서가 된다.
 
@@ -477,6 +486,7 @@ Task 2에서 만든 파일의 `rules`와 `overrides`를 다음으로 교체한�
 확인)이므로 프로퍼티 기반 제한으로 충분히 잡힌다.
 
 **overrides 각 항목의 근거**
+
 - `auth.js` — 토큰 저장소 접근의 **유일한 정당한 위치**다. 여기서까지 막으면 규칙이 성립하지 않는다.
 - `axios.jsx`/`axios.js` — axios 인스턴스를 만드는 곳이므로 원본 패키지 import가 필요하다. Phase 1에서 `.js`로 이름이 바뀌므로 두 경로를 모두 등록해 둔다.
 - `logger.js` — Phase 1에서 생성될 파일. 로거 내부에서는 `console`을 써야 한다. 파일이 아직 없어도 override는 무해하다.
@@ -493,6 +503,7 @@ Expected: **실패한다(exit 1).** 그것이 이 단계의 목적이다.
 각 룰별 위반 건수를 세어 스펙 1.2절과 대조한다.
 
 Run:
+
 ```bash
 npx eslint src --ext .js,.jsx --format json --output-file .lint-report.json || true
 node -e "
@@ -506,13 +517,13 @@ rm .lint-report.json
 
 Expected: 대략 다음 수준의 위반이 나타난다. 스펙 조사 시점의 실측값이다.
 
-| 룰 | 예상 건수 | 근거 (스펙 1.2절) |
-|---|---|---|
-| `no-console` | 약 27 | console 사용 27곳 |
-| `no-restricted-properties` (localStorage) | 약 16 | localStorage 직접 접근 16곳 / 9개 파일 |
-| `import/order` | 다수 | 정렬 규칙 미적용 상태 |
-| `react-hooks/exhaustive-deps` | 소수 | 기존 경고가 error로 승격 |
-| `no-unused-vars` | 소수 | 기존 경고가 error로 승격 |
+| 룰                                        | 예상 건수 | 근거 (스펙 1.2절)                      |
+| ----------------------------------------- | --------- | -------------------------------------- |
+| `no-console`                              | 약 27     | console 사용 27곳                      |
+| `no-restricted-properties` (localStorage) | 약 16     | localStorage 직접 접근 16곳 / 9개 파일 |
+| `import/order`                            | 다수      | 정렬 규칙 미적용 상태                  |
+| `react-hooks/exhaustive-deps`             | 소수      | 기존 경고가 error로 승격               |
+| `no-unused-vars`                          | 소수      | 기존 경고가 error로 승격               |
 
 `no-restricted-imports`(axios)는 **0건이 정상**이다. 모든 호출부가 이미 `../utils/axios` 인스턴스를 import하고 있다(스펙 조사에서 확인). 이 룰은 **회귀 방지용**이다.
 
@@ -563,11 +574,13 @@ Expected: `Compiled successfully` 또는 경고 동반 성공.
 ### Task 5: 테스트 인프라 구축 및 커버리지 게이트
 
 **Files:**
+
 - Create: `src/setupTests.js`
 - Create: `src/utils/TimeUtil.test.js`
 - Modify: `package.json` (`jest` 설정, `test:ci` 스크립트)
 
 **Interfaces:**
+
 - Consumes: Task 2의 `.eslintrc.json`(`react-app/jest` 프리셋)
 - Produces: `npm run test:ci` 스크립트, 커버리지 임계치 설정. Task 6(CI)이 사용한다.
 
@@ -642,9 +655,9 @@ Expected: **7개 테스트 전부 PASS.**
 `TimeUtil.test.js`의 첫 테스트를 임시로 다음과 같이 바꾼다.
 
 ```js
-  it("60초 미만은 초만 표시한다", () => {
-    expect(TimeUtil.formatPlayTime(45)).toBe("46초");
-  });
+it("60초 미만은 초만 표시한다", () => {
+  expect(TimeUtil.formatPlayTime(45)).toBe("46초");
+});
 ```
 
 Run: `CI=true npx react-scripts test --watchAll=false --testPathPattern=TimeUtil`
@@ -725,9 +738,11 @@ src/setupTests.js src/utils/TimeUtil.test.js package.json
 ### Task 6: CI 워크플로우 개편
 
 **Files:**
+
 - Modify: `.github/workflows/PROJECT-CI.yaml`
 
 **Interfaces:**
+
 - Consumes: Task 2의 `npm run lint`, Task 5의 `npm run test:ci`
 - Produces: 린트·테스트 결과를 보고하는 CI. Phase 1에서 차단 게이트로 전환된다.
 
@@ -740,29 +755,29 @@ src/setupTests.js src/utils/TimeUtil.test.js package.json
 **제거할 블록:**
 
 ```yaml
-      - name: 린트 체크
-        run: |
-          if npm run lint --silent 2>/dev/null; then
-            echo "✅ 린트 체크 실행"
-            npm run lint
-          else
-            echo "ℹ️  린트 스크립트가 없습니다. 건너뛰기"
-          fi
+- name: 린트 체크
+  run: |
+    if npm run lint --silent 2>/dev/null; then
+      echo "✅ 린트 체크 실행"
+      npm run lint
+    else
+      echo "ℹ️  린트 스크립트가 없습니다. 건너뛰기"
+    fi
 ```
 
 **교체할 내용:**
 
 ```yaml
-      - name: 포맷 체크
-        run: npm run format:check
-        continue-on-error: true
+- name: 포맷 체크
+  run: npm run format:check
+  continue-on-error: true
 
-      - name: 린트 체크
-        id: lint
-        run: npm run lint
-        # Phase 0: 위반이 다수 남아 있어 결과만 보고한다.
-        # Phase 1에서 위반을 0으로 만든 뒤 이 줄을 제거해 차단 게이트로 전환한다.
-        continue-on-error: true
+- name: 린트 체크
+  id: lint
+  run: npm run lint
+  # Phase 0: 위반이 다수 남아 있어 결과만 보고한다.
+  # Phase 1에서 위반을 0으로 만든 뒤 이 줄을 제거해 차단 게이트로 전환한다.
+  continue-on-error: true
 ```
 
 - [ ] **Step 2: 테스트 단계 교체**
@@ -772,34 +787,34 @@ src/setupTests.js src/utils/TimeUtil.test.js package.json
 **제거할 블록:**
 
 ```yaml
-      - name: 테스트 실행
-        id: test-run
-        run: |
-          echo "🧪 테스트 실행 중..."
-          if CI=true npm test -- --coverage --testResultsProcessor=jest-sonar-reporter --watchAll=false; then
-            echo "test_status=success" >> $GITHUB_OUTPUT
-            echo "✅ 모든 테스트가 통과했습니다."
-          else
-            echo "test_status=failed" >> $GITHUB_OUTPUT
-            echo "❌ 일부 테스트가 실패했습니다."
-            exit 1
-          fi
-        env:
-          CI: true
-        continue-on-error: true
+- name: 테스트 실행
+  id: test-run
+  run: |
+    echo "🧪 테스트 실행 중..."
+    if CI=true npm test -- --coverage --testResultsProcessor=jest-sonar-reporter --watchAll=false; then
+      echo "test_status=success" >> $GITHUB_OUTPUT
+      echo "✅ 모든 테스트가 통과했습니다."
+    else
+      echo "test_status=failed" >> $GITHUB_OUTPUT
+      echo "❌ 일부 테스트가 실패했습니다."
+      exit 1
+    fi
+  env:
+    CI: true
+  continue-on-error: true
 ```
 
 **교체할 내용:**
 
 ```yaml
-      - name: 테스트 실행
-        id: test-run
-        run: npm run test:ci
-        env:
-          CI: true
-        # Phase 0: utils/hooks 커버리지 임계치 미달 상태.
-        # Phase 1에서 테스트를 채운 뒤 이 줄을 제거한다.
-        continue-on-error: true
+- name: 테스트 실행
+  id: test-run
+  run: npm run test:ci
+  env:
+    CI: true
+  # Phase 0: utils/hooks 커버리지 임계치 미달 상태.
+  # Phase 1에서 테스트를 채운 뒤 이 줄을 제거한다.
+  continue-on-error: true
 ```
 
 - [ ] **Step 3: 후속 단계의 출력 참조 정리**
@@ -807,13 +822,15 @@ src/setupTests.js src/utils/TimeUtil.test.js package.json
 기존 "실패 정보 수집" 단계가 `steps.test-run.outputs.test_status`를 참조한다. Step 2에서 해당 output을 더 이상 설정하지 않으므로 참조를 수정한다.
 
 **변경 전:**
+
 ```yaml
-          if [ "${{ steps.test-run.outputs.test_status }}" = "failed" ]; then
+if [ "${{ steps.test-run.outputs.test_status }}" = "failed" ]; then
 ```
 
 **변경 후:**
+
 ```yaml
-          if [ "${{ steps.test-run.outcome }}" = "failure" ]; then
+if [ "${{ steps.test-run.outcome }}" = "failure" ]; then
 ```
 
 > `outcome`은 `continue-on-error`가 적용되기 **전**의 실제 결과를 담는 GitHub Actions 내장 값이다. 별도 output 설정이 필요 없다.
@@ -850,6 +867,7 @@ src/setupTests.js src/utils/TimeUtil.test.js package.json
 - [ ] **Step 5: YAML 문법 검증**
 
 Run:
+
 ```bash
 node -e "
 const fs=require('fs');
@@ -879,6 +897,7 @@ CI=false npm run build; echo "build exit: $?"
 ```
 
 Expected:
+
 - `format exit: 0` (Task 3에서 전체 포맷 적용됨)
 - `lint exit: 1` (위반 잔존 — Phase 1에서 해소)
 - `test exit: 1` (커버리지 미달 — Phase 1에서 해소)
@@ -901,6 +920,7 @@ Expected:
 ### Task 7: 문서 체계 신설
 
 **Files:**
+
 - Create: `docs/README.md`
 - Create: `docs/ARCHITECTURE.md`
 - Create: `docs/CONVENTIONS.md`
@@ -909,6 +929,7 @@ Expected:
 - Create: `docs/GAME-FLOW.md`
 
 **Interfaces:**
+
 - Consumes: 스펙 문서의 진단 내용, Task 1~6에서 확정된 설정값
 - Produces: `claude.md`(Task 8)가 링크할 대상 문서들
 
@@ -1028,10 +1049,12 @@ docs/README.md docs/ARCHITECTURE.md docs/CONVENTIONS.md docs/TESTING.md docs/DES
 ### Task 8: claude.md 재작성
 
 **Files:**
+
 - Modify: `claude.md`
 - Create: `.env.example`
 
 **Interfaces:**
+
 - Consumes: Task 7의 `docs/*.md` (링크 대상), Task 1~6의 확정 설정
 - Produces: AI 에이전트 작업 규칙의 단일 출처
 
@@ -1071,33 +1094,38 @@ REACT_APP_API_BASE_URL=https://api.bagel.suhsaechan.kr
    사용자 승인 없는 파일 삭제 금지, 검증 전 "완료" 보고 금지
 5. **문서 링크 표** — 어떤 주제를 어느 문서에서 찾을지:
 
-   | 주제 | 문서 |
-   |---|---|
-   | 디렉토리 구조·라우팅·데이터 흐름 | `docs/ARCHITECTURE.md` |
-   | 코딩 컨벤션 | `docs/CONVENTIONS.md` |
-   | 테스트 작성법 | `docs/TESTING.md` |
-   | 디자인 토큰 | `docs/DESIGN-SYSTEM.md` |
-   | 게임 분기·점수 체계 | `docs/GAME-FLOW.md` |
-   | 진행 중인 리팩토링 설계 | `docs/superpowers/specs/` |
+   | 주제                             | 문서                      |
+   | -------------------------------- | ------------------------- |
+   | 디렉토리 구조·라우팅·데이터 흐름 | `docs/ARCHITECTURE.md`    |
+   | 코딩 컨벤션                      | `docs/CONVENTIONS.md`     |
+   | 테스트 작성법                    | `docs/TESTING.md`         |
+   | 디자인 토큰                      | `docs/DESIGN-SYSTEM.md`   |
+   | 게임 분기·점수 체계              | `docs/GAME-FLOW.md`       |
+   | 진행 중인 리팩토링 설계          | `docs/superpowers/specs/` |
 
 6. **현재 진행 중인 작업** — 전면 표준화 리팩토링이 진행 중이며 Phase 0~5 중 어디까지
    완료되었는지. 스펙 문서 링크
 
 **제외할 것 (docs/로 이전됨)**
+
 - 색상 팔레트·글라스모피즘 CSS → `docs/DESIGN-SYSTEM.md`
 - 디렉토리 구조도 → `docs/ARCHITECTURE.md`
 - 네이밍·이미지 명명법 → `docs/CONVENTIONS.md`
 - API 응답 구조 예시 → `docs/ARCHITECTURE.md`
 
 **반드시 제거할 것 (사실과 다름)**
+
 - `/login`, `/signup` 라우트 기술 — **존재하지 않는다.** Home의 모달로 처리된다
 - "새로 생성된 표준 구조" 항목의 불완전한 `src/` 트리
 
 **보존할 것**
+
 - 파일 하단의 다음 문구 2개를 그대로 유지한다:
+
   ```
   <!- 해당 문구는 절때 삭제하지 마세요 -->
   ```
+
   이 문구는 원본 파일에 명시적으로 삭제 금지가 표기되어 있다.
 
 - [ ] **Step 3: 사실 검증 — 기술된 라우트가 실존하는지 확인**
@@ -1154,6 +1182,7 @@ CI=false npm run build > /dev/null 2>&1; echo "build: $?"
 ```
 
 Expected:
+
 - `format: 0` — 통과해야 한다
 - `lint: 1` — 위반 잔존(정상, Phase 1 대상)
 - `test: 1` — 커버리지 미달(정상, Phase 1 대상)

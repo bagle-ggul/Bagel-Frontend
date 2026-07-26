@@ -100,13 +100,7 @@ const NextButton = styled.button`
   }
 `;
 
-function SelectPageComponent({
-  backgroundImage,
-  characterImage,
-  storyData,
-  url,
-  scene,
-}) {
+function SelectPageComponent({ backgroundImage, characterImage, storyData, url, scene }) {
   const [index, setIndex] = useState(0);
   const [toggle, setToggle] = useState(false);
   const [subText, setSubText] = useState([]);
@@ -133,11 +127,7 @@ function SelectPageComponent({
     if (option.error) {
       navigate("/over");
     } else {
-      setSubText(
-        option.subtext
-          .split("^")
-          .map((text) => replaceCharacterName(text).trim())
-      );
+      setSubText(option.subtext.split("^").map((text) => replaceCharacterName(text).trim()));
       setScore((prevScore) => prevScore + option.score);
       setToggle(true);
       setSubIndex(0);
@@ -226,15 +216,10 @@ function SelectPageComponent({
           </StyledChatWrap>
           <StyledTextWrap>
             {toggle ? (
-              <StyledSelectButton onClick={onSubClicked}>
-                {subText[subIndex]}
-              </StyledSelectButton>
+              <StyledSelectButton onClick={onSubClicked}>{subText[subIndex]}</StyledSelectButton>
             ) : (
               currentScene.options.map((option, i) => (
-                <StyledSelectButton
-                  key={i}
-                  onClick={() => onClicked(option, i)}
-                >
+                <StyledSelectButton key={i} onClick={() => onClicked(option, i)}>
                   {option.ans}
                 </StyledSelectButton>
               ))

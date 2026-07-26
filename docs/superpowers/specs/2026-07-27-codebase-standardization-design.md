@@ -14,14 +14,14 @@
 
 ### 1.1 중단 지점 — 신구 병존 현황
 
-| 항목 | 새로 만든 것 | 실제 상태 |
-|---|---|---|
-| 인증 유틸 | `src/utils/auth.js` (127줄, 완성) | **1개 파일만 사용**. 나머지 9개 파일이 `localStorage` 직접 접근 (16곳) |
-| 라우트 가드 | `src/components/RequireAuth.jsx` | **참조 0회**. `Route.jsx`에 인라인 `ProtectedRoute`가 중복 구현 |
-| 게임 UI | `src/components/GameUI/BagelSelectPageComponent.jsx` | 신규 사용 중. 구버전 `SelectPageComponent.jsx`(253줄) 방치 |
-| 스토리 데이터 | `src/data/stories/intro.json` (스키마·캐릭터·연출 정의) | Intro만 사용. Main1~5는 여전히 `utils/data.jsx`~`data5.jsx` |
-| 테마 | `src/styles/theme.js` (194줄) | **4개 파일만 import**. 나머지는 rgba 하드코딩 |
-| 로거 | `auth.js`의 `logger` | 미사용. `console.*` 27곳 |
+| 항목          | 새로 만든 것                                            | 실제 상태                                                              |
+| ------------- | ------------------------------------------------------- | ---------------------------------------------------------------------- |
+| 인증 유틸     | `src/utils/auth.js` (127줄, 완성)                       | **1개 파일만 사용**. 나머지 9개 파일이 `localStorage` 직접 접근 (16곳) |
+| 라우트 가드   | `src/components/RequireAuth.jsx`                        | **참조 0회**. `Route.jsx`에 인라인 `ProtectedRoute`가 중복 구현        |
+| 게임 UI       | `src/components/GameUI/BagelSelectPageComponent.jsx`    | 신규 사용 중. 구버전 `SelectPageComponent.jsx`(253줄) 방치             |
+| 스토리 데이터 | `src/data/stories/intro.json` (스키마·캐릭터·연출 정의) | Intro만 사용. Main1~5는 여전히 `utils/data.jsx`~`data5.jsx`            |
+| 테마          | `src/styles/theme.js` (194줄)                           | **4개 파일만 import**. 나머지는 rgba 하드코딩                          |
+| 로거          | `auth.js`의 `logger`                                    | 미사용. `console.*` 27곳                                               |
 
 ### 1.2 확인된 결함
 
@@ -180,14 +180,14 @@ Main2의 돈 줍기 선택과 정확히 연결된다. **의도된 분기이며 �
 
 `package.json`의 `eslintConfig`를 `.eslintrc.json`으로 분리하고 다음 룰을 추가한다.
 
-| 규칙 | 설정 | 막는 것 |
-|---|---|---|
-| `no-console` | `error` (단, `logger` 정의부 예외) | `console.*` → `logger` 강제 |
-| `no-restricted-properties` | `localStorage.getItem/setItem/removeItem` 금지 | 토큰 직접 접근 → `auth.js` 강제. `src/utils/auth.js`만 `overrides`로 예외 |
-| `no-restricted-imports` | `axios` 패키지 직접 import 금지 | `src/utils/axios` 인스턴스 강제. `src/utils/axios.js`만 예외 |
-| `react-hooks/exhaustive-deps` | `warn` → `error` | 의존성 배열 누락 |
-| `no-unused-vars` | `error` | 데드코드 재발 방지 |
-| `import/order` | 그룹 순서 + 개행 강제 | import 정렬 통일 |
+| 규칙                          | 설정                                           | 막는 것                                                                   |
+| ----------------------------- | ---------------------------------------------- | ------------------------------------------------------------------------- |
+| `no-console`                  | `error` (단, `logger` 정의부 예외)             | `console.*` → `logger` 강제                                               |
+| `no-restricted-properties`    | `localStorage.getItem/setItem/removeItem` 금지 | 토큰 직접 접근 → `auth.js` 강제. `src/utils/auth.js`만 `overrides`로 예외 |
+| `no-restricted-imports`       | `axios` 패키지 직접 import 금지                | `src/utils/axios` 인스턴스 강제. `src/utils/axios.js`만 예외              |
+| `react-hooks/exhaustive-deps` | `warn` → `error`                               | 의존성 배열 누락                                                          |
+| `no-unused-vars`              | `error`                                        | 데드코드 재발 방지                                                        |
+| `import/order`                | 그룹 순서 + 개행 강제                          | import 정렬 통일                                                          |
 
 Prettier(`.prettierrc`)와 EditorConfig(`.editorconfig`)를 추가한다. 설정값:
 
@@ -210,11 +210,11 @@ trailingComma: "es5", endOfLine: "lf", charset: utf-8
 
 #### 4.0.3 테스트 3계층 체계
 
-| 계층 | 대상 | 도구 | 기준 |
-|---|---|---|---|
-| **유닛** | `src/utils/`, `src/hooks/` 순수 로직 | Jest | 커버리지 **80% 강제** |
-| **컴포넌트** | 상호작용(선택지 클릭 → 점수 반영, 폼 검증, 모달 개폐) | RTL | 핵심 컴포넌트 필수 |
-| **스모크** | 전 페이지 크래시 없이 렌더 + 라우트 가드 동작 | RTL + MemoryRouter | 전 라우트 필수 |
+| 계층         | 대상                                                  | 도구               | 기준                  |
+| ------------ | ----------------------------------------------------- | ------------------ | --------------------- |
+| **유닛**     | `src/utils/`, `src/hooks/` 순수 로직                  | Jest               | 커버리지 **80% 강제** |
+| **컴포넌트** | 상호작용(선택지 클릭 → 점수 반영, 폼 검증, 모달 개폐) | RTL                | 핵심 컴포넌트 필수    |
+| **스모크**   | 전 페이지 크래시 없이 렌더 + 라우트 가드 동작         | RTL + MemoryRouter | 전 라우트 필수        |
 
 - **파일 위치**: co-located (`auth.js` 옆에 `auth.test.js`). CRA 기본 규약을 따른다.
 - **커버리지 임계치는 `src/utils/`와 `src/hooks/`에만 적용한다.** 전역에 80%를 걸면
@@ -238,6 +238,7 @@ trailingComma: "es5", endOfLine: "lf", charset: utf-8
 전면 강제하면 아직 고치지 않은 린트 에러 때문에 Phase 0 PR 자체가 CI 실패로 막힌다.
 
 **Phase 0에서 하는 것**
+
 - 린트 단계의 조건부 스킵 로직을 제거하고 `npm run lint`를 실제로 실행한다.
   단, 이 시점에는 `continue-on-error: true`를 붙여 **결과만 보고 차단하지 않는다.**
   (에러 목록을 CI 로그에 남기는 것이 목적 — 이것이 Phase 1~4의 작업 목록이다)
@@ -246,6 +247,7 @@ trailingComma: "es5", endOfLine: "lf", charset: utf-8
 - 커버리지 리포트 아티팩트 업로드는 유지한다.
 
 **Phase 1에서 하는 것**
+
 - 린트 에러를 0으로 만든 뒤, 린트·테스트 단계의 `continue-on-error`를 **제거**한다.
 - 이 시점부터 CI가 실제 품질 게이트로 동작한다.
 
@@ -264,11 +266,11 @@ docs/
 
 **문서 중복 방지 규칙**: 같은 내용을 두 곳에 쓰지 않는다.
 
-| 문서 | 역할 |
-|---|---|
-| `README.md` (루트) | 프로젝트 소개·기술 스택·실행 방법. 상세는 `docs/`로 링크만 |
-| `claude.md` | AI 에이전트 작업 규칙 + 작업 파이프라인. 설계 내용은 `docs/`로 링크 |
-| `docs/*.md` | 실제 내용의 단일 출처 |
+| 문서               | 역할                                                                |
+| ------------------ | ------------------------------------------------------------------- |
+| `README.md` (루트) | 프로젝트 소개·기술 스택·실행 방법. 상세는 `docs/`로 링크만          |
+| `claude.md`        | AI 에이전트 작업 규칙 + 작업 파이프라인. 설계 내용은 `docs/`로 링크 |
+| `docs/*.md`        | 실제 내용의 단일 출처                                               |
 
 `claude.md`는 다음을 포함하도록 재작성한다.
 
@@ -326,10 +328,10 @@ docs/
 
 #### 4.1.4 데드코드 제거
 
-| 파일 | 근거 | 처리 |
-|---|---|---|
+| 파일                                             | 근거                                            | 처리                      |
+| ------------------------------------------------ | ----------------------------------------------- | ------------------------- |
 | `src/components/SelectPageComponent.jsx` (253줄) | import 0회. `BagelSelectPageComponent`로 대체됨 | **삭제 (사용자 확인 후)** |
-| `src/pages/MyGameResult.jsx` (164줄) | `Route.jsx`에서 주석 처리됨 | **삭제 (사용자 확인 후)** |
+| `src/pages/MyGameResult.jsx` (164줄)             | `Route.jsx`에서 주석 처리됨                     | **삭제 (사용자 확인 후)** |
 
 > 파일 삭제는 사용자 승인 없이 수행하지 않는다. Phase 1 작업 중 해당 시점에 확인한다.
 
@@ -526,10 +528,7 @@ before/after를 이슈에 첨부**한다.
       ]
     }
   ],
-  "exit": [
-    { "when": { "choseOption": "money.take" }, "goto": "/main4" },
-    { "goto": "/main3" }
-  ]
+  "exit": [{ "when": { "choseOption": "money.take" }, "goto": "/main4" }, { "goto": "/main3" }]
 }
 ```
 
@@ -565,14 +564,14 @@ applyChoice(state, option) → newState            // 점수·선택 이력 반�
 
 기존 하드코딩 로직의 변환 대응표:
 
-| 기존 (컴포넌트 하드코딩) | 신규 (데이터) |
-|---|---|
-| `scene===2, index===0`: score 15~40 → 1, <15 → 2, else → 3 | cafe 1번 씬의 `next` 규칙 3개 |
-| `scene===2, i===0` → `/main4` | cafe `exit`: `choseOption: "money.take"` → `/main4` |
-| `scene===3, index===1`: score>=60 → 2, 20~60 → 3, else → 4 | cave 2번 씬의 `next` 규칙 3개 |
-| `scene===4, index===2`: score>=70 → 3, else → 종료 | umbrella 3번 씬의 `next` 규칙. **임계치는 기존 동작 유지를 위해 70을 사용하고, 데이터의 `love: 60`은 폐기한다** |
-| `scene===5, index===2` → `navigate("/result")` | beach `exit`: `/result` |
-| `option.error` → `/over` | 옵션의 `"outcome": "gameover"` |
+| 기존 (컴포넌트 하드코딩)                                   | 신규 (데이터)                                                                                                   |
+| ---------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `scene===2, index===0`: score 15~40 → 1, <15 → 2, else → 3 | cafe 1번 씬의 `next` 규칙 3개                                                                                   |
+| `scene===2, i===0` → `/main4`                              | cafe `exit`: `choseOption: "money.take"` → `/main4`                                                             |
+| `scene===3, index===1`: score>=60 → 2, 20~60 → 3, else → 4 | cave 2번 씬의 `next` 규칙 3개                                                                                   |
+| `scene===4, index===2`: score>=70 → 3, else → 종료         | umbrella 3번 씬의 `next` 규칙. **임계치는 기존 동작 유지를 위해 70을 사용하고, 데이터의 `love: 60`은 폐기한다** |
+| `scene===5, index===2` → `navigate("/result")`             | beach `exit`: `/result`                                                                                         |
+| `option.error` → `/over`                                   | 옵션의 `"outcome": "gameover"`                                                                                  |
 
 > **주의**: `data4.jsx`의 `love: 60`과 실제 동작 임계치 70이 불일치하는 것은 1.2절 6번의
 > 결함이다. 이번에는 **회귀를 막기 위해 실제 동작(70)을 유지**하고, 어느 쪽이 의도인지는
@@ -634,6 +633,7 @@ applyChoice(state, option) → newState            // 점수·선택 이력 반�
 전체 Phase 완료 후: `git fetch origin` → `origin/main` 병합 → `/pro-changelog-deploy`.
 
 **금지 사항**
+
 - `main` 브랜치 직접 커밋
 - `git add -A` (다른 세션의 동시 작업이 섞일 수 있음)
 - force push
@@ -644,13 +644,13 @@ applyChoice(state, option) → newState            // 점수·선택 이력 반�
 
 ## 6. 리스크와 완화
 
-| 리스크 | 영향 | 완화 |
-|---|---|---|
-| Phase 4 마이그레이션 중 스토리 분기 회귀 | 게임이 잘못된 엔딩으로 감 — 사용자가 즉시 알아채기 어려움 | 마이그레이션 **전에** 기존 로직으로 전 경로 기대값 표를 생성하고, 이를 회귀 테스트의 기준으로 삼는다 |
-| Phase 3 파일 분해 중 UI 깨짐 | 시각적 결함 | 분해 전후 동일 해상도 캡처 비교를 필수화 |
-| 린트 룰이 과도해 작업이 막힘 | 진행 정체 | Phase 1에서 실제 에러 수를 확인한 뒤, 자동 수정 불가능하고 가치가 낮은 룰은 조정한다 |
-| `.env` 도입 후 배포 환경 변수 누락 | 프로덕션 API 호출 실패 | 값 누락 시 기존 URL로 폴백하도록 구현하고, `.env.example`과 CI/Dockerfile 반영을 Phase 1 체크리스트에 포함 |
-| Phase가 길어져 main과 분기 | 병합 충돌 | Phase 단위로 PR을 짧게 유지하고, 각 Phase 시작 시 `git pull --rebase` |
+| 리스크                                   | 영향                                                      | 완화                                                                                                       |
+| ---------------------------------------- | --------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| Phase 4 마이그레이션 중 스토리 분기 회귀 | 게임이 잘못된 엔딩으로 감 — 사용자가 즉시 알아채기 어려움 | 마이그레이션 **전에** 기존 로직으로 전 경로 기대값 표를 생성하고, 이를 회귀 테스트의 기준으로 삼는다       |
+| Phase 3 파일 분해 중 UI 깨짐             | 시각적 결함                                               | 분해 전후 동일 해상도 캡처 비교를 필수화                                                                   |
+| 린트 룰이 과도해 작업이 막힘             | 진행 정체                                                 | Phase 1에서 실제 에러 수를 확인한 뒤, 자동 수정 불가능하고 가치가 낮은 룰은 조정한다                       |
+| `.env` 도입 후 배포 환경 변수 누락       | 프로덕션 API 호출 실패                                    | 값 누락 시 기존 URL로 폴백하도록 구현하고, `.env.example`과 CI/Dockerfile 반영을 Phase 1 체크리스트에 포함 |
+| Phase가 길어져 main과 분기               | 병합 충돌                                                 | Phase 단위로 PR을 짧게 유지하고, 각 Phase 시작 시 `git pull --rebase`                                      |
 
 ---
 

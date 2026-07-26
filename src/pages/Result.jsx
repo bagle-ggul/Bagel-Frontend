@@ -54,15 +54,11 @@ function Result() {
     };
 
     try {
-      const response = await axios.post(
-        "/api/game/over",
-        userData,
-        {
-          headers: {
-            Authorization: `Bearer ${refreshToken}`,
-          },
-        }
-      );
+      const response = await axios.post("/api/game/over", userData, {
+        headers: {
+          Authorization: `Bearer ${refreshToken}`,
+        },
+      });
 
       // Handle success (e.g., display a success message, redirect to another page, etc.)
     } catch (error) {

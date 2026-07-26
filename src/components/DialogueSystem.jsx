@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-import styled, { keyframes, css } from 'styled-components';
-import { colors, glassmorphism, media } from '../styles/theme';
-import { Play, Pause, ChevronLeft, ChevronRight, Check } from 'react-bootstrap-icons';
+import React, { useState, useEffect, useRef } from "react";
+import styled, { keyframes, css } from "styled-components";
+import { colors, glassmorphism, media } from "../styles/theme";
+import { Play, Pause, ChevronLeft, ChevronRight, Check } from "react-bootstrap-icons";
 
 // 애니메이션 키프레임
 const fadeIn = keyframes`
@@ -55,7 +55,7 @@ const CharacterContainer = styled.div`
 const CharacterImage = styled.div`
   width: 600px; /* 1200px의 절반 */
   height: 400px; /* 800px의 절반 */
-  background-image: url(${props => props.src});
+  background-image: url(${(props) => props.src});
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -127,12 +127,14 @@ const DialogueText = styled.p`
     line-height: 1.6;
   }
 
-  ${({ isTyping }) => isTyping && css`
-    overflow: hidden;
-    white-space: nowrap;
-    border-right: 2px solid ${colors.textPrimary};
-    animation: ${typewriterEffect} 2s steps(40, end);
-  `}
+  ${({ isTyping }) =>
+    isTyping &&
+    css`
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 2px solid ${colors.textPrimary};
+      animation: ${typewriterEffect} 2s steps(40, end);
+    `}
 `;
 
 const ControlButtons = styled.div`
@@ -205,7 +207,7 @@ const DialogueSystem = ({
   userData,
   onComplete,
   autoProgress = true,
-  enableControls = true
+  enableControls = true,
 }) => {
   const [currentSceneIndex, setCurrentSceneIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
@@ -220,10 +222,10 @@ const DialogueSystem = ({
 
   // 주인공 캐릭터의 경우 실제 사용자 이름 사용
   const getCharacterDisplayName = (character) => {
-    if (character?.id === 'mc' && userData?.characterName) {
+    if (character?.id === "mc" && userData?.characterName) {
       return userData.characterName;
     }
-    return character?.displayName || character?.name || '???';
+    return character?.displayName || character?.name || "???";
   };
 
   // 다음 씬으로 진행
@@ -233,14 +235,14 @@ const DialogueSystem = ({
       return;
     }
 
-    setCurrentSceneIndex(prev => prev + 1);
+    setCurrentSceneIndex((prev) => prev + 1);
     setProgress(0);
   };
 
   // 이전 씬으로 이동
   const prevScene = () => {
     if (currentSceneIndex > 0) {
-      setCurrentSceneIndex(prev => prev - 1);
+      setCurrentSceneIndex((prev) => prev - 1);
       setProgress(0);
     }
   };
@@ -253,7 +255,7 @@ const DialogueSystem = ({
 
     // 진행 바 애니메이션
     progressTimerRef.current = setInterval(() => {
-      setProgress(prev => {
+      setProgress((prev) => {
         const increment = 100 / (duration / 100);
         return Math.min(prev + increment, 100);
       });
@@ -279,7 +281,7 @@ const DialogueSystem = ({
 
   // 일시정지/재생
   const togglePause = () => {
-    setIsPaused(prev => !prev);
+    setIsPaused((prev) => !prev);
   };
 
   if (!storyData || !currentScene) {
@@ -299,20 +301,14 @@ const DialogueSystem = ({
       <DialogueBox onClick={handleDialogueClick}>
         {/* 캐릭터 네임플레이트 */}
         <NamePlate>
-          <CharacterName>
-            {getCharacterDisplayName(character)}
-          </CharacterName>
+          <CharacterName>{getCharacterDisplayName(character)}</CharacterName>
         </NamePlate>
 
         {/* 대화 텍스트 */}
-        <DialogueText isTyping={isTyping}>
-          {currentScene.text}
-        </DialogueText>
+        <DialogueText isTyping={isTyping}>{currentScene.text}</DialogueText>
 
         {/* 진행바 */}
-        {autoProgress && !isPaused && (
-          <ProgressBar style={{ width: `${progress}%` }} />
-        )}
+        {autoProgress && !isPaused && <ProgressBar style={{ width: `${progress}%` }} />}
       </DialogueBox>
 
       {/* 컨트롤 버튼 */}
@@ -325,12 +321,12 @@ const DialogueSystem = ({
           )}
 
           {autoProgress && (
-            <ControlButton onClick={togglePause} title={isPaused ? '재생' : '일시정지'}>
+            <ControlButton onClick={togglePause} title={isPaused ? "재생" : "일시정지"}>
               {isPaused ? <Play /> : <Pause />}
             </ControlButton>
           )}
 
-          <ControlButton onClick={nextScene} title={isLastScene ? '완료' : '다음 대화'}>
+          <ControlButton onClick={nextScene} title={isLastScene ? "완료" : "다음 대화"}>
             {isLastScene ? <Check /> : <ChevronRight />}
           </ControlButton>
         </ControlButtons>

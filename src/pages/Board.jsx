@@ -17,11 +17,16 @@ import {
   PersonCircle,
   Clock,
   ChevronUp,
-  ArrowRepeat
+  ArrowRepeat,
 } from "react-bootstrap-icons";
 import TimeUtil from "../utils/TimeUtil";
 import { useRankingData } from "../hooks/useRankingData";
-import { useInfiniteScrollObserver, useScrollProgress, useScrollToTop, useTouchSwipe } from "../hooks/useInfiniteScroll";
+import {
+  useInfiniteScrollObserver,
+  useScrollProgress,
+  useScrollToTop,
+  useTouchSwipe,
+} from "../hooks/useInfiniteScroll";
 
 // 배경 이미지 URL
 const backgroundImageUrl = "/img/bg_community_main.png";
@@ -80,13 +85,9 @@ const ScrollProgressBar = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  width: ${props => props.progress}%;
+  width: ${(props) => props.progress}%;
   height: 3px;
-  background: linear-gradient(
-    90deg,
-    rgba(200, 182, 226, 0.9),
-    rgba(200, 182, 226, 0.6)
-  );
+  background: linear-gradient(90deg, rgba(200, 182, 226, 0.9), rgba(200, 182, 226, 0.6));
   z-index: 1000;
   transition: width 0.3s ease;
   box-shadow: 0 2px 10px rgba(200, 182, 226, 0.3);
@@ -206,7 +207,7 @@ const RankCell = styled(TableCell)`
   justify-content: center;
   gap: 8px;
 
-  ${props => {
+  ${(props) => {
     if (props.rank === 1) {
       return `
         color: #FFD700;
@@ -232,8 +233,13 @@ const RankCell = styled(TableCell)`
   }}
 
   @keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
   }
 `;
 
@@ -290,7 +296,7 @@ const RankCard = styled(motion.div)`
   cursor: pointer;
   transition: all 0.3s ease;
 
-  ${props => {
+  ${(props) => {
     if (props.rank <= 5) {
       return `
         border: 1px solid rgba(200, 182, 226, 0.3);
@@ -319,7 +325,7 @@ const MobileRankNumber = styled.div`
   font-size: 1.2em;
   font-weight: 700;
 
-  ${props => {
+  ${(props) => {
     if (props.rank === 1) {
       return `
         color: #FFD700;
@@ -417,8 +423,12 @@ const LoadingSpinner = styled(motion.div)`
   animation: spin 1s linear infinite;
 
   @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
 `;
 
@@ -607,47 +617,48 @@ function Board() {
   }, []);
 
   // 터치 제스처 (모바일용)
-  const { handleTouchStart, handleTouchMove, handleTouchEnd } = useTouchSwipe(
-    () => {
-      if (data.hasNextPage && !data.isLoading) {
-        loadNextPage();
-      }
-    },
-    80
-  );
+  const { handleTouchStart, handleTouchMove, handleTouchEnd } = useTouchSwipe(() => {
+    if (data.hasNextPage && !data.isLoading) {
+      loadNextPage();
+    }
+  }, 80);
 
   // 메모이제이션된 렌더링 함수들
-  const renderDesktopRow = useCallback((item, index) => {
-    const rank = index + 1;
-    return (
-      <MemoizedTableRow
-        key={`${item.memberEmail}-${index}`}
-        item={item}
-        rank={rank}
-        onClick={openUserModal}
-        getRankIcon={getRankIcon}
-      />
-    );
-  }, [openUserModal, getRankIcon]);
+  const renderDesktopRow = useCallback(
+    (item, index) => {
+      const rank = index + 1;
+      return (
+        <MemoizedTableRow
+          key={`${item.memberEmail}-${index}`}
+          item={item}
+          rank={rank}
+          onClick={openUserModal}
+          getRankIcon={getRankIcon}
+        />
+      );
+    },
+    [openUserModal, getRankIcon]
+  );
 
-  const renderMobileCard = useCallback((item, index) => {
-    const rank = index + 1;
-    return (
-      <MemoizedRankCard
-        key={`${item.memberEmail}-${index}`}
-        item={item}
-        rank={rank}
-        onClick={openUserModal}
-        getRankIcon={getRankIcon}
-      />
-    );
-  }, [openUserModal, getRankIcon]);
+  const renderMobileCard = useCallback(
+    (item, index) => {
+      const rank = index + 1;
+      return (
+        <MemoizedRankCard
+          key={`${item.memberEmail}-${index}`}
+          item={item}
+          rank={rank}
+          onClick={openUserModal}
+          getRankIcon={getRankIcon}
+        />
+      );
+    },
+    [openUserModal, getRankIcon]
+  );
 
   return (
     <BoardWrapper>
-      <Title>
-        랭킹 보드
-      </Title>
+      <Title>랭킹 보드</Title>
 
       <GlassContainer>
         {/* 데스크톱 테이블 */}
@@ -663,9 +674,7 @@ function Board() {
                 <TableHeader>날짜</TableHeader>
               </TableRow>
             </TableHead>
-            <tbody>
-              {data.rankings.map(renderDesktopRow)}
-            </tbody>
+            <tbody>{data.rankings.map(renderDesktopRow)}</tbody>
           </Table>
 
           {/* 데스크톱 로딩 트리거 */}
@@ -693,7 +702,7 @@ function Board() {
           >
             <LoadingSpinner />
             <LoadingText>
-              {data.isInitialLoading ? '랭킹을 불러오는 중...' : '더 많은 랭킹을 불러오는 중...'}
+              {data.isInitialLoading ? "랭킹을 불러오는 중..." : "더 많은 랭킹을 불러오는 중..."}
             </LoadingText>
           </LoadingMoreIndicator>
         )}
@@ -715,12 +724,14 @@ function Board() {
 
         {/* 데이터 끝 표시 */}
         {!data.hasNextPage && data.rankings.length > 0 && !data.isInitialLoading && (
-          <div style={{
-            textAlign: 'center',
-            padding: '20px',
-            color: 'rgba(255, 255, 255, 0.6)',
-            borderTop: '1px solid rgba(255, 255, 255, 0.1)'
-          }}>
+          <div
+            style={{
+              textAlign: "center",
+              padding: "20px",
+              color: "rgba(255, 255, 255, 0.6)",
+              borderTop: "1px solid rgba(255, 255, 255, 0.1)",
+            }}
+          >
             모든 랭킹을 확인했습니다 ({data.rankings.length}명)
           </div>
         )}
@@ -744,19 +755,17 @@ function Board() {
       )}
 
       <ButtonContainer>
-        <Link to={'/'}>
+        <Link to={"/"}>
           <ButtonSpan>
-            <House size={16} />
-            홈
+            <House size={16} />홈
           </ButtonSpan>
         </Link>
-        <Link to={'/profile'}>
+        <Link to={"/profile"}>
           <ButtonSpan>
-            <Person size={16} />
-            내 정보
+            <Person size={16} />내 정보
           </ButtonSpan>
         </Link>
-        <Link to={'/intro'}>
+        <Link to={"/intro"}>
           <ButtonSpan>
             <Controller size={16} />
             다시하기
@@ -785,19 +794,19 @@ const MemoizedTableRow = React.memo(({ item, rank, onClick, getRankIcon }) => (
     <ScoreCell>{item.finalScore}점</ScoreCell>
     <TableCell>{item.characterName}</TableCell>
     <TableCell>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px' }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "5px" }}>
         <PersonCircle size={16} />
         {item.mbti}
       </div>
     </TableCell>
     <TableCell>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px' }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "5px" }}>
         <Envelope size={14} />
         {item.memberEmail}
       </div>
     </TableCell>
     <TableCell>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px' }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "5px" }}>
         <Clock size={14} />
         {TimeUtil.getRelativeTime(item.gameDate)}
       </div>
@@ -814,9 +823,7 @@ const MemoizedRankCard = React.memo(({ item, rank, onClick, getRankIcon }) => (
   >
     <MobileRankDisplay>
       {getRankIcon(rank)}
-      <MobileRankNumber rank={rank}>
-        {rank}위
-      </MobileRankNumber>
+      <MobileRankNumber rank={rank}>{rank}위</MobileRankNumber>
     </MobileRankDisplay>
 
     <MobileUserInfo>
@@ -976,18 +983,12 @@ function UserDetailModal({ show, user, onClose, getRankIcon }) {
           exit={{ scale: 0.8, opacity: 0 }}
           onClick={(e) => e.stopPropagation()}
         >
-          <CloseButton
-            onClick={onClose}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-          >
+          <CloseButton onClick={onClose} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
             <XLg size={18} />
           </CloseButton>
 
           <ModalHeader>
-            <div style={{ fontSize: '2em' }}>
-              {getRankIcon(user.rank)}
-            </div>
+            <div style={{ fontSize: "2em" }}>{getRankIcon(user.rank)}</div>
             <ModalUserInfo>
               <ModalUserName>{user.characterName}</ModalUserName>
               <ModalUserRank>
@@ -1022,12 +1023,11 @@ function UserDetailModal({ show, user, onClose, getRankIcon }) {
               <ModalDetailValue>
                 {user.gamePlaySeconds > 0
                   ? TimeUtil.formatPlayTime(user.gamePlaySeconds)
-                  : '기록 없음'
-                }
+                  : "기록 없음"}
               </ModalDetailValue>
             </ModalDetailRow>
 
-            {user.details && user.details !== 'string' && (
+            {user.details && user.details !== "string" && (
               <ModalDetailRow>
                 <Controller size={20} />
                 <ModalDetailLabel>상세 정보</ModalDetailLabel>

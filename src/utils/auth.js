@@ -1,8 +1,8 @@
 // 인증 관련 유틸리티 함수들
 
 export const AUTH_TOKENS = {
-  ACCESS_TOKEN: 'accessToken',
-  REFRESH_TOKEN: 'refreshToken'
+  ACCESS_TOKEN: "accessToken",
+  REFRESH_TOKEN: "refreshToken",
 };
 
 /**
@@ -97,19 +97,19 @@ export const getAuthHeaders = () => {
 export const createApiHeaders = (additionalHeaders = {}) => {
   const authHeaders = getAuthHeaders();
   return {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
     ...authHeaders,
-    ...additionalHeaders
+    ...additionalHeaders,
   };
 };
 
 // 로깅 유틸리티 (개발 환경에서만 동작)
 export const logger = {
-  log: process.env.NODE_ENV === 'development' ? console.log : () => {},
-  warn: process.env.NODE_ENV === 'development' ? console.warn : () => {},
+  log: process.env.NODE_ENV === "development" ? console.log : () => {},
+  warn: process.env.NODE_ENV === "development" ? console.warn : () => {},
   error: console.error, // 에러는 항상 로깅
-  info: process.env.NODE_ENV === 'development' ? console.info : () => {},
-  debug: process.env.NODE_ENV === 'development' ? console.debug : () => {}
+  info: process.env.NODE_ENV === "development" ? console.info : () => {},
+  debug: process.env.NODE_ENV === "development" ? console.debug : () => {},
 };
 
 export default {
@@ -124,5 +124,5 @@ export default {
   isAuthenticated,
   getAuthHeaders,
   createApiHeaders,
-  logger
+  logger,
 };

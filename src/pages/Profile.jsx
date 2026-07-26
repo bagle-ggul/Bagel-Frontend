@@ -58,10 +58,6 @@ const MobileContainer = styled.div`
   }
 `;
 
-
-
-
-
 // 로딩 상태를 위한 스켈레톤 컴포넌트
 const SkeletonCard = styled(motion.div)`
   background: rgba(0, 0, 0, 0.4);
@@ -143,13 +139,6 @@ const SkeletonTitle = styled(SkeletonElement)`
   }
 `;
 
-
-
-
-
-
-
-
 const ButtonContainer = styled.div`
   display: flex;
   position: absolute;
@@ -213,14 +202,11 @@ function Profile() {
   useEffect(() => {
     const fetchProfile = async () => {
       try {
-        const response = await axios.get(
-          "/api/my-page",
-          {
-            headers: {
-              Authorization: `Bearer ${getAuthToken()}`,
-            },
-          }
-        );
+        const response = await axios.get("/api/my-page", {
+          headers: {
+            Authorization: `Bearer ${getAuthToken()}`,
+          },
+        });
         setProfile(response?.data);
       } catch (error) {
         // 프로필 로딩 실패 시 처리 (로그는 제거)
@@ -277,23 +263,23 @@ function Profile() {
         >
           <SkeletonCircle />
           <SkeletonTitle />
-          <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+          <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: "0.8rem" }}>
             {[...Array(4)].map((_, i) => (
               <motion.div
                 key={i}
                 style={{
-                  width: '100%',
-                  height: '48px',
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  borderRadius: '12px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  padding: '0 1.2rem',
+                  width: "100%",
+                  height: "48px",
+                  background: "rgba(255, 255, 255, 0.1)",
+                  borderRadius: "12px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  padding: "0 1.2rem",
                 }}
               >
-                <SkeletonText style={{ width: '30%' }} />
-                <SkeletonText style={{ width: '40%' }} />
+                <SkeletonText style={{ width: "30%" }} />
+                <SkeletonText style={{ width: "40%" }} />
               </motion.div>
             ))}
           </div>
@@ -305,23 +291,23 @@ function Profile() {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <SkeletonTitle />
-          <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+          <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: "0.8rem" }}>
             {[...Array(2)].map((_, i) => (
               <motion.div
                 key={i}
                 style={{
-                  width: '100%',
-                  height: '48px',
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  borderRadius: '12px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  padding: '0 1.2rem',
+                  width: "100%",
+                  height: "48px",
+                  background: "rgba(255, 255, 255, 0.1)",
+                  borderRadius: "12px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  padding: "0 1.2rem",
                 }}
               >
-                <SkeletonText style={{ width: '50%' }} />
-                <SkeletonText style={{ width: '30%' }} />
+                <SkeletonText style={{ width: "50%" }} />
+                <SkeletonText style={{ width: "30%" }} />
               </motion.div>
             ))}
           </div>
@@ -336,23 +322,23 @@ function Profile() {
         >
           <SkeletonCircle />
           <SkeletonTitle />
-          <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+          <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: "0.8rem" }}>
             {[...Array(4)].map((_, i) => (
               <motion.div
                 key={i}
                 style={{
-                  width: '100%',
-                  height: '48px',
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  borderRadius: '12px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  padding: '0 1.2rem',
+                  width: "100%",
+                  height: "48px",
+                  background: "rgba(255, 255, 255, 0.1)",
+                  borderRadius: "12px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  padding: "0 1.2rem",
                 }}
               >
-                <SkeletonText style={{ width: '30%' }} />
-                <SkeletonText style={{ width: '40%' }} />
+                <SkeletonText style={{ width: "30%" }} />
+                <SkeletonText style={{ width: "40%" }} />
               </motion.div>
             ))}
           </div>
@@ -364,23 +350,23 @@ function Profile() {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <SkeletonTitle />
-          <div style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+          <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: "0.8rem" }}>
             {[...Array(2)].map((_, i) => (
               <motion.div
                 key={i}
                 style={{
-                  width: '100%',
-                  height: '48px',
-                  background: 'rgba(255, 255, 255, 0.1)',
-                  borderRadius: '12px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  padding: '0 1.2rem',
+                  width: "100%",
+                  height: "48px",
+                  background: "rgba(255, 255, 255, 0.1)",
+                  borderRadius: "12px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  padding: "0 1.2rem",
                 }}
               >
-                <SkeletonText style={{ width: '50%' }} />
-                <SkeletonText style={{ width: '30%' }} />
+                <SkeletonText style={{ width: "50%" }} />
+                <SkeletonText style={{ width: "30%" }} />
               </motion.div>
             ))}
           </div>
@@ -390,11 +376,7 @@ function Profile() {
   );
 
   return (
-    <ProfileWrapper
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1 }}
-    >
+    <ProfileWrapper initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
       <AnimatePresence mode="wait">
         {!profile ? (
           <motion.div key="loading" exit={{ opacity: 0, scale: 0.95 }}>
@@ -488,8 +470,7 @@ function Profile() {
         <ButtonContainer>
           <Link to={"/"}>
             <ButtonSpan>
-              <House size={16} />
-              홈
+              <House size={16} />홈
             </ButtonSpan>
           </Link>
           <Link to={"/board"}>
