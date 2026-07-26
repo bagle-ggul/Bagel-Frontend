@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { House, Trophy, Controller } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -7,8 +7,56 @@ import styled from "styled-components";
 import GlassCard from "../components/GlassCard";
 import ProfileContent from "../components/ProfileContent";
 import StatsContent from "../components/StatsContent";
-import { getAuthToken } from "../utils/auth";
 import axios from "../utils/axios";
+import { logger } from "../utils/logger";
+
+const ErrorPanel = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 2.5rem 2rem;
+  max-width: 26rem;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+`;
+
+const ErrorMessage = styled.p`
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+`;
+
+const RetryButton = styled.button`
+  padding: 0.7rem 1.8rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(200, 182, 226, 0.9);
+  color: white;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(200, 182, 226, 1);
+    transform: translateY(-2px);
+  }
+`;
+
+/** 조회 실패 시 상황을 알리고 재시도 동선을 제공한다 */
+const ErrorContent = ({ message, onRetry }) => (
+  <ErrorPanel>
+    <ErrorMessage>{message}</ErrorMessage>
+    <RetryButton type="button" onClick={onRetry}>
+      다시 시도
+    </RetryButton>
+  </ErrorPanel>
+);
 
 const ProfileWrapper = styled(motion.div)`
   position: fixed;
@@ -199,23 +247,25 @@ const ButtonSpan = styled.span`
 
 function Profile() {
   const [profile, setProfile] = useState(null);
+  const [loadError, setLoadError] = useState(null);
+
+  // 조회에 실패해도 에러 상태가 없으면 스켈레톤이 영원히 표시된다.
+  // 사용자는 계속 로딩 중이라고 여기고 기다리게 된다.
+  const fetchProfile = useCallback(async () => {
+    setLoadError(null);
+    try {
+      // 토큰은 axios 인터셉터가 주입한다
+      const response = await axios.get("/api/my-page");
+      setProfile(response?.data);
+    } catch (error) {
+      logger.error("프로필 조회 실패:", error);
+      setLoadError("내 정보를 불러오지 못했습니다. 잠시 후 다시 시도해주세요.");
+    }
+  }, []);
 
   useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const response = await axios.get("/api/my-page", {
-          headers: {
-            Authorization: `Bearer ${getAuthToken()}`,
-          },
-        });
-        setProfile(response?.data);
-      } catch (error) {
-        // 프로필 로딩 실패 시 처리 (로그는 제거)
-      }
-    };
-
     fetchProfile();
-  }, []);
+  }, [fetchProfile]);
 
   // 스태거 애니메이션을 위한 variants
   const containerVariants = {
@@ -379,7 +429,11 @@ function Profile() {
   return (
     <ProfileWrapper initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
       <AnimatePresence mode="wait">
-        {!profile ? (
+        {loadError ? (
+          <motion.div key="error" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <ErrorContent message={loadError} onRetry={fetchProfile} />
+          </motion.div>
+        ) : !profile ? (
           <motion.div key="loading" exit={{ opacity: 0, scale: 0.95 }}>
             <LoadingContent />
           </motion.div>
