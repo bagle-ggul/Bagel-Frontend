@@ -39,3 +39,4 @@ out/
 
 ### Claude Configuration ###
 .claude
+.gstack/

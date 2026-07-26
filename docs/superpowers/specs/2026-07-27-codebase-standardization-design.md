@@ -661,3 +661,20 @@ Phase 진행 중 해당 시점에 사용자에게 확인한다.
 1. **데드코드 삭제 승인** (Phase 1) — `SelectPageComponent.jsx`, `MyGameResult.jsx`
 2. **`love` 임계치 확정** (Phase 4) — 데이터 선언값 60 vs 실제 동작 70 중 무엇이 의도인가
 3. **`DialogueSystem` 통합 범위** (Phase 4) — 스키마만 통일할지, 컴포넌트까지 합칠지
+4. **프로젝트 정식 명칭 확정** (Phase 5) — Phase 0 실행 중 발견. 이름이 5곳에서 서로
+   다르며, **사용자에게 보이는 이름만 두 개**다.
+
+   | 위치                              | 이름                  |
+   | --------------------------------- | --------------------- |
+   | 실제 화면 (`src/pages/Home.jsx`)  | **Re: WAVE**          |
+   | 브라우저 탭 (`public/index.html`) | Save Her - Game       |
+   | PWA (`public/manifest.json`)      | Save Her Game         |
+   | `README.md`                       | BAGEL - 그녀를 구하라 |
+   | `package.json`                    | bagle                 |
+
+   어느 것이 정식 명칭인지 확인한 뒤 Phase 5에서 전체를 통일한다. `package.json`의
+   `name` 변경은 배포 파이프라인에 영향을 줄 수 있으므로 별도 검토가 필요하다.
+
+5. **`Result.jsx`의 잘못된 에러 메시지** (Phase 2) — 게임 결과 전송 실패 시
+   "중복된 이메일입니다"가 표시된다. 회원가입 쪽 문구가 복사되어 남은 것으로 보인다.
+   올바른 문구로 교체한다.
