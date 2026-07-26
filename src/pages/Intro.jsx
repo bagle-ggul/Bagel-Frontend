@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
 import styled, { keyframes } from "styled-components";
 
+import { scoreAtom } from "../atom/atom";
 import DialogueSystem from "../components/DialogueSystem";
+import { ROUTES } from "../constants/routes";
 import introStory from "../data/stories/intro.json";
+import { resetProgress } from "../game/progress";
 import axios from "../utils/axios";
 import { logger } from "../utils/logger";
 
@@ -68,6 +72,7 @@ const SkipButton = styled.button`
 
 const SelectPageComponent = () => {
   const navigate = useNavigate();
+  const setScore = useSetRecoilState(scoreAtom);
   const audioRef = useRef(null);
   const [data, setData] = useState(null);
   // loading 값을 참조하는 곳이 없다 — 로딩 UI 미구현 (별도 확인 필요)
@@ -96,12 +101,20 @@ const SelectPageComponent = () => {
     }
   }, []);
 
+  // 인트로에서 스테이지로 넘어가는 시점이 곧 "새 게임 시작"이다.
+  // 이전 판의 점수·진행도가 남아 있으면 엉뚱한 엔딩을 보게 된다.
+  const startNewGame = () => {
+    resetProgress();
+    setScore(0);
+    navigate(ROUTES.MAIN1);
+  };
+
   const handleStoryComplete = () => {
-    navigate("/main1");
+    startNewGame();
   };
 
   const handleSkip = () => {
-    navigate("/main1");
+    startNewGame();
   };
 
   return (

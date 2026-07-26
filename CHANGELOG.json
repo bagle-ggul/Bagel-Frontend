@@ -1,11 +1,39 @@
 {
   "metadata": {
-    "lastUpdated": "2026-07-26T16:30:17Z",
-    "currentVersion": "1.4.6",
+    "lastUpdated": "2026-07-26T16:43:48Z",
+    "currentVersion": "1.4.7",
     "projectType": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
-    "totalReleases": 21
+    "totalReleases": 22
   },
   "releases": [
+    {
+      "version": "1.4.7",
+      "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
+      "date": "2026-07-26",
+      "pr_number": 99,
+      "raw_summary": "Summary by CodeRabbit\n릴리스 노트\n\n\n새 기능\n\n없는 주소로 들어갔을 때 안내 화면 추가\n\n\n\n버그 수정\n\n게임 도중 새로고침하면 점수가 사라지던 문제 해결\n주소를 직접 입력해 이야기를 건너뛸 수 있던 문제 해결\n\n\n\n개선\n\n배경음 재생 처리 정리",
+      "parsed_changes": {
+        "새_기능": {
+          "title": "새 기능",
+          "items": [
+            "없는 주소로 들어갔을 때 안내 화면 추가"
+          ]
+        },
+        "버그_수정": {
+          "title": "버그 수정",
+          "items": [
+            "게임 도중 새로고침하면 점수가 사라지던 문제 해결",
+            "주소를 직접 입력해 이야기를 건너뛸 수 있던 문제 해결"
+          ]
+        },
+        "개선": {
+          "title": "개선",
+          "items": [
+            "배경음 재생 처리 정리"
+          ]
+        }
+      }
+    },
     {
       "version": "1.4.6",
       "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
