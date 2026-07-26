@@ -39,25 +39,24 @@ src/
 
 `src/Route.jsx`가 `createBrowserRouter`로 정의한다. **이 표가 실제 라우트의 전부다.**
 
-| 경로       | 화면                           | 인증 보호 |
-| ---------- | ------------------------------ | --------- |
-| `/`        | `src/pages/Home.jsx`           | ✗         |
-| `/help`    | `src/pages/Help.jsx`           | ✗         |
-| `/intro`   | `src/pages/Intro.jsx`          | ✗         |
-| `/main1`   | `src/pages/Main1.jsx`          | ✓         |
-| `/main2`   | `src/pages/Main2.jsx`          | ✓         |
-| `/main3`   | `src/pages/Main3.jsx`          | ✓         |
-| `/main4`   | `src/pages/Main4.jsx`          | ✓         |
-| `/main5`   | `src/pages/Main5.jsx`          | ✓         |
-| `/result`  | `src/pages/Result.jsx`         | ✓         |
-| `/happy`   | `src/pages/Happy.jsx`          | ✓         |
-| `/middle`  | `src/pages/Middle.jsx`         | ✓         |
-| `/sad`     | `src/pages/Sad.jsx`            | ✓         |
-| `/hidden`  | `src/pages/Hidden.jsx`         | ✓         |
-| `/over`    | `src/pages/GameOver.jsx`       | ✓         |
-| `/board`   | `src/pages/Board.jsx`          | ✓         |
-| `/profile` | `src/pages/Profile.jsx`        | ✓         |
-| `/ranking` | → `/board` 리다이렉트 (레거시) | ✗         |
+| 경로       | 화면                     | 인증 보호 |
+| ---------- | ------------------------ | --------- |
+| `/`        | `src/pages/Home.jsx`     | ✗         |
+| `/help`    | `src/pages/Help.jsx`     | ✗         |
+| `/intro`   | `src/pages/Intro.jsx`    | ✗         |
+| `/main1`   | `src/pages/Main1.jsx`    | ✓         |
+| `/main2`   | `src/pages/Main2.jsx`    | ✓         |
+| `/main3`   | `src/pages/Main3.jsx`    | ✓         |
+| `/main4`   | `src/pages/Main4.jsx`    | ✓         |
+| `/main5`   | `src/pages/Main5.jsx`    | ✓         |
+| `/result`  | `src/pages/Result.jsx`   | ✓         |
+| `/happy`   | `src/pages/Happy.jsx`    | ✓         |
+| `/middle`  | `src/pages/Middle.jsx`   | ✓         |
+| `/sad`     | `src/pages/Sad.jsx`      | ✓         |
+| `/hidden`  | `src/pages/Hidden.jsx`   | ✓         |
+| `/over`    | `src/pages/GameOver.jsx` | ✓         |
+| `/board`   | `src/pages/Board.jsx`    | ✓         |
+| `/profile` | `src/pages/Profile.jsx`  | ✓         |
 
 ### 로그인·회원가입에는 라우트가 없다
 
@@ -77,8 +76,12 @@ src/
 
 ### 없는 페이지 처리
 
-`errorElement`가 정의되어 있지 않다. 존재하지 않는 URL로 접근하면 **빈 흰 화면**이 뜬다.
-Phase 2에서 404 페이지를 추가한다.
+`src/pages/NotFound.jsx`가 라우터의 `errorElement`이자 `*` 경로를 담당한다.
+
+### 진행도 가드
+
+`src/components/RequireProgress.jsx`가 게임 진행도에 따라 화면 접근을 제어한다.
+조건은 [GAME-FLOW.md](GAME-FLOW.md) 참조.
 
 ## 상태 관리
 

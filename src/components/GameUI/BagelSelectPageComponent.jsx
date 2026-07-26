@@ -5,6 +5,8 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 import { scoreAtom, characterNameAtom } from "../../atom/atom";
+import { ROUTES } from "../../constants/routes";
+import { markGameCompleted } from "../../game/progress";
 
 import BagelChoiceButton from "./BagelChoiceButton";
 import BagelDialogBox from "./BagelDialogBox";
@@ -181,7 +183,7 @@ const BagelSelectPageComponent = ({ backgroundImage, characterImage, storyData, 
       }
     }
     if (option.error) {
-      navigate("/over");
+      navigate(ROUTES.GAME_OVER);
     } else {
       // 기존 subtext 구조를 스마트하게 처리
       setSubText(option.subtext.split("^").map((text) => replaceCharacterName(text).trim()));
@@ -237,7 +239,9 @@ const BagelSelectPageComponent = ({ backgroundImage, characterImage, storyData, 
         }
       } else if (scene === 5) {
         if (index === 2) {
-          navigate("/result");
+          // 결과·엔딩 화면은 게임 완료자만 진입할 수 있다
+          markGameCompleted();
+          navigate(ROUTES.RESULT);
         } else {
           setIndex((prev) => prev + 1);
         }

@@ -1,18 +1,16 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 
 import BagelSelectPageComponent from "../components/GameUI/BagelSelectPageComponent";
+import { markStageReached } from "../game/progress";
+import { useBackgroundMusic } from "../hooks/useBackgroundMusic";
 import { storyData } from "../utils/data5";
-import { logger } from "../utils/logger";
 
 function Main5() {
-  const audioRef = useRef(null);
+  const audioRef = useBackgroundMusic();
 
+  // 진행도를 기록해야 다음 스테이지의 가드를 통과할 수 있다
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.play().catch((error) => {
-        logger.warn("배경음 재생 실패:", error);
-      });
-    }
+    markStageReached(5);
   }, []);
 
   return (
@@ -21,7 +19,6 @@ function Main5() {
         backgroundImage={"./img/bg_beach_main.png"}
         characterImage={"./img/mc_normal_main.png"}
         storyData={storyData}
-        url={"/happy"}
         scene={5}
       />
       <audio ref={audioRef} src="./audio/5.mp3" loop />
