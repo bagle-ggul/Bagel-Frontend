@@ -1,11 +1,27 @@
 {
   "metadata": {
-    "lastUpdated": "2026-07-26T16:58:07Z",
+    "lastUpdated": "2026-07-31T11:15:27Z",
     "currentVersion": "1.4.8",
     "projectType": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
-    "totalReleases": 23
+    "totalReleases": 24
   },
   "releases": [
+    {
+      "version": "1.4.8",
+      "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
+      "date": "2026-07-31",
+      "pr_number": 104,
+      "raw_summary": "Summary by CodeRabbit\n릴리스 노트\n\n개선\n\n화면 구성 코드를 정리해 유지보수성 향상\n랭킹 화면의 불필요한 콘솔 경고 제거",
+      "parsed_changes": {
+        "개선": {
+          "title": "개선",
+          "items": [
+            "화면 구성 코드를 정리해 유지보수성 향상",
+            "랭킹 화면의 불필요한 콘솔 경고 제거"
+          ]
+        }
+      }
+    },
     {
       "version": "1.4.8",
       "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
