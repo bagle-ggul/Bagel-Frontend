@@ -36,8 +36,11 @@
 - styled-components 정의는 `*.styled.js`로 분리해 컴포넌트 본문과 섞지 않는다
 - 페이지가 커지면 `pages/<Name>/index.jsx` + `pages/<Name>/components/` 구조로 분해한다
 
-현재 초과 파일: `src/pages/Home.jsx`(2193줄), `src/pages/Board.jsx`(1043줄),
-`src/components/ImageGallery.jsx`(611줄), `src/pages/Profile.jsx`(513줄). Phase 3에서 분해한다.
+styled 정의는 `*.styled.js`로 분리하고, 화면 전용 하위 컴포넌트는 `pages/<Name>/` 아래 둔다.
+`src/pages/Home.jsx`와 `src/pages/Board.jsx`가 이 구조를 따른다.
+
+현재 초과 파일: `src/pages/Home.jsx`(913줄), `src/components/ImageGallery.jsx`(611줄),
+`src/pages/Board.jsx`(531줄), `src/pages/Profile.jsx`(513줄).
 
 ## 스타일링
 

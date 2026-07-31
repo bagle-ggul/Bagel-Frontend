@@ -13,7 +13,11 @@ src/
 │   └── GameUI/        # 게임 플레이 화면 전용 UI
 ├── data/stories/      # JSON 스토리 데이터 (현재 인트로만)
 ├── hooks/             # 커스텀 훅
+├── constants/         # 라우트 경로 등 상수
+├── game/              # 게임 진행 상태 (라우팅·UI와 독립)
 ├── pages/             # 라우트에 대응하는 화면
+│   ├── Home.styled.js # 화면별 styled 정의는 *.styled.js로 분리
+│   └── Home/          # 화면 전용 하위 컴포넌트
 ├── styles/            # 테마 토큰
 └── utils/             # 유틸리티 + 레거시 스토리 데이터
 ```

@@ -70,12 +70,31 @@ React 기반으로 개발된 웹 게임으로, 플레이어의 선택에 따라 
 - 직관적인 게임 인터페이스
 - 커스텀 폰트 (Jua) 적용
 
+## 🧪 품질 관리
+
+코드 품질 기준을 문서가 아닌 **도구로 강제**합니다. 아래 네 가지를 모두 통과해야 머지됩니다.
+
+```bash
+npm run format:check   # 포맷
+npm run lint           # 린트 (위반 0건 유지)
+npm run test:ci        # 테스트 + 커버리지
+npm run build          # 빌드
+```
+
+- ESLint가 `console` 사용, `localStorage` 직접 접근, `axios` 직접 import를 차단합니다
+- `src/utils/`, `src/hooks/`, `src/game/`에 커버리지 80% 임계치가 걸려 있습니다
+- CI가 실제 차단 게이트로 동작합니다
+
+자세한 내용은 [docs/](docs/)를 참조하세요.
+
 ## 📝 향후 계획
 
-- 전체적인 코드 리팩토링 진행 예정
-- 성능 최적화
+전면 표준화 리팩토링이 진행 중입니다. 설계와 진행 상황은
+[docs/superpowers/specs/](docs/superpowers/specs/)에 있습니다.
+
+- 디자인 토큰 체계 재설계
+- 스토리 분기 엔진 데이터화
 - 추가 엔딩 및 스토리 콘텐츠 확장
-- 모바일 최적화 강화
 
 ## 📄 라이선스
 
