@@ -1,11 +1,27 @@
 {
   "metadata": {
-    "lastUpdated": "2026-07-31T11:15:27Z",
-    "currentVersion": "1.4.8",
+    "lastUpdated": "2026-07-31T12:10:46Z",
+    "currentVersion": "1.4.10",
     "projectType": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
-    "totalReleases": 24
+    "totalReleases": 25
   },
   "releases": [
+    {
+      "version": "1.4.10",
+      "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
+      "date": "2026-07-31",
+      "pr_number": 106,
+      "raw_summary": "Summary by CodeRabbit\n릴리스 노트\n\n개선\n\n로그인·크레딧 화면 구성을 정리해 유지보수성 향상\n비밀번호 표시 기능을 하나로 통합",
+      "parsed_changes": {
+        "개선": {
+          "title": "개선",
+          "items": [
+            "로그인·크레딧 화면 구성을 정리해 유지보수성 향상",
+            "비밀번호 표시 기능을 하나로 통합"
+          ]
+        }
+      }
+    },
     {
       "version": "1.4.8",
       "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
