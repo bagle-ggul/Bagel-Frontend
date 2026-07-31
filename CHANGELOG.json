@@ -1,11 +1,26 @@
 {
   "metadata": {
-    "lastUpdated": "2026-07-31T12:10:46Z",
-    "currentVersion": "1.4.10",
+    "lastUpdated": "2026-07-31T12:28:41Z",
+    "currentVersion": "1.4.11",
     "projectType": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
-    "totalReleases": 25
+    "totalReleases": 26
   },
   "releases": [
+    {
+      "version": "1.4.11",
+      "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
+      "date": "2026-07-31",
+      "pr_number": 108,
+      "raw_summary": "Summary by CodeRabbit\n릴리스 노트\n\n문서\n\n프로젝트 문서를 최신 구조에 맞게 정리",
+      "parsed_changes": {
+        "문서": {
+          "title": "문서",
+          "items": [
+            "프로젝트 문서를 최신 구조에 맞게 정리"
+          ]
+        }
+      }
+    },
     {
       "version": "1.4.10",
       "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
