@@ -9,6 +9,9 @@ import axios from "../utils/axios";
 import { logger } from "../utils/logger";
 import { isMusicMuted, setMusicMuted } from "../utils/storage";
 
+import CreditsModal from "./Home/CreditsModal";
+import LoginModal from "./Home/LoginModal";
+import LoginRequiredModal from "./Home/LoginRequiredModal";
 import {
   BirthDateContainer,
   BirthDateRow,
@@ -21,7 +24,6 @@ import {
   ButtonWrapper,
   ChangelogLink,
   CharacterWrapper,
-  DetailRow,
   ErrorMessage,
   GenderButton,
   GenderButtonGroup,
@@ -42,8 +44,6 @@ import {
   MbtiResult,
   MbtiRow,
   MbtiTitle,
-  MemberName,
-  MemberRole,
   MobileCharacterWrapper,
   MobileContainer,
   MobileMainWrapper,
@@ -58,11 +58,6 @@ import {
   SecondaryButtonModal,
   SubmitButton,
   Subtitle,
-  TeamDetails,
-  TeamInfo,
-  TeamList,
-  TeamMember,
-  TeamName,
   Title,
   Wrapper,
 } from "./Home.styled";
@@ -79,7 +74,6 @@ function Home() {
   // 로그인 폼 상태
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [error, setError] = useState("");
 
   // 회원가입 폼 상태
@@ -202,7 +196,6 @@ function Home() {
     setError("");
     setEmail("");
     setPassword("");
-    setIsPasswordVisible(false);
   };
 
   const closeLoginModal = () => {
@@ -210,7 +203,6 @@ function Home() {
     setError("");
     setEmail("");
     setPassword("");
-    setIsPasswordVisible(false);
   };
 
   const handleSignup = async (event) => {
@@ -340,15 +332,6 @@ function Home() {
       });
     }
   };
-
-  const teamMembers = [
-    { name: "서새찬", role: "Backend, Frontend, 발표 및 Document 문서화" },
-    { name: "이창규", role: "Frontend, 이미지 생성" },
-    { name: "강인권", role: "Frontend" },
-    { name: "신혁수", role: "Frontend" },
-    { name: "김현서", role: "스토리 제작 및 전체 통괄, 이미지 생성" },
-    { name: "김도현", role: "스토리 제작 및 전체 통괄, 이미지 생성" },
-  ];
 
   return (
     <div>
@@ -549,70 +532,7 @@ function Home() {
       )}
 
       <AnimatePresence>
-        {showCredits && (
-          <ModalOverlay
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setShowCredits(false)}
-          >
-            <ModalContent
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <ModalTitle>크레딧</ModalTitle>
-              <TeamInfo>
-                <TeamName>그녀가사다준 뉴욕 베이글 (그뉴베)</TeamName>
-                <TeamDetails>
-                  <DetailRow>
-                    <span>날짜: 2024.05.17 | 주제: 파도, 시간, 미로</span>
-                  </DetailRow>
-                  <DetailRow>
-                    <span>세종대학교 소프트웨어융합대학 해커톤</span>
-                  </DetailRow>
-                </TeamDetails>
-              </TeamInfo>
-              <TeamList>
-                {teamMembers.map((member, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                  >
-                    <TeamMember>
-                      <MemberName>{member.name}</MemberName>
-                      <MemberRole>{member.role}</MemberRole>
-                    </TeamMember>
-                  </motion.div>
-                ))}
-              </TeamList>
-              <IconCloseButton
-                onClick={() => setShowCredits(false)}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                aria-label="크레딧 모달 닫기"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </IconCloseButton>
-            </ModalContent>
-          </ModalOverlay>
-        )}
-
+        {showCredits && <CreditsModal onClose={() => setShowCredits(false)} />}
         {showSignup && (
           <ModalOverlay
             initial={{ opacity: 0 }}
@@ -947,192 +867,30 @@ function Home() {
             </ModalContent>
           </ModalOverlay>
         )}
-
         {showLogin && (
-          <ModalOverlay
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={closeLoginModal}
-          >
-            <ModalContent
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <ModalTitle>로그인</ModalTitle>
-              <LoginForm onSubmit={handleLogin}>
-                <InputWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <GlassInput
-                    type="email"
-                    placeholder="이메일을 입력해주세요"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </InputWrapper>
-                <InputWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <PasswordInputWrapper>
-                    <GlassInput
-                      type={isPasswordVisible ? "text" : "password"}
-                      placeholder="비밀번호를 입력해주세요"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                    />
-                    <PasswordToggleButton
-                      type="button"
-                      onClick={() => setIsPasswordVisible(!isPasswordVisible)}
-                    >
-                      {isPasswordVisible ? (
-                        // Eye Open (보기)
-                        <svg
-                          width="20"
-                          height="20"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                        >
-                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                          <circle cx="12" cy="12" r="3" />
-                        </svg>
-                      ) : (
-                        // Eye Closed (숨기기)
-                        <svg
-                          width="20"
-                          height="20"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                        >
-                          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
-                          <line x1="1" y1="1" x2="23" y2="23" />
-                        </svg>
-                      )}
-                    </PasswordToggleButton>
-                  </PasswordInputWrapper>
-                </InputWrapper>
-                <SubmitButton type="submit" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  로그인
-                </SubmitButton>
-                {error && (
-                  <ErrorMessage
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {error}
-                  </ErrorMessage>
-                )}
-              </LoginForm>
-              <IconCloseButton
-                onClick={closeLoginModal}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                aria-label="로그인 모달 닫기"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </IconCloseButton>
-            </ModalContent>
-          </ModalOverlay>
+          <LoginModal
+            email={email}
+            password={password}
+            error={error}
+            onEmailChange={(e) => setEmail(e.target.value)}
+            onPasswordChange={(e) => setPassword(e.target.value)}
+            onSubmit={handleLogin}
+            onClose={closeLoginModal}
+          />
         )}
-
         {showLoginRequired && (
-          <ModalOverlay
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={closeLoginRequiredModal}
-          >
-            <ModalContent
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <ModalTitle>로그인 필요</ModalTitle>
-              <TeamInfo>
-                <TeamDetails>
-                  <DetailRow>
-                    <span>랭킹 보기는 로그인 후 이용할 수 있습니다.</span>
-                  </DetailRow>
-                  <DetailRow>
-                    <span>로그인하여 다른 플레이어들과 점수를 비교해보세요!</span>
-                  </DetailRow>
-                </TeamDetails>
-              </TeamInfo>
-              <div
-                style={{
-                  display: "flex",
-                  gap: "1rem",
-                  justifyContent: "center",
-                  marginTop: "1.5rem",
-                }}
-              >
-                <SubmitButton
-                  type="button"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => {
-                    setShowLoginRequired(false);
-                    setShowLogin(true);
-                  }}
-                >
-                  로그인하기
-                </SubmitButton>
-                <SubmitButton
-                  type="button"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => {
-                    setShowLoginRequired(false);
-                    setShowSignup(true);
-                  }}
-                  style={{
-                    background: "rgba(255, 255, 255, 0.15)",
-                    border: "1px solid rgba(255, 255, 255, 0.3)",
-                  }}
-                >
-                  회원가입하기
-                </SubmitButton>
-              </div>
-              <IconCloseButton
-                onClick={closeLoginRequiredModal}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                aria-label="모달 닫기"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </IconCloseButton>
-            </ModalContent>
-          </ModalOverlay>
+          <LoginRequiredModal
+            onClose={closeLoginRequiredModal}
+            onGoLogin={() => {
+              setShowLoginRequired(false);
+              setShowLogin(true);
+            }}
+            onGoSignup={() => {
+              setShowLoginRequired(false);
+              setShowSignup(true);
+            }}
+          />
+        )}
         )}
       </AnimatePresence>
 
