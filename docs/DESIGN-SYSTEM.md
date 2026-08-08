@@ -147,6 +147,39 @@ border-radius: 20px
 `animations` 객체에 Framer Motion용 variant가 정의되어 있다 — `fadeIn`, `slideUp`,
 `scaleIn`, `hover`, `tap`.
 
+## 3해상도 점검 결과
+
+| 해상도            | 결과                  |
+| ----------------- | --------------------- |
+| 모바일 390×844    | ✅ 뷰포트 초과 요소 0 |
+| 태블릿 768×1024   | ✅ 뷰포트 초과 요소 0 |
+| 데스크톱 1440×900 | ✅ 뷰포트 초과 요소 0 |
+
+### 점검 방법
+
+캡처만으로는 "조금 잘렸는지"를 눈으로 판별하기 어렵다. 그래서 **측정**했다.
+
+```js
+[...document.querySelectorAll("*")].filter(
+  (e) => e.getBoundingClientRect().right > window.innerWidth + 1
+).length;
+```
+
+가로 스크롤 발생 여부(`scrollWidth > innerWidth`)와 함께 확인한다. `overflow: hidden`이
+걸려 있으면 스크롤은 안 생기지만 요소는 여전히 화면 밖에 있으므로 둘 다 봐야 한다.
+
+### 찾아서 고친 결함
+
+**인트로 화면이 모바일에서 뷰포트를 벗어났다.**
+
+`DialogueSystem`의 `CharacterImage`가 모바일에서 `width: 500px` 고정이었고,
+부모 `CharacterContainer`에 폭 제한이 없어 자식만큼 늘어났다. 390px 화면에서
+컨테이너가 500px가 되어 레이아웃이 밀렸다.
+
+부모에 `width: 100%`, 자식에 `max-width: 100%`를 넣어 해소했다.
+`background-size: contain`이라 이미지 자체는 잘리지 않았기 때문에 **눈으로는 알아채기
+어려운 결함**이었다.
+
 ## Phase 3 계획
 
 ### 1. 전수 점검 (선행)
