@@ -10,6 +10,25 @@ import StatsContent from "../components/StatsContent";
 import axios from "../utils/axios";
 import { logger } from "../utils/logger";
 
+// 스켈레톤 로딩 UI — 원래 인라인 style로 4번 반복되던 것
+const SkeletonList = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+`;
+
+const SkeletonRow = styled(motion.div)`
+  width: 100%;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.2rem;
+`;
+
 const ErrorPanel = styled.div`
   display: flex;
   flex-direction: column;
@@ -175,6 +194,9 @@ const SkeletonCircle = styled(SkeletonElement)`
 const SkeletonText = styled(SkeletonElement)`
   height: 20px;
   border-radius: 4px;
+  /* 자리표시자 너비는 행마다 달라서 prop으로 받는다.
+     transient prop($ 접두사)이라 DOM으로 전달되지 않는다 */
+  width: ${(props) => props.$width || "100%"};
 `;
 
 const SkeletonTitle = styled(SkeletonElement)`
@@ -314,26 +336,14 @@ function Profile() {
         >
           <SkeletonCircle />
           <SkeletonTitle />
-          <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: "0.8rem" }}>
+          <SkeletonList>
             {[...Array(4)].map((_, i) => (
-              <motion.div
-                key={i}
-                style={{
-                  width: "100%",
-                  height: "48px",
-                  background: "rgba(255, 255, 255, 0.1)",
-                  borderRadius: "12px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  padding: "0 1.2rem",
-                }}
-              >
-                <SkeletonText style={{ width: "30%" }} />
-                <SkeletonText style={{ width: "40%" }} />
-              </motion.div>
+              <SkeletonRow key={i}>
+                <SkeletonText $width="30%" />
+                <SkeletonText $width="40%" />
+              </SkeletonRow>
             ))}
-          </div>
+          </SkeletonList>
         </SkeletonCard>
 
         <SkeletonCard
@@ -342,26 +352,14 @@ function Profile() {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <SkeletonTitle />
-          <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: "0.8rem" }}>
+          <SkeletonList>
             {[...Array(2)].map((_, i) => (
-              <motion.div
-                key={i}
-                style={{
-                  width: "100%",
-                  height: "48px",
-                  background: "rgba(255, 255, 255, 0.1)",
-                  borderRadius: "12px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  padding: "0 1.2rem",
-                }}
-              >
-                <SkeletonText style={{ width: "50%" }} />
-                <SkeletonText style={{ width: "30%" }} />
-              </motion.div>
+              <SkeletonRow key={i}>
+                <SkeletonText $width="50%" />
+                <SkeletonText $width="30%" />
+              </SkeletonRow>
             ))}
-          </div>
+          </SkeletonList>
         </SkeletonCard>
       </DesktopContainer>
 
@@ -373,26 +371,14 @@ function Profile() {
         >
           <SkeletonCircle />
           <SkeletonTitle />
-          <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: "0.8rem" }}>
+          <SkeletonList>
             {[...Array(4)].map((_, i) => (
-              <motion.div
-                key={i}
-                style={{
-                  width: "100%",
-                  height: "48px",
-                  background: "rgba(255, 255, 255, 0.1)",
-                  borderRadius: "12px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  padding: "0 1.2rem",
-                }}
-              >
-                <SkeletonText style={{ width: "30%" }} />
-                <SkeletonText style={{ width: "40%" }} />
-              </motion.div>
+              <SkeletonRow key={i}>
+                <SkeletonText $width="30%" />
+                <SkeletonText $width="40%" />
+              </SkeletonRow>
             ))}
-          </div>
+          </SkeletonList>
         </SkeletonCard>
 
         <SkeletonCard
@@ -401,26 +387,14 @@ function Profile() {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <SkeletonTitle />
-          <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: "0.8rem" }}>
+          <SkeletonList>
             {[...Array(2)].map((_, i) => (
-              <motion.div
-                key={i}
-                style={{
-                  width: "100%",
-                  height: "48px",
-                  background: "rgba(255, 255, 255, 0.1)",
-                  borderRadius: "12px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  padding: "0 1.2rem",
-                }}
-              >
-                <SkeletonText style={{ width: "50%" }} />
-                <SkeletonText style={{ width: "30%" }} />
-              </motion.div>
+              <SkeletonRow key={i}>
+                <SkeletonText $width="50%" />
+                <SkeletonText $width="30%" />
+              </SkeletonRow>
             ))}
-          </div>
+          </SkeletonList>
         </SkeletonCard>
       </MobileContainer>
     </>

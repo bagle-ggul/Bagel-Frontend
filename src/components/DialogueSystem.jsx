@@ -40,6 +40,9 @@ const CharacterContainer = styled.div`
   align-items: center;
   gap: 0;
   margin-bottom: 1rem;
+  /* 폭 제한이 없으면 자식(CharacterImage)의 고정 폭만큼 늘어나
+     좁은 화면에서 컨테이너가 뷰포트를 벗어난다 */
+  width: 100%;
 
   ${media.mobile} {
     gap: 0;
@@ -49,6 +52,9 @@ const CharacterContainer = styled.div`
 
 const CharacterImage = styled.div`
   width: 600px; /* 1200px의 절반 */
+  /* 고정 폭이 뷰포트를 넘으면 요소가 화면 밖으로 밀린다.
+     background-size: contain이라 이미지 자체는 잘리지 않지만 레이아웃이 어긋난다. */
+  max-width: 100%;
   height: 400px; /* 800px의 절반 */
   background-image: url(${(props) => props.src});
   background-size: contain;
