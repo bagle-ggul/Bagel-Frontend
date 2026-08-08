@@ -1,86 +1,92 @@
-// 공통 테마 스타일 시스템
+/**
+ * 테마 (호환 레이어)
+ *
+ * 토큰 체계는 2계층이다:
+ *   tokens.js   — 원시 토큰. 값 그 자체
+ *   semantic.js — 의미 토큰. "언제 쓰는지"를 이름이 말한다
+ *
+ * **새 코드는 semantic.js를 직접 import한다.** 이 파일은 기존 컴포넌트가 쓰던
+ * 이름(colors, glassmorphism 등)을 유지하기 위한 호환 레이어이며,
+ * 값은 전부 의미 토큰을 참조하므로 tokens.js 한 곳만 고치면 전체가 따라 바뀐다.
+ */
+import {
+  action,
+  border,
+  feedback,
+  glass,
+  glassHover,
+  layer,
+  rank,
+  surface,
+  text,
+} from "./semantic";
+import { palette, radius, shadow, spacing, transition } from "./tokens";
+
 export const colors = {
-  primary: "rgba(200, 182, 226, 0.9)",
-  glassBg: "rgba(0, 0, 0, 0.4)",
-  glassBorder: "rgba(255, 255, 255, 0.15)",
-  textPrimary: "white",
-  textSecondary: "rgba(255, 255, 255, 0.7)",
-  textTertiary: "rgba(255, 255, 255, 0.6)",
-  error: "rgba(220, 53, 69, 0.9)",
-  errorBg: "rgba(220, 53, 69, 0.1)",
-  errorBorder: "rgba(220, 53, 69, 0.3)",
-  warning: "rgba(255, 193, 7, 0.9)",
-  success: "rgba(40, 167, 69, 0.9)",
+  primary: action.primary,
+  glassBg: surface.glass,
+  glassBorder: border.subtle,
+  textPrimary: text.primary,
+  textSecondary: text.secondary,
+  textTertiary: text.tertiary,
+  error: feedback.error,
+  errorBg: feedback.errorSurface,
+  errorBorder: feedback.errorBorder,
+  warning: feedback.warning,
+  success: feedback.success,
 
-  // 랭킹 컬러
-  gold: "#FFD700",
-  silver: "#C0C0C0",
-  bronze: "#CD7F32",
+  gold: rank.first,
+  silver: rank.second,
+  bronze: rank.third,
 };
 
-export const glassmorphism = {
-  background: colors.glassBg,
-  backdropFilter: "blur(15px)",
-  border: `1px solid ${colors.glassBorder}`,
-  boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.5)",
-  borderRadius: "20px",
-};
+export const glassmorphism = glass;
 
 export const glassCard = {
-  ...glassmorphism,
-  transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
-
-  hover: {
-    background: "rgba(0, 0, 0, 0.5)",
-    borderColor: "rgba(200, 182, 226, 0.4)",
-    boxShadow: `
-      0 12px 40px rgba(0, 0, 0, 0.6),
-      0 0 0 1px rgba(200, 182, 226, 0.2),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1)
-    `,
-    transform: "translateY(-4px)",
-  },
+  ...glass,
+  transition: transition.smooth,
+  hover: glassHover,
 };
 
 export const buttons = {
   primary: {
-    background: colors.primary,
-    border: `1px solid ${colors.glassBorder}`,
-    color: colors.textPrimary,
-    borderRadius: "12px",
-    transition: "all 0.3s ease",
+    background: action.primary,
+    border: `1px solid ${border.subtle}`,
+    color: text.onAction,
+    borderRadius: radius.md,
+    transition: transition.fast,
 
     hover: {
-      background: "rgba(200, 182, 226, 1)",
+      background: action.primaryHover,
       transform: "translateY(-2px)",
-      boxShadow: "0 6px 20px rgba(200, 182, 226, 0.3)",
+      boxShadow: shadow.buttonHover,
     },
   },
 
   glass: {
-    ...glassmorphism,
-    borderRadius: "12px",
-    color: colors.textPrimary,
-    transition: "all 0.3s ease",
-    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.3)",
+    ...glass,
+    borderRadius: radius.md,
+    color: text.onAction,
+    transition: transition.fast,
+    boxShadow: shadow.button,
 
     hover: {
-      background: "rgba(200, 182, 226, 0.3)",
-      borderColor: "rgba(200, 182, 226, 0.5)",
+      background: action.secondaryHover,
+      borderColor: border.accentStrong,
       transform: "translateY(-2px)",
-      boxShadow: "0 6px 20px rgba(200, 182, 226, 0.3)",
+      boxShadow: shadow.buttonHover,
     },
   },
 
   retry: {
     background: "rgba(200, 182, 226, 0.8)",
-    border: `1px solid ${colors.glassBorder}`,
-    color: colors.textPrimary,
-    borderRadius: "12px",
-    transition: "all 0.3s ease",
+    border: `1px solid ${border.subtle}`,
+    color: text.onAction,
+    borderRadius: radius.md,
+    transition: transition.fast,
 
     hover: {
-      background: "rgba(200, 182, 226, 1)",
+      background: action.primaryHover,
       transform: "translateY(-2px)",
     },
   },
@@ -122,16 +128,9 @@ export const breakpoints = {
   large: "1440px",
 };
 
-export const zIndex = {
-  base: 1,
-  dropdown: 10,
-  sticky: 100,
-  modal: 1000,
-  progressBar: 1000,
-  scrollButton: 100,
-};
+export const zIndex = layer;
 
-// 미디어 쿼리 헬퍼
+// 미디어 쿼리 헬퍼 — 브레이크포인트를 컴포넌트에 하드코딩하지 않기 위한 것
 export const media = {
   mobile: `@media (max-width: ${breakpoints.mobile})`,
   tablet: `@media (max-width: ${breakpoints.tablet})`,
@@ -139,28 +138,27 @@ export const media = {
   large: `@media (min-width: ${breakpoints.large})`,
 };
 
-// 공통 컴포넌트 스타일
 export const componentStyles = {
   detailRow: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
-    padding: "0.8rem 1.2rem",
-    background: "rgba(255, 255, 255, 0.1)",
+    padding: `${spacing.md} ${spacing.lg}`,
+    background: surface.raised,
     backdropFilter: "blur(10px)",
-    border: "1px solid rgba(255, 255, 255, 0.1)",
-    borderRadius: "12px",
-    transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+    border: `1px solid ${palette.white10}`,
+    borderRadius: radius.md,
+    transition: transition.smooth,
     cursor: "pointer",
     overflow: "hidden",
     position: "relative",
 
     hover: {
-      background: "rgba(255, 255, 255, 0.15)",
-      borderColor: "rgba(200, 182, 226, 0.4)",
+      background: surface.raisedHover,
+      borderColor: border.accent,
       transform: "translateX(3px) scale(1.01)",
-      boxShadow: "0 4px 15px rgba(200, 182, 226, 0.15)",
+      boxShadow: shadow.subtle,
     },
   },
 
@@ -169,11 +167,11 @@ export const componentStyles = {
       width: "8px",
     },
     "&::-webkit-scrollbar-track": {
-      background: "rgba(255, 255, 255, 0.1)",
+      background: surface.raised,
       borderRadius: "4px",
     },
     "&::-webkit-scrollbar-thumb": {
-      background: "rgba(200, 182, 226, 0.5)",
+      background: border.accentStrong,
       borderRadius: "4px",
     },
     "&::-webkit-scrollbar-thumb:hover": {
@@ -182,7 +180,6 @@ export const componentStyles = {
   },
 };
 
-// 익명 객체 export는 import 측에서 이름 추적이 어렵다
 const theme = {
   colors,
   glassmorphism,
