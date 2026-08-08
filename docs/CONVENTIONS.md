@@ -42,6 +42,9 @@ styled 정의는 `*.styled.js`로 분리하고, 화면 전용 하위 컴포넌�
 현재 초과 파일: `src/pages/Home.jsx`(913줄), `src/components/ImageGallery.jsx`(611줄),
 `src/pages/Board.jsx`(531줄), `src/pages/Profile.jsx`(513줄).
 
+미사용 파일은 남겨두지 않는다. 데드코드는 "나중에 쓸지도 모른다"는 이유로 살려두면
+영영 정리되지 않는다. 필요해지면 git 히스토리에서 되살릴 수 있다.
+
 ## 스타일링
 
 - 정적 스타일은 **styled-components 또는 `src/styles/theme.js` 토큰**을 쓴다
