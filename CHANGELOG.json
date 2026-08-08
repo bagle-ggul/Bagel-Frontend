@@ -1,11 +1,26 @@
 {
   "metadata": {
-    "lastUpdated": "2026-08-08T11:00:52Z",
+    "lastUpdated": "2026-08-08T11:09:20Z",
     "currentVersion": "1.4.12",
     "projectType": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
-    "totalReleases": 27
+    "totalReleases": 28
   },
   "releases": [
+    {
+      "version": "1.4.12",
+      "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
+      "date": "2026-08-08",
+      "pr_number": 112,
+      "raw_summary": "Summary by CodeRabbit\n릴리스 노트\n\n개선\n\n회원가입 화면 구성을 정리해 유지보수성 향상",
+      "parsed_changes": {
+        "개선": {
+          "title": "개선",
+          "items": [
+            "회원가입 화면 구성을 정리해 유지보수성 향상"
+          ]
+        }
+      }
+    },
     {
       "version": "1.4.12",
       "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
