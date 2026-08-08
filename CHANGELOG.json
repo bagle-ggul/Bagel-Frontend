@@ -1,11 +1,33 @@
 {
   "metadata": {
-    "lastUpdated": "2026-07-31T12:28:41Z",
-    "currentVersion": "1.4.11",
+    "lastUpdated": "2026-08-08T11:00:52Z",
+    "currentVersion": "1.4.12",
     "projectType": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
-    "totalReleases": 26
+    "totalReleases": 27
   },
   "releases": [
+    {
+      "version": "1.4.12",
+      "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
+      "date": "2026-08-08",
+      "pr_number": 110,
+      "raw_summary": "Summary by CodeRabbit\n릴리스 노트\n\n\n버그 수정\n\n로그인이 만료되어도 자동으로 로그아웃되지 않던 문제 해결\n\n\n\n개선\n\n게임 이름을 \"Re: WAVE\"로 통일\n사용하지 않는 화면 정리로 앱 용량 감소",
+      "parsed_changes": {
+        "버그_수정": {
+          "title": "버그 수정",
+          "items": [
+            "로그인이 만료되어도 자동으로 로그아웃되지 않던 문제 해결"
+          ]
+        },
+        "개선": {
+          "title": "개선",
+          "items": [
+            "게임 이름을 \"Re: WAVE\"로 통일",
+            "사용하지 않는 화면 정리로 앱 용량 감소"
+          ]
+        }
+      }
+    },
     {
       "version": "1.4.11",
       "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
