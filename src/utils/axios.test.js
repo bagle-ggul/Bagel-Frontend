@@ -77,7 +77,28 @@ describe("axios 응답 인터셉터", () => {
     expect(window.location.href).toBe("/");
   });
 
-  it("401이 아닌 에러는 토큰을 건드리지 않는다", async () => {
+  // 이 서버는 잘못된/만료된 토큰에 403을 반환한다(실측).
+  // 401만 처리하면 만료돼도 자동 로그아웃이 되지 않는다.
+  it("403도 인증 실패로 보고 토큰을 정리한다", async () => {
+    setRefreshToken("refresh-abc");
+    const error = { response: { status: 403 } };
+
+    await expect(getResponseHandler().rejected(error)).rejects.toBe(error);
+
+    expect(getRefreshToken()).toBeNull();
+    expect(window.location.href).toBe("/");
+  });
+
+  // 이미 로그아웃 상태인데 또 이동시키면 홈에서 리다이렉트가 반복된다
+  it("토큰이 없으면 401/403이어도 이동시키지 않는다", async () => {
+    const error = { response: { status: 401 } };
+
+    await expect(getResponseHandler().rejected(error)).rejects.toBe(error);
+
+    expect(window.location.href).toBe("");
+  });
+
+  it("인증 실패가 아닌 에러는 토큰을 건드리지 않는다", async () => {
     setRefreshToken("refresh-abc");
     const error = { response: { status: 500 } };
 
