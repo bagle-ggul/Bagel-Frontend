@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { scoreAtom, characterNameAtom } from "../../atom/atom";
 import { ROUTES } from "../../constants/routes";
 import { markGameCompleted } from "../../game/progress";
+import { resolveNextStep, resolveStageExit } from "../../game/storyFlow";
 
 import BagelChoiceButton from "./BagelChoiceButton";
 import BagelDialogBox from "./BagelDialogBox";
@@ -175,13 +176,8 @@ const BagelSelectPageComponent = ({ backgroundImage, characterImage, storyData, 
   };
 
   const onClicked = (option, i) => {
-    if (scene === 2) {
-      if (i === 0) {
-        setBase("/main4");
-      } else {
-        setBase("/main3");
-      }
-    }
+    // 다음 스테이지 목적지는 선택에 따라 갈릴 수 있다 (카페의 돈 줍기)
+    setBase(resolveStageExit(scene, i, url));
     if (option.error) {
       navigate(ROUTES.GAME_OVER);
     } else {
@@ -199,54 +195,13 @@ const BagelSelectPageComponent = ({ backgroundImage, characterImage, storyData, 
     } else {
       setToggle(false);
 
-      if (scene === 2) {
-        if (index === 0) {
-          if (score >= 15 && score < 40) {
-            setIndex(1);
-          } else if (score < 15) {
-            setIndex(2);
-          } else {
-            setIndex(3);
-          }
-        } else if (index !== 1 && index !== 2) {
-          setIndex((prev) => prev + 1);
-        } else {
-          setIndex(3);
-        }
-      } else if (scene === 3) {
-        if (index === 1) {
-          if (score >= 60) {
-            setIndex(2);
-          } else if (score >= 20 && score < 60) {
-            setIndex(3);
-          } else {
-            setIndex(4);
-          }
-        } else if (index === 2 || index === 3 || index === 4) {
-          setIndex(5);
-        } else {
-          setIndex((prev) => prev + 1);
-        }
-      } else if (scene === 4) {
-        if (index === 2) {
-          if (score >= 70) {
-            setIndex(3);
-          } else {
-            setIndex(4);
-          }
-        } else {
-          setIndex((prev) => prev + 1);
-        }
-      } else if (scene === 5) {
-        if (index === 2) {
-          // 결과·엔딩 화면은 게임 완료자만 진입할 수 있다
-          markGameCompleted();
-          navigate(ROUTES.RESULT);
-        } else {
-          setIndex((prev) => prev + 1);
-        }
+      const step = resolveNextStep(scene, index, score);
+      if (step.type === "navigate") {
+        // 결과·엔딩 화면은 게임 완료자만 진입할 수 있다
+        markGameCompleted();
+        navigate(step.to);
       } else {
-        setIndex((prev) => prev + 1);
+        setIndex(step.index);
       }
     }
   };
