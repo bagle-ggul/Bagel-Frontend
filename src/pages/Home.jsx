@@ -12,11 +12,8 @@ import { isMusicMuted, setMusicMuted } from "../utils/storage";
 import CreditsModal from "./Home/CreditsModal";
 import LoginModal from "./Home/LoginModal";
 import LoginRequiredModal from "./Home/LoginRequiredModal";
+import SignupModal from "./Home/SignupModal";
 import {
-  BirthDateContainer,
-  BirthDateRow,
-  BirthDateTitle,
-  BirthSelect,
   BottomCreditsButton,
   BottomRightButtonGroup,
   BottomVersionInfo,
@@ -24,39 +21,17 @@ import {
   ButtonWrapper,
   ChangelogLink,
   CharacterWrapper,
-  ErrorMessage,
-  GenderButton,
-  GenderButtonGroup,
-  GenderContainer,
-  GenderTitle,
-  GlassInput,
-  IconCloseButton,
   IconControlGroup,
   ImageGalleryButton,
-  InputWrapper,
-  LoginForm,
   LogoutButton,
   MainWrapper,
-  MbtiButton,
-  MbtiButtonGroup,
-  MbtiCompactContainer,
-  MbtiLabel,
-  MbtiResult,
-  MbtiRow,
-  MbtiTitle,
   MobileCharacterWrapper,
   MobileContainer,
   MobileMainWrapper,
-  ModalContent,
-  ModalOverlay,
-  ModalTitle,
   MusicControlButton,
-  PasswordInputWrapper,
-  PasswordToggleButton,
   PrimaryButton,
   SecondaryButton,
   SecondaryButtonModal,
-  SubmitButton,
   Subtitle,
   Title,
   Wrapper,
@@ -80,8 +55,6 @@ function Home() {
   const [signupEmail, setSignupEmail] = useState("");
   const [signupPassword, setSignupPassword] = useState("");
   const [signupPasswordConfirm, setSignupPasswordConfirm] = useState("");
-  const [isSignupPasswordVisible, setIsSignupPasswordVisible] = useState(false);
-  const [isSignupPasswordConfirmVisible, setIsSignupPasswordConfirmVisible] = useState(false);
   const [characterName, setCharacterName] = useState("");
   const [mbti, setMbti] = useState("");
   // MBTI 단계별 선택 상태
@@ -205,6 +178,18 @@ function Home() {
     setPassword("");
   };
 
+  // 하위 선택 컴포넌트는 "어떤 축/필드가 바뀌었는지"만 알려준다.
+  // 상태 setter와의 연결은 화면이 담당한다.
+  const handleMbtiChange = (axis, selected) => {
+    const setters = { e: setMbtiE, s: setMbtiS, t: setMbtiT, j: setMbtiJ };
+    setters[axis]?.(selected);
+  };
+
+  const handleBirthChange = (field, value) => {
+    const setters = { year: setBirthYear, month: setBirthMonth, day: setBirthDay };
+    setters[field]?.(value);
+  };
+
   const handleSignup = async (event) => {
     event.preventDefault();
     setSignupError(""); // 에러 메시지 초기화
@@ -245,8 +230,6 @@ function Home() {
       setSignupEmail("");
       setSignupPassword("");
       setSignupPasswordConfirm("");
-      setIsSignupPasswordVisible(false);
-      setIsSignupPasswordConfirmVisible(false);
       setCharacterName("");
       setMbti("");
       setMbtiE("");
@@ -270,8 +253,6 @@ function Home() {
     setSignupEmail("");
     setSignupPassword("");
     setSignupPasswordConfirm("");
-    setIsSignupPasswordVisible(false);
-    setIsSignupPasswordConfirmVisible(false);
     setCharacterName("");
     setMbti("");
     setMbtiE("");
@@ -290,8 +271,6 @@ function Home() {
     setSignupEmail("");
     setSignupPassword("");
     setSignupPasswordConfirm("");
-    setIsSignupPasswordVisible(false);
-    setIsSignupPasswordConfirmVisible(false);
     setCharacterName("");
     setMbti("");
     setMbtiE("");
@@ -534,338 +513,27 @@ function Home() {
       <AnimatePresence>
         {showCredits && <CreditsModal onClose={() => setShowCredits(false)} />}
         {showSignup && (
-          <ModalOverlay
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={closeSignupModal}
-          >
-            <ModalContent
-              initial={{ scale: 0.8, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <ModalTitle>회원가입</ModalTitle>
-              <LoginForm onSubmit={handleSignup}>
-                <InputWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <GlassInput
-                    type="email"
-                    placeholder="이메일을 입력해주세요"
-                    value={signupEmail}
-                    onChange={(e) => setSignupEmail(e.target.value)}
-                    required
-                  />
-                </InputWrapper>
-
-                <InputWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <PasswordInputWrapper>
-                    <GlassInput
-                      type={isSignupPasswordVisible ? "text" : "password"}
-                      placeholder="비밀번호를 입력해주세요"
-                      value={signupPassword}
-                      onChange={(e) => setSignupPassword(e.target.value)}
-                      required
-                    />
-                    <PasswordToggleButton
-                      type="button"
-                      onClick={() => setIsSignupPasswordVisible(!isSignupPasswordVisible)}
-                    >
-                      {isSignupPasswordVisible ? (
-                        <svg
-                          width="20"
-                          height="20"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                        >
-                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                          <circle cx="12" cy="12" r="3" />
-                        </svg>
-                      ) : (
-                        <svg
-                          width="20"
-                          height="20"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                        >
-                          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
-                          <line x1="1" y1="1" x2="23" y2="23" />
-                        </svg>
-                      )}
-                    </PasswordToggleButton>
-                  </PasswordInputWrapper>
-                </InputWrapper>
-
-                <InputWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <PasswordInputWrapper>
-                    <GlassInput
-                      type={isSignupPasswordConfirmVisible ? "text" : "password"}
-                      placeholder="비밀번호를 다시 입력해주세요"
-                      value={signupPasswordConfirm}
-                      onChange={(e) => setSignupPasswordConfirm(e.target.value)}
-                      required
-                    />
-                    <PasswordToggleButton
-                      type="button"
-                      onClick={() =>
-                        setIsSignupPasswordConfirmVisible(!isSignupPasswordConfirmVisible)
-                      }
-                    >
-                      {isSignupPasswordConfirmVisible ? (
-                        <svg
-                          width="20"
-                          height="20"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                        >
-                          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                          <circle cx="12" cy="12" r="3" />
-                        </svg>
-                      ) : (
-                        <svg
-                          width="20"
-                          height="20"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                        >
-                          <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
-                          <line x1="1" y1="1" x2="23" y2="23" />
-                        </svg>
-                      )}
-                    </PasswordToggleButton>
-                  </PasswordInputWrapper>
-                  {signupPasswordConfirm && signupPassword !== signupPasswordConfirm && (
-                    <ErrorMessage
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      비밀번호가 일치하지 않습니다
-                    </ErrorMessage>
-                  )}
-                </InputWrapper>
-
-                <InputWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <GlassInput
-                    type="text"
-                    placeholder="이름을 입력해주세요"
-                    value={characterName}
-                    onChange={(e) => setCharacterName(e.target.value)}
-                    required
-                  />
-                </InputWrapper>
-
-                <InputWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <MbtiCompactContainer>
-                    <MbtiTitle>성격 유형 (MBTI)</MbtiTitle>
-
-                    <MbtiRow>
-                      <MbtiLabel>에너지</MbtiLabel>
-                      <MbtiButtonGroup>
-                        <MbtiButton
-                          selected={mbtiE === "E"}
-                          onClick={() => setMbtiE("E")}
-                          type="button"
-                        >
-                          E 외향
-                        </MbtiButton>
-                        <MbtiButton
-                          selected={mbtiE === "I"}
-                          onClick={() => setMbtiE("I")}
-                          type="button"
-                        >
-                          I 내향
-                        </MbtiButton>
-                      </MbtiButtonGroup>
-                    </MbtiRow>
-
-                    <MbtiRow>
-                      <MbtiLabel>인식</MbtiLabel>
-                      <MbtiButtonGroup>
-                        <MbtiButton
-                          selected={mbtiS === "S"}
-                          onClick={() => setMbtiS("S")}
-                          type="button"
-                        >
-                          S 감각
-                        </MbtiButton>
-                        <MbtiButton
-                          selected={mbtiS === "N"}
-                          onClick={() => setMbtiS("N")}
-                          type="button"
-                        >
-                          N 직관
-                        </MbtiButton>
-                      </MbtiButtonGroup>
-                    </MbtiRow>
-
-                    <MbtiRow>
-                      <MbtiLabel>판단</MbtiLabel>
-                      <MbtiButtonGroup>
-                        <MbtiButton
-                          selected={mbtiT === "T"}
-                          onClick={() => setMbtiT("T")}
-                          type="button"
-                        >
-                          T 사고
-                        </MbtiButton>
-                        <MbtiButton
-                          selected={mbtiT === "F"}
-                          onClick={() => setMbtiT("F")}
-                          type="button"
-                        >
-                          F 감정
-                        </MbtiButton>
-                      </MbtiButtonGroup>
-                    </MbtiRow>
-
-                    <MbtiRow>
-                      <MbtiLabel>생활</MbtiLabel>
-                      <MbtiButtonGroup>
-                        <MbtiButton
-                          selected={mbtiJ === "J"}
-                          onClick={() => setMbtiJ("J")}
-                          type="button"
-                        >
-                          J 계획
-                        </MbtiButton>
-                        <MbtiButton
-                          selected={mbtiJ === "P"}
-                          onClick={() => setMbtiJ("P")}
-                          type="button"
-                        >
-                          P 자율
-                        </MbtiButton>
-                      </MbtiButtonGroup>
-                    </MbtiRow>
-
-                    {mbti && (
-                      <MbtiResult>
-                        <span>{mbti}</span>
-                      </MbtiResult>
-                    )}
-                  </MbtiCompactContainer>
-                </InputWrapper>
-
-                <InputWrapper whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <BirthDateContainer>
-                    <BirthDateTitle>생년월일</BirthDateTitle>
-                    <BirthDateRow>
-                      <BirthSelect
-                        value={birthYear}
-                        onChange={(e) => setBirthYear(e.target.value)}
-                        required
-                      >
-                        <option value="" disabled>
-                          년도
-                        </option>
-                        {Array.from({ length: 50 }, (_, i) => new Date().getFullYear() - i).map(
-                          (year) => (
-                            <option key={year} value={year}>
-                              {year}년
-                            </option>
-                          )
-                        )}
-                      </BirthSelect>
-
-                      <BirthSelect
-                        value={birthMonth}
-                        onChange={(e) => setBirthMonth(e.target.value)}
-                        required
-                      >
-                        <option value="" disabled>
-                          월
-                        </option>
-                        {Array.from({ length: 12 }, (_, i) => i + 1).map((month) => (
-                          <option key={month} value={month}>
-                            {month}월
-                          </option>
-                        ))}
-                      </BirthSelect>
-
-                      <BirthSelect
-                        value={birthDay}
-                        onChange={(e) => setBirthDay(e.target.value)}
-                        required
-                      >
-                        <option value="" disabled>
-                          일
-                        </option>
-                        {Array.from({ length: 31 }, (_, i) => i + 1).map((day) => (
-                          <option key={day} value={day}>
-                            {day}일
-                          </option>
-                        ))}
-                      </BirthSelect>
-                    </BirthDateRow>
-                  </BirthDateContainer>
-                </InputWrapper>
-
-                <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  <GenderContainer>
-                    <GenderTitle>성별</GenderTitle>
-                    <GenderButtonGroup>
-                      <GenderButton
-                        selected={gender === "남성"}
-                        onClick={() => setGender("남성")}
-                        type="button"
-                      >
-                        남성
-                      </GenderButton>
-                      <GenderButton
-                        selected={gender === "여성"}
-                        onClick={() => setGender("여성")}
-                        type="button"
-                      >
-                        여성
-                      </GenderButton>
-                    </GenderButtonGroup>
-                  </GenderContainer>
-                </motion.div>
-
-                <SubmitButton type="submit" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  회원가입
-                </SubmitButton>
-                {signupError && (
-                  <ErrorMessage
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    {signupError}
-                  </ErrorMessage>
-                )}
-              </LoginForm>
-              <IconCloseButton
-                onClick={closeSignupModal}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-                aria-label="회원가입 모달 닫기"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </IconCloseButton>
-            </ModalContent>
-          </ModalOverlay>
+          <SignupModal
+            email={signupEmail}
+            password={signupPassword}
+            passwordConfirm={signupPasswordConfirm}
+            characterName={characterName}
+            mbti={{ e: mbtiE, s: mbtiS, t: mbtiT, j: mbtiJ }}
+            mbtiResult={mbti}
+            birth={{ year: birthYear, month: birthMonth, day: birthDay }}
+            gender={gender}
+            error={signupError}
+            onEmailChange={(e) => setSignupEmail(e.target.value)}
+            onPasswordChange={(e) => setSignupPassword(e.target.value)}
+            onPasswordConfirmChange={(e) => setSignupPasswordConfirm(e.target.value)}
+            onCharacterNameChange={(e) => setCharacterName(e.target.value)}
+            onMbtiChange={handleMbtiChange}
+            onBirthChange={handleBirthChange}
+            onGenderChange={setGender}
+            onSubmit={handleSignup}
+            onClose={closeSignupModal}
+          />
+        )}
         )}
         {showLogin && (
           <LoginModal
