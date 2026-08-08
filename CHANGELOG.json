@@ -1,11 +1,32 @@
 {
   "metadata": {
-    "lastUpdated": "2026-08-08T13:27:17Z",
-    "currentVersion": "1.4.16",
+    "lastUpdated": "2026-08-08T13:56:13Z",
+    "currentVersion": "1.4.17",
     "projectType": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
-    "totalReleases": 31
+    "totalReleases": 32
   },
   "releases": [
+    {
+      "version": "1.4.17",
+      "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
+      "date": "2026-08-08",
+      "pr_number": 120,
+      "raw_summary": "Summary by CodeRabbit\n릴리스 노트\n\n\n버그 수정\n\n휴대폰에서 인트로 화면이 일부 잘려 보이던 문제 해결\n\n\n\n개선\n\n화면 구성 코드를 정리해 유지보수성 향상",
+      "parsed_changes": {
+        "버그_수정": {
+          "title": "버그 수정",
+          "items": [
+            "휴대폰에서 인트로 화면이 일부 잘려 보이던 문제 해결"
+          ]
+        },
+        "개선": {
+          "title": "개선",
+          "items": [
+            "화면 구성 코드를 정리해 유지보수성 향상"
+          ]
+        }
+      }
+    },
     {
       "version": "1.4.16",
       "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
