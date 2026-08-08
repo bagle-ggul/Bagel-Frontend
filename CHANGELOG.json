@@ -1,11 +1,26 @@
 {
   "metadata": {
-    "lastUpdated": "2026-08-08T12:45:23Z",
-    "currentVersion": "1.4.15",
+    "lastUpdated": "2026-08-08T13:27:17Z",
+    "currentVersion": "1.4.16",
     "projectType": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
-    "totalReleases": 30
+    "totalReleases": 31
   },
   "releases": [
+    {
+      "version": "1.4.16",
+      "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
+      "date": "2026-08-08",
+      "pr_number": 118,
+      "raw_summary": "Summary by CodeRabbit\n릴리스 노트\n\n개선\n\n스토리 분기 규칙을 데이터로 분리해 이야기 추가·수정이 쉬워졌습니다",
+      "parsed_changes": {
+        "개선": {
+          "title": "개선",
+          "items": [
+            "스토리 분기 규칙을 데이터로 분리해 이야기 추가·수정이 쉬워졌습니다"
+          ]
+        }
+      }
+    },
     {
       "version": "1.4.15",
       "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
