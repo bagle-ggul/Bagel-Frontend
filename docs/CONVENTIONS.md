@@ -20,6 +20,14 @@
 `const accessToken = localStorage.getItem("refreshToken")` 형태가 4곳 있다. 읽는 사람을
 속이는 이름이며 Phase 1에서 정리한다.
 
+## 이미지 자산
+
+- `public/img/`의 이미지는 **webp**로 둔다. PNG·JPG 원본을 함께 두지 않는다 (원본은 git 히스토리에 있다)
+- 변환 기준: 품질 80, 알파 채널 유지. 사진류(jpg)는 긴 변 2000px 이하로 줄인다
+- 참조 경로는 항상 `/img/이름.webp` 절대 경로로 쓴다 (`img/…` 상대 경로는 중첩 라우트에서 깨진다)
+- **예외**: `public/` 루트의 favicon·`apple-touch-icon`·PWA 아이콘(`android-chrome-*`)은
+  브라우저·매니페스트 규격상 PNG/ICO를 유지한다
+
 ## 파일 확장자
 
 - **JSX를 포함하면 `.jsx`**, 포함하지 않으면 `.js`

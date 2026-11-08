@@ -5,14 +5,14 @@ import {
   MbtiButtonGroup,
   MbtiCompactContainer,
   MbtiLabel,
-  MbtiResult,
+  MbtiResultBadge,
   MbtiRow,
   MbtiTitle,
-} from "../Home.styled";
+} from "./MbtiSelect.styled";
 
 /**
- * MBTI 4개 축. 원래는 같은 마크업이 4번 복사돼 있어 92줄이었다.
- * 축이 늘거나 라벨이 바뀌면 이 배열만 고치면 된다.
+ * MBTI 4개 축. 축이 늘거나 라벨이 바뀌면 이 배열만 고치면 된다.
+ * key는 utils/mbti.js의 MBTI_AXIS_KEYS와 같아야 한다.
  */
 const MBTI_AXES = [
   {
@@ -54,12 +54,15 @@ const MBTI_AXES = [
  *
  * @param {Object} value 축별 선택값 `{ e, s, t, j }`
  * @param {Function} onChange `(axisKey, selected) => void`
- * @param {string} [result] 완성된 MBTI 문자열. 있으면 하단에 표시
+ * @param {string} [result] 완성된 MBTI 문자열. 있으면 제목 옆에 배지로 표시
  */
 function MbtiSelect({ value, onChange, result }) {
   return (
-    <MbtiCompactContainer>
-      <MbtiTitle>성격 유형 (MBTI)</MbtiTitle>
+    <MbtiCompactContainer role="group" aria-label="성격 유형 MBTI 선택">
+      <MbtiTitle>
+        성격 유형 (MBTI)
+        {result && <MbtiResultBadge aria-live="polite">{result}</MbtiResultBadge>}
+      </MbtiTitle>
 
       {MBTI_AXES.map((axis) => (
         <MbtiRow key={axis.key}>
@@ -69,7 +72,8 @@ function MbtiSelect({ value, onChange, result }) {
               <MbtiButton
                 key={code}
                 type="button"
-                selected={value[axis.key] === code}
+                $isSelected={value[axis.key] === code}
+                aria-pressed={value[axis.key] === code}
                 onClick={() => onChange(axis.key, code)}
               >
                 {text}
@@ -78,12 +82,6 @@ function MbtiSelect({ value, onChange, result }) {
           </MbtiButtonGroup>
         </MbtiRow>
       ))}
-
-      {result && (
-        <MbtiResult>
-          <span>{result}</span>
-        </MbtiResult>
-      )}
     </MbtiCompactContainer>
   );
 }

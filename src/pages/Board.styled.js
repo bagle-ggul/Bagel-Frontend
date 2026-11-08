@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import styled from "styled-components";
 
 // 배경 이미지 URL
-export const backgroundImageUrl = "/img/bg_community_main.png";
+export const backgroundImageUrl = "/img/bg_community_main.webp";
 
 export const BoardWrapper = styled.div`
   background-image: url(${backgroundImageUrl});

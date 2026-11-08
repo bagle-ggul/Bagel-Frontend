@@ -4,6 +4,8 @@ import styled from "styled-components";
 
 import { componentStyles } from "../styles/theme";
 
+import { DetailRow, DetailTitle, DetailValue } from "./DetailRow.styled";
+
 const ProfileImage = styled(motion.img)`
   width: 150px;
   height: 150px;
@@ -62,50 +64,11 @@ const UserDetailContainer = styled.div`
   width: 100%;
 `;
 
-const DetailRow = styled(motion.div)`
-  ${({ theme }) =>
-    theme &&
-    Object.entries(theme)
-      .map(([key, value]) => `${key}: ${value};`)
-      .join(" ")}
-
-  @media (max-width: 480px) {
-    padding: 0.6rem 1rem;
-    flex-direction: column;
-    gap: 0.3rem;
-    text-align: center;
-
-    &:hover {
-      transform: translateY(-2px) scale(1.01);
-    }
-  }
-`;
-
-const DetailTitle = styled.span`
-  font-weight: 600;
-  color: rgba(200, 182, 226, 1);
-  font-size: 1rem;
-
-  @media (max-width: 480px) {
-    font-size: 0.9rem;
-  }
-`;
-
-const DetailValue = styled.span`
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: 500;
-  font-size: 1rem;
-
-  @media (max-width: 480px) {
-    font-size: 0.9rem;
-  }
-`;
-
 const ProfileContent = ({ profile, itemVariants, containerVariants }) => {
   return (
     <>
       <ProfileImage
-        src={"/img/mc_profile_main.png"}
+        src={"/img/mc_profile_main.webp"}
         alt="Profile"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -133,42 +96,9 @@ const ProfileContent = ({ profile, itemVariants, containerVariants }) => {
             variants={itemVariants}
             whileHover={{ scale: 1.02 }}
           >
-            <DetailTitle>이메일</DetailTitle>
-            <DetailValue>{profile?.email}</DetailValue>
+            <DetailTitle>MBTI</DetailTitle>
+            <DetailValue>{profile?.mbti}</DetailValue>
           </DetailRow>
-          <DetailRow
-            theme={componentStyles.detailRow}
-            variants={itemVariants}
-            whileHover={{ scale: 1.02 }}
-          >
-            <DetailTitle>생일</DetailTitle>
-            <DetailValue>{new Date(profile?.birthDate).toLocaleDateString()}</DetailValue>
-          </DetailRow>
-          <motion.div
-            variants={itemVariants}
-            style={{
-              display: "flex",
-              gap: "12px",
-              width: "100%",
-            }}
-          >
-            <DetailRow
-              theme={componentStyles.detailRow}
-              style={{ flex: 1 }}
-              whileHover={{ scale: 1.02 }}
-            >
-              <DetailTitle>성별</DetailTitle>
-              <DetailValue>{profile?.gender}</DetailValue>
-            </DetailRow>
-            <DetailRow
-              theme={componentStyles.detailRow}
-              style={{ flex: 1 }}
-              whileHover={{ scale: 1.02 }}
-            >
-              <DetailTitle>MBTI</DetailTitle>
-              <DetailValue>{profile?.mbti}</DetailValue>
-            </DetailRow>
-          </motion.div>
         </UserDetailContainer>
       </motion.div>
     </>

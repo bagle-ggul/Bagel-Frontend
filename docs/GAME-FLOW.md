@@ -7,7 +7,7 @@
 ## 전체 흐름
 
 ```
-Home(/) ─ 로그인 ─→ Intro(/intro) ─→ Main1(집)
+Home(/) ─ 닉네임·MBTI 입력 ─→ Intro(/intro) ─→ Main1(집)
                                         │
                                      Main2(카페)
                                         │
