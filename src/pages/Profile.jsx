@@ -84,7 +84,7 @@ const ProfileWrapper = styled(motion.div)`
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: url("/img/bg_community_main.png") no-repeat center center;
+  background: url("/img/bg_community_main.webp") no-repeat center center;
   background-size: cover;
   padding: 20px;
 `;

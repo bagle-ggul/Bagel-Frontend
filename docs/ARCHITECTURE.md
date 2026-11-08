@@ -47,7 +47,7 @@ src/
 | ---------- | ------------------------ | --------- |
 | `/`        | `src/pages/Home.jsx`     | ✗         |
 | `/help`    | `src/pages/Help.jsx`     | ✗         |
-| `/intro`   | `src/pages/Intro.jsx`    | ✗         |
+| `/intro`   | `src/pages/Intro.jsx`    | ✓         |
 | `/main1`   | `src/pages/Main1.jsx`    | ✓         |
 | `/main2`   | `src/pages/Main2.jsx`    | ✓         |
 | `/main3`   | `src/pages/Main3.jsx`    | ✓         |
@@ -62,18 +62,29 @@ src/
 | `/board`   | `src/pages/Board.jsx`    | ✓         |
 | `/profile` | `src/pages/Profile.jsx`  | ✓         |
 
-### 로그인·회원가입에는 라우트가 없다
+### 가입·로그인은 없다 (게스트 시작)
 
-**`/login`과 `/signup`은 존재하지 않는다.** 로그인과 회원가입은 `src/pages/Home.jsx` 내부의
-모달로 처리된다.
+**가입과 로그인은 없다.** `/login`·`/signup` 라우트도 존재하지 않는다. 홈에서 `게임 시작`
+(또는 `랭킹 보기`)을 누르면 시작 모달(`src/pages/Home/GuestStartModal.jsx`)이 열리고,
+**닉네임과 MBTI만** 입력하면 바로 시작한다.
 
-> 이 사실이 문서화되지 않아 여러 곳에서 오해를 낳았다. axios의 401 처리가 존재하지 않는
-> `/login`으로 리다이렉트했고, 기존 `claude.md`에도 두 페이지가 있다고 기술되어 있었다.
-> 둘 다 Phase 1에서 정정했다.
+| 단계        | 처리                                                                                                                          |
+| ----------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| 닉네임 추천 | 모달이 열릴 때 `GET /api/guest/nickname`으로 추천값을 채운다. 다시 뽑기·직접 입력 가능. 비워서 보내면 서버가 자동 생성        |
+| 시작        | `POST /api/guest/start` `{ characterName?, mbti }`. 응답의 `Authorization` 헤더(액세스 토큰)와 body의 `refreshToken`을 받는다 |
+| 저장        | `refreshToken`을 `auth.js`로 저장하고 목적지(`/intro` 또는 `/board`)로 이동한다                                               |
+
+폼 상태·검증은 `src/hooks/useGuestStartForm.js`, API 호출은 `src/utils/guestApi.js`가 맡는다.
+닉네임 규칙(2~12자, 한글·영문·숫자·밑줄)은 서버 `GuestStartForm`과 같아야 한다.
+
+**토큰이 곧 계정이다.** 저장소가 지워지면 같은 플레이어로 돌아올 수 없다. 홈의 `새로 시작`은
+토큰과 진행 기록을 지우고 새 플레이어로 다시 시작한다.
+
+> 이메일·비밀번호 가입/로그인이 있었으나 진입 장벽 때문에 이용자가 없어 제거했다.
 
 ### 인증 보호 방식
 
-`src/components/RequireAuth.jsx`가 보호 라우트 13개를 감싼다. `auth.js`의
+`src/components/RequireAuth.jsx`가 보호 라우트 14개를 감싼다. `auth.js`의
 `isAuthenticated()`로 토큰 존재 여부를 확인하며, 미인증 시 `/`로 이동한다.
 
 만료 검증은 하지 않는다. 만료된 토큰은 API 401 응답 시 axios 인터셉터가 정리한다.
@@ -116,7 +127,7 @@ import한다(전수 확인됨).
 - **요청**: `auth.js`의 `getAuthToken()`으로 토큰을 자동 주입한다. **호출부는 `Authorization`
   헤더를 붙이지 않는다.**
 - **응답**: **401·403**을 인증 실패로 보고 토큰을 정리한 뒤 `/`(홈)로 이동한다.
-  로그인은 별도 라우트가 아니라 홈의 모달이기 때문이다.
+  토큰은 홈의 시작 모달에서 발급되기 때문이다.
 
 > **403을 포함하는 이유**: 이 서버는 잘못된/만료된 토큰에 **403을 반환한다**(실측 확인).
 > 401만 처리하면 토큰이 만료돼도 자동 로그아웃이 되지 않아 사용자가 계속 실패하는 화면만

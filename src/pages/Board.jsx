@@ -6,7 +6,6 @@ import {
   Award,
   Star,
   StarFill,
-  Envelope,
   Calendar3,
   Controller,
   XLg,
@@ -29,6 +28,7 @@ import {
 import { useRankingData } from "../hooks/useRankingData";
 import TimeUtil from "../utils/TimeUtil";
 
+import BoardEmptyState from "./Board/BoardEmptyState";
 import {
   BoardWrapper,
   ButtonContainer,
@@ -82,6 +82,10 @@ function Board() {
     data.hasNextPage
   );
 
+  // 로딩과 에러가 끝났는데도 목록이 비어 있는 경우 (아직 아무도 기록을 남기지 않음)
+  const isRankingEmpty =
+    !data.isInitialLoading && !data.isLoading && !data.error && data.rankings.length === 0;
+
   // 랭킹 아이콘 렌더링 함수
   const getRankIcon = useCallback((rank) => {
     if (rank === 1) return <TrophyFill size={24} color="white" />;
@@ -116,7 +120,7 @@ function Board() {
       const rank = index + 1;
       return (
         <MemoizedTableRow
-          key={`${item.memberEmail}-${index}`}
+          key={item.gameResultId ?? index}
           item={item}
           rank={rank}
           onClick={openUserModal}
@@ -132,7 +136,7 @@ function Board() {
       const rank = index + 1;
       return (
         <MemoizedRankCard
-          key={`${item.memberEmail}-${index}`}
+          key={item.gameResultId ?? index}
           item={item}
           rank={rank}
           onClick={openUserModal}
@@ -148,37 +152,42 @@ function Board() {
       <Title>랭킹 보드</Title>
 
       <GlassContainer>
-        {/* 데스크톱 테이블 */}
-        <ScrollableTableContainer>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableHeader>순위</TableHeader>
-                <TableHeader>점수</TableHeader>
-                <TableHeader>캐릭터 이름</TableHeader>
-                <TableHeader>MBTI</TableHeader>
-                <TableHeader>이메일</TableHeader>
-                <TableHeader>날짜</TableHeader>
-              </TableRow>
-            </TableHead>
-            <tbody>{data.rankings.map(renderDesktopRow)}</tbody>
-          </Table>
+        {isRankingEmpty && <BoardEmptyState />}
 
-          {/* 데스크톱 로딩 트리거 */}
-          <LoadMoreTrigger ref={loadMoreRef} />
-        </ScrollableTableContainer>
+        {/* 데스크톱 테이블 */}
+        {!isRankingEmpty && (
+          <ScrollableTableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableHeader>순위</TableHeader>
+                  <TableHeader>점수</TableHeader>
+                  <TableHeader>닉네임</TableHeader>
+                  <TableHeader>MBTI</TableHeader>
+                  <TableHeader>날짜</TableHeader>
+                </TableRow>
+              </TableHead>
+              <tbody>{data.rankings.map(renderDesktopRow)}</tbody>
+            </Table>
+
+            {/* 데스크톱 로딩 트리거 */}
+            <LoadMoreTrigger ref={loadMoreRef} />
+          </ScrollableTableContainer>
+        )}
 
         {/* 모바일 카드 리스트 */}
-        <MobileCardContainer
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        >
-          {data.rankings.map(renderMobileCard)}
+        {!isRankingEmpty && (
+          <MobileCardContainer
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
+            {data.rankings.map(renderMobileCard)}
 
-          {/* 모바일 로딩 트리거 */}
-          <LoadMoreTrigger ref={loadMoreRef} />
-        </MobileCardContainer>
+            {/* 모바일 로딩 트리거 */}
+            <LoadMoreTrigger ref={loadMoreRef} />
+          </MobileCardContainer>
+        )}
 
         {/* 로딩 상태 표시 */}
         {(isLoadingMore || data.isLoading) && (
@@ -284,12 +293,6 @@ const MemoizedTableRow = React.memo(({ item, rank, onClick, getRankIcon }) => (
       <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "5px" }}>
         <PersonCircle size={16} />
         {item.mbti}
-      </div>
-    </TableCell>
-    <TableCell>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "5px" }}>
-        <Envelope size={14} />
-        {item.memberEmail}
       </div>
     </TableCell>
     <TableCell>
@@ -490,12 +493,6 @@ function UserDetailModal({ show, user, onClose, getRankIcon }) {
               <PersonCircle size={20} />
               <ModalDetailLabel>MBTI</ModalDetailLabel>
               <ModalDetailValue>{user.mbti}</ModalDetailValue>
-            </ModalDetailRow>
-
-            <ModalDetailRow>
-              <Envelope size={20} />
-              <ModalDetailLabel>이메일</ModalDetailLabel>
-              <ModalDetailValue>{user.memberEmail}</ModalDetailValue>
             </ModalDetailRow>
 
             <ModalDetailRow>

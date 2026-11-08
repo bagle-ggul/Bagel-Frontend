@@ -4,7 +4,9 @@ import styled from "styled-components";
 
 import { componentStyles } from "../styles/theme";
 
-const StatsTitle = styled.h3`
+import { DetailRow, DetailTitle, DetailValue } from "./DetailRow.styled";
+
+const StatsTitle = styled(motion.h3)`
   font-size: 1.8rem;
   font-weight: 700;
   color: rgba(200, 182, 226, 1);
@@ -27,45 +29,6 @@ const StatsContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
-`;
-
-const DetailRow = styled(motion.div)`
-  ${({ theme }) =>
-    theme &&
-    Object.entries(theme)
-      .map(([key, value]) => `${key}: ${value};`)
-      .join(" ")}
-
-  @media (max-width: 480px) {
-    padding: 0.6rem 1rem;
-    flex-direction: column;
-    gap: 0.3rem;
-    text-align: center;
-
-    &:hover {
-      transform: translateY(-2px) scale(1.01);
-    }
-  }
-`;
-
-const DetailTitle = styled.span`
-  font-weight: 600;
-  color: rgba(200, 182, 226, 1);
-  font-size: 1rem;
-
-  @media (max-width: 480px) {
-    font-size: 0.9rem;
-  }
-`;
-
-const DetailValue = styled.span`
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: 500;
-  font-size: 1rem;
-
-  @media (max-width: 480px) {
-    font-size: 0.9rem;
-  }
 `;
 
 const StatsContent = ({ profile, itemVariants, containerVariants }) => {

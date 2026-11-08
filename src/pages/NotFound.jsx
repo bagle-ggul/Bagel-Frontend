@@ -11,7 +11,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url("/img/bg_beach_main.png") no-repeat center center;
+  background: url("/img/bg_beach_main.webp") no-repeat center center;
   background-size: cover;
   padding: 2rem;
 `;

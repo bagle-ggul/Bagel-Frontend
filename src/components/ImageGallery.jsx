@@ -5,15 +5,15 @@ import styled from "styled-components";
 
 // 프로젝트 이미지 목록 (01부터 순서대로)
 const PROJECT_IMAGES = [
-  "/img/bagel_team_01.jpg",
-  "/img/bagel_team_02.jpg",
-  "/img/bagel_team_03.jpg",
-  "/img/bagel_team_04.jpg",
-  "/img/bagel_team_05.jpg",
-  "/img/bagel_team_06.jpg",
-  "/img/bagel_team_07.jpg",
-  "/img/bagel_team_08.jpg",
-  "/img/bagel_team_09.jpg",
+  "/img/bagel_team_01.webp",
+  "/img/bagel_team_02.webp",
+  "/img/bagel_team_03.webp",
+  "/img/bagel_team_04.webp",
+  "/img/bagel_team_05.webp",
+  "/img/bagel_team_06.webp",
+  "/img/bagel_team_07.webp",
+  "/img/bagel_team_08.webp",
+  "/img/bagel_team_09.webp",
 ];
 
 // 갤러리 모달 오버레이
@@ -410,7 +410,9 @@ function ImageGallery({ isOpen, onClose }) {
     if (selectedImage) {
       const link = document.createElement("a");
       link.href = selectedImage;
-      link.download = `bagel-project-${Date.now()}.jpg`;
+      // 실제 파일 형식과 확장자를 맞춘다 (webp를 .jpg로 저장하면 일부 뷰어가 열지 못함)
+      const imageExtension = selectedImage.split(".").pop();
+      link.download = `bagel-project-${Date.now()}.${imageExtension}`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);

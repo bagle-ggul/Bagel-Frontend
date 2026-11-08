@@ -5,32 +5,36 @@
 
 ## 진행 현황
 
-| 항목                       | 상태                                             |
-| -------------------------- | ------------------------------------------------ |
-| `src/pages/Home.jsx` 분해  | 2190줄 → **913줄** (styled 분리 + 모달 3종 분리) |
-| `src/pages/Board.jsx` 분해 | 1045줄 → **531줄** (styled 분리)                 |
-| `unknown prop` 콘솔 경고   | **해소** (transient prop 적용)                   |
-| 인라인 스타일              | 36곳 → **34곳**                                  |
-| 토큰 2계층 재설계          | 미착수                                           |
-| 3해상도 전수 캡처          | 미착수                                           |
+| 항목                       | 상태                                                            |
+| -------------------------- | --------------------------------------------------------------- |
+| `src/pages/Home.jsx` 분해  | 2190줄 → **219줄** (styled 분리 + 메뉴 추출 + 가입·로그인 제거) |
+| `src/pages/Board.jsx` 분해 | 1045줄 → **528줄** (styled 분리)                                |
+| `unknown prop` 콘솔 경고   | **해소** (transient prop 적용, 전 화면 순회 실측)               |
+| 인라인 스타일              | 36곳 → **14곳**                                                 |
+| 토큰 2계층 재설계          | 미착수                                                          |
+| 3해상도 전수 캡처          | 미착수                                                          |
 
 ### 분해된 구조
 
 ```
 src/pages/
-├── Home.jsx            # 화면 조립 + 폼 상태 (913줄)
-├── Home.styled.js      # 페이지 레벨 styled 정의
+├── Home.jsx                 # 화면 조립 (219줄)
+├── Home.styled.js           # 페이지 레벨 styled 정의
 ├── Home/
-│   ├── CreditsModal.jsx
-│   ├── LoginModal.jsx
-│   ├── LoginRequiredModal.jsx
-│   └── PasswordField.jsx   # 로그인·회원가입이 공유
-├── Board.jsx           # 랭킹 화면 (531줄)
+│   ├── HomeMenu.jsx         # 제목·아이콘·주요 버튼 (데스크톱/모바일 공용)
+│   ├── GuestStartModal.jsx  # 닉네임·MBTI 시작 모달 (+ .styled.js)
+│   ├── MbtiSelect.jsx       # MBTI 4축 선택 (+ .styled.js)
+│   └── CreditsModal.jsx
+├── Board.jsx                # 랭킹 화면 (528줄)
+├── Board/BoardEmptyState.jsx
 └── Board.styled.js
+
+src/components/DetailRow.styled.js   # 프로필·통계 카드가 공유하는 "라벨 - 값" 줄
+src/styles/styleObject.js            # JS 스타일 객체 > CSS 문자열 (camelCase 변환)
 ```
 
-`Home.jsx`에 남은 가장 큰 덩어리는 **회원가입 모달**이다. MBTI 4개, 생년월일 3개, 폼 4개 등
-상태 13개가 얽혀 있어, 하위 선택 컴포넌트(MBTI·생년월일·성별)부터 나누는 접근이 필요하다.
+새로 만든 스타일(`GuestStartModal.styled.js`, `MbtiSelect.styled.js`, `BoardEmptyState.jsx`)은
+`semantic.js` 의미 토큰만 쓴다. 기존 `Home.styled.js`·`Board.styled.js`는 아직 하드코딩 값이 남아 있다.
 
 ## 현재 상태
 
@@ -193,7 +197,7 @@ dev 서버를 띄우고 전 화면을 **3해상도**에서 캡처해 문제 목�
 | 태블릿   | 768 × 1024 |
 | 모바일   | 390 × 844  |
 
-대상: 홈(로그인 전/후), 로그인 모달, 회원가입 모달, 크레딧 모달, 이미지 갤러리, 인트로,
+대상: 홈(진입 전/후), 게임 시작 모달, 크레딧 모달, 이미지 갤러리, 인트로,
 Main1~5, 결과, 엔딩 4종, 게임오버, 랭킹, 프로필, 404.
 
 ### 2. 토큰 2계층 재설계
