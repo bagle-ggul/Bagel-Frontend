@@ -46,7 +46,7 @@ const SceneWrap = styled.div`
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-  background: url("/img/bg_hidden_main.png") no-repeat center center;
+  background: url("/img/bg_hidden_main.webp") no-repeat center center;
   background-size: cover;
   padding: 20px;
   text-align: center;
@@ -63,7 +63,7 @@ const DialogueBox = styled.div`
   margin-bottom: 20px;
   text-align: center;
   z-index: 10;
-  opacity: ${(props) => (props.visible ? 1 : 0)};
+  opacity: ${(props) => (props.$isVisible ? 1 : 0)};
   transition: opacity 1s ease-in-out; /* 1초 동안 점차 나타나게 */
 `;
 
@@ -127,9 +127,9 @@ function Hidden() {
   return (
     <SceneWrap>
       <StyledCharacterBackground>
-        <img src="/img/her_hidden_main.png" alt="여자" />
+        <img src="/img/her_hidden_main.webp" alt="여자" />
       </StyledCharacterBackground>
-      <DialogueBox visible={isVisible}>
+      <DialogueBox $isVisible={isVisible}>
         <CharacterName>{character}</CharacterName>
         <DialogueText>{text}</DialogueText>
       </DialogueBox>

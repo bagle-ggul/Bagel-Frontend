@@ -31,7 +31,7 @@ const CenteredDiv = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url("img/bg_cafe_main.png");
+  background-image: url("/img/bg_cafe_main.webp");
   background-size: cover;
   background-repeat: no-repeat;
   width: 100%;
@@ -76,7 +76,7 @@ function Result() {
 
   return (
     <CenteredDiv>
-      <img src="img/mc_result_main.png" alt="레몬에이드" />
+      <img src="/img/mc_result_main.webp" alt="레몬에이드" />
       <CenteredButton onClick={handleClick}>결과확인</CenteredButton>
     </CenteredDiv>
   );

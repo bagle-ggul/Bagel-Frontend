@@ -16,6 +16,7 @@ const BaseCard = styled(motion.div)`
   color: white;
   max-width: 500px;
   width: 100%;
+  justify-self: center; /* 그리드 칸 안에서 가운데 정렬 (max-width 때문에 왼쪽으로 쏠림 방지) */
   cursor: pointer;
 
   &:hover {

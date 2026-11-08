@@ -128,8 +128,8 @@ const DialogueText = styled.p`
     line-height: 1.6;
   }
 
-  ${({ isTyping }) =>
-    isTyping &&
+  ${({ $isTyping }) =>
+    $isTyping &&
     css`
       overflow: hidden;
       white-space: nowrap;
@@ -311,7 +311,7 @@ const DialogueSystem = ({
         </NamePlate>
 
         {/* 대화 텍스트 */}
-        <DialogueText isTyping={isTyping}>{currentScene.text}</DialogueText>
+        <DialogueText $isTyping={isTyping}>{currentScene.text}</DialogueText>
 
         {/* 진행바 */}
         {autoProgress && !isPaused && <ProgressBar style={{ width: `${progress}%` }} />}

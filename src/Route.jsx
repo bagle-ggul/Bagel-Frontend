@@ -53,7 +53,8 @@ const router = createBrowserRouter([
     children: [
       { path: "", element: <Home /> },
       { path: "help", element: <Help /> },
-      { path: "intro", element: <Intro /> },
+      // 프로필(/api/my-page)을 읽는 화면이라 토큰 없이 직접 진입하면 빈 화면이 된다
+      { path: "intro", element: authOnly(<Intro />) },
 
       // 게임 스테이지 — 직전 스테이지까지 진행해야 진입할 수 있다
       { path: "main1", element: stageGuarded(<Main1 />, 1) },

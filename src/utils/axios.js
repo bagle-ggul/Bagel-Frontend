@@ -41,7 +41,7 @@ axiosInstance.interceptors.request.use(
  */
 const AUTH_FAILURE_STATUS = [401, 403];
 
-// 로그인은 별도 라우트가 아니라 홈의 모달로 처리되므로 "/"가 목적지다.
+// 토큰 발급은 홈의 시작 모달에서 이뤄지므로 "/"가 목적지다.
 // (이전에는 존재하지 않는 "/login"으로 보내고 있었다)
 axiosInstance.interceptors.response.use(
   (response) => response,
