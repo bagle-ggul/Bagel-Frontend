@@ -3,9 +3,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+import { Button } from "../../components/ui";
 import { ROUTES } from "../../constants/routes";
-import { action, text } from "../../styles/semantic";
-import { radius, spacing, transition } from "../../styles/tokens";
+import { text } from "../../styles/semantic";
+import { spacing } from "../../styles/tokens";
 
 const EmptyStateWrapper = styled(motion.div)`
   display: flex;
@@ -29,20 +30,8 @@ const EmptyStateHint = styled.p`
   color: ${text.secondary};
 `;
 
-const PlayLink = styled(Link)`
+const PlayButton = styled(Button)`
   margin-top: ${spacing.sm};
-  padding: 0.8rem ${spacing.xl};
-  background: ${action.primary};
-  border-radius: ${radius.md};
-  color: ${text.onAction};
-  font-weight: 600;
-  text-decoration: none;
-  transition: ${transition.fast};
-
-  &:hover {
-    background: ${action.primaryHover};
-    transform: translateY(-2px);
-  }
 `;
 
 /**
@@ -54,7 +43,9 @@ function BoardEmptyState() {
     <EmptyStateWrapper initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}>
       <EmptyStateTitle>아직 기록이 없어요</EmptyStateTitle>
       <EmptyStateHint>첫 번째 랭커가 되어보세요!</EmptyStateHint>
-      <PlayLink to={ROUTES.INTRO}>게임 하러 가기</PlayLink>
+      <PlayButton as={Link} to={ROUTES.INTRO} size="lg">
+        게임 하러 가기
+      </PlayButton>
     </EmptyStateWrapper>
   );
 }

@@ -1,8 +1,9 @@
+import { motion } from "framer-motion";
 import styled, { css, keyframes } from "styled-components";
 
-import { action, border, surface, text } from "../../styles/semantic";
-import { radius, shadow, spacing, transition } from "../../styles/tokens";
-import { LoginForm, ModalContent, ModalTitle, SubmitButton } from "../Home.styled";
+import { Button } from "../../components/ui";
+import { action, border, feedback, focus, surface, text } from "../../styles/semantic";
+import { blur, radius, shadow, spacing, transition } from "../../styles/tokens";
 
 const spin = keyframes`
   to {
@@ -10,33 +11,76 @@ const spin = keyframes`
   }
 `;
 
-// 입력 몇 개뿐인 폼이라 공용 모달보다 좁고 낮게 쓴다 (낮은 화면에서도 제출 버튼이 보이도록)
-export const GuestModalContent = styled(ModalContent)`
-  max-width: 460px;
-  max-height: 92vh;
-  padding: ${spacing.xl} ${spacing.xl};
-
-  @media (max-width: 480px) {
-    padding: ${spacing.lg} ${spacing.lg};
-  }
-`;
-
-export const GuestModalTitle = styled(ModalTitle)`
-  margin-bottom: ${spacing.sm};
-  font-size: 2rem;
-
-  @media (max-width: 480px) {
-    font-size: 1.6rem;
-  }
-`;
-
-export const GuestForm = styled(LoginForm)`
+export const GuestForm = styled.form`
+  display: flex;
+  flex-direction: column;
   gap: ${spacing.md};
+  width: 100%;
+`;
+
+export const InputWrapper = styled(motion.div)`
+  width: 100%;
+`;
+
+export const GlassInput = styled.input`
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background: ${surface.raised};
+  backdrop-filter: ${blur.subtle};
+  border: 1px solid ${border.default};
+  border-radius: ${radius.md};
+  color: ${text.primary};
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: ${transition.fast};
+
+  &::placeholder {
+    color: ${text.secondary};
+  }
+
+  &:focus {
+    outline: none;
+    border-color: ${border.accentStrong};
+    box-shadow: 0 0 0 3px ${focus.ring};
+    background: ${surface.raisedHover};
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.9rem 1.2rem;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+  }
+`;
+
+export const ErrorMessage = styled(motion.div)`
+  width: 100%;
+  padding: 0.8rem 1rem;
+  background: ${feedback.errorSurface};
+  backdrop-filter: ${blur.subtle};
+  border: 1px solid ${feedback.errorBorder};
+  border-radius: ${radius.sm};
+  color: ${feedback.errorText};
+  font-size: 0.9rem;
+  text-align: center;
+  margin-top: ${spacing.sm};
+
+  @media (max-width: 768px) {
+    padding: 0.7rem 0.8rem;
+    font-size: 0.85rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.6rem 0.7rem;
+    font-size: 0.8rem;
+  }
 `;
 
 export const GuestModalDescription = styled.p`
   margin: 0 0 ${spacing.lg};
-  text-align: center;
   font-size: 0.95rem;
   line-height: 1.5;
   color: ${text.secondary};
@@ -107,11 +151,11 @@ export const VisuallyHiddenLabel = styled.label`
   border: 0;
 `;
 
-export const StartButton = styled(SubmitButton)`
+// 제출 중에는 대기 커서
+export const StartButton = styled(Button)`
+  width: 100%;
+
   &:disabled {
     cursor: wait;
-    opacity: 0.6;
-    transform: none;
-    box-shadow: none;
   }
 `;

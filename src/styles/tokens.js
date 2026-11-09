@@ -12,27 +12,38 @@ export const palette = {
   lilac90: "rgba(200, 182, 226, 0.9)",
   lilac100: "rgba(200, 182, 226, 1)",
   lilac50: "rgba(200, 182, 226, 0.5)",
+  lilac40: "rgba(200, 182, 226, 0.4)",
   lilac30: "rgba(200, 182, 226, 0.3)",
   lilac20: "rgba(200, 182, 226, 0.2)",
+  lilac10: "rgba(200, 182, 226, 0.1)",
 
   // 중립 — 흰색 계열 (어두운 배경 위에서 쓴다)
   white: "#ffffff",
+  white90: "rgba(255, 255, 255, 0.9)",
+  white80: "rgba(255, 255, 255, 0.8)",
   white70: "rgba(255, 255, 255, 0.7)",
   white60: "rgba(255, 255, 255, 0.6)",
   white30: "rgba(255, 255, 255, 0.3)",
+  white20: "rgba(255, 255, 255, 0.2)",
   white15: "rgba(255, 255, 255, 0.15)",
   white10: "rgba(255, 255, 255, 0.1)",
+  white05: "rgba(255, 255, 255, 0.05)",
 
   // 중립 — 검정 계열
+  black95: "rgba(0, 0, 0, 0.95)",
+  black80: "rgba(0, 0, 0, 0.8)",
+  black70: "rgba(0, 0, 0, 0.7)",
   black60: "rgba(0, 0, 0, 0.6)",
   black50: "rgba(0, 0, 0, 0.5)",
   black40: "rgba(0, 0, 0, 0.4)",
   black30: "rgba(0, 0, 0, 0.3)",
+  black20: "rgba(0, 0, 0, 0.2)",
 
   // 상태
   red90: "rgba(220, 53, 69, 0.9)",
   red30: "rgba(220, 53, 69, 0.3)",
   red10: "rgba(220, 53, 69, 0.1)",
+  red400: "#ff6b6b",
   amber90: "rgba(255, 193, 7, 0.9)",
   green90: "rgba(40, 167, 69, 0.9)",
 
@@ -40,6 +51,9 @@ export const palette = {
   gold: "#FFD700",
   silver: "#C0C0C0",
   bronze: "#CD7F32",
+  goldGlow: "rgba(255, 215, 0, 0.6)",
+  silverGlow: "rgba(192, 192, 192, 0.5)",
+  bronzeGlow: "rgba(205, 127, 50, 0.5)",
 };
 
 /** 간격 스케일 */
@@ -67,6 +81,10 @@ export const shadow = {
   button: "0 4px 12px rgba(0, 0, 0, 0.3)",
   buttonHover: "0 6px 20px rgba(200, 182, 226, 0.3)",
   subtle: "0 4px 15px rgba(200, 182, 226, 0.15)",
+  text: "0 4px 12px rgba(0, 0, 0, 0.5)", // 제목 글자 그림자
+  avatar: "0 8px 20px rgba(0, 0, 0, 0.3)", // 프로필 원형 이미지
+  avatarHover: "0 12px 30px rgba(200, 182, 226, 0.2)",
+  viewerImage: "0 20px 60px rgba(0, 0, 0, 0.7)", // 갤러리 확대 이미지
 };
 
 /** 흐림 강도 (글라스모피즘) */

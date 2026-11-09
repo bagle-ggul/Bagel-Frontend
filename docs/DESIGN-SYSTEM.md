@@ -1,79 +1,82 @@
 # 디자인 시스템
 
-> **상태: 진행 중.** 대형 화면 분해는 상당 부분 진행됐고, 토큰 2계층 재설계는 아직이다.
-> 확정 전까지 이 문서는 "현황 기록"이며 지켜야 할 규격이 아니다.
+> **상태: 적용 완료 (게임 UI·엔딩 제외).** 토큰 2계층과 공용 컴포넌트가 홈·랭킹·갤러리·프로필·
+> 게임오버·404에 적용됐다. 게임 플레이 UI와 엔딩 화면은 #127·#128에서 새로 만들 때 함께 정리한다.
 
 ## 진행 현황
 
-| 항목                       | 상태                                                            |
-| -------------------------- | --------------------------------------------------------------- |
-| `src/pages/Home.jsx` 분해  | 2190줄 → **219줄** (styled 분리 + 메뉴 추출 + 가입·로그인 제거) |
-| `src/pages/Board.jsx` 분해 | 1045줄 → **528줄** (styled 분리)                                |
-| `unknown prop` 콘솔 경고   | **해소** (transient prop 적용, 전 화면 순회 실측)               |
-| 인라인 스타일              | 36곳 → **14곳**                                                 |
-| 토큰 2계층 재설계          | 미착수                                                          |
-| 3해상도 전수 캡처          | 미착수                                                          |
+| 항목                     | 상태                                                                                        |
+| ------------------------ | ------------------------------------------------------------------------------------------- |
+| 토큰 2계층               | **적용** (`tokens.js` 원시 + `semantic.js` 의미, `theme.js`는 호환 레이어)                  |
+| 하드코딩 색상            | 293곳(22개 파일) → **57곳(12개 파일)**. 남은 곳은 게임 UI·엔딩뿐                            |
+| 공용 컴포넌트            | `Button`·`Card`·`Modal`·`NameTag` (`src/components/ui/`). `GlassCard`는 제거                |
+| 대형 파일 분해           | `Home.styled.js` 810 → 223줄, `Board.styled.js` 552 → 254줄, `ImageGallery.jsx` 616 → 4파일 |
+| `unknown prop` 콘솔 경고 | **해소** (transient prop 적용)                                                              |
+| 3해상도 전수 캡처        | **완료** (이관된 화면 기준, 아래 참조)                                                      |
+| 규칙 테스트              | `designTokens.rules.test.js` + `designTokens.baseline.json` (줄이기만 허용)                 |
 
-### 분해된 구조
+### 남은 하드코딩 (57곳)
+
+| 구분        | 파일                                                         | 처리            |
+| ----------- | ------------------------------------------------------------ | --------------- |
+| 게임 플레이 | `src/components/GameUI/*`, `DialogueSystem.jsx`, `Intro.jsx` | #127에서 재구성 |
+| 엔딩·결과   | `Happy`, `Middle`, `Sad`, `Hidden`, `Result`                 | #128에서 재구성 |
+| 진입점      | `src/index.jsx` (`background-color: #000`)                   | 토큰으로 교체   |
+
+### 디렉토리 구조
 
 ```
+src/styles/
+├── tokens.js                # 원시 토큰
+├── semantic.js              # 의미 토큰
+├── theme.js                 # 호환 레이어
+└── styleObject.js           # JS 스타일 객체 > CSS 문자열
+
+src/components/ui/           # 공용 컴포넌트
+├── Button.jsx · Card.jsx · Modal.jsx · NameTag.jsx
+└── index.js
+
 src/pages/
-├── Home.jsx                 # 화면 조립 (219줄)
-├── Home.styled.js           # 페이지 레벨 styled 정의
-├── Home/
-│   ├── HomeMenu.jsx         # 제목·아이콘·주요 버튼 (데스크톱/모바일 공용)
-│   ├── GuestStartModal.jsx  # 닉네임·MBTI 시작 모달 (+ .styled.js)
-│   ├── MbtiSelect.jsx       # MBTI 4축 선택 (+ .styled.js)
-│   └── CreditsModal.jsx
-├── Board.jsx                # 랭킹 화면 (528줄)
-├── Board/BoardEmptyState.jsx
-└── Board.styled.js
+├── Home.jsx · Home.styled.js
+├── Home/                    # HomeMenu(+.styled), GuestStartModal, MbtiSelect, CreditsModal(+.styled)
+├── Board.jsx · Board.styled.js
+└── Board/                   # BoardList.styled, BoardEmptyState, UserDetailModal(+.styled)
 
-src/components/DetailRow.styled.js   # 프로필·통계 카드가 공유하는 "라벨 - 값" 줄
-src/styles/styleObject.js            # JS 스타일 객체 > CSS 문자열 (camelCase 변환)
+src/components/
+├── ImageGallery.jsx · ImageGallery.styled.js    # 목록
+├── ImageViewer.jsx · ImageViewer.styled.js      # 뷰어
+└── DetailRow.styled.js                           # 프로필·통계 카드가 공유하는 "라벨 - 값" 줄
 ```
 
-새로 만든 스타일(`GuestStartModal.styled.js`, `MbtiSelect.styled.js`, `BoardEmptyState.jsx`)은
-`semantic.js` 의미 토큰만 쓴다. 기존 `Home.styled.js`·`Board.styled.js`는 아직 하드코딩 값이 남아 있다.
+## 공용 컴포넌트
 
-## 현재 상태
+`src/components/ui/`에서 import한다. 화면은 토큰과 이 컴포넌트만 조합한다.
 
-### 토큰은 있지만 거의 쓰이지 않는다
+| 컴포넌트  | 용도                                                                          | 주요 props                                                        |
+| --------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| `Button`  | 모든 버튼·버튼형 링크. 포커스 링 포함                                         | `variant`(primary, secondary, ghost), `size`(md, lg), `as={Link}` |
+| `Card`    | 글라스 표면 카드                                                              | `padding`(md, lg)                                                 |
+| `Modal`   | 오버레이 모달. dialog role·aria, Esc·바깥 클릭·닫기 버튼, 열릴 때 포커스 이동 | `title`, `onClose`, `children`, `maxWidth`                        |
+| `NameTag` | 이름표 (#127 대사창에서 사용 예정)                                            | `name`                                                            |
 
-`src/styles/theme.js`(194줄)에 색상·간격·z-index 토큰이 정의되어 있다. 그러나 **`src/` 전체에서
-4개 파일만 이 파일을 import한다.** 나머지는 `rgba(...)` 값을 컴포넌트에 직접 쓴다.
+## 규칙 테스트
 
-같은 연보라색이 `theme.js`의 `colors.primary`로도, 여러 컴포넌트의 하드코딩된
-`rgba(200, 182, 226, 0.9)`로도 존재한다. **한 곳을 바꿔도 다른 곳은 그대로 남는다.**
+문서만으로는 규칙이 지켜지지 않아 **줄이기만 허용하는(ratchet) 테스트**로 강제한다.
 
-### 인라인 스타일과 styled-components 혼용
-
-인라인 `style={{}}`이 36곳에 있다. 대부분 정적 값이라 styled-components로 옮길 수 있다.
-
-| 파일                                       | 인라인 스타일 수 |
-| ------------------------------------------ | ---------------- |
-| `src/pages/Profile.jsx`                    | 16               |
-| `src/pages/Board.jsx`                      | 5                |
-| `src/components/ProfileContent.jsx`        | 4                |
-| `src/components/GameUI/TypewriterText.jsx` | 4                |
-| `src/pages/Home.jsx`                       | 2                |
-| 그 외 5개 파일                             | 각 1             |
-
-### 토큰에 의미가 없다
-
-현재 `theme.js`의 토큰은 **값의 나열**이다. `colors.primary`가 무엇인지는 알 수 있지만,
-"이 색을 언제 써야 하는가"는 정의되어 있지 않다. 그래서 새 컴포넌트를 만들 때 참조할
-기준이 없고, 결국 눈대중으로 `rgba`를 적게 된다.
+- `src/designTokens.rules.test.js`가 `src/` 파일의 하드코딩 색상(`rgba(`, `#hex` 등)을 센다.
+- `src/designTokens.baseline.json`에 파일별 허용 개수를 기록한다. 현재 합계 57.
+- **새 파일은 0이어야 한다.** 기준치에 없는 파일에 하드코딩이 있으면 실패한다.
+- 기존 파일이 늘면 실패한다. **줄었으면 같은 커밋에서 JSON도 낮춘다** (안 낮추면 실패).
 
 ## 토큰 체계 (2계층)
 
 컴포넌트는 **의미 토큰만** 참조한다. 원시 토큰을 직접 쓰지 않는다.
 
-| 파일                     | 역할                                                                                                           |
-| ------------------------ | -------------------------------------------------------------------------------------------------------------- |
-| `src/styles/tokens.js`   | **원시 토큰**. 팔레트·간격·반경·그림자·흐림·전환. 값 그 자체이며 "언제 쓰는지"는 말하지 않는다                 |
-| `src/styles/semantic.js` | **의미 토큰**. `surface`·`text`·`border`·`action`·`feedback`·`rank`·`glass`·`layer`. 이름이 용도를 말한다      |
-| `src/styles/theme.js`    | 호환 레이어. 기존 컴포넌트가 쓰던 이름(`colors`, `glassmorphism` 등)을 유지하되 값은 전부 의미 토큰을 참조한다 |
+| 파일                     | 역할                                                                                                                                   |
+| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/styles/tokens.js`   | **원시 토큰**. 팔레트·간격·반경·그림자·흐림·전환. 값 그 자체이며 "언제 쓰는지"는 말하지 않는다                                         |
+| `src/styles/semantic.js` | **의미 토큰**. `surface`·`text`·`border`·`action`·`feedback`·`rank`·`glass`·`overlay`·`focus`·`rankGlow`·`layer`. 이름이 용도를 말한다 |
+| `src/styles/theme.js`    | 호환 레이어. 기존 컴포넌트가 쓰던 이름(`colors`, `glassmorphism` 등)을 유지하되 값은 전부 의미 토큰을 참조한다                         |
 
 ### 왜 나눴나
 
@@ -92,7 +95,7 @@ import { colors, glassmorphism, media } from "../styles/theme";
 
 색을 바꾸려면 `tokens.js`의 팔레트 한 곳만 고치면 의미 토큰과 호환 레이어를 타고 전체에 반영된다.
 
-## 기존 토큰 (호환 레이어)
+## 호환 레이어 토큰
 
 `src/styles/theme.js` 기준이다.
 
@@ -103,7 +106,7 @@ import { colors, glassmorphism, media } from "../styles/theme";
 | `colors.primary`                    | `rgba(200, 182, 226, 0.9)`        | 연보라 — 메인 |
 | `colors.glassBg`                    | `rgba(0, 0, 0, 0.4)`              | 글라스 배경   |
 | `colors.glassBorder`                | `rgba(255, 255, 255, 0.15)`       | 글라스 테두리 |
-| `colors.textPrimary`                | `white`                           | 본문          |
+| `colors.textPrimary`                | `#ffffff`                         | 본문          |
 | `colors.textSecondary`              | `rgba(255, 255, 255, 0.7)`        | 보조 텍스트   |
 | `colors.textTertiary`               | `rgba(255, 255, 255, 0.6)`        | 부가 텍스트   |
 | `colors.error`                      | `rgba(220, 53, 69, 0.9)`          | 에러          |
@@ -144,6 +147,8 @@ border-radius: 20px
 | `zIndex.sticky`       | `100`  |
 | `zIndex.scrollButton` | `100`  |
 | `zIndex.modal`        | `1000` |
+| `zIndex.galleryModal` | `1500` |
+| `zIndex.imageViewer`  | `2000` |
 | `zIndex.progressBar`  | `1000` |
 
 ### 애니메이션
@@ -153,11 +158,16 @@ border-radius: 20px
 
 ## 3해상도 점검 결과
 
-| 해상도            | 결과                  |
-| ----------------- | --------------------- |
-| 모바일 390×844    | ✅ 뷰포트 초과 요소 0 |
-| 태블릿 768×1024   | ✅ 뷰포트 초과 요소 0 |
-| 데스크톱 1440×900 | ✅ 뷰포트 초과 요소 0 |
+토큰 이관 후 홈(진입 전/후)·시작 모달·크레딧·갤러리와 이미지 뷰어·랭킹(목록·빈 상태·상세 모달)·
+프로필·게임오버·404를 3해상도에서 캡처했다. 잘림·겹침 없음, 브라우저 콘솔 경고·에러 0건.
+
+| 해상도            | 결과              |
+| ----------------- | ----------------- |
+| 모바일 390×844    | ✅ 잘림·겹침 없음 |
+| 태블릿 768×1024   | ✅ 잘림·겹침 없음 |
+| 데스크톱 1280×800 | ✅ 잘림·겹침 없음 |
+
+게임 플레이·엔딩 화면은 #127·#128에서 재구성한 뒤 같은 방식으로 점검한다.
 
 ### 점검 방법
 
@@ -183,50 +193,3 @@ border-radius: 20px
 부모에 `width: 100%`, 자식에 `max-width: 100%`를 넣어 해소했다.
 `background-size: contain`이라 이미지 자체는 잘리지 않았기 때문에 **눈으로는 알아채기
 어려운 결함**이었다.
-
-## Phase 3 계획
-
-### 1. 전수 점검 (선행)
-
-dev 서버를 띄우고 전 화면을 **3해상도**에서 캡처해 문제 목록을 만든다. **캡처 없이 추측으로
-고치지 않는다.**
-
-| 구분     | 해상도     |
-| -------- | ---------- |
-| 데스크톱 | 1440 × 900 |
-| 태블릿   | 768 × 1024 |
-| 모바일   | 390 × 844  |
-
-대상: 홈(진입 전/후), 게임 시작 모달, 크레딧 모달, 이미지 갤러리, 인트로,
-Main1~5, 결과, 엔딩 4종, 게임오버, 랭킹, 프로필, 404.
-
-### 2. 토큰 2계층 재설계
-
-- **원시 토큰** — 팔레트 원색, 간격 스케일, 폰트 크기 스케일, 반경, 그림자
-- **의미 토큰** — `surface.glass`, `text.primary`, `border.subtle`, `action.primary` 등
-  **용도 기반 이름**
-
-컴포넌트는 **의미 토큰만** 참조한다. 그래야 "이 색을 언제 쓰는가"가 이름에 담긴다.
-
-### 3. 적용
-
-- 하드코딩된 `rgba` 값을 의미 토큰 참조로 교체
-- 인라인 스타일 36곳을 styled-components/토큰으로 흡수 (동적 계산값은 예외 —
-  [CONVENTIONS.md](CONVENTIONS.md) 참조)
-- 브레이크포인트 하드코딩을 `media` 헬퍼로 교체
-
-### 4. 대형 화면 분해
-
-토큰 적용과 함께 진행한다. 파일이 크면 스타일 정리 자체가 불가능하다.
-
-| 파일                              | 현재 줄 수 |
-| --------------------------------- | ---------- |
-| `src/pages/Home.jsx`              | 2193       |
-| `src/pages/Board.jsx`             | 1043       |
-| `src/components/ImageGallery.jsx` | 611        |
-| `src/pages/Profile.jsx`           | 513        |
-
-### 5. 검증
-
-수정 후 동일 해상도에서 재캡처해 before/after를 비교한다. 3해상도 전 화면에서 레이아웃
-깨짐 0이 완료 기준이다.

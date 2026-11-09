@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+import { Button } from "../components/ui";
 import { ROUTES } from "../constants/routes";
 import { colors, glassmorphism, media } from "../styles/theme";
 
@@ -60,21 +61,8 @@ const Description = styled.p`
   color: ${colors.textSecondary};
 `;
 
-const HomeLink = styled(Link)`
+const HomeLink = styled(Button)`
   margin-top: 0.5rem;
-  padding: 0.75rem 2rem;
-  border-radius: 12px;
-  background: ${colors.primary};
-  border: 1px solid ${colors.glassBorder};
-  color: ${colors.textPrimary};
-  font-size: 1rem;
-  text-decoration: none;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background: rgba(200, 182, 226, 1);
-    transform: translateY(-2px);
-  }
 `;
 
 /**
@@ -92,7 +80,9 @@ function NotFound() {
           <br />
           주소가 바뀌었거나 잘못 입력하셨을 수 있어요.
         </Description>
-        <HomeLink to={ROUTES.HOME}>처음으로 돌아가기</HomeLink>
+        <HomeLink as={Link} to={ROUTES.HOME}>
+          처음으로 돌아가기
+        </HomeLink>
       </Panel>
     </Wrapper>
   );
