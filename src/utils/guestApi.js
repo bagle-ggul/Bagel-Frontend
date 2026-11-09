@@ -10,10 +10,8 @@ export const fetchSuggestedNickname = async () => {
 };
 
 /**
- * 가입·로그인 없이 닉네임(선택)과 MBTI로 플레이 시작
+ * 게스트 시작 요청: 닉네임(선택)과 MBTI > { id, characterName, mbti, refreshToken }
  * 닉네임이 비어 있으면 필드를 보내지 않아 서버가 자동 생성
- * @param {{characterName?: string, mbti: string}} startRequest
- * @returns {Promise<{id: number, characterName: string, mbti: string, refreshToken: string}>}
  */
 export const startAsGuest = async ({ characterName, mbti }) => {
   const trimmedCharacterName = (characterName ?? "").trim();

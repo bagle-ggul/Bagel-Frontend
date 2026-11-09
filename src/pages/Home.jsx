@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import ImageGallery from "../components/ImageGallery";
+import { CHANGELOG_URL } from "../constants/externalLinks";
 import { ROUTES } from "../constants/routes";
 import { APP_VERSION } from "../constants/version";
 import { resetProgress } from "../game/progress";
@@ -37,8 +38,8 @@ const characterImageTransition = { duration: 1.5, delay: 0.3, ease: "easeOut" };
 function Home() {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(checkAuthenticated);
-  const [showCredits, setShowCredits] = useState(false);
-  const [showImageGallery, setShowImageGallery] = useState(false);
+  const [isCreditsModalOpen, setIsCreditsModalOpen] = useState(false);
+  const [isImageGalleryOpen, setIsImageGalleryOpen] = useState(false);
   const [characterImage, setCharacterImage] = useState(DESKTOP_CHARACTER_IMAGE);
 
   // 시작 모달 요청: null이면 닫힘, 있으면 시작 후 이동할 경로와 안내 문구
@@ -150,7 +151,7 @@ function Home() {
       isAuthenticated={isAuthenticated}
       isMuted={isMuted}
       onToggleMusic={toggleMusic}
-      onOpenGallery={() => setShowImageGallery(true)}
+      onOpenGallery={() => setIsImageGalleryOpen(true)}
       onStartClick={openGuestStartForGame}
       onRankingClick={openGuestStartForRanking}
     />
@@ -181,7 +182,9 @@ function Home() {
       </MobileContainer>
 
       <BottomRightButtonGroup>
-        <BottomCreditsButton onClick={() => setShowCredits(true)}>크레딧</BottomCreditsButton>
+        <BottomCreditsButton onClick={() => setIsCreditsModalOpen(true)}>
+          크레딧
+        </BottomCreditsButton>
         {isAuthenticated && (
           <LogoutButton onClick={handleResetClick}>
             {isResetPending ? "진행 기록이 지워져요. 한 번 더 누르세요" : "새로 시작"}
@@ -190,7 +193,7 @@ function Home() {
       </BottomRightButtonGroup>
 
       <AnimatePresence>
-        {showCredits && <CreditsModal onClose={() => setShowCredits(false)} />}
+        {isCreditsModalOpen && <CreditsModal onClose={() => setIsCreditsModalOpen(false)} />}
         {guestStartRequest && (
           <GuestStartModal
             description={guestStartRequest.description}
@@ -201,11 +204,11 @@ function Home() {
       </AnimatePresence>
 
       {/* 이미지 갤러리 모달 */}
-      <ImageGallery isOpen={showImageGallery} onClose={() => setShowImageGallery(false)} />
+      <ImageGallery isOpen={isImageGalleryOpen} onClose={() => setIsImageGalleryOpen(false)} />
 
       {/* 왼쪽 아래 버전 정보 */}
       <BottomVersionInfo
-        href="https://github.com/bagle-ggul/Bagel-Frontend/blob/main/CHANGELOG.md"
+        href={CHANGELOG_URL}
         target="_blank"
         rel="noopener noreferrer"
         title="Changelog 확인"

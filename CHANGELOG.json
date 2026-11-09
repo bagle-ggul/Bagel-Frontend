@@ -1,11 +1,27 @@
 {
   "metadata": {
-    "lastUpdated": "2026-11-09T04:42:45Z",
-    "currentVersion": "1.4.19",
+    "lastUpdated": "2026-11-09T05:01:13Z",
+    "currentVersion": "1.4.20",
     "projectType": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
-    "totalReleases": 34
+    "totalReleases": 35
   },
   "releases": [
+    {
+      "version": "1.4.20",
+      "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
+      "date": "2026-11-09",
+      "pr_number": 136,
+      "raw_summary": "Summary by CodeRabbit\n릴리스 노트\n\n개선\n\n배경음악 용량을 크게 줄여 게임 진입과 장면 전환이 더 빨라졌어요\n내부 코드 이름과 설명을 정리했어요",
+      "parsed_changes": {
+        "개선": {
+          "title": "개선",
+          "items": [
+            "배경음악 용량을 크게 줄여 게임 진입과 장면 전환이 더 빨라졌어요",
+            "내부 코드 이름과 설명을 정리했어요"
+          ]
+        }
+      }
+    },
     {
       "version": "1.4.19",
       "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",

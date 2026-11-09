@@ -4,9 +4,8 @@ export const NICKNAME_MAX_LENGTH = 12;
 const NICKNAME_ALLOWED_PATTERN = /^[가-힣a-zA-Z0-9_]+$/;
 
 /**
- * 닉네임 입력값 검증: 비어 있으면 통과(서버가 자동 생성), 아니면 길이 > 문자 규칙 순
- * @param {string} nickname
- * @returns {string} 오류 메시지. 통과하면 빈 문자열
+ * 닉네임 검증: 비어 있으면 통과(서버가 자동 생성), 아니면 길이 > 문자 규칙 순
+ * 통과하면 빈 문자열, 아니면 오류 메시지
  */
 export const getNicknameError = (nickname) => {
   const trimmedNickname = (nickname ?? "").trim();

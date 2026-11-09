@@ -9,12 +9,8 @@ const toDeclarations = (styles) =>
     .join(" ");
 
 /**
- * 스타일 객체 > CSS 문자열 (camelCase 속성은 kebab-case로, 중첩 hover는 &:hover 블록으로)
- * theme.js의 componentStyles처럼 JS 객체로 둔 스타일을 styled-components에 주입할 때 쓴다.
- * camelCase를 그대로 내보내면 브라우저가 무효 CSS로 버려 레이아웃이 통째로 사라진다.
- *
- * @param {Object} [styleObject]
- * @returns {string}
+ * 스타일 객체 > CSS 문자열 (camelCase는 kebab-case로, 중첩 hover는 &:hover 블록으로)
+ * camelCase를 그대로 내보내면 브라우저가 무효 CSS로 버려 레이아웃이 사라짐
  */
 export const toCss = (styleObject) => {
   if (!styleObject) {

@@ -2,10 +2,8 @@ import fs from "fs";
 import path from "path";
 
 /**
- * 이미지 자산 규칙 테스트 (소스 스캔)
- * - public/img는 webp만 둔다 (PNG·JPG가 돌아오면 배포 용량이 다시 커진다)
- * - 코드는 /img/이름.webp 절대 경로만 쓴다 (img/… 상대 경로는 중첩 라우트에서 깨진다)
- * - 참조한 파일은 실제로 존재해야 한다
+ * 이미지 자산 규칙: public/img는 webp만, 코드는 /img/이름.webp 절대 경로만, 참조 파일은 실제 존재
+ * 소스 스캔 방식 (PNG·JPG 재유입과 상대 경로, 깨진 경로를 막음)
  */
 
 const SOURCE_DIRECTORY = path.join(__dirname);

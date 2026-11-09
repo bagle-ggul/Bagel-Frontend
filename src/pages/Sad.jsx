@@ -180,7 +180,7 @@ function Sad() {
         <CharacterName>{character}</CharacterName>
         <DialogueText>{text}</DialogueText>
       </DialogueBox>
-      <audio ref={audioRef} src="/audio/sad.mp3" loop />
+      <audio ref={audioRef} src="/audio/sad.m4a" loop />
     </SceneWrap>
   );
 }

@@ -34,12 +34,8 @@ const CloseIcon = () => (
 );
 
 /**
- * 게임 시작 모달: 가입·로그인 없이 닉네임과 MBTI만 받는다.
- * 닉네임은 서버 추천값이 미리 채워지고, 그대로 쓰거나 다시 뽑거나 직접 고칠 수 있다.
- *
- * @param {string} [description] 모달을 연 이유 안내 (예: 랭킹 보기 전)
- * @param {Function} onStarted 시작 성공 후 호출 (응답 본문 전달)
- * @param {Function} onClose
+ * 게임 시작 모달: 가입·로그인 없이 닉네임과 MBTI만 입력
+ * 닉네임은 서버 추천값이 채워지고 다시 뽑기·직접 입력 가능 (description은 모달을 연 이유 안내)
  */
 function GuestStartModal({ description, onStarted, onClose }) {
   const {
