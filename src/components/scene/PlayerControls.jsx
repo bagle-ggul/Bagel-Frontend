@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import styled from "styled-components";
 
+import { PLAY_MODE, PLAY_MODES } from "../../game/playMode";
 import { layer, surface } from "../../styles/semantic";
 import { spacing } from "../../styles/tokens";
 import { Button } from "../ui";
@@ -22,15 +23,19 @@ const Container = styled.div`
  * 조작 버튼: 자동, 건너뛰기, 지난 대사 (같은 모드를 다시 누르면 manual)
  */
 function PlayerControls({ mode, onModeChange, canSkip, showSkip = true, onOpenLog }) {
-  const toggleMode = (targetMode) => onModeChange(mode === targetMode ? "manual" : targetMode);
+  // 누른 버튼 포커스 해제 (버튼 위 Space는 진행 키로 인정되지 않음)
+  const toggleMode = (mouseEvent, targetMode) => {
+    mouseEvent.currentTarget.blur();
+    onModeChange(mode === targetMode ? PLAY_MODE.MANUAL : targetMode);
+  };
 
   return (
     <Container onClick={(mouseEvent) => mouseEvent.stopPropagation()}>
       <Button
         type="button"
         variant="ghost"
-        aria-pressed={mode === "auto"}
-        onClick={() => toggleMode("auto")}
+        aria-pressed={mode === PLAY_MODE.AUTO}
+        onClick={(mouseEvent) => toggleMode(mouseEvent, PLAY_MODE.AUTO)}
       >
         자동
       </Button>
@@ -38,9 +43,9 @@ function PlayerControls({ mode, onModeChange, canSkip, showSkip = true, onOpenLo
         <Button
           type="button"
           variant="ghost"
-          aria-pressed={mode === "skip"}
-          disabled={!canSkip && mode !== "skip"}
-          onClick={() => toggleMode("skip")}
+          aria-pressed={mode === PLAY_MODE.SKIP}
+          disabled={!canSkip && mode !== PLAY_MODE.SKIP}
+          onClick={(mouseEvent) => toggleMode(mouseEvent, PLAY_MODE.SKIP)}
         >
           건너뛰기
         </Button>
@@ -53,7 +58,7 @@ function PlayerControls({ mode, onModeChange, canSkip, showSkip = true, onOpenLo
 }
 
 PlayerControls.propTypes = {
-  mode: PropTypes.oneOf(["manual", "auto", "skip"]).isRequired,
+  mode: PropTypes.oneOf(PLAY_MODES).isRequired,
   onModeChange: PropTypes.func.isRequired,
   canSkip: PropTypes.bool.isRequired,
   showSkip: PropTypes.bool,

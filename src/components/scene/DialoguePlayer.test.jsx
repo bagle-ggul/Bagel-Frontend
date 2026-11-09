@@ -169,6 +169,31 @@ describe("DialoguePlayer", () => {
     expect(screen.getByText("우산 있어?")).toBeInTheDocument();
   });
 
+  it("로그가 열려 있으면 자동 진행이 멈춘다", () => {
+    renderPlayer();
+    fireEvent.click(screen.getByRole("button", { name: "자동" }));
+    fireEvent.click(screen.getByRole("button", { name: "지난 대사" }));
+    for (let count = 0; count < MAXIMUM_TICK_COUNT; count += 1) tick(TYPING_SPEED_MS);
+    tick(AUTO_DELAY_MS * 3);
+    expect(screen.queryByText("우산 있어?")).toBeNull();
+    expect(screen.getByRole("button", { name: "자동" })).toHaveAttribute("aria-pressed", "true");
+  });
+
+  it("자동을 켰다 끈 뒤 Space로 다음 줄로 간다", () => {
+    renderPlayer();
+    const autoButton = screen.getByRole("button", { name: "자동" });
+    autoButton.focus();
+    fireEvent.click(autoButton);
+    autoButton.focus();
+    fireEvent.click(autoButton);
+    expect(autoButton).toHaveAttribute("aria-pressed", "false");
+    expect(autoButton).not.toHaveFocus();
+
+    // 포커스가 버튼을 떠났으므로 Space는 화면 진행 (완성 > 다음 줄 > 완성)
+    ["완성", "다음 줄", "완성"].forEach(() => pressKey(" "));
+    expect(screen.getByText("우산 있어?")).toBeInTheDocument();
+  });
+
   it("처음 보는 줄에서는 건너뛰기가 비활성이다", () => {
     renderPlayer();
     expect(screen.getByRole("button", { name: "건너뛰기" })).toBeDisabled();

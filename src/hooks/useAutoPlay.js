@@ -1,5 +1,7 @@
 import { useEffect, useRef } from "react";
 
+import { PLAY_MODE } from "../game/playMode";
+
 // 자동 모드: 타이핑이 끝난 뒤 다음 줄까지 대기 (ms)
 export const AUTO_DELAY_MS = 1600;
 // 건너뛰기 모드: 본 줄을 넘기는 간격 (ms)
@@ -23,13 +25,13 @@ export function useAutoPlay({
   callbacksRef.current = { onComplete, onAdvance, onStop };
 
   useEffect(() => {
-    if (mode === "auto") {
+    if (mode === PLAY_MODE.AUTO) {
       if (lineKey === null || lineKey === undefined || !isTypingDone) return undefined;
       const timerId = setTimeout(() => callbacksRef.current.onAdvance(), AUTO_DELAY_MS);
       return () => clearTimeout(timerId);
     }
 
-    if (mode === "skip") {
+    if (mode === PLAY_MODE.SKIP) {
       if (lineKey === null || lineKey === undefined || !isSeen) {
         callbacksRef.current.onStop();
         return undefined;

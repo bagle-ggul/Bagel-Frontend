@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useCallback, useMemo, useState } from "react";
 
 import { PHASE } from "../../game/dialogueFlow";
+import { PLAY_MODE, PLAY_MODES } from "../../game/playMode";
 import { useAdvanceKeys } from "../../hooks/useAdvanceKeys";
 import { useAutoPlay } from "../../hooks/useAutoPlay";
 import { useDialogueFlow } from "../../hooks/useDialogueFlow";
@@ -17,8 +18,6 @@ import DialogueLogModal from "./DialogueLogModal";
 import { BottomArea, ChoiceArea, EndSlotArea, Screen, SpriteArea } from "./DialoguePlayer.styled";
 import PlayerControls from "./PlayerControls";
 import SceneBackdrop from "./SceneBackdrop";
-
-const MODE = { MANUAL: "manual", AUTO: "auto", SKIP: "skip" };
 
 // 장면 전체 그림 주소 (배경 + 장면·줄 sprite, 중복 제거)
 const collectImageUrls = (background, script) => {
@@ -42,7 +41,7 @@ function DialoguePlayer({
   scopeId,
   background,
   ambient = "none",
-  initialMode = MODE.MANUAL,
+  initialMode = PLAY_MODE.MANUAL,
   initialSceneIndex = 0,
   allowSkip = true,
   playerName,
@@ -68,7 +67,7 @@ function DialoguePlayer({
   // 직접 탭·Space 진행 (로그 열림·선택지·종료는 무시, 자동·건너뛰기는 manual로 해제)
   const requestAdvance = useCallback(() => {
     if (isLogOpen || isChoicePhase || isEnded) return;
-    if (mode !== MODE.MANUAL) setMode(MODE.MANUAL);
+    if (mode !== PLAY_MODE.MANUAL) setMode(PLAY_MODE.MANUAL);
     if (typing.isDone) advance();
     else typing.complete();
   }, [isLogOpen, isChoicePhase, isEnded, mode, typing, advance]);
@@ -80,14 +79,15 @@ function DialoguePlayer({
     choiceCount: choices.length,
   });
 
+  // 로그 열림 중에는 자동·건너뛰기 일시 정지 (표시 모드는 유지)
   useAutoPlay({
-    mode,
+    mode: isLogOpen ? PLAY_MODE.MANUAL : mode,
     lineKey,
     isTypingDone: typing.isDone,
     isSeen: isLineSeenBefore,
     onComplete: typing.complete,
     onAdvance: advance,
-    onStop: () => setMode(MODE.MANUAL),
+    onStop: () => setMode(PLAY_MODE.MANUAL),
   });
 
   // 대사창 내용: 진행 중 줄 > 선택지 단계면 마지막 본 대사 (전체 표시, 진행 표시 없음)
@@ -154,7 +154,7 @@ DialoguePlayer.propTypes = {
   scopeId: PropTypes.string.isRequired,
   background: PropTypes.string.isRequired,
   ambient: PropTypes.oneOf(["rain", "dust", "petals", "sparkle", "none"]),
-  initialMode: PropTypes.oneOf([MODE.MANUAL, MODE.AUTO, MODE.SKIP]),
+  initialMode: PropTypes.oneOf(PLAY_MODES),
   initialSceneIndex: PropTypes.number,
   allowSkip: PropTypes.bool,
   playerName: PropTypes.string.isRequired,

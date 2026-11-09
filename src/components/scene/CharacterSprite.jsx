@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import PropTypes from "prop-types";
 import styled, { css } from "styled-components";
 
+import { media } from "../../styles/theme";
 import { radius, shadow } from "../../styles/tokens";
 
 const ENTRANCE_SECONDS = 0.5;
@@ -30,7 +31,7 @@ const Sprite = styled.img`
       box-shadow: ${shadow.card};
     `}
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     height: min(38dvh, 16rem);
   }
 `;

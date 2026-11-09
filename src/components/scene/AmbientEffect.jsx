@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import styled, { css, keyframes } from "styled-components";
 
 import { effect } from "../../styles/semantic";
+import { media } from "../../styles/theme";
 
 import { buildParticles, PARTICLE_COUNT_BY_KIND } from "./ambientParticles";
 
@@ -85,7 +86,7 @@ const Particle = styled.span`
   ${({ $kind }) => particleStyleByKind[$kind]}
 
   /* 모바일은 절반만 (짝수 번째) */
-  @media (max-width: 480px) {
+  ${media.mobile} {
     &:nth-child(odd) {
       display: none;
     }

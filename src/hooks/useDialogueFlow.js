@@ -27,9 +27,11 @@ export function useDialogueFlow({
   onChoose,
   onSceneDone,
 }) {
-  const [flow, setFlow] = useState(() =>
-    createFlowState(script[initialSceneIndex], initialSceneIndex)
-  );
+  // 범위 밖 시작 장면은 0번으로
+  const [flow, setFlow] = useState(() => {
+    const startSceneIndex = script[initialSceneIndex] ? initialSceneIndex : 0;
+    return createFlowState(script[startSceneIndex], startSceneIndex);
+  });
   const [log, setLog] = useState([]);
 
   // 같은 틱 연속 입력(빠른 두 번 탭)도 최신 상태 기준으로 처리
@@ -72,15 +74,11 @@ export function useDialogueFlow({
     appendLog({ speakerId, speakerName, text });
   }, [lineKey, appendLog]);
 
-  // 장면 종료 통지 1회 > 반환값대로 이동
-  const isSceneDoneHandledRef = useRef(false);
+  // 장면 종료 통지: flow 객체당 1회 (연속으로 빈 장면이 끝나도 다시 통지) > 반환값대로 이동
+  const handledFlowRef = useRef(null);
   useEffect(() => {
-    if (flow.phase !== PHASE.SCENE_DONE) {
-      isSceneDoneHandledRef.current = false;
-      return;
-    }
-    if (isSceneDoneHandledRef.current) return;
-    isSceneDoneHandledRef.current = true;
+    if (flow.phase !== PHASE.SCENE_DONE || handledFlowRef.current === flow) return;
+    handledFlowRef.current = flow;
 
     const { sceneIndex, choiceIndex } = flow;
     const choice = choiceIndex === null ? null : script[sceneIndex].choices[choiceIndex];

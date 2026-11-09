@@ -1,4 +1,5 @@
 import { act, renderHook } from "@testing-library/react";
+import { StrictMode } from "react";
 
 import { PHASE } from "../game/dialogueFlow";
 import { clearSeenLines, isLineSeen } from "../game/seenLines";
@@ -25,7 +26,10 @@ const script = [
   },
 ];
 
-const setup = (overrides = {}) => {
+// 줄·선택지 없는 장면 (시작하자마자 sceneDone)
+const emptyScene = { sprite: null, lines: [], choices: [] };
+
+const setup = (overrides = {}, renderOptions = {}) => {
   const callbacks = { onChoose: jest.fn(), onSceneDone: jest.fn() };
   const initialProps = {
     script,
@@ -34,7 +38,10 @@ const setup = (overrides = {}) => {
     ...callbacks,
     ...overrides,
   };
-  const view = renderHook((props) => useDialogueFlow(props), { initialProps });
+  const view = renderHook((props) => useDialogueFlow(props), {
+    initialProps,
+    ...renderOptions,
+  });
   return { ...callbacks, ...view };
 };
 
@@ -163,5 +170,28 @@ describe("useDialogueFlow", () => {
     setup().unmount();
     const { result } = setup({ scopeId: "stage2" });
     expect(result.current.isLineSeenBefore).toBe(false);
+  });
+
+  it("다음 장면도 곧바로 끝나면 onSceneDone을 다시 부른다", () => {
+    const onSceneDone = jest.fn(({ sceneIndex }) =>
+      sceneIndex === 0 ? { type: "scene", index: 1 } : { type: "end" }
+    );
+    const { result } = setup({ script: [emptyScene, emptyScene], onSceneDone });
+
+    expect(onSceneDone).toHaveBeenCalledTimes(2);
+    expect(onSceneDone.mock.calls.map(([payload]) => payload.sceneIndex)).toEqual([0, 1]);
+    expect(result.current.flow.phase).toBe(PHASE.ENDED);
+  });
+
+  it("StrictMode에서도 onSceneDone을 한 번만 부른다", () => {
+    const onSceneDone = jest.fn();
+    setup({ script: [emptyScene], onSceneDone }, { wrapper: StrictMode });
+    expect(onSceneDone).toHaveBeenCalledTimes(1);
+  });
+
+  it("범위 밖 initialSceneIndex는 0번 장면에서 시작한다", () => {
+    const { result } = setup({ initialSceneIndex: 7 });
+    expect(result.current.flow.sceneIndex).toBe(0);
+    expect(result.current.line.text).toBe("바람이 분다.");
   });
 });

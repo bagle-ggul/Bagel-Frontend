@@ -1,10 +1,11 @@
 import styled from "styled-components";
 
 import { layer } from "../../styles/semantic";
+import { media } from "../../styles/theme";
 import { spacing } from "../../styles/tokens";
 
-// 모바일 여백 전환 기준 (CharacterSprite와 동일)
-const MOBILE_BREAKPOINT = "480px";
+// 대사창·선택지 최대 너비
+const DIALOGUE_MAX_WIDTH = "800px";
 
 // 화면 전체 탭 영역: 세로 flex (캐릭터 > 선택지 > 대사창 순으로 아래 정렬)
 export const Screen = styled.div`
@@ -31,11 +32,11 @@ export const BottomArea = styled.div`
   flex-direction: column;
   gap: ${spacing.md};
   width: 100%;
-  max-width: 800px;
+  max-width: ${DIALOGUE_MAX_WIDTH};
   margin: 0 auto;
   padding: ${spacing.lg};
 
-  @media (max-width: ${MOBILE_BREAKPOINT}) {
+  ${media.mobile} {
     padding: ${spacing.sm};
   }
 `;
