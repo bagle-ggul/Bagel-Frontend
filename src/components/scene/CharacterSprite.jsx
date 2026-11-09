@@ -30,7 +30,7 @@ const Breath = styled(motion.div)`
 const Sprite = styled.img`
   display: block;
   height: min(84dvh, 56rem);
-  max-width: none;
+  max-width: 100vw; // 가로로 넓은 그림은 화면 폭에 맞춰 줄임 (아래 정렬 유지 > 얼굴 잘림 방지)
   object-fit: contain;
   object-position: bottom;
 
