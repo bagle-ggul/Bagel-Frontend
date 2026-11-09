@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 
-import { characterNameAtom, scoreAtom } from "../atom/atom";
+import { scoreAtom } from "../atom/atom";
 import { DialoguePlayer } from "../components/scene";
 import { Button } from "../components/ui";
 import { ROUTES } from "../constants/routes";
@@ -20,8 +20,7 @@ import { getPreloadImages, getStageConfig } from "../game/stages";
 import { resolveStageExit } from "../game/storyFlow";
 import { useBackgroundMusic } from "../hooks/useBackgroundMusic";
 import { useImagePreload } from "../hooks/useImagePreload";
-import axios from "../utils/axios";
-import { logger } from "../utils/logger";
+import { usePlayerName } from "../hooks/usePlayerName";
 
 // 다음 장소로 버튼 등장 페이드 (초)
 const END_BUTTON_FADE_SECONDS = 0.5;
@@ -35,7 +34,7 @@ function StagePage({ stage }) {
   const navigate = useNavigate();
   const audioRef = useBackgroundMusic();
   const [score, setScore] = useRecoilState(scoreAtom);
-  const [characterName, setCharacterName] = useRecoilState(characterNameAtom);
+  const characterName = usePlayerName();
 
   // 분기 없는 마지막 스테이지 방어값
   const fallbackExit = config.defaultExit ?? ROUTES.RESULT;
@@ -51,21 +50,6 @@ function StagePage({ stage }) {
   useEffect(() => {
     markStageReached(stage);
   }, [stage]);
-
-  // 닉네임 보충 (atom은 새로고침 시 비므로 스테이지마다 확인)
-  useEffect(() => {
-    if (characterName) return;
-    const fetchCharacterName = async () => {
-      try {
-        const response = await axios.get("/api/my-page");
-        if (response.data?.characterName) setCharacterName(response.data.characterName);
-      } catch (error) {
-        // 이름 기본값(주인공)으로 진행 가능
-        logger.error("캐릭터 정보 조회 실패:", error);
-      }
-    };
-    fetchCharacterName();
-  }, [characterName, setCharacterName]);
 
   const script = useMemo(
     () => toStageScript(config.storyData, { playerName: characterName }),

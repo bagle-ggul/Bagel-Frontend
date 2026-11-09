@@ -1,9 +1,9 @@
 import { useEffect, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
-import { characterNameAtom, scoreAtom } from "../atom/atom";
+import { scoreAtom } from "../atom/atom";
 import { DialoguePlayer } from "../components/scene";
 import { Button } from "../components/ui";
 import { ROUTES } from "../constants/routes";
@@ -14,10 +14,9 @@ import { resetProgress, resetRunProgress } from "../game/progress";
 import { getPreloadImages } from "../game/stages";
 import { useBackgroundMusic } from "../hooks/useBackgroundMusic";
 import { useImagePreload } from "../hooks/useImagePreload";
+import { usePlayerName } from "../hooks/usePlayerName";
 import { layer } from "../styles/semantic";
 import { spacing } from "../styles/tokens";
-import axios from "../utils/axios";
-import { logger } from "../utils/logger";
 
 const INTRO_BACKGROUND = "/img/bg_intro_main.webp";
 const INTRO_MUSIC = "/audio/intro.m4a";
@@ -43,20 +42,8 @@ function Intro() {
   const isRegression = Boolean(useLocation().state?.isRegression);
   const audioRef = useBackgroundMusic();
   const setScore = useSetRecoilState(scoreAtom);
-  const [characterName, setCharacterName] = useRecoilState(characterNameAtom);
-
-  // 닉네임 조회 (실패해도 기본 이름으로 진행)
-  useEffect(() => {
-    const fetchCharacterName = async () => {
-      try {
-        const response = await axios.get("/api/my-page");
-        if (response.data?.characterName) setCharacterName(response.data.characterName);
-      } catch (error) {
-        logger.error("프로필 조회 실패:", error);
-      }
-    };
-    fetchCharacterName();
-  }, [setCharacterName]);
+  // 게임 시작 시점이라 프로필 닉네임으로 1회 갱신
+  const characterName = usePlayerName({ shouldRefresh: true });
 
   // 인트로 재생 중 1스테이지 그림·화면 코드 미리 받기 (진입 시 빈 화면 방지)
   const firstStageImages = useMemo(() => getPreloadImages(FIRST_STAGE), []);

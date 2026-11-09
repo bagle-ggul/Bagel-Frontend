@@ -1,9 +1,7 @@
 import PropTypes from "prop-types";
 import { useCallback, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { useRecoilValue } from "recoil";
 
-import { characterNameAtom } from "../atom/atom";
 import { DialoguePlayer } from "../components/scene";
 import { Button } from "../components/ui";
 import { ROUTES } from "../constants/routes";
@@ -11,6 +9,7 @@ import endingsJson from "../data/stories/endings.json";
 import { ENDING_IDS, toEndingScript } from "../game/ending";
 import { getChoiceHistory, getRegressionCount } from "../game/progress";
 import { useBackgroundMusic } from "../hooks/useBackgroundMusic";
+import { usePlayerName } from "../hooks/usePlayerName";
 import { motionCurve, motionSeconds } from "../styles/tokens";
 
 import {
@@ -37,7 +36,7 @@ const finishEndingScene = () => ({ type: "end" });
 function EndingPage({ endingId }) {
   const ending = endingsJson[endingId];
   const audioRef = useBackgroundMusic();
-  const characterName = useRecoilValue(characterNameAtom);
+  const characterName = usePlayerName();
 
   const script = useMemo(
     () => toEndingScript(ending, { playerName: characterName }),
