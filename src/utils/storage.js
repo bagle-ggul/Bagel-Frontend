@@ -8,6 +8,8 @@
 
 export const STORAGE_KEYS = {
   MUSIC_MUTED: "musicMuted",
+  // 대사 자동 진행 선호 ("true"면 다음 스테이지·장면도 자동으로 시작)
+  AUTO_PLAY_PREFERRED: "autoPlayPreferred",
 };
 
 /**
@@ -26,10 +28,36 @@ export const setMusicMuted = (muted) => {
   localStorage.setItem(STORAGE_KEYS.MUSIC_MUTED, String(muted));
 };
 
+/**
+ * 대사 자동 진행 선호 여부 조회 (저장소 막힘 시 false)
+ * @returns {boolean}
+ */
+export const isAutoPlayPreferred = () => {
+  try {
+    return localStorage.getItem(STORAGE_KEYS.AUTO_PLAY_PREFERRED) === "true";
+  } catch {
+    return false;
+  }
+};
+
+/**
+ * 대사 자동 진행 선호 여부 저장 (저장 실패는 무시 > 이번 화면에서만 유지)
+ * @param {boolean} isPreferred
+ */
+export const setAutoPlayPreferred = (isPreferred) => {
+  try {
+    localStorage.setItem(STORAGE_KEYS.AUTO_PLAY_PREFERRED, String(isPreferred));
+  } catch {
+    // 사생활 모드 등 저장 불가
+  }
+};
+
 const storage = {
   STORAGE_KEYS,
   isMusicMuted,
   setMusicMuted,
+  isAutoPlayPreferred,
+  setAutoPlayPreferred,
 };
 
 export default storage;

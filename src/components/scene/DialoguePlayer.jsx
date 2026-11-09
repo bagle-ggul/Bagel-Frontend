@@ -10,6 +10,7 @@ import { useDialogueFlow } from "../../hooks/useDialogueFlow";
 import { useImagePreload } from "../../hooks/useImagePreload";
 import { TYPING_SPEED_MS, useTypewriter } from "../../hooks/useTypewriter";
 import { motionCurve, motionSeconds } from "../../styles/tokens";
+import { isAutoPlayPreferred, setAutoPlayPreferred } from "../../utils/storage";
 
 import AmbientEffect from "./AmbientEffect";
 import CharacterSprite from "./CharacterSprite";
@@ -37,6 +38,9 @@ const collectImageUrls = (background, script) => {
   return [...new Set([background, ...spriteUrls].filter(Boolean))];
 };
 
+// 저장된 선호 > 시작 모드 (자동 선호면 auto, 아니면 manual)
+const loadPreferredPlayMode = () => (isAutoPlayPreferred() ? PLAY_MODE.AUTO : PLAY_MODE.MANUAL);
+
 // 장면 마지막 본 대사 (선택지 단계에서 대사창 유지용)
 const selectLastSceneLine = (scene) => scene?.lines[scene.lines.length - 1] ?? null;
 
@@ -49,7 +53,7 @@ function DialoguePlayer({
   scopeId,
   background,
   ambient = "none",
-  initialMode = PLAY_MODE.MANUAL,
+  initialMode,
   initialSceneIndex = 0,
   allowSkip = true,
   playerName,
@@ -57,8 +61,14 @@ function DialoguePlayer({
   onSceneDone,
   endSlot = null,
 }) {
-  const reduced = Boolean(useReducedMotion());
-  const [mode, setMode] = useState(initialMode);
+  const isReducedMotion = Boolean(useReducedMotion());
+  const [mode, setPlayMode] = useState(() => initialMode ?? loadPreferredPlayMode());
+
+  // 모드 변경 + 자동 여부 저장 (건너뛰기는 저장하지 않음 > 다음 화면은 수동)
+  const setMode = useCallback((nextMode) => {
+    setPlayMode(nextMode);
+    setAutoPlayPreferred(nextMode === PLAY_MODE.AUTO);
+  }, []);
   const [isLogOpen, setIsLogOpen] = useState(false);
 
   const { flow, line, lineKey, isLineSeenBefore, choices, sprite, advance, choose, log } =
@@ -78,7 +88,7 @@ function DialoguePlayer({
     if (mode !== PLAY_MODE.MANUAL) setMode(PLAY_MODE.MANUAL);
     if (typing.isDone) advance();
     else typing.complete();
-  }, [isLogOpen, isChoicePhase, isEnded, mode, typing, advance]);
+  }, [isLogOpen, isChoicePhase, isEnded, mode, setMode, typing, advance]);
 
   useAdvanceKeys({
     enabled: !isLogOpen && !isEnded,
@@ -106,11 +116,11 @@ function DialoguePlayer({
 
   return (
     <MotionConfig reducedMotion="user">
-      <SceneBackdrop src={background} sceneKey={flow.sceneIndex} reduced={reduced}>
+      <SceneBackdrop src={background} sceneKey={flow.sceneIndex} isReducedMotion={isReducedMotion}>
         <Screen data-testid="dialogue-player" onClick={requestAdvance}>
-          <AmbientEffect kind={ambient} reduced={reduced} />
+          <AmbientEffect kind={ambient} isReducedMotion={isReducedMotion} />
           <SpriteLayer>
-            <CharacterSprite src={sprite} alt="" reduced={reduced} />
+            <CharacterSprite src={sprite} alt="" isReducedMotion={isReducedMotion} />
           </SpriteLayer>
           {/* 선택지: 막과 함께 서서히 등장, 고르면 바로 사라짐 (선택 반응을 즉시 보여 줌) */}
           {isChoicePhase && (
