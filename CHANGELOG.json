@@ -1,11 +1,34 @@
 {
   "metadata": {
-    "lastUpdated": "2026-11-09T05:11:36Z",
-    "currentVersion": "1.4.21",
+    "lastUpdated": "2026-11-09T05:58:29Z",
+    "currentVersion": "1.4.22",
     "projectType": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
-    "totalReleases": 36
+    "totalReleases": 37
   },
   "releases": [
+    {
+      "version": "1.4.22",
+      "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
+      "date": "2026-11-09",
+      "pr_number": 141,
+      "raw_summary": "Summary by CodeRabbit\n릴리스 노트\n\n\n개선\n\n버튼, 카드, 창 모양을 하나로 통일해 화면이 더 깔끔하고 현대적으로 바뀌었어요\n랭킹 상세, 갤러리, 프로필, 게임오버 화면을 새 디자인으로 정리했어요\n창을 Esc 키나 바깥을 눌러서도 닫을 수 있어요\n\n\n\n버그 수정\n\n랭킹 화면에서 나던 화면 경고와 아이콘 중복 표시를 고쳤어요",
+      "parsed_changes": {
+        "개선": {
+          "title": "개선",
+          "items": [
+            "버튼, 카드, 창 모양을 하나로 통일해 화면이 더 깔끔하고 현대적으로 바뀌었어요",
+            "랭킹 상세, 갤러리, 프로필, 게임오버 화면을 새 디자인으로 정리했어요",
+            "창을 Esc 키나 바깥을 눌러서도 닫을 수 있어요"
+          ]
+        },
+        "버그_수정": {
+          "title": "버그 수정",
+          "items": [
+            "랭킹 화면에서 나던 화면 경고와 아이콘 중복 표시를 고쳤어요"
+          ]
+        }
+      }
+    },
     {
       "version": "1.4.21",
       "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
