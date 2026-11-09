@@ -11,6 +11,7 @@
 | [TESTING.md](TESTING.md)             | 테스트 3계층, 파일 위치, 모킹 방침, 커버리지 기준                         | 개별 테스트 케이스 목록          |
 | [DESIGN-SYSTEM.md](DESIGN-SYSTEM.md) | 디자인 토큰, 색상·간격 체계, 반응형 브레이크포인트                        | 컴포넌트 구현 세부               |
 | [GAME-FLOW.md](GAME-FLOW.md)         | 스토리 분기 구조, 점수 임계치, 엔딩 조건                                  | 스토리 텍스트 원문               |
+| [ART-GUIDE.md](ART-GUIDE.md)         | 인게임 그림 화풍, 캐릭터 고정 설정, 파일 규격과 변환 방법                 | 표지(홈) 그림                    |
 | `superpowers/specs/`                 | 설계 스펙 — "왜 이렇게 바꾸기로 했는가"                                   | 확정된 규칙(각 주제 문서로 이관) |
 | `superpowers/plans/`                 | 구현 계획 — "어떤 순서로 무엇을 하는가"                                   | 설계 근거                        |
 
