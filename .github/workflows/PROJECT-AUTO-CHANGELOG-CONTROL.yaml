@@ -406,8 +406,10 @@ jobs:
           echo "PR base branch: $PR_BASE"
           
           # Checkout the PR head branch
+          # 러너에 남은 오래된 로컬 브랜치가 아니라 방금 받은 원격 기준으로 맞춘다
+          # (앞 단계가 head에 CHANGELOG 커밋을 올린 뒤라 그대로 쓰면 push가 non-fast-forward로 거절됨)
           git fetch origin $PR_HEAD
-          git checkout $PR_HEAD
+          git checkout -B "$PR_HEAD" "origin/$PR_HEAD"
           
           # Make sure we have the latest from the base branch
           git fetch origin $PR_BASE
