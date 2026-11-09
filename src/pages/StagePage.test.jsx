@@ -60,7 +60,7 @@ describe("StagePage", () => {
   it("스테이지 1 첫 줄을 나레이션으로 보여 준다", () => {
     renderStage();
     tapScreen();
-    expect(screen.getByText(/수정이로부터 연락이 왔다\./)).toBeInTheDocument();
+    expect(screen.getByText(/여행 전날 밤\./)).toBeInTheDocument();
   });
 
   it("진입하면 진행도를 기록한다", () => {
@@ -92,7 +92,7 @@ describe("StagePage", () => {
     tapUntilChoices();
     chooseByIndex(0);
     tapUntilChoices();
-    fireEvent.click(within(queryChoiceGroup()).getByRole("button", { name: /No/ }));
+    fireEvent.click(within(queryChoiceGroup()).getByRole("button", { name: "그냥 잔다" }));
     expect(screen.queryByText("게임오버 화면")).toBeNull();
 
     for (
@@ -123,7 +123,7 @@ describe("StagePage", () => {
 
     // 장면 0 아샷추(0점) > 장면 2 유일 선택지(0점) > 장면 3 줍는다(0점)
     chooseByLabel("아샷추");
-    chooseByLabel("왜? 음료 마신게 마음에 안 들었어?");
+    chooseByLabel("왜? 음료가 별로였어?");
     chooseByLabel("줍는다");
     for (let count = 0; count < MAXIMUM_INTERACTION_COUNT && !findNextStageLink(); count += 1) {
       tapScreen();

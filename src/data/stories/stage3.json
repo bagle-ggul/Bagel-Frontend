@@ -6,31 +6,47 @@
       "lines": [
         {
           "speaker": "narration",
-          "text": "갑자기 비가 쏟아진다.\n우산이 없는 나머지 급히 동굴로 들어가서 피해야 한다.\n어두운 동굴에 들어가니 수정이가 무서워한다."
+          "text": "바다로 가는 길에 갑자기 비가 쏟아진다."
+        },
+        {
+          "speaker": "narration",
+          "text": "우산이 없어 두 사람은 근처 동굴로 급히 몸을 피했다."
+        },
+        {
+          "speaker": "narration",
+          "text": "안이 어둡다. 수정이 소매를 꼭 붙잡는다."
         }
       ],
       "choices": [
         {
-          "label": "괜찮아, 우리 비 그칠 때까지 조금만 있자.",
+          "label": "비 그칠 때까지 있자고 달랜다",
           "score": 10,
           "followUp": [
             {
+              "speaker": "player",
+              "text": "괜찮아. 비 그칠 때까지 조금만 있자."
+            },
+            {
               "speaker": "sujung",
-              "text": "그래, 그러자."
+              "text": "응… 그러자."
             }
           ]
         },
         {
-          "label": "우리가 동굴 탐험가가 된 거라고 생각해봐! 숨겨진 보물이라도 찾을까?",
+          "label": "탐험가 놀이를 하자고 한다",
           "score": 0,
           "followUp": [
             {
+              "speaker": "player",
+              "text": "우리 탐험가 된 거라고 생각해 봐. 보물이라도 찾을까?"
+            },
+            {
               "speaker": "sujung",
-              "text": "ㅎㅎㅎ 무슨 소리야. 장난치지마."
+              "text": "뭐래… 장난치지 마."
             },
             {
               "speaker": "narration",
-              "text": "수정이가 잠시 웃지만 금세 얼굴이 굳는다."
+              "text": "잠깐 웃던 수정의 얼굴이 금세 굳는다."
             }
           ]
         }
@@ -41,31 +57,43 @@
       "lines": [
         {
           "speaker": "narration",
-          "text": "동굴 벽에 튀어나온 돌에 수정이가 상처 입었다."
+          "text": "어둠 속을 더듬던 수정이 튀어나온 바위에 팔을 긁혔다."
+        },
+        {
+          "speaker": "sujung",
+          "text": "아…!"
         }
       ],
       "choices": [
         {
-          "label": "잠깐, 내가 치료해줄게. 조금만 참아.",
+          "label": "바로 상처를 살핀다",
           "score": 10,
           "followUp": [
             {
+              "speaker": "player",
+              "text": "잠깐만, 내가 봐 줄게. 조금만 참아."
+            },
+            {
               "speaker": "sujung",
-              "text": "응 고마워…"
+              "text": "응… 고마워."
             },
             {
               "speaker": "narration",
-              "text": "수정이가 수줍게 웃음 짓는다."
+              "text": "수정이 수줍게 웃는다."
             }
           ]
         },
         {
-          "label": "의사 자격증은 없지만, 내가 할 수 있는 건 해볼게!",
+          "label": "농담으로 넘긴다",
           "score": 0,
           "followUp": [
             {
+              "speaker": "player",
+              "text": "의사 면허는 없지만 최선을 다해 보겠습니다!"
+            },
+            {
               "speaker": "sujung",
-              "text": "ㅋㅋㅋㅋㅋ 그래"
+              "text": "뭐야… 아프단 말이야."
             }
           ]
         }
@@ -76,27 +104,35 @@
       "lines": [
         {
           "speaker": "sujung",
-          "text": "좀 추운 것 같아..."
+          "text": "좀 추운 것 같아…"
         }
       ],
       "choices": [
         {
-          "label": "내 겉옷 줄게. 이거라도 입어.",
+          "label": "겉옷을 벗어 준다",
           "score": 0,
           "followUp": [
             {
+              "speaker": "player",
+              "text": "내 겉옷 입어."
+            },
+            {
               "speaker": "sujung",
-              "text": "어.. 고마워…"
+              "text": "어… 고마워."
             }
           ]
         },
         {
-          "label": "어깨동무를 하며 살짝 감싸준다.",
+          "label": "말없이 어깨를 감싼다",
           "score": 10,
           "followUp": [
             {
               "speaker": "narration",
-              "text": "아무 말 없이 수정이를 팔로 감싸줬다.\n수정이의 얼굴이 살짝 붉어진다."
+              "text": "아무 말 없이 수정의 어깨를 감쌌다."
+            },
+            {
+              "speaker": "narration",
+              "text": "수정의 얼굴이 살짝 붉어진다."
             }
           ]
         }
@@ -107,27 +143,35 @@
       "lines": [
         {
           "speaker": "narration",
-          "text": "정적을 깨기 위해 {player}이 이야기를 꺼낸다."
+          "text": "빗소리만 가득한 정적. 무슨 말이든 꺼내야 할 것 같다."
         }
       ],
       "choices": [
         {
-          "label": "내 취미는 사실…",
+          "label": "내 취미 이야기를 꺼낸다",
           "score": 0,
           "followUp": [
             {
               "speaker": "narration",
-              "text": "{player}이 자신의 취미에 대해 설명한다.\n수정이가 지루해 하며 표정이 굳는다."
+              "text": "취미 이야기를 한참 늘어놓았다."
+            },
+            {
+              "speaker": "narration",
+              "text": "수정이 하품을 참는다."
             }
           ]
         },
         {
-          "label": "지금 우리가 해야 할 일은...",
+          "label": "여기서 어떻게 할지 이야기한다",
           "score": 0,
           "followUp": [
             {
+              "speaker": "player",
+              "text": "비 그치면 바로 해변 쪽으로 나가자. 길은 내가 기억해."
+            },
+            {
               "speaker": "narration",
-              "text": "{player}이 현재 동굴 속에서 어떻게 해야 할지 얘기한다.\n믿음직한 모습에 수정이가 미소 짓는다."
+              "text": "믿음직한 말투에 수정이 미소 짓는다."
             }
           ]
         }
@@ -138,31 +182,39 @@
       "lines": [
         {
           "speaker": "narration",
-          "text": "갑자기 동굴 속에서 쥐가 찍찍 거리며 나타났다."
+          "text": "어둠 속에서 쥐 한 마리가 찍찍거리며 튀어나왔다."
         }
       ],
       "choices": [
         {
-          "label": "저리 가!",
+          "label": "저리 가라고 쫓는다",
           "score": 0,
           "followUp": [
             {
+              "speaker": "player",
+              "text": "저리 가!"
+            },
+            {
               "speaker": "narration",
-              "text": "겁먹은 쥐가 다시 동굴 속으로 돌아갔다."
+              "text": "놀란 쥐가 동굴 안쪽으로 사라졌다."
             }
           ]
         },
         {
-          "label": "어, 쥐다! 내가 잡아볼게!",
+          "label": "잡아 보겠다고 나선다",
           "score": 0,
           "followUp": [
             {
+              "speaker": "player",
+              "text": "쥐다! 내가 잡아 볼게!"
+            },
+            {
               "speaker": "narration",
-              "text": "쥐가 {player}을 피해 도망치다 수정이에게 다가간다."
+              "text": "쥐가 도망치다 수정 쪽으로 달려든다."
             },
             {
               "speaker": "sujung",
-              "text": "꺄악! 뭐하는 짓이야!"
+              "text": "꺄악! 뭐 하는 거야!"
             }
           ]
         }
@@ -173,18 +225,30 @@
       "lines": [
         {
           "speaker": "narration",
-          "text": "갑자기 동굴 안에서 큰 진동과 울리는 소리가 들려온다."
+          "text": "그때, 동굴 깊은 곳에서 낮은 진동이 울린다."
+        },
+        {
+          "speaker": "narration",
+          "text": "이 소리… 어디선가 들어 본 적이 있다."
         }
       ],
       "choices": [
         {
-          "label": "소리를 무시하고 계속 이동한다.",
+          "label": "소리를 무시하고 안쪽으로 간다",
           "score": 0,
           "gameOver": true,
           "followUp": [
             {
               "speaker": "narration",
-              "text": "갑자기 동굴이 붕괴하기 시작했다."
+              "text": "몇 걸음 들어가자 천장에서 돌이 쏟아지기 시작한다."
+            },
+            {
+              "speaker": "player",
+              "text": "수정아!"
+            },
+            {
+              "speaker": "narration",
+              "text": "눈앞이 하얗게 번지며 시간이 되감긴다."
             }
           ]
         },
@@ -194,11 +258,11 @@
           "followUp": [
             {
               "speaker": "player",
-              "text": "소리가 불길한데? 여긴 위험할 것 같아. 나가자."
+              "text": "소리가 불길해. 여기 위험하겠어, 나가자."
             },
             {
               "speaker": "narration",
-              "text": "밖에 나오니 비가 그쳐 있고 두 사람은 해변으로 이동한다."
+              "text": "밖으로 나오니 비가 그쳐 있다. 두 사람은 해변으로 향한다."
             }
           ]
         }
