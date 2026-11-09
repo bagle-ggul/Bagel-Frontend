@@ -16,12 +16,12 @@ MotionGlobalConfig.skipAnimations = true;
 // 스테이지 1 전체를 넘기는 데 충분한 조작 횟수 상한 (무한 반복 방지)
 const MAXIMUM_INTERACTION_COUNT = 200;
 
-const renderStage = () =>
+const renderStage = (stage = 1) =>
   render(
-    <MemoryRouter initialEntries={["/main1"]}>
+    <MemoryRouter initialEntries={[`/main${stage}`]}>
       <RecoilRoot>
         <Routes>
-          <Route path="/main1" element={<StagePage stage={1} />} />
+          <Route path={`/main${stage}`} element={<StagePage stage={stage} />} />
           <Route path="/over" element={<div>게임오버 화면</div>} />
         </Routes>
       </RecoilRoot>
@@ -36,6 +36,11 @@ const tapUntilChoices = () => {
   for (let count = 0; count < MAXIMUM_INTERACTION_COUNT && !queryChoiceGroup(); count += 1) {
     tapScreen();
   }
+};
+
+const chooseByLabel = (label) => {
+  tapUntilChoices();
+  fireEvent.click(within(queryChoiceGroup()).getByRole("button", { name: label }));
 };
 
 const chooseByIndex = (choiceIndex) => {
@@ -110,5 +115,19 @@ describe("StagePage", () => {
       else tapScreen();
     }
     expect(findNextStageLink()).toHaveAttribute("href", "/main2");
+  });
+
+  it("점수 변화 없는 선택만 해도 카페 돈 줍기는 우산 경로로 간다", () => {
+    renderStage(2);
+    const findNextStageLink = () => screen.queryByRole("link", { name: "다음 장소로" });
+
+    // 장면 0 아샷추(0점) > 장면 2 유일 선택지(0점) > 장면 3 줍는다(0점)
+    chooseByLabel("아샷추");
+    chooseByLabel("왜? 음료 마신게 마음에 안 들었어?");
+    chooseByLabel("줍는다");
+    for (let count = 0; count < MAXIMUM_INTERACTION_COUNT && !findNextStageLink(); count += 1) {
+      tapScreen();
+    }
+    expect(findNextStageLink()).toHaveAttribute("href", "/main4");
   });
 });

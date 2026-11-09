@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import PropTypes from "prop-types";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 
@@ -32,11 +32,15 @@ function StagePage({ stage }) {
   const [score, setScore] = useRecoilState(scoreAtom);
   const [characterName, setCharacterName] = useRecoilState(characterNameAtom);
 
-  // 렌더를 기다리지 않는 최신 점수·다음 목적지 (선택 직후 장면 종료 판정용)
+  // 분기 없는 마지막 스테이지 방어값
+  const fallbackExit = config.defaultExit ?? ROUTES.RESULT;
+  // 렌더를 기다리지 않는 최신 점수 (선택 직후 장면 종료 판정용)
   const scoreRef = useRef(score);
-  const exitRef = useRef(config.defaultExit ?? ROUTES.RESULT);
+  // 다음 목적지는 state (0점 선택은 점수 변화 없어 재렌더 없음 > ref면 버튼 주소 갱신 누락)
+  const [nextStageRoute, setNextStageRoute] = useState(fallbackExit);
 
-  useImagePreload(getPreloadImages(stage));
+  const preloadImages = useMemo(() => getPreloadImages(stage), [stage]);
+  useImagePreload(preloadImages);
 
   // 진행도 기록 (다음 스테이지 가드 통과 조건)
   useEffect(() => {
@@ -70,9 +74,9 @@ function StagePage({ stage }) {
         scoreRef.current += choice.score;
         setScore(scoreRef.current);
       }
-      exitRef.current = resolveStageExit(stage, choiceIndex, config.defaultExit ?? ROUTES.RESULT);
+      setNextStageRoute(resolveStageExit(stage, choiceIndex, fallbackExit));
     },
-    [stage, config, setScore]
+    [stage, fallbackExit, setScore]
   );
 
   // 장면 종료: 게임오버·결과 이동 > 다음 장면 > 스테이지 끝
@@ -103,7 +107,7 @@ function StagePage({ stage }) {
       animate={{ opacity: 1 }}
       transition={{ duration: END_BUTTON_FADE_SECONDS }}
     >
-      <Button as={Link} to={exitRef.current} size="lg">
+      <Button as={Link} to={nextStageRoute} size="lg">
         다음 장소로
       </Button>
     </motion.div>
