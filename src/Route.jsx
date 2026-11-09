@@ -1,25 +1,29 @@
+import { Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
 
 import RequireAuth from "./components/RequireAuth";
 import RequireProgress from "./components/RequireProgress";
+import RouteFallback from "./components/RouteFallback";
 import { ROUTES } from "./constants/routes";
 import Board from "./pages/Board";
-import GameOver from "./pages/GameOver";
-import Happy from "./pages/Happy";
 import Help from "./pages/Help";
-import Hidden from "./pages/Hidden";
 import Home from "./pages/Home";
-import Intro from "./pages/Intro";
-import Main1 from "./pages/Main1";
-import Main2 from "./pages/Main2";
-import Main3 from "./pages/Main3";
-import Main4 from "./pages/Main4";
-import Main5 from "./pages/Main5";
-import Middle from "./pages/Middle";
 import NotFound from "./pages/NotFound";
 import Profile from "./pages/Profile";
-import Result from "./pages/Result";
-import Sad from "./pages/Sad";
+import { lazyWithReload } from "./utils/lazyWithReload";
+
+// 게임 화면 지연 로드 (첫 화면 번들에서 제외, 배포 후 옛 청크 실패 시 새로고침 1회)
+const Intro = lazyWithReload(() => import("./pages/Intro"));
+const StagePage = lazyWithReload(() => import("./pages/StagePage"));
+const Result = lazyWithReload(() => import("./pages/Result"));
+const Happy = lazyWithReload(() => import("./pages/Happy"));
+const Middle = lazyWithReload(() => import("./pages/Middle"));
+const Sad = lazyWithReload(() => import("./pages/Sad"));
+const Hidden = lazyWithReload(() => import("./pages/Hidden"));
+const GameOver = lazyWithReload(() => import("./pages/GameOver"));
+
+/** 지연 로드 화면 대기 표시 */
+const withSuspense = (element) => <Suspense fallback={<RouteFallback />}>{element}</Suspense>;
 
 /** 로그인만 필요한 화면 */
 const authOnly = (element) => <RequireAuth>{element}</RequireAuth>;
@@ -54,22 +58,23 @@ const router = createBrowserRouter([
       { path: "", element: <Home /> },
       { path: "help", element: <Help /> },
       // 프로필(/api/my-page)을 읽는 화면이라 토큰 없이 직접 진입하면 빈 화면이 된다
-      { path: "intro", element: authOnly(<Intro />) },
+      { path: "intro", element: authOnly(withSuspense(<Intro />)) },
 
       // 게임 스테이지 — 직전 스테이지까지 진행해야 진입할 수 있다
-      { path: "main1", element: stageGuarded(<Main1 />, 1) },
-      { path: "main2", element: stageGuarded(<Main2 />, 2) },
-      { path: "main3", element: stageGuarded(<Main3 />, 3) },
-      { path: "main4", element: stageGuarded(<Main4 />, 4) },
-      { path: "main5", element: stageGuarded(<Main5 />, 5) },
+      // key: 스테이지 간 이동 시 상태(점수 ref·대사 흐름) 재생성
+      { path: "main1", element: stageGuarded(withSuspense(<StagePage key={1} stage={1} />), 1) },
+      { path: "main2", element: stageGuarded(withSuspense(<StagePage key={2} stage={2} />), 2) },
+      { path: "main3", element: stageGuarded(withSuspense(<StagePage key={3} stage={3} />), 3) },
+      { path: "main4", element: stageGuarded(withSuspense(<StagePage key={4} stage={4} />), 4) },
+      { path: "main5", element: stageGuarded(withSuspense(<StagePage key={5} stage={5} />), 5) },
 
       // 결과·엔딩 — 게임을 끝내야 볼 수 있다
-      { path: "result", element: completedOnly(<Result />) },
-      { path: "happy", element: completedOnly(<Happy />) },
-      { path: "middle", element: completedOnly(<Middle />) },
-      { path: "sad", element: completedOnly(<Sad />) },
-      { path: "hidden", element: completedOnly(<Hidden />) },
-      { path: "over", element: startedOnly(<GameOver />) },
+      { path: "result", element: completedOnly(withSuspense(<Result />)) },
+      { path: "happy", element: completedOnly(withSuspense(<Happy />)) },
+      { path: "middle", element: completedOnly(withSuspense(<Middle />)) },
+      { path: "sad", element: completedOnly(withSuspense(<Sad />)) },
+      { path: "hidden", element: completedOnly(withSuspense(<Hidden />)) },
+      { path: "over", element: startedOnly(withSuspense(<GameOver />)) },
 
       // 부가 화면
       { path: "board", element: authOnly(<Board />) },

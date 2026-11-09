@@ -1,11 +1,53 @@
 {
   "metadata": {
-    "lastUpdated": "2026-11-09T05:58:29Z",
-    "currentVersion": "1.4.22",
+    "lastUpdated": "2026-11-09T07:43:10Z",
+    "currentVersion": "1.4.23",
     "projectType": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
-    "totalReleases": 37
+    "totalReleases": 38
   },
   "releases": [
+    {
+      "version": "1.4.23",
+      "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
+      "date": "2026-11-09",
+      "pr_number": 143,
+      "raw_summary": "Summary by CodeRabbit\n릴리스 노트\n\n\n새 기능\n\n선택지는 대사가 끝난 뒤 화면 가운데 같은 모양 카드로 표시\n대사는 화면 탭·Space·Enter로 넘기고, 숫자 키 1~4로 선택\n자동 진행, 이미 본 줄 건너뛰기, 지난 대사 보기 추가\n장소별 분위기 효과(먼지·꽃잎·비·반짝임)와 장면 전환 연출\n넓은 대사창과 이름표, 화면 아래에 선 캐릭터 배치\n\n\n\n버그 수정\n\n카페·동굴 갈림길 다음 장소로 넘어가면 처음으로 돌아가던 문제\n점수 변화 없는 선택 뒤 다음 장소 버튼이 잘못된 곳을 가리키던 문제\n선택지가 나오면 캐릭터가 위로 떠오르던 문제\n새 버전 배포 직후 게임 시작 시 빈 페이지가 뜨던 문제\n\n\n\n개선\n\n게임 화면을 필요할 때 불러와 첫 화면 로딩 단축\n다음 장면 그림 미리 받기로 전환 끊김 감소\n기기의 동작 줄이기 설정을 따르는 움직임\n\n\n\n문서\n\n게임 흐름·화면 구조·디자인 규칙 문서 갱신",
+      "parsed_changes": {
+        "새_기능": {
+          "title": "새 기능",
+          "items": [
+            "선택지는 대사가 끝난 뒤 화면 가운데 같은 모양 카드로 표시",
+            "대사는 화면 탭·Space·Enter로 넘기고, 숫자 키 1~4로 선택",
+            "자동 진행, 이미 본 줄 건너뛰기, 지난 대사 보기 추가",
+            "장소별 분위기 효과(먼지·꽃잎·비·반짝임)와 장면 전환 연출",
+            "넓은 대사창과 이름표, 화면 아래에 선 캐릭터 배치"
+          ]
+        },
+        "버그_수정": {
+          "title": "버그 수정",
+          "items": [
+            "카페·동굴 갈림길 다음 장소로 넘어가면 처음으로 돌아가던 문제",
+            "점수 변화 없는 선택 뒤 다음 장소 버튼이 잘못된 곳을 가리키던 문제",
+            "선택지가 나오면 캐릭터가 위로 떠오르던 문제",
+            "새 버전 배포 직후 게임 시작 시 빈 페이지가 뜨던 문제"
+          ]
+        },
+        "개선": {
+          "title": "개선",
+          "items": [
+            "게임 화면을 필요할 때 불러와 첫 화면 로딩 단축",
+            "다음 장면 그림 미리 받기로 전환 끊김 감소",
+            "기기의 동작 줄이기 설정을 따르는 움직임"
+          ]
+        },
+        "문서": {
+          "title": "문서",
+          "items": [
+            "게임 흐름·화면 구조·디자인 규칙 문서 갱신"
+          ]
+        }
+      }
+    },
     {
       "version": "1.4.22",
       "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",

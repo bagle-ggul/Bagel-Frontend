@@ -93,6 +93,16 @@ export const blur = {
   subtle: "blur(10px)",
 };
 
+/** 움직임 (framer-motion용): 부드럽게 감속하는 곡선과 길이 (초) */
+export const motionCurve = {
+  soft: [0.22, 1, 0.36, 1], // 빠르게 시작해 천천히 멈춤 (등장·교체 공통)
+};
+export const motionSeconds = {
+  quick: 0.25, // 이름표·선택 후 사라짐
+  base: 0.45, // 선택지·막 등장
+  slow: 0.7, // 캐릭터 등장·교체
+};
+
 /** 전환 */
 export const transition = {
   fast: "all 0.3s ease",

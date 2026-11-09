@@ -1,135 +1,103 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
-import styled, { keyframes } from "styled-components";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import styled from "styled-components";
 
-import { scoreAtom } from "../atom/atom";
-import DialogueSystem from "../components/DialogueSystem";
+import { characterNameAtom, scoreAtom } from "../atom/atom";
+import { DialoguePlayer } from "../components/scene";
+import { Button } from "../components/ui";
 import { ROUTES } from "../constants/routes";
 import introStory from "../data/stories/intro.json";
+import { fromIntroStory } from "../game/dialogueScript";
+import { PLAY_MODE } from "../game/playMode";
 import { resetProgress } from "../game/progress";
+import { getPreloadImages } from "../game/stages";
+import { useBackgroundMusic } from "../hooks/useBackgroundMusic";
+import { useImagePreload } from "../hooks/useImagePreload";
+import { layer } from "../styles/semantic";
+import { spacing } from "../styles/tokens";
 import axios from "../utils/axios";
 import { logger } from "../utils/logger";
 
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+const INTRO_BACKGROUND = "/img/bg_intro_main.webp";
+const INTRO_MUSIC = "/audio/intro.m4a";
+const FIRST_STAGE = 1;
+
+// 1스테이지 화면 코드 미리 받기 (실패는 무시, 실제 진입 시 다시 시도)
+const warmFirstStageChunk = () => import("./StagePage").catch(() => {});
+
+// 왼쪽 위 고정 (오른쪽 위 조작 버튼과 겹치지 않게, 플레이어보다 위)
+const IntroSkipButton = styled(Button)`
+  position: fixed;
+  top: ${spacing.md};
+  left: ${spacing.md};
+  z-index: ${layer.sticky};
 `;
 
-const SceneWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-  background: url("/img/bg_intro_main.webp") no-repeat center center;
-  background-size: cover;
-  padding: 20px;
-  text-align: center;
-  animation: ${fadeIn} 2s ease-in-out;
-`;
-
-const SkipButton = styled.button`
-  position: absolute;
-  top: 30px;
-  right: 30px;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-  border-radius: 12px;
-  color: white;
-  padding: 12px 24px;
-  font-size: 1rem;
-  font-weight: 600;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: rgba(200, 182, 226, 0.5);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(200, 182, 226, 0.3);
-  }
-
-  &:active {
-    transform: translateY(0);
-  }
-
-  @media (max-width: 768px) {
-    top: 20px;
-    right: 20px;
-    padding: 10px 20px;
-    font-size: 0.9rem;
-  }
-`;
-
-const SelectPageComponent = () => {
+/**
+ * 인트로 화면: 닉네임 조회 > 자동 재생 대사 > 끝나거나 건너뛰면 새 게임 시작
+ */
+function Intro() {
   const navigate = useNavigate();
+  const audioRef = useBackgroundMusic();
   const setScore = useSetRecoilState(scoreAtom);
-  const audioRef = useRef(null);
-  const [data, setData] = useState(null);
-  // loading 값을 참조하는 곳이 없다 — 로딩 UI 미구현 (별도 확인 필요)
-  const [, setLoading] = useState(true);
+  const [characterName, setCharacterName] = useRecoilState(characterNameAtom);
 
+  // 닉네임 조회 (실패해도 기본 이름으로 진행)
   useEffect(() => {
-    const fetchProfile = async () => {
+    const fetchCharacterName = async () => {
       try {
         const response = await axios.get("/api/my-page");
-        setData(response.data);
-        setLoading(false);
+        if (response.data?.characterName) setCharacterName(response.data.characterName);
       } catch (error) {
         logger.error("프로필 조회 실패:", error);
-        setLoading(false);
       }
     };
+    fetchCharacterName();
+  }, [setCharacterName]);
 
-    fetchProfile();
-  }, []);
-
+  // 인트로 재생 중 1스테이지 그림·화면 코드 미리 받기 (진입 시 빈 화면 방지)
+  const firstStageImages = useMemo(() => getPreloadImages(FIRST_STAGE), []);
+  useImagePreload(firstStageImages);
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.play().catch((error) => {
-        logger.warn("배경음 재생 실패:", error);
-      });
-    }
+    warmFirstStageChunk();
   }, []);
 
-  // 인트로에서 스테이지로 넘어가는 시점이 곧 "새 게임 시작"이다.
-  // 이전 판의 점수·진행도가 남아 있으면 엉뚱한 엔딩을 보게 된다.
+  const script = useMemo(
+    () => fromIntroStory(introStory.story, { playerName: characterName }),
+    [characterName]
+  );
+
+  // 인트로 종료 시점이 곧 새 게임 시작 (이전 판 점수·진행도가 남으면 엉뚱한 엔딩)
   const startNewGame = () => {
     resetProgress();
     setScore(0);
     navigate(ROUTES.MAIN1);
   };
 
-  const handleStoryComplete = () => {
-    startNewGame();
-  };
-
-  const handleSkip = () => {
+  const handleSkipClick = (mouseEvent) => {
+    mouseEvent.stopPropagation();
     startNewGame();
   };
 
   return (
-    <SceneWrap>
-      <DialogueSystem
-        storyData={introStory.story}
-        userData={data}
-        onComplete={handleStoryComplete}
-        autoProgress={true}
-        enableControls={true}
+    <>
+      <DialoguePlayer
+        script={script}
+        scopeId="intro"
+        background={INTRO_BACKGROUND}
+        ambient="none"
+        initialMode={PLAY_MODE.AUTO}
+        allowSkip={false}
+        playerName={characterName}
+        onSceneDone={startNewGame}
       />
-      <SkipButton onClick={handleSkip}>Skip</SkipButton>
-      <audio ref={audioRef} src="/audio/intro.m4a" loop />
-    </SceneWrap>
+      <IntroSkipButton type="button" variant="ghost" onClick={handleSkipClick}>
+        인트로 건너뛰기
+      </IntroSkipButton>
+      <audio ref={audioRef} src={INTRO_MUSIC} loop />
+    </>
   );
-};
+}
 
-export default SelectPageComponent;
+export default Intro;

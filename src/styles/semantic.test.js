@@ -1,11 +1,21 @@
-import semantic, { action, border, feedback, focus, overlay, surface, text } from "./semantic";
+import semantic, {
+  action,
+  border,
+  dialogue,
+  effect,
+  feedback,
+  focus,
+  overlay,
+  surface,
+  text,
+} from "./semantic";
 import { palette } from "./tokens";
 
 const paletteValues = new Set(Object.values(palette));
 
 describe("의미 토큰", () => {
   it("모든 의미 토큰 값은 palette 값 중 하나다", () => {
-    const groups = { surface, text, border, action, feedback, overlay, focus };
+    const groups = { surface, text, border, action, feedback, overlay, focus, dialogue, effect };
     Object.entries(groups).forEach(([groupName, group]) => {
       Object.entries(group).forEach(([tokenName, tokenValue]) => {
         expect({
