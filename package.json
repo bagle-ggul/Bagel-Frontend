@@ -1,6 +1,6 @@
 {
   "name": "re-wave",
-  "version": "1.4.18",
+  "version": "1.4.19",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
