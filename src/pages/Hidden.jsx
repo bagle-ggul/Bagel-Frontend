@@ -117,7 +117,7 @@ function Hidden() {
 
       return () => clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 클리어
     } else {
-      // 모든 장면이 끝나면 Main1 페이지로 이동
+      // 모든 장면이 끝나면 프로필 페이지로 이동
       navigate("/profile");
     }
   }, [currentScene, navigate]);

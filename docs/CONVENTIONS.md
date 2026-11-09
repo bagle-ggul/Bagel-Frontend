@@ -13,7 +13,7 @@
 | 이벤트 핸들러 | `handle` 접두사     | `handleSubmit`, `handleChoiceClick`         |
 | 핸들러 prop   | `on` 접두사         | `onClick`, `onTypeComplete`                 |
 | 상수          | `UPPER_SNAKE_CASE`  | `AUTH_TOKENS`, `API_BASE_URL`               |
-| 컴포넌트      | `PascalCase`        | `BagelDialogBox`                            |
+| 컴포넌트      | `PascalCase`        | `DialogueBox`                               |
 | 훅            | `use` 접두사        | `useRankingData`, `useInfiniteScroll`       |
 
 **변수명은 실제 담긴 값과 일치해야 한다.** 현재 코드에는

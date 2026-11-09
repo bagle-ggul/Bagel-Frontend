@@ -10,9 +10,10 @@ src/
 ├── Route.jsx          # 라우터 정의 (createBrowserRouter)
 ├── atom/              # Recoil 전역 상태
 ├── components/        # 재사용 컴포넌트
-│   └── GameUI/        # 게임 플레이 화면 전용 UI
+│   ├── scene/         # 장면 플레이어 (대사창·선택지·배경·캐릭터·효과)
+│   └── ui/            # 공용 UI (Button·Card·Modal·NameTag)
 ├── data/stories/      # JSON 스토리 데이터 (현재 인트로만)
-├── hooks/             # 커스텀 훅
+├── hooks/             # 커스텀 훅 (타이핑·진행 키·자동 재생·이미지 미리 받기·대사 흐름)
 ├── constants/         # 라우트 경로 등 상수
 ├── game/              # 게임 진행 상태 (라우팅·UI와 독립)
 ├── pages/             # 라우트에 대응하는 화면
@@ -22,16 +23,18 @@ src/
 └── utils/             # 유틸리티 + 레거시 스토리 데이터
 ```
 
-| 디렉토리                 | 책임                                                                   |
-| ------------------------ | ---------------------------------------------------------------------- |
-| `src/atom/`              | Recoil atom 정의. 현재 `scoreAtom`, `characterNameAtom` 2개            |
-| `src/components/`        | 화면 간 재사용되는 컴포넌트                                            |
-| `src/components/GameUI/` | 게임 플레이 전용 — 대사창, 선택지 버튼, 타이핑 효과                    |
-| `src/data/stories/`      | 새 형식의 JSON 스토리 데이터. 현재 인트로만 사용                       |
-| `src/hooks/`             | `useRankingData`(랭킹 조회), `useInfiniteScroll`(무한 스크롤)          |
-| `src/pages/`             | 라우트 1:1 대응 화면                                                   |
-| `src/styles/`            | `theme.js` — 색상·간격·z-index 토큰                                    |
-| `src/utils/`             | 인증·HTTP·시간 유틸 + **레거시 스토리 데이터**(`data.jsx`~`data5.jsx`) |
+| 디렉토리                | 책임                                                                                                                                                                                                                                                                                                                         |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/atom/`             | Recoil atom 정의. 현재 `scoreAtom`, `characterNameAtom` 2개                                                                                                                                                                                                                                                                  |
+| `src/components/`       | 화면 간 재사용되는 컴포넌트                                                                                                                                                                                                                                                                                                  |
+| `src/components/scene/` | 장면 플레이어 — `DialoguePlayer`가 대사창·선택지·배경·캐릭터·효과·조작 버튼 조립                                                                                                                                                                                                                                             |
+| `src/components/ui/`    | 공용 UI — `Button`·`Card`·`Modal`·`NameTag`·`VisuallyHidden`(스크린리더 전용)                                                                                                                                                                                                                                                |
+| `src/data/stories/`     | 새 형식의 JSON 스토리 데이터. 현재 인트로만 사용                                                                                                                                                                                                                                                                             |
+| `src/hooks/`            | 대사 플레이어 — `useDialogueFlow`(진행·선택·로그), `useTypewriter`(타이핑), `useAdvanceKeys`(Space·Enter·1~4 키), `useAutoPlay`(자동·건너뛰기), `useImagePreload`(그림 미리 받기), `useBackgroundMusic`(배경 음악). 그 외 `useRankingData`(랭킹 조회), `useInfiniteScroll`(무한 스크롤), `useGuestStartForm`(게스트 시작 폼) |
+| `src/game/`             | 스테이지 설정(`stages`), 대사 변환·진행(`dialogueScript`, `dialogueFlow`), 본 줄 기록(`seenLines`), 장면 종료 판정(`stageProgress`), 재생 모드(`playMode`), 전이 규칙(`storyFlow`), 진행도(`progress`)                                                                                                                       |
+| `src/pages/`            | 스테이지 5개는 `StagePage` 하나, 나머지는 라우트 1:1 대응 화면                                                                                                                                                                                                                                                               |
+| `src/styles/`           | `theme.js` — 색상·간격·z-index 토큰                                                                                                                                                                                                                                                                                          |
+| `src/utils/`            | 인증·HTTP·시간 유틸, `lazyWithReload`(배포 후 옛 청크 로드 실패 시 새로고침 1회) + **레거시 스토리 데이터**(`data.jsx`~`data5.jsx`)                                                                                                                                                                                          |
 
 > `src/utils/`에 스토리 데이터가 섞여 있는 것은 정리되지 않은 상태다. Phase 4에서
 > `src/data/stories/`로 통합한다.
@@ -43,24 +46,23 @@ src/
 
 `src/Route.jsx`가 `createBrowserRouter`로 정의한다. **이 표가 실제 라우트의 전부다.**
 
-| 경로       | 화면                     | 인증 보호 |
-| ---------- | ------------------------ | --------- |
-| `/`        | `src/pages/Home.jsx`     | ✗         |
-| `/help`    | `src/pages/Help.jsx`     | ✗         |
-| `/intro`   | `src/pages/Intro.jsx`    | ✓         |
-| `/main1`   | `src/pages/Main1.jsx`    | ✓         |
-| `/main2`   | `src/pages/Main2.jsx`    | ✓         |
-| `/main3`   | `src/pages/Main3.jsx`    | ✓         |
-| `/main4`   | `src/pages/Main4.jsx`    | ✓         |
-| `/main5`   | `src/pages/Main5.jsx`    | ✓         |
-| `/result`  | `src/pages/Result.jsx`   | ✓         |
-| `/happy`   | `src/pages/Happy.jsx`    | ✓         |
-| `/middle`  | `src/pages/Middle.jsx`   | ✓         |
-| `/sad`     | `src/pages/Sad.jsx`      | ✓         |
-| `/hidden`  | `src/pages/Hidden.jsx`   | ✓         |
-| `/over`    | `src/pages/GameOver.jsx` | ✓         |
-| `/board`   | `src/pages/Board.jsx`    | ✓         |
-| `/profile` | `src/pages/Profile.jsx`  | ✓         |
+| 경로              | 화면                                         | 인증 보호 |
+| ----------------- | -------------------------------------------- | --------- |
+| `/`               | `src/pages/Home.jsx`                         | ✗         |
+| `/help`           | `src/pages/Help.jsx`                         | ✗         |
+| `/intro`          | `src/pages/Intro.jsx`                        | ✓         |
+| `/main1`~`/main5` | `src/pages/StagePage.jsx` (`stage` prop 1~5) | ✓         |
+| `/result`         | `src/pages/Result.jsx`                       | ✓         |
+| `/happy`          | `src/pages/Happy.jsx`                        | ✓         |
+| `/middle`         | `src/pages/Middle.jsx`                       | ✓         |
+| `/sad`            | `src/pages/Sad.jsx`                          | ✓         |
+| `/hidden`         | `src/pages/Hidden.jsx`                       | ✓         |
+| `/over`           | `src/pages/GameOver.jsx`                     | ✓         |
+
+게임 화면(인트로·스테이지·결과·엔딩·게임오버)은 `React.lazy`로 지연 로드하고 `Suspense`의
+`RouteFallback`을 보여 준다. 스테이지 라우트는 `key`로 스테이지 간 상태를 새로 만든다.| `/over` | `src/pages/GameOver.jsx` | ✓ |
+| `/board` | `src/pages/Board.jsx` | ✓ |
+| `/profile` | `src/pages/Profile.jsx` | ✓ |
 
 ### 가입·로그인은 없다 (게스트 시작)
 
@@ -110,8 +112,8 @@ Recoil을 쓴다. atom은 `src/atom/atom.js`에 2개뿐이다.
 **게임 도중 새로고침하면 점수가 0으로 초기화된다.** Phase 2에서 `sessionStorage` 동기화를
 추가한다.
 
-`characterNameAtom`은 `src/pages/Main1.jsx`에서만 조회한다. 다른 스테이지는 조회하지 않는
-비대칭 구조다.
+`characterNameAtom`은 인트로와 `StagePage`가 비어 있을 때 `/api/my-page`로 조회해 채운다
+(새로고침하면 atom이 비므로 스테이지마다 확인).
 
 ## API 통신
 
@@ -159,8 +161,8 @@ UI 설정(배경음 음소거)은 `src/utils/storage.js`가 별도로 담당한�
 
 스토리 분기·점수 체계는 [GAME-FLOW.md](GAME-FLOW.md)를 참조한다.
 
-핵심만 요약하면, 카페(Main2)에서 돈을 줍는지 여부로 동굴(Main3) / 우산(Main4) 경로가
-갈리고 둘 다 해변(Main5)으로 합류한다.
+핵심만 요약하면, 카페(스테이지 2)에서 돈을 줍는지 여부로 동굴(스테이지 3) / 우산(스테이지 4) 경로가
+갈리고 둘 다 해변(스테이지 5)으로 합류한다.
 
 ## 스타일링
 

@@ -86,6 +86,20 @@ describe("progress 스테이지 진입 자격", () => {
     expect(canEnterStage(5)).toBe(false);
   });
 
+  // 카페에서 돈을 주우면 동굴(3)을 건너뛰고 우산(4)으로 간다
+  it("스테이지 2를 마치면 분기 목적지 3과 4 모두 들어갈 수 있다", () => {
+    markStageReached(2);
+    expect(canEnterStage(3)).toBe(true);
+    expect(canEnterStage(4)).toBe(true);
+    expect(canEnterStage(5)).toBe(false);
+  });
+
+  // 동굴(3)에서는 우산(4)을 거치지 않고 해변(5)으로 간다
+  it("스테이지 3을 마치면 4를 거치지 않아도 5에 들어갈 수 있다", () => {
+    markStageReached(3);
+    expect(canEnterStage(5)).toBe(true);
+  });
+
   it("진행한 만큼은 자유롭게 오갈 수 있다", () => {
     markStageReached(4);
     expect(canEnterStage(2)).toBe(true);

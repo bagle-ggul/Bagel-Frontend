@@ -77,6 +77,23 @@ export const focus = {
   ring: palette.lilac40,
 };
 
+/** 대사 진행 화면 (대사창·나레이션·선택지 카드) */
+export const dialogue = {
+  box: palette.black70,
+  narration: palette.white80,
+  choice: palette.black60,
+  choiceHover: palette.lilac30,
+};
+
+/** 장면 분위기 효과 (비·먼지·꽃잎·반짝임·장막) */
+export const effect = {
+  rain: palette.white30,
+  dust: palette.white60,
+  petal: palette.lilac50,
+  sparkle: palette.white90,
+  veil: palette.black80,
+};
+
 /** 순위 표시 */
 export const rank = {
   first: palette.gold,
@@ -130,6 +147,8 @@ const semantic = {
   feedback,
   overlay,
   focus,
+  dialogue,
+  effect,
   rank,
   rankGlow,
   glass,

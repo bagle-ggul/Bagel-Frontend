@@ -138,19 +138,6 @@ export const FieldHint = styled.span`
   color: ${text.tertiary};
 `;
 
-// 화면에는 숨기고 스크린리더에만 읽히는 라벨
-export const VisuallyHiddenLabel = styled.label`
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-`;
-
 // 제출 중에는 대기 커서
 export const StartButton = styled(Button)`
   width: 100%;
