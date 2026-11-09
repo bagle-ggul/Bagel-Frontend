@@ -16,6 +16,7 @@ export const surface = {
   glassHover: palette.black50,
   raised: palette.white10,
   raisedHover: palette.white15,
+  strong: palette.black80, // 불투명에 가까운 어두운 패널
 };
 
 /** 텍스트 */
@@ -23,6 +24,8 @@ export const text = {
   primary: palette.white,
   secondary: palette.white70,
   tertiary: palette.white60,
+  muted: palette.white80, // secondary보다 약간 진한 보조 텍스트
+  emphasis: palette.white90, // primary 바로 아래 강조 텍스트
   accent: palette.lilac90,
   onAction: palette.white,
 };
@@ -30,6 +33,8 @@ export const text = {
 /** 테두리 */
 export const border = {
   subtle: palette.white15,
+  default: palette.white20,
+  strong: palette.white30,
   accent: palette.lilac30,
   accentStrong: palette.lilac50,
   danger: palette.red30,
@@ -50,6 +55,18 @@ export const feedback = {
   errorBorder: palette.red30,
   warning: palette.amber90,
   success: palette.green90,
+};
+
+/** 오버레이 — 콘텐츠 위를 덮는 어두운 막 */
+export const overlay = {
+  faint: palette.black20,
+  light: palette.black30,
+  modal: palette.black70,
+};
+
+/** 포커스 — 키보드 포커스 표시 */
+export const focus = {
+  ring: palette.lilac40,
 };
 
 /** 순위 표시 */
@@ -94,6 +111,8 @@ const semantic = {
   border,
   action,
   feedback,
+  overlay,
+  focus,
   rank,
   glass,
   glassHover,
