@@ -12,9 +12,8 @@ const SOURCE_DIRECTORY = path.join(__dirname);
 const REPOSITORY_SOURCE_PREFIX = "src";
 const TOKEN_DIRECTORY_NAME = "styles";
 
-// 색 패턴 2개: rgb·rgba 함수, hex (#126 같은 이슈 번호는 제외)
+// 색 패턴 2개: rgb·rgba 함수, hex
 const COLOR_PATTERN = /rgba?\([^)]*\)|#[0-9a-fA-F]{3,8}\b/g;
-const ISSUE_NUMBER_PATTERN = /^#\d{1,3}$/;
 
 const collectSourceFiles = (directory) =>
   fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
@@ -34,9 +33,7 @@ const toRepositoryPath = (filePath) =>
   );
 
 const countHardcodedColors = (filePath) =>
-  (fs.readFileSync(filePath, "utf-8").match(COLOR_PATTERN) || []).filter(
-    (match) => !ISSUE_NUMBER_PATTERN.test(match)
-  ).length;
+  (fs.readFileSync(filePath, "utf-8").match(COLOR_PATTERN) || []).length;
 
 const colorCountByPath = Object.fromEntries(
   collectSourceFiles(SOURCE_DIRECTORY)

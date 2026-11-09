@@ -25,6 +25,7 @@ export const surface = {
 
 /** 텍스트 */
 export const text = {
+  // 밝기 순: primary > emphasis > muted > secondary > tertiary
   primary: palette.white,
   secondary: palette.white70,
   tertiary: palette.white60,

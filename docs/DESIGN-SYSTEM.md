@@ -8,19 +8,20 @@
 | 항목                     | 상태                                                                                        |
 | ------------------------ | ------------------------------------------------------------------------------------------- |
 | 토큰 2계층               | **적용** (`tokens.js` 원시 + `semantic.js` 의미, `theme.js`는 호환 레이어)                  |
-| 하드코딩 색상            | 293곳(22개 파일) → **56곳(11개 파일)**. 남은 곳은 게임 UI·엔딩뿐                            |
+| 하드코딩 색상            | 293곳(22개 파일) → **57곳(12개 파일)**. 남은 곳은 게임 UI·엔딩뿐                            |
 | 공용 컴포넌트            | `Button`·`Card`·`Modal`·`NameTag` (`src/components/ui/`). `GlassCard`는 제거                |
-| 대형 파일 분해           | `Home.styled.js` 810 → 223줄, `Board.styled.js` 552 → 254줄, `ImageGallery.jsx` 616 → 3파일 |
+| 대형 파일 분해           | `Home.styled.js` 810 → 223줄, `Board.styled.js` 552 → 254줄, `ImageGallery.jsx` 616 → 4파일 |
 | `unknown prop` 콘솔 경고 | **해소** (transient prop 적용)                                                              |
 | 3해상도 전수 캡처        | **완료** (이관된 화면 기준, 아래 참조)                                                      |
 | 규칙 테스트              | `designTokens.rules.test.js` + `designTokens.baseline.json` (줄이기만 허용)                 |
 
-### 남은 하드코딩 (56곳)
+### 남은 하드코딩 (57곳)
 
 | 구분        | 파일                                                         | 처리            |
 | ----------- | ------------------------------------------------------------ | --------------- |
 | 게임 플레이 | `src/components/GameUI/*`, `DialogueSystem.jsx`, `Intro.jsx` | #127에서 재구성 |
 | 엔딩·결과   | `Happy`, `Middle`, `Sad`, `Hidden`, `Result`                 | #128에서 재구성 |
+| 진입점      | `src/index.jsx` (`background-color: #000`)                   | 토큰으로 교체   |
 
 ### 디렉토리 구조
 
@@ -63,7 +64,7 @@ src/components/
 문서만으로는 규칙이 지켜지지 않아 **줄이기만 허용하는(ratchet) 테스트**로 강제한다.
 
 - `src/designTokens.rules.test.js`가 `src/` 파일의 하드코딩 색상(`rgba(`, `#hex` 등)을 센다.
-- `src/designTokens.baseline.json`에 파일별 허용 개수를 기록한다. 현재 합계 56.
+- `src/designTokens.baseline.json`에 파일별 허용 개수를 기록한다. 현재 합계 57.
 - **새 파일은 0이어야 한다.** 기준치에 없는 파일에 하드코딩이 있으면 실패한다.
 - 기존 파일이 늘면 실패한다. **줄었으면 같은 커밋에서 JSON도 낮춘다** (안 낮추면 실패).
 
@@ -71,11 +72,11 @@ src/components/
 
 컴포넌트는 **의미 토큰만** 참조한다. 원시 토큰을 직접 쓰지 않는다.
 
-| 파일                     | 역할                                                                                                           |
-| ------------------------ | -------------------------------------------------------------------------------------------------------------- |
-| `src/styles/tokens.js`   | **원시 토큰**. 팔레트·간격·반경·그림자·흐림·전환. 값 그 자체이며 "언제 쓰는지"는 말하지 않는다                 |
-| `src/styles/semantic.js` | **의미 토큰**. `surface`·`text`·`border`·`action`·`feedback`·`rank`·`glass`·`layer`. 이름이 용도를 말한다      |
-| `src/styles/theme.js`    | 호환 레이어. 기존 컴포넌트가 쓰던 이름(`colors`, `glassmorphism` 등)을 유지하되 값은 전부 의미 토큰을 참조한다 |
+| 파일                     | 역할                                                                                                                                   |
+| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/styles/tokens.js`   | **원시 토큰**. 팔레트·간격·반경·그림자·흐림·전환. 값 그 자체이며 "언제 쓰는지"는 말하지 않는다                                         |
+| `src/styles/semantic.js` | **의미 토큰**. `surface`·`text`·`border`·`action`·`feedback`·`rank`·`glass`·`overlay`·`focus`·`rankGlow`·`layer`. 이름이 용도를 말한다 |
+| `src/styles/theme.js`    | 호환 레이어. 기존 컴포넌트가 쓰던 이름(`colors`, `glassmorphism` 등)을 유지하되 값은 전부 의미 토큰을 참조한다                         |
 
 ### 왜 나눴나
 
@@ -105,7 +106,7 @@ import { colors, glassmorphism, media } from "../styles/theme";
 | `colors.primary`                    | `rgba(200, 182, 226, 0.9)`        | 연보라 — 메인 |
 | `colors.glassBg`                    | `rgba(0, 0, 0, 0.4)`              | 글라스 배경   |
 | `colors.glassBorder`                | `rgba(255, 255, 255, 0.15)`       | 글라스 테두리 |
-| `colors.textPrimary`                | `white`                           | 본문          |
+| `colors.textPrimary`                | `#ffffff`                         | 본문          |
 | `colors.textSecondary`              | `rgba(255, 255, 255, 0.7)`        | 보조 텍스트   |
 | `colors.textTertiary`               | `rgba(255, 255, 255, 0.6)`        | 부가 텍스트   |
 | `colors.error`                      | `rgba(220, 53, 69, 0.9)`          | 에러          |
@@ -146,6 +147,8 @@ border-radius: 20px
 | `zIndex.sticky`       | `100`  |
 | `zIndex.scrollButton` | `100`  |
 | `zIndex.modal`        | `1000` |
+| `zIndex.galleryModal` | `1500` |
+| `zIndex.imageViewer`  | `2000` |
 | `zIndex.progressBar`  | `1000` |
 
 ### 애니메이션
