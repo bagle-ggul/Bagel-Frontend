@@ -1,21 +1,14 @@
 {
-  "src/components/DetailRow.styled.js": 2,
   "src/components/DialogueSystem.jsx": 1,
   "src/components/GameUI/BagelChoiceButton.jsx": 19,
   "src/components/GameUI/BagelDialogBox.jsx": 14,
   "src/components/GameUI/BagelSelectPageComponent.jsx": 9,
   "src/components/GameUI/TypewriterText.jsx": 2,
   "src/components/ImageGallery.jsx": 33,
-  "src/components/ProfileContent.jsx": 5,
-  "src/components/StatsContent.jsx": 2,
-  "src/pages/GameOver.jsx": 13,
   "src/pages/Happy.jsx": 1,
-  "src/pages/Help.jsx": 1,
   "src/pages/Hidden.jsx": 1,
   "src/pages/Intro.jsx": 6,
   "src/pages/Middle.jsx": 1,
-  "src/pages/NotFound.jsx": 1,
-  "src/pages/Profile.jsx": 20,
   "src/pages/Result.jsx": 1,
   "src/pages/Sad.jsx": 1
 }

@@ -30,6 +30,7 @@ export const palette = {
   white05: "rgba(255, 255, 255, 0.05)",
 
   // 중립 — 검정 계열
+  black95: "rgba(0, 0, 0, 0.95)",
   black80: "rgba(0, 0, 0, 0.8)",
   black70: "rgba(0, 0, 0, 0.7)",
   black60: "rgba(0, 0, 0, 0.6)",
@@ -80,6 +81,10 @@ export const shadow = {
   button: "0 4px 12px rgba(0, 0, 0, 0.3)",
   buttonHover: "0 6px 20px rgba(200, 182, 226, 0.3)",
   subtle: "0 4px 15px rgba(200, 182, 226, 0.15)",
+  text: "0 4px 12px rgba(0, 0, 0, 0.5)", // 제목 글자 그림자
+  avatar: "0 8px 20px rgba(0, 0, 0, 0.3)", // 프로필 원형 이미지
+  avatarHover: "0 12px 30px rgba(200, 182, 226, 0.2)",
+  viewerImage: "0 20px 60px rgba(0, 0, 0, 0.7)", // 갤러리 확대 이미지
 };
 
 /** 흐림 강도 (글라스모피즘) */

@@ -20,6 +20,7 @@ export const surface = {
   faint: palette.white05, // 카드 안에서 한 단계 더 옅게 구분하는 면
   accentFaint: palette.lilac10, // 강조 대상 행·카드의 옅은 보라 면
   accentHover: palette.lilac20, // 행·카드 hover 시 보라 면
+  control: palette.black60, // 이미지 위에 얹는 조작 버튼·표시 면
 };
 
 /** 텍스트 */
@@ -66,6 +67,8 @@ export const overlay = {
   faint: palette.black20,
   light: palette.black30,
   modal: palette.black70,
+  dim: palette.black50, // 화면 일부를 어둡게 눌러 글자를 읽히게 하는 막
+  viewer: palette.black95, // 이미지 뷰어 전체화면 배경
 };
 
 /** 포커스 — 키보드 포커스 표시 */
@@ -113,6 +116,8 @@ export const layer = {
   sticky: 100,
   scrollButton: 100,
   modal: 1000,
+  galleryModal: 1500, // 홈 위에 뜨는 이미지 갤러리 목록
+  imageViewer: 2000, // 갤러리 목록 위의 확대 뷰어
   progressBar: 1000,
 };
 
