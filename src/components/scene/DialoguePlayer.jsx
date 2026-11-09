@@ -9,6 +9,7 @@ import { useAutoPlay } from "../../hooks/useAutoPlay";
 import { useDialogueFlow } from "../../hooks/useDialogueFlow";
 import { useImagePreload } from "../../hooks/useImagePreload";
 import { TYPING_SPEED_MS, useTypewriter } from "../../hooks/useTypewriter";
+import { motionCurve, motionSeconds } from "../../styles/tokens";
 
 import AmbientEffect from "./AmbientEffect";
 import CharacterSprite from "./CharacterSprite";
@@ -17,6 +18,7 @@ import DialogueBox from "./DialogueBox";
 import DialogueLogModal from "./DialogueLogModal";
 import {
   ChoiceArea,
+  ChoiceLayer,
   DialogueLayer,
   EndSlotArea,
   Screen,
@@ -110,14 +112,21 @@ function DialoguePlayer({
           <SpriteLayer>
             <CharacterSprite src={sprite} alt="" reduced={reduced} />
           </SpriteLayer>
-          <DialogueLayer>
-            {isChoicePhase && (
+          {/* 선택지: 막과 함께 서서히 등장, 고르면 바로 사라짐 (선택 반응을 즉시 보여 줌) */}
+          {isChoicePhase && (
+            <ChoiceLayer
+              key={`choices-${flow.sceneIndex}`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: motionSeconds.base, ease: motionCurve.soft }}
+            >
               <ChoiceArea>
                 <ChoiceList choices={choices} onChoose={choose} />
               </ChoiceArea>
-            )}
-            {dialogueBoxProps && <DialogueBox {...dialogueBoxProps} />}
-          </DialogueLayer>
+            </ChoiceLayer>
+          )}
+          {/* 대사창은 선택지 막 위 (선택 중에도 마지막 대사를 또렷하게) */}
+          <DialogueLayer>{dialogueBoxProps && <DialogueBox {...dialogueBoxProps} />}</DialogueLayer>
           <PlayerControls
             mode={mode}
             onModeChange={setMode}

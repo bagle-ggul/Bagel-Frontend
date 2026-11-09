@@ -3,14 +3,16 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 
 import { media } from "../../styles/theme";
+import { motionCurve, motionSeconds } from "../../styles/tokens";
 
-const ENTRANCE_SECONDS = 0.5;
 const ENTRANCE_OFFSET_PIXELS = 24; // 등장 시작 위치 (아래로, 화면 밖으로 잘려 틈 없음)
 const BREATH_LOOP_SECONDS = 6;
 const BREATH_SCALE_KEYFRAMES = [1, 1.006, 1]; // 대기 숨쉬기 (아래 기준 세로 배율)
 
-// 바깥: 등장·교체 담당
+// 바깥: 등장·교체 담당 (교체 중 두 그림이 나란히 서지 않고 같은 자리에 겹치도록 절대 배치)
 const Entrance = styled(motion.div)`
+  position: absolute;
+  inset: 0;
   display: flex;
   align-items: flex-end;
   justify-content: center;
@@ -51,8 +53,11 @@ function CharacterSprite({ src, alt, reduced }) {
           key={src}
           initial={{ y: ENTRANCE_OFFSET_PIXELS, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: ENTRANCE_SECONDS }}
+          exit={{
+            opacity: 0,
+            transition: { duration: motionSeconds.base, ease: motionCurve.soft },
+          }}
+          transition={{ duration: motionSeconds.slow, ease: motionCurve.soft }}
         >
           <Breath
             data-testid="character-idle"
