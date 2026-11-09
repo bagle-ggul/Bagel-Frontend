@@ -2,12 +2,10 @@ import styled from "styled-components";
 
 import { Button } from "../components/ui";
 import { glass, layer, overlay, surface, text } from "../styles/semantic";
+import { media } from "../styles/theme";
 import { spacing } from "../styles/tokens";
 
 // 홈 화면 레이아웃: 배경, 데스크톱·모바일 메뉴 패널, 캐릭터, 하단 모서리 버튼
-
-const MOBILE_BREAKPOINT = "768px";
-const SMALL_MOBILE_BREAKPOINT = "480px";
 
 export const Wrapper = styled.div`
   position: fixed;
@@ -48,7 +46,7 @@ export const MainWrapper = styled.div`
     max-width: 50vw;
   }
 
-  @media (max-width: ${MOBILE_BREAKPOINT}) {
+  ${media.tablet} {
     display: none; /* 모바일에서는 MobileContainer로 이동 */
   }
 `;
@@ -79,7 +77,7 @@ export const CharacterWrapper = styled.div`
     height: 60vh;
   }
 
-  @media (max-width: ${MOBILE_BREAKPOINT}) {
+  ${media.tablet} {
     display: none; /* 모바일에서는 MobileContainer로 이동 */
   }
 `;
@@ -88,7 +86,7 @@ export const CharacterWrapper = styled.div`
 export const MobileContainer = styled.div`
   display: none;
 
-  @media (max-width: ${MOBILE_BREAKPOINT}) {
+  ${media.tablet} {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -101,7 +99,7 @@ export const MobileContainer = styled.div`
     gap: 0;
   }
 
-  @media (max-width: ${SMALL_MOBILE_BREAKPOINT}) {
+  ${media.mobile} {
     bottom: 9vh;
     gap: 0;
   }
@@ -123,7 +121,7 @@ export const MobileCharacterWrapper = styled.div`
     filter: drop-shadow(0 0 20px ${overlay.light});
   }
 
-  @media (max-width: ${SMALL_MOBILE_BREAKPOINT}) {
+  ${media.mobile} {
     img {
       height: 33vh;
     }
@@ -153,7 +151,7 @@ export const MobileMainWrapper = styled.div`
   max-width: 90vw;
   z-index: ${layer.dropdown};
 
-  @media (max-width: ${SMALL_MOBILE_BREAKPOINT}) {
+  ${media.mobile} {
     padding: 1.5rem 1.2rem;
     width: 90vw;
     max-width: 90vw;
@@ -170,12 +168,12 @@ export const BottomRightButtonGroup = styled.div`
   align-items: center;
   z-index: ${layer.sticky};
 
-  @media (max-width: ${MOBILE_BREAKPOINT}) {
+  ${media.tablet} {
     bottom: 15px;
     right: 15px;
   }
 
-  @media (max-width: ${SMALL_MOBILE_BREAKPOINT}) {
+  ${media.mobile} {
     bottom: 10px;
     right: 10px;
   }
@@ -193,12 +191,12 @@ export const CornerButton = styled(Button)`
     background: ${surface.glassHover};
   }
 
-  @media (max-width: ${MOBILE_BREAKPOINT}) {
+  ${media.tablet} {
     font-size: 0.9rem;
     padding: 0.8rem 1.2rem;
   }
 
-  @media (max-width: ${SMALL_MOBILE_BREAKPOINT}) {
+  ${media.mobile} {
     font-size: 0.8rem;
     padding: 0.7rem 1rem;
   }
@@ -211,12 +209,12 @@ export const BottomVersionInfo = styled(CornerButton)`
   left: 20px;
   z-index: ${layer.sticky};
 
-  @media (max-width: ${MOBILE_BREAKPOINT}) {
+  ${media.tablet} {
     bottom: 15px;
     left: 15px;
   }
 
-  @media (max-width: ${SMALL_MOBILE_BREAKPOINT}) {
+  ${media.mobile} {
     bottom: 10px;
     left: 10px;
   }

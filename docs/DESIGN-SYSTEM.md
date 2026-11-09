@@ -5,23 +5,16 @@
 
 ## 진행 현황
 
-| 항목                     | 상태                                                                                        |
-| ------------------------ | ------------------------------------------------------------------------------------------- |
-| 토큰 2계층               | **적용** (`tokens.js` 원시 + `semantic.js` 의미, `theme.js`는 호환 레이어)                  |
-| 하드코딩 색상            | 293곳(22개 파일) → **2곳(2개 파일)**. 남은 곳은 결과·진입점뿐                               |
-| 공용 컴포넌트            | `Button`·`Card`·`Modal`·`NameTag` (`src/components/ui/`). `GlassCard`는 제거                |
-| 대형 파일 분해           | `Home.styled.js` 810 → 223줄, `Board.styled.js` 552 → 254줄, `ImageGallery.jsx` 616 → 4파일 |
-| `unknown prop` 콘솔 경고 | **해소** (transient prop 적용)                                                              |
-| 게임 플레이 화면         | **완료** (`src/components/scene/` 장면 플레이어, #127)                                      |
-| 3해상도 전수 캡처        | **완료** (이관된 화면 기준, 아래 참조)                                                      |
-| 규칙 테스트              | `designTokens.rules.test.js` + `designTokens.baseline.json` (줄이기만 허용)                 |
-
-### 남은 하드코딩 (2곳)
-
-| 구분   | 파일                                       | 처리          |
-| ------ | ------------------------------------------ | ------------- |
-| 결과   | `Result`                                   | 재구성 예정   |
-| 진입점 | `src/index.jsx` (`background-color: #000`) | 토큰으로 교체 |
+| 항목                     | 상태                                                                                           |
+| ------------------------ | ---------------------------------------------------------------------------------------------- |
+| 토큰 2계층               | **적용** (`tokens.js` 원시 + `semantic.js` 의미, `theme.js`는 호환 레이어)                     |
+| 하드코딩 색상            | 293곳(22개 파일) → **0곳** (#131에서 결과 화면·진입점까지 토큰으로 교체)                       |
+| 공용 컴포넌트            | `Button`·`Card`·`Modal`·`NameTag` (`src/components/ui/`). `GlassCard`는 제거                   |
+| 대형 파일 분해           | `Home.styled.js` 810 → 223줄, `Board.styled.js` 552 → 254줄, `ImageGallery.jsx` 616 → 4파일    |
+| `unknown prop` 콘솔 경고 | **해소** (transient prop 적용)                                                                 |
+| 게임 플레이 화면         | **완료** (`src/components/scene/` 장면 플레이어, #127)                                         |
+| 3해상도 전수 캡처        | **완료** (이관된 화면 기준, 아래 참조)                                                         |
+| 규칙 테스트              | `designTokens.rules.test.js`(하드코딩 색) · `breakpoints.rules.test.js`(기준점 숫자 직접 사용) |
 
 ### 디렉토리 구조
 
@@ -118,7 +111,7 @@ src/components/
 문서만으로는 규칙이 지켜지지 않아 **줄이기만 허용하는(ratchet) 테스트**로 강제한다.
 
 - `src/designTokens.rules.test.js`가 `src/` 파일의 하드코딩 색상(`rgba(`, `#hex` 등)을 센다.
-- `src/designTokens.baseline.json`에 파일별 허용 개수를 기록한다. 현재 합계 6.
+- `src/designTokens.baseline.json`에 파일별 허용 개수를 기록한다. 현재 합계 0(빈 객체).
 - **새 파일은 0이어야 한다.** 기준치에 없는 파일에 하드코딩이 있으면 실패한다.
 - 기존 파일이 늘면 실패한다. **줄었으면 같은 커밋에서 JSON도 낮춘다** (안 낮추면 실패).
 
@@ -189,8 +182,9 @@ border-radius: 20px
 | `desktop` | `1024px` |
 | `large`   | `1440px` |
 
-`media` 헬퍼로 미디어 쿼리를 생성할 수 있다 (`media.mobile`, `media.tablet` 등). 그러나
-대부분의 컴포넌트는 `@media (max-width: 768px)`를 직접 쓴다.
+미디어 쿼리는 `media` 헬퍼(`media.mobile`, `media.tablet` 등, `src/styles/theme.js`)로 쓴다.
+위 표의 값을 `@media (max-width: 768px)`처럼 숫자로 직접 쓰면 `src/breakpoints.rules.test.js`가
+실패시킨다. 표에 없는 화면별 기준점(예: 홈 `1200px`·`900px`·`360px`)만 숫자로 쓴다.
 
 ### z-index
 

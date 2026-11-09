@@ -240,7 +240,7 @@ describe("useScrollToTop", () => {
   it("임계값 아래에서는 버튼을 숨긴다", () => {
     const { result } = renderHook(() => useScrollToTop(300));
 
-    expect(result.current.showScrollTop).toBe(false);
+    expect(result.current.shouldShowScrollTop).toBe(false);
   });
 
   it("임계값을 넘으면 버튼을 표시한다", async () => {
@@ -248,7 +248,7 @@ describe("useScrollToTop", () => {
 
     const { result } = renderHook(() => useScrollToTop(300));
 
-    await waitFor(() => expect(result.current.showScrollTop).toBe(true));
+    await waitFor(() => expect(result.current.shouldShowScrollTop).toBe(true));
   });
 
   it("임계값을 인자로 조정할 수 있다", async () => {
@@ -256,7 +256,7 @@ describe("useScrollToTop", () => {
 
     const { result } = renderHook(() => useScrollToTop(100));
 
-    await waitFor(() => expect(result.current.showScrollTop).toBe(true));
+    await waitFor(() => expect(result.current.shouldShowScrollTop).toBe(true));
   });
 
   it("스크롤 이벤트가 발생하면 표시 여부를 갱신한다", async () => {
@@ -267,7 +267,7 @@ describe("useScrollToTop", () => {
       window.dispatchEvent(new Event("scroll"));
     });
 
-    await waitFor(() => expect(result.current.showScrollTop).toBe(true));
+    await waitFor(() => expect(result.current.shouldShowScrollTop).toBe(true));
   });
 
   it("맨 위로 이동은 부드러운 스크롤을 사용한다", () => {

@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import { text } from "../styles/semantic";
 import { componentStyles } from "../styles/theme";
+import { media } from "../styles/theme";
 import { shadow } from "../styles/tokens";
 
 import { DetailRow, DetailTitle, DetailValue } from "./DetailRow.styled";
@@ -16,12 +17,12 @@ const StatsTitle = styled(motion.h3)`
   text-align: center;
   text-shadow: ${shadow.text};
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     font-size: 1.3rem;
     margin-bottom: 1rem;
   }

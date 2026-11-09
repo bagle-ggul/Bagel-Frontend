@@ -45,7 +45,7 @@ const Content = styled.div`
  * 장면 배경: 배경 크로스페이드, 가독성 그라데이션, 장면 전환 막
  * 첫 진입은 검은 막에서 페이드 인
  */
-function SceneBackdrop({ src, sceneKey, reduced, children }) {
+function SceneBackdrop({ src, sceneKey, isReducedMotion, children }) {
   return (
     <Stage>
       <AnimatePresence initial={false}>
@@ -64,7 +64,7 @@ function SceneBackdrop({ src, sceneKey, reduced, children }) {
         key={sceneKey}
         initial={{ opacity: 1 }}
         animate={{ opacity: 0 }}
-        transition={{ duration: reduced ? VEIL_FADE_REDUCED_SECONDS : VEIL_FADE_SECONDS }}
+        transition={{ duration: isReducedMotion ? VEIL_FADE_REDUCED_SECONDS : VEIL_FADE_SECONDS }}
       />
       <Content>{children}</Content>
     </Stage>
@@ -74,7 +74,7 @@ function SceneBackdrop({ src, sceneKey, reduced, children }) {
 SceneBackdrop.propTypes = {
   src: PropTypes.string.isRequired,
   sceneKey: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  reduced: PropTypes.bool.isRequired,
+  isReducedMotion: PropTypes.bool.isRequired,
   children: PropTypes.node,
 };
 

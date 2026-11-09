@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import styled from "styled-components";
 
 import { action, border, layer, overlay, surface, text } from "../styles/semantic";
+import { media } from "../styles/theme";
 import { blur, radius, shadow, transition } from "../styles/tokens";
 
 import { RoundIconButton } from "./ImageGallery.styled";
@@ -38,7 +39,7 @@ export const ExpandedImage = styled(motion.img)`
   border-radius: 16px;
   box-shadow: ${shadow.viewerImage};
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     max-width: 90vw;
     max-height: 60vh;
   }
@@ -54,7 +55,7 @@ export const ImageControls = styled.div`
   gap: 1rem;
   align-items: center;
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     bottom: -50px;
     gap: 0.8rem;
   }
@@ -85,12 +86,12 @@ export const DownloadButton = styled(motion.button)`
     transform: scale(0.98);
   }
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     padding: 0.7rem 1.2rem;
     font-size: 0.9rem;
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     padding: 0.6rem 1rem;
     font-size: 0.85rem;
     gap: 0.4rem;
@@ -141,25 +142,25 @@ const NavButton = styled(motion.button)`
     transform: translateY(-50%);
   }
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     width: 50px;
     height: 50px;
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     width: 45px;
     height: 45px;
   }
 `;
 
-export const PrevButton = styled(NavButton)`
+export const PreviousButton = styled(NavButton)`
   left: 20px;
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     left: 15px;
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     left: 10px;
   }
 `;
@@ -167,11 +168,11 @@ export const PrevButton = styled(NavButton)`
 export const NextButton = styled(NavButton)`
   right: 20px;
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     right: 15px;
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     right: 10px;
   }
 `;
@@ -191,7 +192,7 @@ export const ImageCounter = styled.div`
   font-size: 0.9rem;
   font-weight: 500;
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     top: 15px;
     font-size: 0.8rem;
     padding: 0.4rem 0.8rem;

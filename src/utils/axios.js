@@ -15,9 +15,7 @@ const axiosInstance = axios.create({
   withCredentials: true,
 });
 
-// 요청마다 토큰을 자동 주입한다.
-// 이전에는 저장되지 않는 키(authToken)를 읽어 인터셉터가 사실상 죽어 있었고,
-// 그래서 모든 호출부가 Authorization 헤더를 수동으로 붙이고 있었다.
+// 요청마다 토큰 자동 주입 (호출부는 Authorization 헤더를 직접 붙이지 않음)
 axiosInstance.interceptors.request.use(
   (config) => {
     const token = getAuthToken();
@@ -41,8 +39,7 @@ axiosInstance.interceptors.request.use(
  */
 const AUTH_FAILURE_STATUS = [401, 403];
 
-// 토큰 발급은 홈의 시작 모달에서 이뤄지므로 "/"가 목적지다.
-// (이전에는 존재하지 않는 "/login"으로 보내고 있었다)
+// 인증 실패 시 홈("/")으로 이동 (토큰 발급은 홈의 시작 모달에서)
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {

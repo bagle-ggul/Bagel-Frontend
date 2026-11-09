@@ -30,6 +30,7 @@ export const palette = {
   white05: "rgba(255, 255, 255, 0.05)",
 
   // 중립 — 검정 계열
+  black: "#000000",
   black95: "rgba(0, 0, 0, 0.95)",
   black80: "rgba(0, 0, 0, 0.8)",
   black70: "rgba(0, 0, 0, 0.7)",

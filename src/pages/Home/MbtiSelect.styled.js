@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import { action, border, surface, text } from "../../styles/semantic";
+import { media } from "../../styles/theme";
 import { blur, radius, spacing, transition } from "../../styles/tokens";
 
 export const MbtiCompactContainer = styled.div`
@@ -26,7 +27,7 @@ export const MbtiTitle = styled.h4`
   font-weight: 600;
   color: ${text.accent};
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     font-size: 0.9rem;
   }
 `;
@@ -56,7 +57,7 @@ export const MbtiLabel = styled.span`
   font-weight: 500;
   color: ${text.secondary};
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     font-size: 0.8rem;
     min-width: 2.8rem;
   }
@@ -88,7 +89,7 @@ export const MbtiButton = styled.button`
     transform: translateY(-1px);
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     padding: 0.5rem 0.4rem;
     font-size: 0.8rem;
   }
