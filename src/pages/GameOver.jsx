@@ -6,6 +6,7 @@ import styled, { keyframes } from "styled-components";
 import { scoreAtom } from "../atom/atom";
 import { Button, Card } from "../components/ui";
 import { ROUTES } from "../constants/routes";
+import { media } from "../styles/theme";
 import axios from "../utils/axios";
 import { logger } from "../utils/logger";
 
@@ -51,13 +52,13 @@ const NavigationContainer = styled(Card)`
   z-index: 2;
   animation: ${modalFadeIn} 0.8s ease-out forwards;
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     width: 280px;
     padding: 1.5rem;
     bottom: 6%;
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     width: 100%;
     max-width: 90%;
     padding: 1rem;
@@ -74,7 +75,7 @@ const NavButton = styled(Button)`
   padding: 1.2rem 2rem;
   font-size: 1.3rem;
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     padding: 1rem 1.5rem;
     font-size: 1.1rem;
   }
@@ -106,13 +107,13 @@ const CenteredDiv = styled.div`
     transform: translate(-50%, -60%);
     z-index: 1;
 
-    @media (max-width: 768px) {
+    ${media.tablet} {
       max-width: 85%;
       max-height: 60vh;
       transform: translate(-50%, -55%);
     }
 
-    @media (max-width: 480px) {
+    ${media.mobile} {
       max-width: 120%;
       max-height: 50vh;
       transform: translate(-50%, -50%);
@@ -121,8 +122,8 @@ const CenteredDiv = styled.div`
 `;
 
 function GameOver() {
-  const [fadeOutEffect, setFadeOutEffect] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [isFadingOut, setIsFadingOut] = useState(false);
+  const [isNavigationVisible, setIsNavigationVisible] = useState(false);
   const navigate = useNavigate();
   const score = useRecoilValue(scoreAtom);
   const setScore = useSetRecoilState(scoreAtom); // 상태 업데이트를 위한 함수
@@ -130,7 +131,7 @@ function GameOver() {
   useEffect(() => {
     // 2초 후에 모달 표시
     const timer = setTimeout(() => {
-      setShowModal(true);
+      setIsNavigationVisible(true);
     }, 2000);
 
     return () => clearTimeout(timer);
@@ -153,12 +154,12 @@ function GameOver() {
   };
 
   const handleNavigation = async (path, navigationState) => {
-    setFadeOutEffect(true);
+    setIsFadingOut(true);
     setTimeout(() => {
       setScore(0); // score 초기화
       navigate(path, { state: navigationState });
       handleSubmit();
-    }, 1000); // 1초 후에 페이지를 이동합니다.
+    }, 1000); // 페이드아웃(1초) 후 이동
   };
 
   const handleHome = () => handleNavigation("/");
@@ -168,9 +169,9 @@ function GameOver() {
   const handlePlayAgain = () => handleNavigation(ROUTES.INTRO, { isRegression: true });
 
   return (
-    <CenteredDiv className={fadeOutEffect ? "fade-out" : ""}>
+    <CenteredDiv className={isFadingOut ? "fade-out" : ""}>
       <img src="/img/her_underwater_gameover.webp" alt="게임오버 캐릭터" />
-      {showModal && (
+      {isNavigationVisible && (
         <NavigationContainer>
           <NavButton variant="primary" onClick={handlePlayAgain}>
             회귀 하기

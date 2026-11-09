@@ -45,7 +45,7 @@ const Sprite = styled.img`
  * 캐릭터 그림: 화면 아래 고정 > 등장(아래에서 올라오며 페이드 인), 교체 크로스페이드, 숨쉬기
  * src가 null이면 그리지 않음
  */
-function CharacterSprite({ src, alt, reduced }) {
+function CharacterSprite({ src, alt, isReducedMotion }) {
   return (
     <AnimatePresence mode="sync">
       {src && (
@@ -61,10 +61,10 @@ function CharacterSprite({ src, alt, reduced }) {
         >
           <Breath
             data-testid="character-idle"
-            data-idle={reduced ? "off" : "on"}
-            animate={reduced ? { scaleY: 1 } : { scaleY: BREATH_SCALE_KEYFRAMES }}
+            data-idle={isReducedMotion ? "off" : "on"}
+            animate={isReducedMotion ? { scaleY: 1 } : { scaleY: BREATH_SCALE_KEYFRAMES }}
             transition={
-              reduced
+              isReducedMotion
                 ? { duration: 0 }
                 : { duration: BREATH_LOOP_SECONDS, repeat: Infinity, ease: "easeInOut" }
             }
@@ -80,7 +80,7 @@ function CharacterSprite({ src, alt, reduced }) {
 CharacterSprite.propTypes = {
   src: PropTypes.string,
   alt: PropTypes.string.isRequired,
-  reduced: PropTypes.bool.isRequired,
+  isReducedMotion: PropTypes.bool.isRequired,
 };
 
 export default CharacterSprite;

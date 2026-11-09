@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import { border, surface, text } from "../../styles/semantic";
+import { media } from "../../styles/theme";
 import { radius } from "../../styles/tokens";
 
 // 크레딧 모달 내용: 팀 정보 카드, 팀원 목록
@@ -13,7 +14,7 @@ export const TeamInfo = styled.div`
   border-radius: ${radius.md};
   border: 1px solid ${border.subtle};
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     padding: 1.2rem;
     margin-bottom: 1.5rem;
   }
@@ -25,7 +26,7 @@ export const TeamName = styled.h3`
   margin-bottom: 0.3rem;
   color: ${text.accent};
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     font-size: 1.5rem;
   }
 `;
@@ -38,7 +39,7 @@ export const TeamDetails = styled.div`
   opacity: 0.85;
   line-height: 1.6;
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     font-size: 0.9rem;
   }
 `;
@@ -75,7 +76,7 @@ export const TeamMember = styled.div`
     transform: translateX(5px);
   }
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     padding: 1rem;
   }
 `;
@@ -84,7 +85,7 @@ export const MemberName = styled.span`
   font-size: 1.3rem;
   font-weight: 700;
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     font-size: 1.1rem;
   }
 `;
@@ -94,7 +95,7 @@ export const MemberRole = styled.span`
   opacity: 0.85;
   line-height: 1.5;
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     font-size: 0.85rem;
   }
 `;

@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import styled from "styled-components";
 
 import { action, border, focus, glass, layer, surface, text } from "../styles/semantic";
+import { media } from "../styles/theme";
 import { blur, radius, shadow, spacing, transition } from "../styles/tokens";
 
 // 갤러리 목록 모달 오버레이
@@ -35,12 +36,12 @@ export const GalleryModalContent = styled(motion.div)`
   box-shadow: ${glass.boxShadow};
   color: ${text.primary};
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     padding: 2rem 1.5rem;
     max-width: 95vw;
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     padding: 1.5rem 1rem;
   }
 `;
@@ -53,12 +54,12 @@ export const GalleryTitle = styled.h2`
   text-shadow: ${shadow.text};
   color: ${text.accent};
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     font-size: 1.8rem;
     margin-bottom: 1.5rem;
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     font-size: 1.5rem;
   }
 `;
@@ -69,12 +70,12 @@ export const ImageGrid = styled.div`
   gap: ${spacing.lg};
   margin: 0 0 1.5rem 0;
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     gap: ${spacing.md};
   }
 `;
@@ -124,12 +125,12 @@ export const RoundIconButton = styled(motion.button)`
     transform: scale(0.95);
   }
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     width: 44px;
     height: 44px;
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     width: 40px;
     height: 40px;
   }
@@ -153,12 +154,12 @@ export const GalleryCloseButton = styled(RoundIconButton)`
     box-shadow: 0 0 0 3px ${focus.ring};
   }
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     top: 1rem;
     right: 1rem;
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     top: 0.8rem;
     right: 0.8rem;
   }

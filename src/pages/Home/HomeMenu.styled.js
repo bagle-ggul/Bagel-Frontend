@@ -3,6 +3,7 @@ import styled, { css } from "styled-components";
 
 import { Button } from "../../components/ui";
 import { border, surface, text } from "../../styles/semantic";
+import { media } from "../../styles/theme";
 import { radius, shadow } from "../../styles/tokens";
 
 // 홈 메뉴: 제목, 아이콘 버튼 3개(GitHub, 갤러리, 음악), 주요 버튼
@@ -16,11 +17,11 @@ export const Title = styled.h1`
     0 6px 20px ${surface.strong},
     0 0 40px ${border.strong};
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     font-size: 3.5rem;
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     font-size: 2.5rem;
   }
 `;
@@ -31,11 +32,11 @@ export const Subtitle = styled.p`
   opacity: 0.9;
   margin: 0;
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     font-size: 1rem;
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     font-size: 0.9rem;
   }
 `;
@@ -53,11 +54,11 @@ export const IconControlGroup = styled.div`
     opacity: 0.9;
   }
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     margin-top: 0.4rem;
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     margin-top: 0.3rem;
   }
 `;
@@ -91,14 +92,14 @@ const iconButtonStyles = css`
     height: 20px;
   }
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     svg {
       width: 18px;
       height: 18px;
     }
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     svg {
       width: 16px;
       height: 16px;
@@ -130,11 +131,11 @@ export const ButtonGroup = styled.div`
 export const ButtonWrapper = styled(motion.div)`
   width: 40%;
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     width: 60%;
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     width: 80%;
   }
 `;
@@ -148,11 +149,11 @@ export const MenuButton = styled(Button)`
     box-shadow: ${shadow.buttonHover};
   }
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     font-size: 1.1rem;
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     font-size: 1rem;
   }
 `;

@@ -5,6 +5,7 @@ import { RecoilRoot } from "recoil";
 import { createGlobalStyle } from "styled-components";
 
 import router from "./Route";
+import { surface } from "./styles/semantic";
 
 const GlobalStyle = createGlobalStyle`
 html, body, div, span, applet, object, iframe,
@@ -48,7 +49,7 @@ body {
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
-  background-color: #000;
+  background-color: ${surface.page};
 }
 menu, ol, ul {
   list-style: none;

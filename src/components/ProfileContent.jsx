@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 import { border, text } from "../styles/semantic";
 import { componentStyles } from "../styles/theme";
+import { media } from "../styles/theme";
 import { shadow } from "../styles/tokens";
 
 import { DetailRow, DetailTitle, DetailValue } from "./DetailRow.styled";
@@ -25,13 +26,13 @@ const ProfileImage = styled(motion.img)`
     box-shadow: ${shadow.avatarHover};
   }
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     width: 120px;
     height: 120px;
     transform: translateY(-8px);
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     width: 100px;
     height: 100px;
     margin-bottom: 1rem;
@@ -47,12 +48,12 @@ const UserName = styled(motion.h2)`
   text-shadow: ${shadow.text};
   letter-spacing: -0.02em;
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     font-size: 2rem;
     margin-bottom: 1.2rem;
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     font-size: 1.8rem;
     margin-bottom: 1rem;
   }

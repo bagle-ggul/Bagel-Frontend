@@ -76,7 +76,7 @@ function Board() {
   // 커스텀 훅들 사용
   const { data, loadNextPage, retryLoad } = useRankingData(pageSize);
   const scrollProgress = useScrollProgress();
-  const { showScrollTop, scrollToTop } = useScrollToTop(300);
+  const { shouldShowScrollTop, scrollToTop } = useScrollToTop(300);
   const { loadMoreRef, isLoading: isLoadingMore } = useInfiniteScrollObserver(
     loadNextPage,
     data.hasNextPage
@@ -222,7 +222,7 @@ function Board() {
       <ScrollProgressBar $progress={scrollProgress} />
 
       {/* 맨 위로 버튼 */}
-      {showScrollTop && (
+      {shouldShowScrollTop && (
         <ScrollToTopButton
           onClick={scrollToTop}
           initial={{ opacity: 0, scale: 0.8 }}

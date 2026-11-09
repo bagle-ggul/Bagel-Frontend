@@ -25,7 +25,7 @@ describe("axios 요청 인터셉터", () => {
     localStorage.clear();
   });
 
-  // 이전에는 저장되지 않는 키(authToken)를 읽어 인터셉터가 사실상 죽어 있었다
+  // 저장 키(auth.js) <-> 인터셉터 조회 키 일치 확인
   it("저장된 토큰을 Authorization 헤더로 주입한다", () => {
     setRefreshToken("refresh-abc");
 

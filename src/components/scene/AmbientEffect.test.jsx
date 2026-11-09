@@ -8,7 +8,7 @@ MotionGlobalConfig.skipAnimations = true;
 
 describe("AmbientEffect", () => {
   it("rain은 입자 48개를 그린다", () => {
-    render(<AmbientEffect kind="rain" reduced={false} />);
+    render(<AmbientEffect kind="rain" isReducedMotion={false} />);
     expect(screen.getAllByTestId("ambient-particle")).toHaveLength(48);
   });
 
@@ -17,22 +17,22 @@ describe("AmbientEffect", () => {
     ["petals", 18],
     ["sparkle", 20],
   ])("%s는 입자 %i개를 그린다", (kind, count) => {
-    render(<AmbientEffect kind={kind} reduced={false} />);
+    render(<AmbientEffect kind={kind} isReducedMotion={false} />);
     expect(screen.getAllByTestId("ambient-particle")).toHaveLength(count);
   });
 
   it("none이면 아무것도 그리지 않는다", () => {
-    render(<AmbientEffect kind="none" reduced={false} />);
+    render(<AmbientEffect kind="none" isReducedMotion={false} />);
     expect(screen.queryAllByTestId("ambient-particle")).toHaveLength(0);
   });
 
-  it("reduced면 아무것도 그리지 않는다", () => {
-    render(<AmbientEffect kind="dust" reduced />);
+  it("isReducedMotion면 아무것도 그리지 않는다", () => {
+    render(<AmbientEffect kind="dust" isReducedMotion />);
     expect(screen.queryAllByTestId("ambient-particle")).toHaveLength(0);
   });
 
   it("효과 층은 aria-hidden이다", () => {
-    render(<AmbientEffect kind="petals" reduced={false} />);
+    render(<AmbientEffect kind="petals" isReducedMotion={false} />);
     expect(screen.getByTestId("ambient-layer")).toHaveAttribute("aria-hidden", "true");
   });
 });

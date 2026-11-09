@@ -4,43 +4,35 @@ import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 import { scoreAtom } from "../atom/atom";
+import { Button } from "../components/ui";
 import { ENDING_ROUTE_BY_ID, resolveEnding } from "../game/ending";
 import { getChoiceHistory } from "../game/progress";
 import axios from "../utils/axios";
 import { logger } from "../utils/logger";
 
-const CenteredButton = styled.button`
+// 결과 확인 화면: 카페 배경 + 레몬에이드 그림 + 하단 확인 버튼
+const ResultScreen = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  background-image: url("/img/bg_cafe_main.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  img {
+    margin-top: 320px;
+  }
+`;
+
+// 하단 중앙 고정 확인 버튼
+const ResultConfirmButton = styled(Button)`
   position: absolute;
   top: 90%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 1rem 2rem;
-  font-size: 1.5rem;
-  cursor: pointer;
-  background-color: saddlebrown;
-  color: white;
-  border: none;
-  border-radius: 15px;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    transition: all 0.3s;
-    background-color: #e5792b;
-  }
-`;
-
-const CenteredDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-image: url("/img/bg_cafe_main.webp");
-  background-size: cover;
-  background-repeat: no-repeat;
-  width: 100%;
-  height: 100vh; /* Full viewport height */
-  img {
-    margin-top: 320px;
-  }
 `;
 
 function Result() {
@@ -59,8 +51,7 @@ function Result() {
       // 토큰은 axios 인터셉터가 주입한다
       await axios.post("/api/game/over", userData);
     } catch (error) {
-      // 전송에 실패해도 엔딩은 그대로 보여준다. 기록만 남지 않을 뿐이다.
-      // (이전에는 회원가입 쪽 문구인 "중복된 이메일입니다"를 띄우고 있었다)
+      // 전송 실패해도 엔딩 진행 (랭킹 기록만 누락)
       logger.error("게임 결과 전송 실패:", error);
     }
   };
@@ -73,10 +64,12 @@ function Result() {
   };
 
   return (
-    <CenteredDiv>
+    <ResultScreen>
       <img src="/img/mc_result_main.webp" alt="레몬에이드" />
-      <CenteredButton onClick={handleClick}>결과확인</CenteredButton>
-    </CenteredDiv>
+      <ResultConfirmButton size="lg" onClick={handleClick}>
+        결과확인
+      </ResultConfirmButton>
+    </ResultScreen>
   );
 }
 
