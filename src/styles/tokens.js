@@ -26,6 +26,7 @@ export const palette = {
   white20: "rgba(255, 255, 255, 0.2)",
   white15: "rgba(255, 255, 255, 0.15)",
   white10: "rgba(255, 255, 255, 0.1)",
+  white05: "rgba(255, 255, 255, 0.05)",
 
   // 중립 — 검정 계열
   black80: "rgba(0, 0, 0, 0.8)",
@@ -40,6 +41,7 @@ export const palette = {
   red90: "rgba(220, 53, 69, 0.9)",
   red30: "rgba(220, 53, 69, 0.3)",
   red10: "rgba(220, 53, 69, 0.1)",
+  red400: "#ff6b6b",
   amber90: "rgba(255, 193, 7, 0.9)",
   green90: "rgba(40, 167, 69, 0.9)",
 

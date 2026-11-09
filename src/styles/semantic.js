@@ -17,6 +17,7 @@ export const surface = {
   raised: palette.white10,
   raisedHover: palette.white15,
   strong: palette.black80, // 불투명에 가까운 어두운 패널
+  faint: palette.white05, // 카드 안에서 한 단계 더 옅게 구분하는 면
 };
 
 /** 텍스트 */
@@ -53,6 +54,7 @@ export const feedback = {
   error: palette.red90,
   errorSurface: palette.red10,
   errorBorder: palette.red30,
+  errorText: palette.red400, // 어두운 배경 위에서 읽히는 밝은 오류 글자색
   warning: palette.amber90,
   success: palette.green90,
 };

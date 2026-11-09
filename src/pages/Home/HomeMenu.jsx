@@ -1,22 +1,22 @@
 import { motion } from "framer-motion";
 import React from "react";
 import { Images } from "react-bootstrap-icons";
+import { Link } from "react-router-dom";
 
 import { GITHUB_ORGANIZATION_URL } from "../../constants/externalLinks";
 import { ROUTES } from "../../constants/routes";
+
 import {
   ButtonGroup,
   ButtonWrapper,
   ChangelogLink,
   IconControlGroup,
   ImageGalleryButton,
+  MenuButton,
   MusicControlButton,
-  PrimaryButton,
-  SecondaryButton,
-  SecondaryButtonModal,
   Subtitle,
   Title,
-} from "../Home.styled";
+} from "./HomeMenu.styled";
 
 const hoverProps = { whileHover: { scale: 1.02 }, whileTap: { scale: 0.98 } };
 
@@ -95,26 +95,32 @@ function HomeMenu({
         {isAuthenticated ? (
           <>
             <ButtonWrapper {...hoverProps}>
-              <PrimaryButton to={ROUTES.INTRO}>게임 시작</PrimaryButton>
+              <MenuButton as={Link} to={ROUTES.INTRO} size="lg">
+                게임 시작
+              </MenuButton>
             </ButtonWrapper>
             <ButtonWrapper {...hoverProps}>
-              <SecondaryButton to={ROUTES.PROFILE}>내 정보</SecondaryButton>
+              <MenuButton as={Link} to={ROUTES.PROFILE} variant="secondary" size="lg">
+                내 정보
+              </MenuButton>
             </ButtonWrapper>
             <ButtonWrapper {...hoverProps}>
-              <SecondaryButton to={ROUTES.BOARD}>랭킹 보기</SecondaryButton>
+              <MenuButton as={Link} to={ROUTES.BOARD} variant="secondary" size="lg">
+                랭킹 보기
+              </MenuButton>
             </ButtonWrapper>
           </>
         ) : (
           <>
             <ButtonWrapper {...hoverProps}>
-              <PrimaryButton as="button" type="button" onClick={onStartClick}>
+              <MenuButton type="button" size="lg" onClick={onStartClick}>
                 게임 시작
-              </PrimaryButton>
+              </MenuButton>
             </ButtonWrapper>
             <ButtonWrapper {...hoverProps}>
-              <SecondaryButtonModal type="button" onClick={onRankingClick}>
+              <MenuButton type="button" variant="secondary" size="lg" onClick={onRankingClick}>
                 랭킹 보기
-              </SecondaryButtonModal>
+              </MenuButton>
             </ButtonWrapper>
           </>
         )}

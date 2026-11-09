@@ -14,11 +14,10 @@ import CreditsModal from "./Home/CreditsModal";
 import GuestStartModal from "./Home/GuestStartModal";
 import HomeMenu from "./Home/HomeMenu";
 import {
-  BottomCreditsButton,
   BottomRightButtonGroup,
   BottomVersionInfo,
   CharacterWrapper,
-  LogoutButton,
+  CornerButton,
   MainWrapper,
   MobileCharacterWrapper,
   MobileContainer,
@@ -182,13 +181,13 @@ function Home() {
       </MobileContainer>
 
       <BottomRightButtonGroup>
-        <BottomCreditsButton onClick={() => setIsCreditsModalOpen(true)}>
+        <CornerButton variant="ghost" onClick={() => setIsCreditsModalOpen(true)}>
           크레딧
-        </BottomCreditsButton>
+        </CornerButton>
         {isAuthenticated && (
-          <LogoutButton onClick={handleResetClick}>
+          <CornerButton variant="ghost" onClick={handleResetClick}>
             {isResetPending ? "진행 기록이 지워져요. 한 번 더 누르세요" : "새로 시작"}
-          </LogoutButton>
+          </CornerButton>
         )}
       </BottomRightButtonGroup>
 
@@ -208,6 +207,8 @@ function Home() {
 
       {/* 왼쪽 아래 버전 정보 */}
       <BottomVersionInfo
+        as="a"
+        variant="ghost"
         href={CHANGELOG_URL}
         target="_blank"
         rel="noopener noreferrer"
