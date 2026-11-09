@@ -127,7 +127,7 @@ const SelectPageComponent = () => {
         enableControls={true}
       />
       <SkipButton onClick={handleSkip}>Skip</SkipButton>
-      <audio ref={audioRef} src="/audio/intro.mp3" loop />
+      <audio ref={audioRef} src="/audio/intro.m4a" loop />
     </SceneWrap>
   );
 };

@@ -28,6 +28,12 @@
 - **예외**: `public/` 루트의 favicon·`apple-touch-icon`·PWA 아이콘(`android-chrome-*`)은
   브라우저·매니페스트 규격상 PNG/ICO를 유지한다
 
+## 오디오 자산
+
+- `public/audio/`의 배경음은 **AAC(.m4a)**로 둔다. 영상 트랙이 든 MP4를 `.mp3` 확장자로 두지 않는다
+- 원본이 이미 AAC면 다시 인코딩하지 않고 오디오 트랙만 복사한다 (`ffmpeg -i 원본 -vn -c:a copy -movflags +faststart 결과.m4a`)
+- 참조 경로는 `/audio/이름.m4a` 절대 경로로 쓴다. 규칙은 `src/audioAssets.rules.test.js`가 강제한다
+
 ## 파일 확장자
 
 - **JSX를 포함하면 `.jsx`**, 포함하지 않으면 `.js`

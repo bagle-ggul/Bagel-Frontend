@@ -132,7 +132,7 @@ function Happy() {
         <CharacterName>{character}</CharacterName>
         <DialogueText>{text}</DialogueText>
       </DialogueBox>
-      <audio ref={audioRef} src="/audio/happy.mp3" loop />
+      <audio ref={audioRef} src="/audio/happy.m4a" loop />
     </SceneWrap>
   );
 }

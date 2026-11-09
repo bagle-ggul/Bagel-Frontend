@@ -128,7 +128,7 @@ function Middle() {
         <CharacterName>{character}</CharacterName>
         <DialogueText>{text}</DialogueText>
       </DialogueBox>
-      <audio ref={audioRef} src="./audio/middle.mp3" loop />
+      <audio ref={audioRef} src="./audio/middle.m4a" loop />
     </SceneWrap>
   );
 }

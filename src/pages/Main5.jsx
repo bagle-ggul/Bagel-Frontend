@@ -21,7 +21,7 @@ function Main5() {
         storyData={storyData}
         scene={5}
       />
-      <audio ref={audioRef} src="./audio/5.mp3" loop />
+      <audio ref={audioRef} src="./audio/5.m4a" loop />
     </>
   );
 }
