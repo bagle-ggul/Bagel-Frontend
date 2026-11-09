@@ -9,7 +9,7 @@ import path from "path";
 const SOURCE_DIRECTORY = path.join(__dirname);
 const IMAGE_DIRECTORY = path.join(__dirname, "..", "public", "img");
 
-// 변환 이전부터 파일이 없던 참조. DialogueSystem이 avatar를 쓰지 않아 런타임 영향 없음.
+// 변환 이전부터 파일이 없던 참조. intro.json의 avatar는 화면에서 쓰지 않음.
 // 이 목록은 줄이기만 한다 (새 항목 추가 금지)
 const KNOWN_MISSING_IMAGE_NAMES = ["mc_main.webp", "her_main_happy.webp", "mystery_man.webp"];
 
