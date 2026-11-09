@@ -22,7 +22,7 @@ function Main2() {
         url={"/main3"}
         scene={2}
       />
-      <audio ref={audioRef} src="./audio/2.mp3" loop />
+      <audio ref={audioRef} src="./audio/2.m4a" loop />
     </>
   );
 }
