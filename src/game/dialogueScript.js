@@ -44,10 +44,10 @@ const stripOuterQuotes = (text) => {
   return (hasClosing ? withoutOpening.slice(0, -1) : withoutOpening).trim();
 };
 
-/** 줄 전체가 ( … )면 괄호 제거 */
+/** 줄 전체가 ( … ) 또는 ( … ). 형태면 괄호 제거 (뒤 문장부호는 유지) */
 const stripWrappingParentheses = (text) => {
-  const matched = text.match(/^\(([\s\S]*)\)$/);
-  return matched ? matched[1].trim() : text;
+  const matched = text.match(/^\(([^()]*)\)\s*([.。!?]*)$/);
+  return matched ? `${matched[1].trim()}${matched[2]}` : text;
 };
 
 /** 조각 1개 > 화자 판별 결과 (speakerKey: 별칭 또는 원문 이름, null이면 나레이션) */

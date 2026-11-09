@@ -51,6 +51,12 @@ describe("parseLines", () => {
     expect(lines[0].text.startsWith("갑자기 비가 쏟아진다.\n")).toBe(true);
   });
 
+  it("괄호 뒤 문장부호는 남기고 괄호만 벗긴다", () => {
+    const [line] = parseLines(data4.plot[0].text);
+    expect(line.text.startsWith("갑자기 비가 온다.\n")).toBe(true);
+    expect(parseLines("(갑자기 비가 온다).")[0].text).toBe("갑자기 비가 온다.");
+  });
+
   it("^ 로 나뉜 이어지는 대사를 순서대로 만든다", () => {
     const noOption = data1.plot[1].options.find((option) => option.ans === "No");
     expect(parseLines(noOption.subtext).map((line) => line.speakerId)).toEqual([
@@ -150,7 +156,7 @@ describe("레거시 데이터 변환", () => {
     (_name, storyData) => {
       toStageScript(storyData, { playerName }).forEach((scene) => {
         const texts = [...scene.lines, ...scene.choices.flatMap((choice) => choice.followUp)].map(
-          (l) => l.text
+          (line) => line.text
         );
         texts.forEach((text) => {
           expect(text).not.toMatch(/^(이수정|수정|주인공|나)\s*[:：]/);
@@ -159,6 +165,15 @@ describe("레거시 데이터 변환", () => {
       });
     }
   );
+
+  it.each(stages)("%s: 어떤 나레이션 text도 여는 괄호로 시작하지 않는다", (_name, storyData) => {
+    toStageScript(storyData, { playerName }).forEach((scene) => {
+      const lines = [...scene.lines, ...scene.choices.flatMap((choice) => choice.followUp)];
+      lines
+        .filter((line) => line.speakerId === "narration")
+        .forEach((line) => expect(line.text.startsWith("(")).toBe(false));
+    });
+  });
 
   it.each(stages)('%s: playerName "민수"이면 어떤 text에도 "주인공"이 없다', (_name, storyData) => {
     toStageScript(storyData, { playerName }).forEach((scene) => {
@@ -188,5 +203,15 @@ describe("레거시 데이터 변환", () => {
     );
     expect(scene.lines[0].speakerName).toBe(playerName);
     expect(scene.lines[0].sprite).toBe(introStory.story.scenes[0].characterImage);
+    expect(scene.lines.find((line) => line.speakerId === "sujung").speakerName).toBe("이수정");
+    expect(scene.lines.find((line) => line.speakerId === "???").speakerName).toBe("???");
+  });
+
+  it("fromIntroStory는 텍스트의 주인공을 닉네임으로 바꾼다", () => {
+    const story = {
+      characters: { mc: { displayName: "주인공" } },
+      scenes: [{ speaker: "mc", text: "주인공은 웃었다", characterImage: "/img/a.webp" }],
+    };
+    expect(fromIntroStory(story, { playerName })[0].lines[0].text).toBe("민수은 웃었다");
   });
 });
