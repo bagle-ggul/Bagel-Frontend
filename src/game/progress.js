@@ -1,3 +1,5 @@
+import { logger } from "../utils/logger";
+
 import { getPreviousStages } from "./stageGraph";
 
 /**
@@ -14,6 +16,10 @@ export const PROGRESS_KEYS = {
   SCORE: "bagel:game:score",
   MAX_STAGE: "bagel:game:maxStage",
   COMPLETED: "bagel:game:completed",
+  // 이번 회차 고른 선택 [{ stage, sceneIndex, choiceIndex, label }]
+  CHOICE_HISTORY: "bagel:game:choiceHistory",
+  // 게임오버로 되돌아간 횟수 (회귀 재시작에도 유지, 새 게임에서만 초기화)
+  REGRESSION_COUNT: "bagel:game:regressionCount",
 };
 
 /**
@@ -69,13 +75,76 @@ export const markGameCompleted = () => {
   sessionStorage.setItem(PROGRESS_KEYS.COMPLETED, "true");
 };
 
+// 저장소 쓰기·삭제 (용량 초과·사생활 모드 실패는 기록만 포기, 플레이는 계속)
+const writeProgressItem = (key, value) => {
+  try {
+    sessionStorage.setItem(key, value);
+  } catch (error) {
+    logger.warn(`[progress] write failed : ${key}`, error);
+  }
+};
+
+const removeProgressItem = (key) => {
+  try {
+    sessionStorage.removeItem(key);
+  } catch (error) {
+    logger.warn(`[progress] remove failed : ${key}`, error);
+  }
+};
+
+/** 이번 회차 고른 선택 목록 (손상된 JSON·저장소 막힘은 빈 목록) */
+export const getChoiceHistory = () => {
+  try {
+    const parsed = JSON.parse(sessionStorage.getItem(PROGRESS_KEYS.CHOICE_HISTORY));
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+};
+
 /**
- * 진행 상태 전체 초기화 (새 게임 시작)
+ * 선택 기록: 같은 스테이지·장면 기존 기록 제거 후 추가 (뒤로가기·재진입 시 중복 방지)
  */
-export const resetProgress = () => {
+export const recordChoice = ({ stage, sceneIndex, choiceIndex, label }) => {
+  const otherChoices = getChoiceHistory().filter(
+    (entry) => !(entry.stage === stage && entry.sceneIndex === sceneIndex)
+  );
+  const nextHistory = [...otherChoices, { stage, sceneIndex, choiceIndex, label }];
+  writeProgressItem(PROGRESS_KEYS.CHOICE_HISTORY, JSON.stringify(nextHistory));
+};
+
+/** 회귀 횟수 (없거나 손상되면 0) */
+export const getRegressionCount = () => {
+  try {
+    const parsed = Number(sessionStorage.getItem(PROGRESS_KEYS.REGRESSION_COUNT));
+    return Number.isInteger(parsed) && parsed > 0 ? parsed : 0;
+  } catch {
+    return 0;
+  }
+};
+
+/** 회귀 횟수 1 증가 (게임오버 선택 시) */
+export const incrementRegressionCount = () => {
+  writeProgressItem(PROGRESS_KEYS.REGRESSION_COUNT, String(getRegressionCount() + 1));
+};
+
+/**
+ * 회차 상태 초기화 (게임오버 후 회귀 재시작): 점수, 도달 스테이지, 완료, 고른 선택
+ * 회귀 횟수는 유지
+ */
+export const resetRunProgress = () => {
   sessionStorage.removeItem(PROGRESS_KEYS.SCORE);
   sessionStorage.removeItem(PROGRESS_KEYS.MAX_STAGE);
   sessionStorage.removeItem(PROGRESS_KEYS.COMPLETED);
+  removeProgressItem(PROGRESS_KEYS.CHOICE_HISTORY);
+};
+
+/**
+ * 진행 상태 전체 초기화 (새 게임 시작): 회차 상태 + 회귀 횟수
+ */
+export const resetProgress = () => {
+  resetRunProgress();
+  removeProgressItem(PROGRESS_KEYS.REGRESSION_COUNT);
 };
 
 /**
@@ -100,6 +169,11 @@ const progress = {
   markStageReached,
   isGameCompleted,
   markGameCompleted,
+  getChoiceHistory,
+  recordChoice,
+  getRegressionCount,
+  incrementRegressionCount,
+  resetRunProgress,
   resetProgress,
   canEnterStage,
 };

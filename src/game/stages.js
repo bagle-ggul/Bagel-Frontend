@@ -1,9 +1,9 @@
 import { ROUTES } from "../constants/routes";
-import { storyData as stage1StoryData } from "../utils/data";
-import { storyData as stage2StoryData } from "../utils/data2";
-import { storyData as stage3StoryData } from "../utils/data3";
-import { storyData as stage4StoryData } from "../utils/data4";
-import { storyData as stage5StoryData } from "../utils/data5";
+import stage1StoryData from "../data/stories/stage1.json";
+import stage2StoryData from "../data/stories/stage2.json";
+import stage3StoryData from "../data/stories/stage3.json";
+import stage4StoryData from "../data/stories/stage4.json";
+import stage5StoryData from "../data/stories/stage5.json";
 
 import { NEXT_STAGES } from "./stageGraph";
 
@@ -62,12 +62,6 @@ export const STAGE_CONFIGS = {
 /** 스테이지 번호 > 설정 (없으면 null) */
 export const getStageConfig = (stage) => STAGE_CONFIGS[stage] ?? null;
 
-/** 장면 하나의 그림: 장면 그림 + 선택지별 그림 */
-const collectSceneImages = (plotScene) => [
-  plotScene.img,
-  ...(plotScene.options ?? []).map((option) => option.img),
-];
-
 /**
  * 미리 불러올 그림: 현재 스테이지 장면 그림 전부 + 다음 후보 스테이지의 배경과 첫 장면 그림 (중복 제거)
  */
@@ -75,10 +69,13 @@ export const getPreloadImages = (stage) => {
   const current = getStageConfig(stage);
   if (!current) return [];
 
-  const currentImages = [current.background, ...current.storyData.plot.flatMap(collectSceneImages)];
+  const currentImages = [
+    current.background,
+    ...current.storyData.scenes.map((scene) => scene.sprite),
+  ];
   const nextImages = (NEXT_STAGES[stage] ?? []).flatMap((nextStage) => {
     const next = getStageConfig(nextStage);
-    return [next.background, next.storyData.plot[0]?.img];
+    return [next.background, next.storyData.scenes[0]?.sprite];
   });
 
   return [...new Set([...currentImages, ...nextImages].filter(Boolean))];

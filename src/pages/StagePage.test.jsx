@@ -3,7 +3,13 @@ import { MotionGlobalConfig } from "framer-motion";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 
-import { getMaxStage, PROGRESS_KEYS, resetProgress } from "../game/progress";
+import {
+  getChoiceHistory,
+  getMaxStage,
+  getRegressionCount,
+  PROGRESS_KEYS,
+  resetProgress,
+} from "../game/progress";
 import { clearSeenLines } from "../game/seenLines";
 import axios from "../utils/axios";
 
@@ -60,7 +66,7 @@ describe("StagePage", () => {
   it("스테이지 1 첫 줄을 나레이션으로 보여 준다", () => {
     renderStage();
     tapScreen();
-    expect(screen.getByText(/수정이로부터 연락이 왔다\./)).toBeInTheDocument();
+    expect(screen.getByText(/여행 전날 밤\./)).toBeInTheDocument();
   });
 
   it("진입하면 진행도를 기록한다", () => {
@@ -92,7 +98,7 @@ describe("StagePage", () => {
     tapUntilChoices();
     chooseByIndex(0);
     tapUntilChoices();
-    fireEvent.click(within(queryChoiceGroup()).getByRole("button", { name: /No/ }));
+    fireEvent.click(within(queryChoiceGroup()).getByRole("button", { name: "그냥 잔다" }));
     expect(screen.queryByText("게임오버 화면")).toBeNull();
 
     for (
@@ -103,6 +109,21 @@ describe("StagePage", () => {
       tapScreen();
     }
     expect(screen.getByText("게임오버 화면")).toBeInTheDocument();
+    // 게임오버 = 회귀 1회, 점수 변화 없음
+    expect(getRegressionCount()).toBe(1);
+    expect(sessionStorage.getItem(PROGRESS_KEYS.SCORE)).toBe("10");
+  });
+
+  it("고른 선택을 스테이지·장면·문구로 기록한다", () => {
+    renderStage();
+    tapUntilChoices();
+    const firstChoiceLabel = within(queryChoiceGroup()).getAllByRole("button")[0].textContent;
+    chooseByIndex(0);
+    expect(getChoiceHistory()).toEqual([
+      { stage: 1, sceneIndex: 0, choiceIndex: 0, label: expect.any(String) },
+    ]);
+    expect(firstChoiceLabel).toContain(getChoiceHistory()[0].label);
+    expect(getRegressionCount()).toBe(0);
   });
 
   it("스테이지를 마치면 다음 장소로 버튼이 기본 목적지를 가리킨다", () => {
@@ -123,7 +144,7 @@ describe("StagePage", () => {
 
     // 장면 0 아샷추(0점) > 장면 2 유일 선택지(0점) > 장면 3 줍는다(0점)
     chooseByLabel("아샷추");
-    chooseByLabel("왜? 음료 마신게 마음에 안 들었어?");
+    chooseByLabel("왜? 음료가 별로였어?");
     chooseByLabel("줍는다");
     for (let count = 0; count < MAXIMUM_INTERACTION_COUNT && !findNextStageLink(); count += 1) {
       tapScreen();

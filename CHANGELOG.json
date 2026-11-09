@@ -1,11 +1,34 @@
 {
   "metadata": {
-    "lastUpdated": "2026-11-09T09:35:28Z",
-    "currentVersion": "1.4.24",
+    "lastUpdated": "2026-11-09T11:41:20Z",
+    "currentVersion": "1.4.25",
     "projectType": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
-    "totalReleases": 39
+    "totalReleases": 40
   },
   "releases": [
+    {
+      "version": "1.4.25",
+      "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
+      "date": "2026-11-09",
+      "pr_number": 147,
+      "raw_summary": "Summary by CodeRabbit\n\n\n새로운 기능\n\n엔딩 끝에 이번 판에서 고른 선택과 회귀 횟수 요약 표시\n특정 선택을 하면 볼 수 있는 히든 엔딩 추가\n인트로와 모든 장소의 대사를 다시 써 이야기 흐름 강화\n\n\n\n개선\n\n엔딩 화면에서 새로고침해도 닉네임이 유지됨",
+      "parsed_changes": {
+        "새로운_기능": {
+          "title": "새로운 기능",
+          "items": [
+            "엔딩 끝에 이번 판에서 고른 선택과 회귀 횟수 요약 표시",
+            "특정 선택을 하면 볼 수 있는 히든 엔딩 추가",
+            "인트로와 모든 장소의 대사를 다시 써 이야기 흐름 강화"
+          ]
+        },
+        "개선": {
+          "title": "개선",
+          "items": [
+            "엔딩 화면에서 새로고침해도 닉네임이 유지됨"
+          ]
+        }
+      }
+    },
     {
       "version": "1.4.24",
       "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",

@@ -1,12 +1,17 @@
 import {
   PROGRESS_KEYS,
   canEnterStage,
+  getChoiceHistory,
   getMaxStage,
+  getRegressionCount,
   getScore,
+  incrementRegressionCount,
   isGameCompleted,
   markGameCompleted,
   markStageReached,
+  recordChoice,
   resetProgress,
+  resetRunProgress,
   setScore,
 } from "./progress";
 
@@ -140,5 +145,102 @@ describe("progress 초기화", () => {
     expect(getMaxStage()).toBe(0);
     expect(isGameCompleted()).toBe(false);
     expect(canEnterStage(5)).toBe(false);
+  });
+});
+
+describe("progress 고른 선택 기록", () => {
+  beforeEach(() => {
+    sessionStorage.clear();
+  });
+
+  it("기록이 없으면 빈 목록이다", () => {
+    expect(getChoiceHistory()).toEqual([]);
+  });
+
+  it("고른 순서대로 쌓인다", () => {
+    recordChoice({ stage: 1, sceneIndex: 0, choiceIndex: 1, label: "일어난다" });
+    recordChoice({ stage: 2, sceneIndex: 0, choiceIndex: 0, label: "라떼" });
+    expect(getChoiceHistory()).toEqual([
+      { stage: 1, sceneIndex: 0, choiceIndex: 1, label: "일어난다" },
+      { stage: 2, sceneIndex: 0, choiceIndex: 0, label: "라떼" },
+    ]);
+  });
+
+  // 같은 장면을 다시 고르면 최신 선택만 남는다
+  it("같은 스테이지·장면은 덮어쓴다", () => {
+    recordChoice({ stage: 1, sceneIndex: 0, choiceIndex: 0, label: "A" });
+    recordChoice({ stage: 1, sceneIndex: 1, choiceIndex: 0, label: "B" });
+    recordChoice({ stage: 1, sceneIndex: 0, choiceIndex: 2, label: "C" });
+    expect(getChoiceHistory().map((entry) => entry.label)).toEqual(["B", "C"]);
+  });
+
+  it("손상된 값은 빈 목록으로 처리한다", () => {
+    sessionStorage.setItem(PROGRESS_KEYS.CHOICE_HISTORY, "{oops");
+    expect(getChoiceHistory()).toEqual([]);
+    sessionStorage.setItem(PROGRESS_KEYS.CHOICE_HISTORY, "{}");
+    expect(getChoiceHistory()).toEqual([]);
+  });
+});
+
+describe("progress 회귀 횟수", () => {
+  beforeEach(() => {
+    sessionStorage.clear();
+  });
+
+  it("기본값은 0이고 1씩 늘어난다", () => {
+    expect(getRegressionCount()).toBe(0);
+    incrementRegressionCount();
+    incrementRegressionCount();
+    expect(getRegressionCount()).toBe(2);
+  });
+
+  it("손상된 값은 0으로 처리한다", () => {
+    sessionStorage.setItem(PROGRESS_KEYS.REGRESSION_COUNT, "abc");
+    expect(getRegressionCount()).toBe(0);
+  });
+
+  it("회귀 재시작은 회차 상태만 지우고 회귀 횟수는 남긴다", () => {
+    setScore(40);
+    markStageReached(3);
+    recordChoice({ stage: 1, sceneIndex: 0, choiceIndex: 0, label: "A" });
+    incrementRegressionCount();
+
+    resetRunProgress();
+
+    expect(getScore()).toBe(0);
+    expect(getMaxStage()).toBe(0);
+    expect(getChoiceHistory()).toEqual([]);
+    expect(getRegressionCount()).toBe(1);
+  });
+
+  it("새 게임 초기화는 회귀 횟수와 선택 기록까지 지운다", () => {
+    recordChoice({ stage: 1, sceneIndex: 0, choiceIndex: 0, label: "A" });
+    incrementRegressionCount();
+
+    resetProgress();
+
+    expect(getChoiceHistory()).toEqual([]);
+    expect(getRegressionCount()).toBe(0);
+  });
+
+  // 저장소가 막혀도 게임은 계속된다
+  it("저장소 쓰기 실패는 무시한다", () => {
+    const setItemSpy = jest.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
+      throw new Error("quota");
+    });
+    expect(() => incrementRegressionCount()).not.toThrow();
+    expect(() =>
+      recordChoice({ stage: 1, sceneIndex: 0, choiceIndex: 0, label: "A" })
+    ).not.toThrow();
+    setItemSpy.mockRestore();
+  });
+
+  it("저장소 읽기 실패는 기본값으로 처리한다", () => {
+    const getItemSpy = jest.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
+      throw new Error("blocked");
+    });
+    expect(getRegressionCount()).toBe(0);
+    expect(getChoiceHistory()).toEqual([]);
+    getItemSpy.mockRestore();
   });
 });

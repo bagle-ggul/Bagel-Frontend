@@ -12,6 +12,7 @@ React 18 + CRA 기반 인터랙티브 비주얼 노벨 게임. 플레이어의 �
 | 테스트 작성법 · 커버리지 기준            | [docs/TESTING.md](docs/TESTING.md)             |
 | 디자인 토큰 · 반응형                     | [docs/DESIGN-SYSTEM.md](docs/DESIGN-SYSTEM.md) |
 | 게임 분기 구조 · 점수 임계치             | [docs/GAME-FLOW.md](docs/GAME-FLOW.md)         |
+| 인게임 그림 화풍 · 파일 규격             | [docs/ART-GUIDE.md](docs/ART-GUIDE.md)         |
 | 문서 전체 인덱스                         | [docs/README.md](docs/README.md)               |
 | 진행 중인 리팩토링 설계                  | `docs/superpowers/specs/`                      |
 | 구현 계획                                | `docs/superpowers/plans/`                      |

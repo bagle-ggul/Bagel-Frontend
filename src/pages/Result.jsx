@@ -4,6 +4,8 @@ import { useRecoilValue } from "recoil";
 import styled from "styled-components";
 
 import { scoreAtom } from "../atom/atom";
+import { ENDING_ROUTE_BY_ID, resolveEnding } from "../game/ending";
+import { getChoiceHistory } from "../game/progress";
 import axios from "../utils/axios";
 import { logger } from "../utils/logger";
 
@@ -65,13 +67,9 @@ function Result() {
 
   const handleClick = async () => {
     await handleSubmit();
-    if (score >= 100) {
-      navigate("/happy");
-    } else if (score >= 50 && score < 100) {
-      navigate("/middle");
-    } else {
-      navigate("/sad");
-    }
+    // 점수 + 이번 회차 고른 선택 > 엔딩 (히든 > 해피 > 미들 > 새드)
+    const endingId = resolveEnding({ score, choiceHistory: getChoiceHistory() });
+    navigate(ENDING_ROUTE_BY_ID[endingId]);
   };
 
   return (
