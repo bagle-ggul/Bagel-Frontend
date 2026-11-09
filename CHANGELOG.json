@@ -1,11 +1,32 @@
 {
   "metadata": {
-    "lastUpdated": "2026-11-09T05:01:13Z",
-    "currentVersion": "1.4.20",
+    "lastUpdated": "2026-11-09T05:11:36Z",
+    "currentVersion": "1.4.21",
     "projectType": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
-    "totalReleases": 35
+    "totalReleases": 36
   },
   "releases": [
+    {
+      "version": "1.4.21",
+      "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
+      "date": "2026-11-09",
+      "pr_number": 139,
+      "raw_summary": "Summary by CodeRabbit\n릴리스 노트\n\n\n버그 수정\n\n배포 자동화가 중간에 멈추던 문제를 고쳤어요\n\n\n\n문서\n\n저장소 구조 안내를 최신 상태로 맞췄어요",
+      "parsed_changes": {
+        "버그_수정": {
+          "title": "버그 수정",
+          "items": [
+            "배포 자동화가 중간에 멈추던 문제를 고쳤어요"
+          ]
+        },
+        "문서": {
+          "title": "문서",
+          "items": [
+            "저장소 구조 안내를 최신 상태로 맞췄어요"
+          ]
+        }
+      }
+    },
     {
       "version": "1.4.20",
       "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
