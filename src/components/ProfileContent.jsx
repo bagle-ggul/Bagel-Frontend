@@ -2,7 +2,9 @@ import { motion } from "framer-motion";
 import React from "react";
 import styled from "styled-components";
 
+import { border, text } from "../styles/semantic";
 import { componentStyles } from "../styles/theme";
+import { shadow } from "../styles/tokens";
 
 import { DetailRow, DetailTitle, DetailValue } from "./DetailRow.styled";
 
@@ -11,16 +13,16 @@ const ProfileImage = styled(motion.img)`
   height: 150px;
   border-radius: 50%;
   margin-bottom: 1.5rem;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  border: 3px solid ${border.strong};
+  box-shadow: ${shadow.avatar};
   object-fit: cover;
   object-position: center 30%;
   transition: opacity 0.3s ease;
   transform: translateY(-10px);
 
   &:hover {
-    border-color: rgba(200, 182, 226, 0.6);
-    box-shadow: 0 12px 30px rgba(200, 182, 226, 0.2);
+    border-color: ${border.accentStrong};
+    box-shadow: ${shadow.avatarHover};
   }
 
   @media (max-width: 768px) {
@@ -40,9 +42,9 @@ const ProfileImage = styled(motion.img)`
 const UserName = styled(motion.h2)`
   font-size: 2.5rem;
   font-weight: 700;
-  color: white;
+  color: ${text.primary};
   margin-bottom: 1.5rem;
-  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  text-shadow: ${shadow.text};
   letter-spacing: -0.02em;
 
   @media (max-width: 768px) {

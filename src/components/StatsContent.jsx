@@ -2,17 +2,19 @@ import { motion } from "framer-motion";
 import React from "react";
 import styled from "styled-components";
 
+import { text } from "../styles/semantic";
 import { componentStyles } from "../styles/theme";
+import { shadow } from "../styles/tokens";
 
 import { DetailRow, DetailTitle, DetailValue } from "./DetailRow.styled";
 
 const StatsTitle = styled(motion.h3)`
   font-size: 1.8rem;
   font-weight: 700;
-  color: rgba(200, 182, 226, 1);
+  color: ${text.accent};
   margin-bottom: 2rem;
   text-align: center;
-  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  text-shadow: ${shadow.text};
 
   @media (max-width: 768px) {
     font-size: 1.5rem;

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import styled from "styled-components";
 
+import { text } from "../styles/semantic";
 import { toCss } from "../styles/styleObject";
 
 // 프로필·통계 카드가 공유하는 "라벨 - 값" 한 줄.
@@ -22,7 +23,7 @@ export const DetailRow = styled(motion.div)`
 
 export const DetailTitle = styled.span`
   font-weight: 600;
-  color: rgba(200, 182, 226, 1);
+  color: ${text.accent};
   font-size: 1rem;
 
   @media (max-width: 480px) {
@@ -31,7 +32,7 @@ export const DetailTitle = styled.span`
 `;
 
 export const DetailValue = styled.span`
-  color: rgba(255, 255, 255, 0.9);
+  color: ${text.emphasis};
   font-weight: 500;
   font-size: 1rem;
 

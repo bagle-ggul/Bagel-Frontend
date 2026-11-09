@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import { overlay, text } from "../styles/semantic";
+
 const Wrapper = styled.div`
   display: grid;
   position: relative;
@@ -23,9 +25,9 @@ const MainWrapper = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%); /* Center the MainWrapper div */
-  color: white; /* Add text color for visibility, adjust as needed */
+  color: ${text.primary}; /* 배경 위 가독성용 텍스트 색 */
   font-size: 3rem; /* Adjust font size as needed */
-  background: rgba(0, 0, 0, 0.5); /* 배경을 반투명하게 설정하여 가독성 향상 */
+  background: ${overlay.dim}; /* 배경을 반투명하게 설정하여 가독성 향상 */
   h1 {
     font-size: 8rem;
     font-weight: 500;

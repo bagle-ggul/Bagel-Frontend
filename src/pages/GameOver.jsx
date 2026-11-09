@@ -4,6 +4,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import styled, { keyframes } from "styled-components";
 
 import { scoreAtom } from "../atom/atom";
+import { Button, Card } from "../components/ui";
 import axios from "../utils/axios";
 import { logger } from "../utils/logger";
 
@@ -36,7 +37,7 @@ const modalFadeIn = keyframes`
   }
 `;
 
-const NavigationContainer = styled.div`
+const NavigationContainer = styled(Card)`
   position: absolute;
   bottom: 8%;
   left: 50%;
@@ -45,11 +46,6 @@ const NavigationContainer = styled.div`
   grid-template-columns: 1fr;
   gap: 1rem;
   padding: 2rem;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(15px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
-  border-radius: 20px;
   width: 300px;
   z-index: 2;
   animation: ${modalFadeIn} 0.8s ease-out forwards;
@@ -71,66 +67,11 @@ const NavigationContainer = styled.div`
   }
 `;
 
-const PrimaryNavButton = styled.button`
+// 하단 버튼 공통: 컨테이너 폭을 채우는 큰 버튼
+const NavButton = styled(Button)`
+  width: 100%;
   padding: 1.2rem 2rem;
   font-size: 1.3rem;
-  font-weight: 600;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  text-align: center;
-  display: block;
-  width: 100%;
-  background: rgba(255, 255, 255, 0.85);
-  color: #000;
-  border: none;
-  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
-
-  &:hover {
-    background: rgba(200, 182, 226, 0.9);
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(200, 182, 226, 0.4);
-  }
-
-  &:active {
-    transform: scale(0.97);
-  }
-
-  @media (max-width: 480px) {
-    padding: 1rem 1.5rem;
-    font-size: 1.1rem;
-  }
-`;
-
-const SecondaryNavButton = styled.button`
-  padding: 1.2rem 2rem;
-  font-size: 1.3rem;
-  font-weight: 600;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  text-align: center;
-  display: block;
-  width: 100%;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  color: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.25);
-    border-color: rgba(255, 255, 255, 0.5);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-  }
-
-  &:active {
-    transform: scale(0.97);
-  }
 
   @media (max-width: 480px) {
     padding: 1rem 1.5rem;
@@ -229,10 +170,18 @@ function GameOver() {
       <img src="/img/her_underwater_gameover.webp" alt="게임오버 캐릭터" />
       {showModal && (
         <NavigationContainer>
-          <PrimaryNavButton onClick={handlePlayAgain}>회귀 하기</PrimaryNavButton>
-          <SecondaryNavButton onClick={handleHome}>홈</SecondaryNavButton>
-          <SecondaryNavButton onClick={handleRankings}>랭킹 확인</SecondaryNavButton>
-          <SecondaryNavButton onClick={handleProfile}>마이페이지</SecondaryNavButton>
+          <NavButton variant="primary" onClick={handlePlayAgain}>
+            회귀 하기
+          </NavButton>
+          <NavButton variant="secondary" onClick={handleHome}>
+            홈
+          </NavButton>
+          <NavButton variant="secondary" onClick={handleRankings}>
+            랭킹 확인
+          </NavButton>
+          <NavButton variant="secondary" onClick={handleProfile}>
+            마이페이지
+          </NavButton>
         </NavigationContainer>
       )}
     </CenteredDiv>
