@@ -261,7 +261,7 @@ function Board() {
 // 메모이제이션된 컴포넌트들
 const MemoizedTableRow = React.memo(({ item, rank, onClick, getRankIcon }) => (
   <TableRow onClick={() => onClick(item, rank)}>
-    <RankCell rank={rank}>
+    <RankCell $rank={rank}>
       {getRankIcon(rank)}
       {rank}
     </RankCell>
@@ -284,14 +284,14 @@ const MemoizedTableRow = React.memo(({ item, rank, onClick, getRankIcon }) => (
 
 const MemoizedRankCard = React.memo(({ item, rank, onClick, getRankIcon }) => (
   <RankCard
-    rank={rank}
+    $rank={rank}
     onClick={() => onClick(item, rank)}
     whileHover={{ scale: 1.02 }}
     whileTap={{ scale: 0.98 }}
   >
     <MobileRankDisplay>
       {getRankIcon(rank)}
-      <MobileRankNumber rank={rank}>{rank}위</MobileRankNumber>
+      <MobileRankNumber $rank={rank}>{rank}위</MobileRankNumber>
     </MobileRankDisplay>
 
     <MobileUserInfo>

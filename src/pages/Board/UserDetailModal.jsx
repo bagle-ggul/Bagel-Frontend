@@ -1,4 +1,4 @@
-import { Calendar3, Clock, Controller, PersonCircle, Trophy } from "react-bootstrap-icons";
+import { Calendar3, Clock, Controller, PersonCircle } from "react-bootstrap-icons";
 
 import { Modal } from "../../components/ui";
 import TimeUtil from "../../utils/TimeUtil";
@@ -23,7 +23,6 @@ function UserDetailModal({ user, onClose, getRankIcon }) {
       <ModalHeader>
         <ModalRankIcon>{getRankIcon(user.rank)}</ModalRankIcon>
         <ModalUserRank>
-          <Trophy size={18} color="white" />
           {user.rank}위 • {user.finalScore}점
         </ModalUserRank>
       </ModalHeader>

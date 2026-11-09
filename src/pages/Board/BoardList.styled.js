@@ -133,8 +133,8 @@ export const RankCell = styled(TableCell)`
   align-items: center;
   justify-content: center;
   gap: 8px;
-  ${({ rank: rankNumber }) => rankTextStyle({ rank: rankNumber, glowPixels: 10 })}
-  ${({ rank: rankNumber }) => rankNumber === 1 && "animation: pulse 2s infinite;"}
+  ${({ $rank: rankNumber }) => rankTextStyle({ rank: rankNumber, glowPixels: 10 })}
+  ${({ $rank: rankNumber }) => rankNumber === 1 && "animation: pulse 2s infinite;"}
 
   @keyframes pulse {
     0%,
@@ -183,7 +183,7 @@ export const RankCard = styled(motion.div)`
   cursor: pointer;
   transition: all 0.3s ease;
 
-  ${({ rank: rankNumber }) =>
+  ${({ $rank: rankNumber }) =>
     rankNumber <= 5 &&
     css`
       border: 1px solid ${border.accent};
@@ -210,7 +210,7 @@ export const MobileRankNumber = styled.div`
   font-size: 1.2em;
   font-weight: 700;
   color: ${text.primary};
-  ${({ rank: rankNumber }) => rankTextStyle({ rank: rankNumber, glowPixels: 8 })}
+  ${({ $rank: rankNumber }) => rankTextStyle({ rank: rankNumber, glowPixels: 8 })}
 `;
 
 // 모바일 사용자 정보
