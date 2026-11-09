@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import React from "react";
 import { Images } from "react-bootstrap-icons";
 
+import { GITHUB_ORGANIZATION_URL } from "../../constants/externalLinks";
 import { ROUTES } from "../../constants/routes";
 import {
   ButtonGroup,
@@ -40,16 +41,8 @@ const MusicOnIcon = () => (
 );
 
 /**
- * 홈 메뉴: 제목, 아이콘 3개(GitHub, 갤러리, 음악), 주요 버튼 3개
- * 데스크톱·모바일 배치가 같은 내용을 쓰므로 한 곳에서 그린다.
- * 버튼은 진입 여부에 따라 달라진다: 진입 전엔 모달을 열고, 진입 후엔 바로 이동
- *
- * @param {boolean} isAuthenticated 토큰 보유 여부
- * @param {boolean} isMuted 배경음악 음소거 여부
- * @param {Function} onToggleMusic
- * @param {Function} onOpenGallery
- * @param {Function} onStartClick 진입 전 "게임 시작" 클릭
- * @param {Function} onRankingClick 진입 전 "랭킹 보기" 클릭
+ * 홈 메뉴: 제목, 아이콘 3개(GitHub, 갤러리, 음악), 주요 버튼 (데스크톱·모바일 공용)
+ * 진입 전에는 버튼이 시작 모달을 열고, 진입 후에는 바로 이동
  */
 function HomeMenu({
   isAuthenticated,
@@ -72,7 +65,7 @@ function HomeMenu({
         <Subtitle>선택의 순간, 그녀의 운명이 갈린다.</Subtitle>
         <IconControlGroup>
           <ChangelogLink
-            href="https://github.com/bagle-ggul"
+            href={GITHUB_ORGANIZATION_URL}
             target="_blank"
             rel="noopener noreferrer"
             title="GitHub 저장소"

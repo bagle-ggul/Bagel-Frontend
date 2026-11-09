@@ -5,8 +5,7 @@ export const EMPTY_MBTI_AXES = { e: "", s: "", t: "", j: "" };
 
 /**
  * 축별 선택값 > MBTI 문자열 (예: { e: "E", s: "N", t: "F", j: "P" } > "ENFP")
- * @param {{e: string, s: string, t: string, j: string}} mbtiAxes
- * @returns {string} 4축을 모두 고르지 않았으면 빈 문자열
+ * 4축을 모두 고르지 않았으면 빈 문자열
  */
 export const combineMbti = (mbtiAxes) => {
   const hasAllAxes = MBTI_AXIS_KEYS.every((axisKey) => Boolean(mbtiAxes?.[axisKey]));
