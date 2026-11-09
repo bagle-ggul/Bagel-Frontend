@@ -15,7 +15,13 @@ import CharacterSprite from "./CharacterSprite";
 import ChoiceList from "./ChoiceList";
 import DialogueBox from "./DialogueBox";
 import DialogueLogModal from "./DialogueLogModal";
-import { BottomArea, ChoiceArea, EndSlotArea, Screen, SpriteArea } from "./DialoguePlayer.styled";
+import {
+  ChoiceArea,
+  DialogueLayer,
+  EndSlotArea,
+  Screen,
+  SpriteLayer,
+} from "./DialoguePlayer.styled";
 import PlayerControls from "./PlayerControls";
 import SceneBackdrop from "./SceneBackdrop";
 
@@ -101,17 +107,17 @@ function DialoguePlayer({
       <SceneBackdrop src={background} sceneKey={flow.sceneIndex} reduced={reduced}>
         <Screen data-testid="dialogue-player" onClick={requestAdvance}>
           <AmbientEffect kind={ambient} reduced={reduced} />
-          <SpriteArea>
+          <SpriteLayer>
             <CharacterSprite src={sprite} alt="" reduced={reduced} />
-          </SpriteArea>
-          <BottomArea>
+          </SpriteLayer>
+          <DialogueLayer>
             {isChoicePhase && (
               <ChoiceArea>
                 <ChoiceList choices={choices} onChoose={choose} />
               </ChoiceArea>
             )}
             {dialogueBoxProps && <DialogueBox {...dialogueBoxProps} />}
-          </BottomArea>
+          </DialogueLayer>
           <PlayerControls
             mode={mode}
             onModeChange={setMode}
