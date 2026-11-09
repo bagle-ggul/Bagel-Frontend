@@ -6,11 +6,18 @@ on:
     branches:
       - main
     types: [opened, synchronize, reopened]
+    # 백엔드만 바뀐 PR은 BACKEND-CI.yaml이 검증한다 (#132)
+    paths-ignore:
+      - "backend/**"
+      - ".github/workflows/BACKEND-*.yaml"
 
   # main 브랜치에 push가 발생했을 때
   push:
     branches:
       - main
+    paths-ignore:
+      - "backend/**"
+      - ".github/workflows/BACKEND-*.yaml"
 
   # 수동 실행
   workflow_dispatch:

@@ -1,0 +1,55 @@
+spring:
+  jpa:
+    open-in-view: false
+    generate-ddl: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+suhapilog:
+  enabled: true
+  github:
+    base-url: "https://github.com/bagle-ggul/Bagel-Backend/issues"
+  storage:
+    path: "./github-issues" #기본값
+  default-author: "Author 누락됨!"
+
+suh-logger:
+  enabled: true                    # true(기본값), false
+  pretty-print-json: true         # false(기본값), true
+  max-response-body-size: 4096     # 양의 정수 (기본값: 4096)
+  exclude-patterns:                # 문자열 배열 (기본값: 빈 배열)
+  #    - "/actuator"                  # Spring Boot Actuator 제외
+  excluded-classes:                # 문자열 배열 (기본값: 빈 배열)
+  #    - "org.springframework.web.multipart.MultipartFile"
+  masking:
+    header: true                   # true(기본값), false - 민감한 헤더 마스킹 여부
+  header:
+    enabled: false                 # false(기본값), true - 전역 헤더 로깅 활성화 여부
+
+springdoc:
+  default-consumes-media-type: application/json;charset=UTF-8
+  default-produces-media-type: application/json;charset=UTF-8
+  swagger-ui:
+    path: /docs/swagger
+  api-docs:
+    path: /v3/api-docs
+  servers:
+    - url: http://suh-project.synology.me:8093
+      description: 서버 개발 환경
+    - url: http://localhost:8080
+      description: 로컬 개발 환경
+
+management:
+  endpoints:
+    web:
+      exposure:
+        # "*"는 /actuator/env, /actuator/beans 등 내부 정보까지 노출하므로 필요한 것만 연다
+        include: health,info,prometheus
+  endpoint:
+    health:
+      show-details: never
