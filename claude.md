@@ -38,7 +38,19 @@ React 18 + CRA 기반 인터랙티브 비주얼 노벨 게임. 플레이어의 �
 ### 배포 트리거
 
 `main`에 push한다고 배포되지 않는다. main push는 **버전 자동 증가와 CI까지만** 트리거하며,
-실제 배포는 **`deploy` 브랜치 push**가 트리거한다 (`.github/workflows/FRONTEND-CICD.yaml`).
+실제 배포는 **`deploy` 브랜치 push**가 트리거한다. 바뀐 폴더에 따라 나뉜다.
+
+| 변경 경로                 | 배포 워크플로                            | CI 워크플로                          |
+| ------------------------- | ---------------------------------------- | ------------------------------------ |
+| `backend/**`              | `BACKEND-CICD.yaml` (NAS `bagel-back`)   | `BACKEND-CI.yaml` (빌드·테스트)      |
+| 그 외 (루트 = 프론트엔드) | `FRONTEND-CICD.yaml` (NAS `bagel-front`) | `PROJECT-CI.yaml` (포맷·린트·테스트) |
+
+## 모노레포 구조
+
+루트가 프론트엔드(React)이고 백엔드(Spring Boot)는 `backend/`에 있다. 백엔드 작업 규칙은
+`backend/CLAUDE.md`를 따른다. 백엔드 품질 확인은 `cd backend && ./gradlew clean build`.
+API 계약을 바꾸는 작업은 한 PR에서 양쪽을 함께 고친다. 두 쪽이 같은 `deploy` push에서 동시에
+배포되므로, 하위 호환이 깨지는 변경은 백엔드가 구버전 프론트도 받도록 먼저 배포한다.
 
 ## 품질 게이트
 
