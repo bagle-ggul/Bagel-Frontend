@@ -1,9 +1,5 @@
 {
   "src/components/DialogueSystem.jsx": 1,
-  "src/components/GameUI/BagelChoiceButton.jsx": 19,
-  "src/components/GameUI/BagelDialogBox.jsx": 14,
-  "src/components/GameUI/BagelSelectPageComponent.jsx": 9,
-  "src/components/GameUI/TypewriterText.jsx": 2,
   "src/index.jsx": 1,
   "src/pages/Happy.jsx": 1,
   "src/pages/Hidden.jsx": 1,
