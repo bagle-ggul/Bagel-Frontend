@@ -1,0 +1,8 @@
+# 프론트 이미지(루트 Dockerfile) 빌드 컨텍스트에서 제외 — 백엔드는 backend/Dockerfile로 따로 빌드 (#132)
+backend
+node_modules
+build
+coverage
+docs
+.git
+.github

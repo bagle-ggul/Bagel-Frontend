@@ -1,9 +1,13 @@
 name: BAGEL-FE-CICD
 
+# 모노레포: backend/ 외 변경이 deploy에 올라왔을 때만 프론트를 배포한다 (#132)
 on:
   push:
     branches:
       - deploy
+    paths-ignore:
+      - "backend/**"
+      - ".github/workflows/BACKEND-*.yaml"
   workflow_dispatch:
 
 jobs:
@@ -39,9 +43,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}
+          key: ${{ runner.os }}-buildx-frontend-${{ hashFiles('Dockerfile') }}
           restore-keys: |
-            ${{ runner.os }}-buildx-
+            ${{ runner.os }}-buildx-frontend-
 
       - name: Docker 이미지 빌드 및 푸시
         uses: docker/build-push-action@v6
