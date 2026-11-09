@@ -40,6 +40,10 @@ const ProgressDot = styled.span`
   border-radius: ${radius.pill};
   background: ${text.accent};
   animation: ${blink} 1s infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 `;
 
 /**

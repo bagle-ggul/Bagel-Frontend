@@ -12,9 +12,9 @@ describe("DialogueBox", () => {
   });
 
   it("나레이션은 이름표가 없다", () => {
-    const line = { speakerId: "narration", speakerName: "", text: "비가 온다" };
+    const line = { speakerId: "narration", speakerName: "나레이터", text: "비가 온다" };
     render(<DialogueBox line={line} visibleText="비가 온다" isDone={false} />);
     expect(screen.getByText("비가 온다")).toBeInTheDocument();
-    expect(screen.getAllByText(/./)).toHaveLength(1);
+    expect(screen.queryByText("나레이터")).toBeNull();
   });
 });

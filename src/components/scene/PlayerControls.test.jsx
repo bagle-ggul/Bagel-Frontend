@@ -36,4 +36,29 @@ describe("PlayerControls", () => {
     fireEvent.click(screen.getByRole("button", { name: "지난 대사" }));
     expect(onOpenLog).toHaveBeenCalled();
   });
+
+  it("활성 모드 버튼만 aria-pressed true", () => {
+    setup({ mode: "auto" });
+    expect(screen.getByRole("button", { name: "자동" })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByRole("button", { name: "건너뛰기" })).toHaveAttribute(
+      "aria-pressed",
+      "false"
+    );
+  });
+
+  it("skip 모드에서는 canSkip false여도 건너뛰기가 활성", () => {
+    setup({ mode: "skip", canSkip: false });
+    expect(screen.getByRole("button", { name: "건너뛰기" })).toBeEnabled();
+  });
+
+  it("컨트롤 클릭이 부모로 전파되지 않는다", () => {
+    const onParentClick = jest.fn();
+    render(
+      <div onClick={onParentClick}>
+        <PlayerControls mode="manual" canSkip onModeChange={() => {}} onOpenLog={() => {}} />
+      </div>
+    );
+    fireEvent.click(screen.getByRole("button", { name: "자동" }));
+    expect(onParentClick).not.toHaveBeenCalled();
+  });
 });

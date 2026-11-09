@@ -33,4 +33,12 @@ describe("DialogueLogModal", () => {
     fireEvent.click(screen.getByRole("button", { name: "닫기" }));
     expect(onClose).toHaveBeenCalled();
   });
+
+  it("열리면 목록 끝으로 스크롤한다", () => {
+    const originalScrollIntoView = Element.prototype.scrollIntoView;
+    Element.prototype.scrollIntoView = jest.fn();
+    render(<DialogueLogModal entries={entries} onClose={() => {}} />);
+    expect(Element.prototype.scrollIntoView).toHaveBeenCalled();
+    Element.prototype.scrollIntoView = originalScrollIntoView;
+  });
 });

@@ -63,7 +63,7 @@ function ChoiceList({ choices, onChoose }) {
     <List role="group" aria-label="선택지">
       {choices.map((choice, index) => (
         <ChoiceCard
-          key={choice.label}
+          key={`${index}-${choice.label}`}
           type="button"
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}

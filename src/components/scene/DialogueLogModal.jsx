@@ -51,7 +51,9 @@ function DialogueLogModal({ entries, onClose }) {
             const isChoice = entry.speakerId === "choice";
             return (
               <Entry key={entry.id} $isChoice={isChoice}>
-                {!isChoice && entry.speakerName && <SpeakerName>{entry.speakerName}</SpeakerName>}
+                {!isChoice && entry.speakerId !== "narration" && (
+                  <SpeakerName>{entry.speakerName}</SpeakerName>
+                )}
                 {isChoice ? `선택 · ${entry.text}` : entry.text}
               </Entry>
             );
