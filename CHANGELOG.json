@@ -1,11 +1,32 @@
 {
   "metadata": {
-    "lastUpdated": "2026-11-08T22:25:37Z",
-    "currentVersion": "1.4.18",
+    "lastUpdated": "2026-11-09T04:42:45Z",
+    "currentVersion": "1.4.19",
     "projectType": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
-    "totalReleases": 33
+    "totalReleases": 34
   },
   "releases": [
+    {
+      "version": "1.4.19",
+      "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
+      "date": "2026-11-09",
+      "pr_number": 135,
+      "raw_summary": "Summary by CodeRabbit\n릴리스 노트\n\n\n개선\n\n프론트엔드와 백엔드를 한 저장소로 합쳐, 바뀐 쪽만 골라 배포하도록 배포 과정을 정리했어요\n\n\n\n기타\n\n서비스 동작에는 변화가 없어요",
+      "parsed_changes": {
+        "개선": {
+          "title": "개선",
+          "items": [
+            "프론트엔드와 백엔드를 한 저장소로 합쳐, 바뀐 쪽만 골라 배포하도록 배포 과정을 정리했어요"
+          ]
+        },
+        "기타": {
+          "title": "기타",
+          "items": [
+            "서비스 동작에는 변화가 없어요"
+          ]
+        }
+      }
+    },
     {
       "version": "1.4.18",
       "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
