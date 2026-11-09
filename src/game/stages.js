@@ -7,7 +7,7 @@ import { storyData as stage5StoryData } from "../utils/data5";
 
 /**
  * 스테이지 설정 표: 장소, 스토리 데이터, 배경, 음악, 기본 다음 경로, 분위기 효과
- * 값은 기존 Main1~Main5 페이지 props와 동일 (defaultExit null = 마지막 스테이지)
+ * StagePage가 stage 번호로 조회 (defaultExit null = 마지막 스테이지)
  */
 export const STAGE_CONFIGS = {
   1: {

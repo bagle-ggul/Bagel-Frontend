@@ -7,8 +7,7 @@ import stageRules from "../data/stageRules.json";
  * 규칙은 `src/data/stageRules.json`에 있다. 이 파일은 그 규칙을 **평가**만 한다.
  * 씬을 추가하거나 점수 임계치를 바꾸려면 JSON만 고치면 되고, 이 코드는 손대지 않는다.
  *
- * 원래는 `BagelSelectPageComponent`의 `onSubClicked()`에 숫자 조건문 60줄로 박혀 있었다.
- * 컴포넌트가 스토리 구조를 알고 있어서, 씬 하나를 추가하려면 컴포넌트를 고쳐야 했다.
+ * 화면 컴포넌트는 스토리 구조를 모르고 이 엔진의 결과만 따른다.
  *
  * 동작은 그대로다. 값의 근거는 docs/GAME-FLOW.md,
  * 회귀 검증은 storyFlow.test.js의 전 경로 기대값 표가 담당한다.
