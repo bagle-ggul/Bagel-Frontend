@@ -18,7 +18,7 @@ describe("SceneBackdrop", () => {
   it("배경 주소를 style로 건다", () => {
     render(<SceneBackdrop src="/bg.webp" sceneKey="a" reduced={false} />);
     expect(screen.getByTestId("scene-backdrop-image")).toHaveStyle({
-      backgroundImage: "url(/bg.webp)",
+      backgroundImage: 'url("/bg.webp")',
     });
   });
 });

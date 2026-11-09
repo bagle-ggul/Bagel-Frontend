@@ -6,12 +6,22 @@ import { radius, shadow } from "../../styles/tokens";
 
 const ENTRANCE_SECONDS = 0.5;
 const IDLE_LOOP_SECONDS = 6;
+const IDLE_FLOAT_KEYFRAMES = [0, -4, 0]; // 대기 위아래 흔들림 (px)
 
-const Sprite = styled(motion.img)`
+// 바깥: 등장·교체 담당
+const Entrance = styled(motion.div)`
+  pointer-events: none;
+`;
+
+// 안쪽: 대기 움직임 담당 (등장 y와 키프레임이 충돌하지 않도록 분리)
+const Idle = styled(motion.div)`
+  display: flex;
+`;
+
+const Sprite = styled.img`
   height: min(52dvh, 27rem);
   max-width: 100%;
   object-fit: contain;
-  pointer-events: none;
 
   ${({ $framed }) =>
     $framed &&
@@ -33,21 +43,26 @@ function CharacterSprite({ src, alt, framed = true, reduced }) {
   return (
     <AnimatePresence mode="sync">
       {src && (
-        <Sprite
+        <Entrance
           key={src}
-          src={src}
-          alt={alt}
-          $framed={framed}
           initial={{ y: 24, opacity: 0 }}
-          animate={reduced ? { y: 0, opacity: 1 } : { y: [0, -4, 0], opacity: 1 }}
+          animate={{ y: 0, opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{
-            duration: ENTRANCE_SECONDS,
-            y: reduced
-              ? { duration: ENTRANCE_SECONDS }
-              : { duration: IDLE_LOOP_SECONDS, repeat: Infinity, ease: "easeInOut" },
-          }}
-        />
+          transition={{ duration: ENTRANCE_SECONDS }}
+        >
+          <Idle
+            data-testid="character-idle"
+            data-idle={reduced ? "off" : "on"}
+            animate={reduced ? { y: 0 } : { y: IDLE_FLOAT_KEYFRAMES }}
+            transition={
+              reduced
+                ? { duration: 0 }
+                : { duration: IDLE_LOOP_SECONDS, repeat: Infinity, ease: "easeInOut" }
+            }
+          >
+            <Sprite src={src} alt={alt} $framed={framed} />
+          </Idle>
+        </Entrance>
       )}
     </AnimatePresence>
   );

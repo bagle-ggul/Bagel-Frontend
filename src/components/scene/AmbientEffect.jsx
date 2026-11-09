@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import { useMemo } from "react";
 import styled, { css, keyframes } from "styled-components";
 
 import { effect } from "../../styles/semantic";
@@ -53,7 +54,7 @@ const particleStyleByKind = {
     animation-timing-function: ease-in-out;
   `,
   sparkle: css`
-    bottom: 0;
+    bottom: var(--bottom);
     border-radius: 50%;
     background: ${effect.sparkle};
     animation-name: ${twinkle};
@@ -66,6 +67,7 @@ const Layer = styled.div`
   inset: 0;
   overflow: hidden;
   pointer-events: none;
+  will-change: transform, opacity;
 
   @media (prefers-reduced-motion: reduce) {
     display: none;
@@ -80,7 +82,6 @@ const Particle = styled.span`
   animation-duration: var(--duration);
   animation-delay: var(--delay);
   animation-iteration-count: infinite;
-  will-change: transform, opacity;
   ${({ $kind }) => particleStyleByKind[$kind]}
 
   /* 모바일은 절반만 (짝수 번째) */
@@ -97,11 +98,12 @@ const Particle = styled.span`
  */
 function AmbientEffect({ kind, reduced }) {
   const count = PARTICLE_COUNT_BY_KIND[kind];
+  const particles = useMemo(() => (count ? buildParticles(kind, count) : []), [kind, count]);
   if (reduced || !count) return null;
 
   return (
     <Layer aria-hidden="true" data-testid="ambient-layer">
-      {buildParticles(kind, count).map((particle, index) => (
+      {particles.map((particle, index) => (
         <Particle
           key={index}
           $kind={kind}
@@ -112,6 +114,7 @@ function AmbientEffect({ kind, reduced }) {
             "--duration": particle.duration,
             "--size": particle.size,
             "--drift": particle.drift,
+            "--bottom": particle.bottom,
           }}
         />
       ))}

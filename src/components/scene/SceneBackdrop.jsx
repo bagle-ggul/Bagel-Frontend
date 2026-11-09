@@ -52,7 +52,7 @@ function SceneBackdrop({ src, sceneKey, reduced, children }) {
         <BackgroundImage
           key={src}
           data-testid="scene-backdrop-image"
-          style={{ backgroundImage: `url(${src})` }}
+          style={{ backgroundImage: `url("${src}")` }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

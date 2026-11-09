@@ -17,4 +17,11 @@ describe("CharacterSprite", () => {
     render(<CharacterSprite src={null} alt="없음" reduced={false} />);
     expect(screen.queryByRole("img")).not.toBeInTheDocument();
   });
+
+  it("reduced면 대기 움직임을 끈다", () => {
+    const { rerender } = render(<CharacterSprite src="/a.webp" alt="그림" reduced />);
+    expect(screen.getByTestId("character-idle")).toHaveAttribute("data-idle", "off");
+    rerender(<CharacterSprite src="/a.webp" alt="그림" reduced={false} />);
+    expect(screen.getByTestId("character-idle")).toHaveAttribute("data-idle", "on");
+  });
 });
