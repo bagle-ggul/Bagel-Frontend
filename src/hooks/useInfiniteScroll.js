@@ -102,10 +102,10 @@ export const useScrollProgress = () => {
 /**
  * 맨 위로 스크롤 버튼 표시 여부 훅
  * @param {number} threshold - 버튼을 표시할 스크롤 위치 (px)
- * @returns {Object} - { showScrollTop, scrollToTop }
+ * @returns {Object} - { shouldShowScrollTop, scrollToTop }
  */
 export const useScrollToTop = (threshold = 300) => {
-  const [showScrollTop, setShowScrollTop] = useState(false);
+  const [shouldShowScrollTop, setShouldShowScrollTop] = useState(false);
 
   const scrollToTop = useCallback(() => {
     window.scrollTo({
@@ -116,7 +116,7 @@ export const useScrollToTop = (threshold = 300) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setShowScrollTop(window.pageYOffset > threshold);
+      setShouldShowScrollTop(window.pageYOffset > threshold);
     };
 
     const throttledHandleScroll = throttle(handleScroll, 100);
@@ -129,7 +129,7 @@ export const useScrollToTop = (threshold = 300) => {
     };
   }, [threshold]);
 
-  return { showScrollTop, scrollToTop };
+  return { shouldShowScrollTop, scrollToTop };
 };
 
 /**

@@ -11,6 +11,7 @@ import {
   surface,
   text,
 } from "../../styles/semantic";
+import { media } from "../../styles/theme";
 import { blur } from "../../styles/tokens";
 
 // 커스텀 스크롤바 (너비만 다르게)
@@ -64,7 +65,7 @@ export const ScrollableTableContainer = styled.div`
   overflow-x: hidden;
   ${scrollbarStyle(8)}
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     display: none;
   }
 `;
@@ -165,7 +166,7 @@ export const MobileCardContainer = styled.div`
   flex: 1;
   ${scrollbarStyle(6)}
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     display: flex;
   }
 `;

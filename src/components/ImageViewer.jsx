@@ -11,7 +11,7 @@ import {
   ImageViewerContainer,
   ImageViewerOverlay,
   NextButton,
-  PrevButton,
+  PreviousButton,
   ViewerCloseButton,
 } from "./ImageViewer.styled";
 
@@ -30,7 +30,7 @@ function ImageViewer({ images, selectedIndex = null, onChangeIndex, onClose }) {
   const selectedImage = isOpen ? images[selectedIndex] : null;
 
   // 키보드 이벤트 이펙트의 의존성이라 useCallback으로 안정화 (처음 <-> 마지막 순환)
-  const goToPrevImage = useCallback(() => {
+  const goToPreviousImage = useCallback(() => {
     onChangeIndex(selectedIndex > 0 ? selectedIndex - 1 : images.length - 1);
   }, [selectedIndex, images.length, onChangeIndex]);
 
@@ -60,7 +60,7 @@ function ImageViewer({ images, selectedIndex = null, onChangeIndex, onClose }) {
     if (distance > SWIPE_THRESHOLD_PIXELS) {
       goToNextImage();
     } else if (distance < -SWIPE_THRESHOLD_PIXELS) {
-      goToPrevImage();
+      goToPreviousImage();
     }
   };
 
@@ -70,7 +70,7 @@ function ImageViewer({ images, selectedIndex = null, onChangeIndex, onClose }) {
       if (!isOpen) return;
 
       if (e.key === "ArrowLeft") {
-        goToPrevImage();
+        goToPreviousImage();
       } else if (e.key === "ArrowRight") {
         goToNextImage();
       } else if (e.key === "Escape") {
@@ -80,7 +80,7 @@ function ImageViewer({ images, selectedIndex = null, onChangeIndex, onClose }) {
 
     document.addEventListener("keydown", handleKeyPress);
     return () => document.removeEventListener("keydown", handleKeyPress);
-  }, [isOpen, goToNextImage, goToPrevImage, onClose]);
+  }, [isOpen, goToNextImage, goToPreviousImage, onClose]);
 
   return (
     <AnimatePresence>
@@ -102,15 +102,15 @@ function ImageViewer({ images, selectedIndex = null, onChangeIndex, onClose }) {
               {selectedIndex + 1} / {images.length}
             </ImageCounter>
 
-            <PrevButton
-              onClick={goToPrevImage}
+            <PreviousButton
+              onClick={goToPreviousImage}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
               disabled={images.length <= 1}
               aria-label="이전 이미지"
             >
               <ChevronLeft size={24} />
-            </PrevButton>
+            </PreviousButton>
 
             <NextButton
               onClick={goToNextImage}

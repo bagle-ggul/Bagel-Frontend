@@ -66,8 +66,7 @@ const HomeLink = styled(Button)`
 `;
 
 /**
- * 라우터의 errorElement.
- * 이전에는 없는 주소로 들어가면 아무 안내 없는 빈 화면이 떴다.
+ * 라우터 errorElement: 없는 주소·화면 오류 시 안내와 홈 이동 버튼
  */
 function NotFound() {
   return (

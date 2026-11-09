@@ -80,6 +80,7 @@ const tapUntilChoices = () => {
 describe("DialoguePlayer", () => {
   beforeEach(() => {
     clearSeenLines();
+    localStorage.clear();
     jest.useFakeTimers();
   });
   afterEach(() => jest.useRealTimers());
@@ -167,6 +168,28 @@ describe("DialoguePlayer", () => {
     tick(AUTO_DELAY_MS);
     "우산 있어?".split("").forEach(() => tick(TYPING_SPEED_MS));
     expect(screen.getByText("우산 있어?")).toBeInTheDocument();
+  });
+
+  it("자동을 켜 두면 다음 화면(새 플레이어)도 자동으로 시작한다", () => {
+    const { unmount } = renderPlayer();
+    fireEvent.click(screen.getByRole("button", { name: "자동" }));
+    unmount();
+    renderPlayer({ scopeId: "next-stage" });
+    expect(screen.getByRole("button", { name: "자동" })).toHaveAttribute("aria-pressed", "true");
+  });
+
+  it("탭으로 자동을 해제하면 다음 화면은 수동으로 시작한다", () => {
+    const { unmount } = renderPlayer();
+    fireEvent.click(screen.getByRole("button", { name: "자동" }));
+    tapScreen();
+    unmount();
+    renderPlayer({ scopeId: "next-stage" });
+    expect(screen.getByRole("button", { name: "자동" })).toHaveAttribute("aria-pressed", "false");
+  });
+
+  it("initialMode를 주면 저장된 선호보다 우선한다", () => {
+    renderPlayer({ initialMode: "auto" });
+    expect(screen.getByRole("button", { name: "자동" })).toHaveAttribute("aria-pressed", "true");
   });
 
   it("로그가 열려 있으면 자동 진행이 멈춘다", () => {

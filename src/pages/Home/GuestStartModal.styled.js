@@ -3,6 +3,7 @@ import styled, { css, keyframes } from "styled-components";
 
 import { Button } from "../../components/ui";
 import { action, border, feedback, focus, surface, text } from "../../styles/semantic";
+import { media } from "../../styles/theme";
 import { blur, radius, shadow, spacing, transition } from "../../styles/tokens";
 
 const spin = keyframes`
@@ -45,12 +46,12 @@ export const GlassInput = styled.input`
     background: ${surface.raisedHover};
   }
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     padding: 0.9rem 1.2rem;
     font-size: 0.95rem;
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     padding: 0.8rem 1rem;
     font-size: 0.9rem;
   }
@@ -68,12 +69,12 @@ export const ErrorMessage = styled(motion.div)`
   text-align: center;
   margin-top: ${spacing.sm};
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     padding: 0.7rem 0.8rem;
     font-size: 0.85rem;
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     padding: 0.6rem 0.7rem;
     font-size: 0.8rem;
   }

@@ -13,6 +13,7 @@ import {
   surface,
   text,
 } from "../styles/semantic";
+import { media } from "../styles/theme";
 import { blur, radius, shadow } from "../styles/tokens";
 
 // 배경 이미지 URL
@@ -35,11 +36,11 @@ export const BoardWrapper = styled.div`
   padding: 20px;
   box-sizing: border-box;
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     padding: 15px;
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     padding: 10px;
   }
 `;
@@ -54,13 +55,13 @@ export const Title = styled.h1`
   gap: 15px;
   font-weight: 700;
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     font-size: 2.2em;
     margin: 50px 0 15px 0;
     gap: 10px;
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     font-size: 1.8em;
     margin: 40px 0 10px 0;
     gap: 8px;
@@ -95,13 +96,13 @@ export const GlassContainer = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     width: 95%;
     max-height: 80vh;
     border-radius: 15px;
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     width: 100%;
     max-height: 85vh;
     border-radius: 12px;
@@ -196,14 +197,14 @@ export const ScrollToTopButton = styled(motion.button)`
     box-shadow: 0 12px 40px ${focus.ring};
   }
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     bottom: 70px;
     right: 15px;
     width: 48px;
     height: 48px;
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     bottom: 60px;
     right: 10px;
     width: 44px;
@@ -224,12 +225,12 @@ export const ButtonContainer = styled.div`
   right: 20px;
   gap: 10px;
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     top: 15px;
     right: 15px;
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     top: 10px;
     right: 10px;
   }
@@ -242,12 +243,12 @@ export const TopNavButton = styled(Button)`
   box-shadow: ${shadow.button};
   border-radius: ${radius.md};
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     padding: 8px 16px;
     font-size: 0.9rem;
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     padding: 6px 12px;
     font-size: 0.8rem;
   }

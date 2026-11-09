@@ -97,10 +97,10 @@ const Particle = styled.span`
  * 장소별 분위기 효과: 비, 먼지, 꽃잎, 반짝임 입자 층
  * none이거나 줄임 동작이면 그리지 않음
  */
-function AmbientEffect({ kind, reduced }) {
+function AmbientEffect({ kind, isReducedMotion }) {
   const count = PARTICLE_COUNT_BY_KIND[kind];
   const particles = useMemo(() => (count ? buildParticles(kind, count) : []), [kind, count]);
-  if (reduced || !count) return null;
+  if (isReducedMotion || !count) return null;
 
   return (
     <Layer aria-hidden="true" data-testid="ambient-layer">
@@ -125,7 +125,7 @@ function AmbientEffect({ kind, reduced }) {
 
 AmbientEffect.propTypes = {
   kind: PropTypes.oneOf(["rain", "dust", "petals", "sparkle", "none"]).isRequired,
-  reduced: PropTypes.bool.isRequired,
+  isReducedMotion: PropTypes.bool.isRequired,
 };
 
 export default AmbientEffect;

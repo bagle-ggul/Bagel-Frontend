@@ -1,11 +1,34 @@
 {
   "metadata": {
-    "lastUpdated": "2026-11-09T11:41:20Z",
-    "currentVersion": "1.4.25",
+    "lastUpdated": "2026-11-09T13:38:05Z",
+    "currentVersion": "1.4.26",
     "projectType": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
-    "totalReleases": 40
+    "totalReleases": 41
   },
   "releases": [
+    {
+      "version": "1.4.26",
+      "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",
+      "date": "2026-11-09",
+      "pr_number": 149,
+      "raw_summary": "Summary by CodeRabbit\n\n\n새 기능\n\n자동 진행을 켜 두면 다음 장소와 엔딩도 자동으로 이어서 재생\n\n\n\n개선\n\n사이트 첫 로딩 속도 개선 (압축된 운영 빌드로 서빙)\n결과 확인 버튼을 다른 화면과 같은 디자인으로 통일\n화면 크기별 레이아웃 기준을 하나로 정리",
+      "parsed_changes": {
+        "새_기능": {
+          "title": "새 기능",
+          "items": [
+            "자동 진행을 켜 두면 다음 장소와 엔딩도 자동으로 이어서 재생"
+          ]
+        },
+        "개선": {
+          "title": "개선",
+          "items": [
+            "사이트 첫 로딩 속도 개선 (압축된 운영 빌드로 서빙)",
+            "결과 확인 버튼을 다른 화면과 같은 디자인으로 통일",
+            "화면 크기별 레이아웃 기준을 하나로 정리"
+          ]
+        }
+      }
+    },
     {
       "version": "1.4.25",
       "project_type": "project_type: react # spring, flutter, react, react-native, react-native-expo, node, basic",

@@ -12,6 +12,7 @@ import { blur, palette, radius, shadow, transition } from "./tokens";
 
 /** 표면 — 배경으로 깔리는 것 */
 export const surface = {
+  page: palette.black, // 앱 바탕 (그림이 덮지 못한 여백·로딩 중 화면)
   glass: palette.black40,
   glassHover: palette.black50,
   raised: palette.white10,

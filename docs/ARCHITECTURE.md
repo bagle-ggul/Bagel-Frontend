@@ -175,7 +175,7 @@ styled-components(CSS-in-JS)를 쓴다. `src/styles/theme.js`에 토큰이 정�
 | 버전 관리   | `version.yml`이 단일 출처. `scripts/sync-version.js`가 동기화                                       |
 | CI          | `.github/workflows/PROJECT-CI.yaml` — main PR/push에서 실행                                         |
 | 배포 트리거 | `deploy` 브랜치 push. 프론트 `FRONTEND-CICD.yaml`, 백엔드(`backend/**` 변경 시) `BACKEND-CICD.yaml` |
-| 배포 방식   | Docker + Nginx 정적 서빙                                                                            |
+| 배포 방식   | Docker 2단계: node 빌드 → nginx 정적 서빙(`nginx/default.conf`, 컨테이너 포트 3000)                 |
 
 `main`에 push한다고 배포되지 않는다. main push는 버전 자동 증가와 CI까지만 트리거하며,
 실제 배포는 `deploy` 브랜치 push가 트리거한다.

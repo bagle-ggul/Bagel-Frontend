@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import { Button, Card } from "../components/ui";
 import { border, glass, glassHover, layer, surface, text } from "../styles/semantic";
+import { media } from "../styles/theme";
 import { blur, radius, shadow, spacing, transition } from "../styles/tokens";
 
 // 스켈레톤 로딩 UI
@@ -65,7 +66,7 @@ export const DesktopContainer = styled.div`
   margin: 0 auto;
   padding-top: 76px; /* 버튼(44px) + 여백(16px) + 패딩(16px) */
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     display: none;
   }
 `;
@@ -74,7 +75,7 @@ export const DesktopContainer = styled.div`
 export const MobileContainer = styled.div`
   display: none;
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -85,7 +86,7 @@ export const MobileContainer = styled.div`
     padding-top: 71px; /* 버튼(39px) + 여백(16px) + 패딩(16px) */
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     padding-top: 66px; /* 버튼(34px) + 여백(16px) + 패딩(16px) */
   }
 `;
@@ -96,12 +97,12 @@ const profileCardLayout = `
   max-width: 500px;
   width: 100%;
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     padding: 2rem 1.5rem;
     max-width: 90vw;
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     padding: 1.5rem 1.2rem;
     max-width: 95vw;
   }
@@ -134,7 +135,7 @@ export const ProfileCard = styled(motion(Card))`
     transform: ${glassHover.transform};
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     &:hover {
       transform: translateY(-2px);
     }
@@ -167,12 +168,12 @@ export const SkeletonCircle = styled(SkeletonElement)`
   height: 150px;
   border-radius: 50%;
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     width: 120px;
     height: 120px;
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     width: 100px;
     height: 100px;
   }
@@ -190,7 +191,7 @@ export const SkeletonTitle = styled(SkeletonElement)`
   width: 200px;
   border-radius: 6px;
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     width: 150px;
     height: 28px;
   }
@@ -204,12 +205,12 @@ export const ButtonContainer = styled.div`
   gap: 10px;
   z-index: ${layer.sticky};
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     top: 15px;
     right: 15px;
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     top: 10px;
     right: 10px;
   }
@@ -221,12 +222,12 @@ export const TopNavButton = styled(Button)`
   backdrop-filter: ${blur.subtle};
   box-shadow: ${shadow.button};
 
-  @media (max-width: 768px) {
+  ${media.tablet} {
     padding: 8px 16px;
     font-size: 0.9rem;
   }
 
-  @media (max-width: 480px) {
+  ${media.mobile} {
     padding: 6px 12px;
     font-size: 0.8rem;
   }
