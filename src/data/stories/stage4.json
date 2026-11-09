@@ -1,0 +1,202 @@
+{
+  "place": "Umbrella",
+  "scenes": [
+    {
+      "sprite": "/img/bg_road_scene1.webp",
+      "lines": [
+        {
+          "speaker": "narration",
+          "text": "갑자기 비가 온다.\n얻은 돈으로 편의점에서 우산을 사올 수 있었다.\n하지만 두사람에게 우산 하나는 너무 작다."
+        }
+      ],
+      "choices": [
+        {
+          "label": "조금 더 가까이 걸어간다.",
+          "score": 10,
+          "followUp": [
+            {
+              "speaker": "player",
+              "text": "나한테 조금 더 붙어봐. 둘이서 쓰기에는 우산이 너무 작다."
+            }
+          ]
+        },
+        {
+          "label": "그대로 간다.",
+          "score": 0,
+          "followUp": [
+            {
+              "speaker": "narration",
+              "text": "어깨가 젖은 수정이의 표정이 굳어진다."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sprite": "/img/bg_road_scene2.webp",
+      "lines": [
+        {
+          "speaker": "narration",
+          "text": "둘 사이에 정적이 흐른다."
+        }
+      ],
+      "choices": [
+        {
+          "label": "날씨 얘기를 한다.",
+          "score": 0,
+          "followUp": [
+            {
+              "speaker": "player",
+              "text": "오늘 날씨가 참... 그렇네…"
+            },
+            {
+              "speaker": "narration",
+              "text": "흥미 없는 이야기에 수정이는 대답이 없다."
+            }
+          ]
+        },
+        {
+          "label": "있잖아.. 만약 너한테 시간을 되돌릴 수 있는 능력이 생긴다면 어떻게 할 거야?",
+          "score": 10,
+          "followUp": [
+            {
+              "speaker": "player",
+              "text": "있잖아.. 만약 너한테 시간을 되돌릴 수 있는 능력이 생긴다면 어떻게 할 거야?"
+            },
+            {
+              "speaker": "sujung",
+              "text": "시간을 되돌릴 수 있는 능력? 그런 능력이 있다면 정말 좋겠다 ㅎㅎㅎ."
+            },
+            {
+              "speaker": "narration",
+              "text": "흥미로운 주제에 그녀가 즐겁게 이야기 한다."
+            }
+          ]
+        },
+        {
+          "label": "그대로 간다.",
+          "score": 0,
+          "followUp": [
+            {
+              "speaker": "narration",
+              "text": "두 사람 사이의 정적이 계속된다."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sprite": "/img/bg_road_scene3.webp",
+      "lines": [
+        {
+          "speaker": "narration",
+          "text": "뱀이 나타났다."
+        }
+      ],
+      "choices": [
+        {
+          "label": "이수정 앞에 서서 뱀으로부터 막아준다.",
+          "score": 0,
+          "gameOver": true,
+          "followUp": [
+            {
+              "speaker": "player",
+              "text": "뒤로 물러서! 내가 막을게."
+            },
+            {
+              "speaker": "player",
+              "text": "으악!"
+            },
+            {
+              "speaker": "narration",
+              "text": "{player}은 뱀에 물려 끝을 맞이한다."
+            }
+          ]
+        },
+        {
+          "label": "같이 도망친다.",
+          "score": 0,
+          "followUp": [
+            {
+              "speaker": "player",
+              "text": "뛰어! 도망치자"
+            },
+            {
+              "speaker": "narration",
+              "text": "두 사람은 뱀을 피해 멀리 도망쳤다."
+            },
+            {
+              "speaker": "sujung",
+              "text": "갑자기 뱀이 나타나서 깜짝 놀랐네…"
+            }
+          ]
+        },
+        {
+          "label": "뱀을 위협한다.",
+          "score": 10,
+          "followUp": [
+            {
+              "speaker": "narration",
+              "text": "{player}이 팔을 휘두르며 뱀을 쫓아낸다"
+            },
+            {
+              "speaker": "player",
+              "text": "저리 가!"
+            },
+            {
+              "speaker": "narration",
+              "text": "겁먹은 뱀은 도망친다."
+            },
+            {
+              "speaker": "sujung",
+              "text": "깜짝 놀랐어… 그래도 덕분에 뱀이 가서 다행이네…."
+            },
+            {
+              "speaker": "narration",
+              "text": "두 사람은 해변을 향해 걸어간다."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sprite": "/img/bg_cave_scene1.webp",
+      "lines": [
+        {
+          "speaker": "sujung",
+          "text": "있잖아.. 우리 맥주 좀 사갈까?"
+        }
+      ],
+      "choices": [
+        {
+          "label": "그래! 좋아, 맥주 마시자.",
+          "score": 10,
+          "followUp": [
+            {
+              "speaker": "player",
+              "text": "그래! 좋아, 맥주 마시자."
+            }
+          ]
+        },
+        {
+          "label": "아니, 난 맥주는 별로 안 마시고 싶은데.",
+          "score": 0,
+          "followUp": [
+            {
+              "speaker": "player",
+              "text": "아니, 난 맥주는 별로 안 마시고 싶은데."
+            },
+            {
+              "speaker": "sujung",
+              "text": "아.. 그래? 알았어…"
+            },
+            {
+              "speaker": "narration",
+              "text": "그녀의 얼굴에 서운함이 가득해졌다."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,181 @@
+{
+  "place": "Beach",
+  "scenes": [
+    {
+      "sprite": "/img/bg_beach_scene1.webp",
+      "lines": [
+        {
+          "speaker": "narration",
+          "text": "두 사람은 드디어 바다에 도착한다. 그녀는 기뻐하며 바다를 향해 뛰어간다. {player}은 그녀를 바라보며 무엇을 할지 고민한다"
+        }
+      ],
+      "choices": [
+        {
+          "label": "함께 바다로 뛰어간다.",
+          "score": 10,
+          "followUp": [
+            {
+              "speaker": "player",
+              "text": "나도 같이 가!"
+            },
+            {
+              "speaker": "sujung",
+              "text": "빨리 와!"
+            },
+            {
+              "speaker": "narration",
+              "text": "두 사람은 바다에서 함께 즐거운 시간을 보낸다."
+            }
+          ]
+        },
+        {
+          "label": "해변에 앉아 기다린다.",
+          "score": 0,
+          "followUp": [
+            {
+              "speaker": "player",
+              "text": "난 피곤해서 여기서 좀 쉴게."
+            },
+            {
+              "speaker": "sujung",
+              "text": "아 뭐야.. 재미없게…"
+            },
+            {
+              "speaker": "narration",
+              "text": "그녀는 혼자 노는 동안 {player}은 그녀를 보고만 있다."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sprite": "/img/bg_beach_scene2.webp",
+      "lines": [
+        {
+          "speaker": "narration",
+          "text": "바다에서 놀고 난 후 그녀는 {player}에게 뭘 할지 물어본다."
+        }
+      ],
+      "choices": [
+        {
+          "label": "모래성 쌓기",
+          "score": 10,
+          "followUp": [
+            {
+              "speaker": "player",
+              "text": "모래성 쌓기 어때?"
+            },
+            {
+              "speaker": "sujung",
+              "text": "모래성 쌓기? 좋아! 재밌겠다!"
+            },
+            {
+              "speaker": "narration",
+              "text": "두 사람은 함께 모래성을 쌓으며 즐거운 시간을 보낸다."
+            }
+          ]
+        },
+        {
+          "label": "해변 산책",
+          "score": 10,
+          "followUp": [
+            {
+              "speaker": "player",
+              "text": "해변을 따라 산책할래?"
+            },
+            {
+              "speaker": "sujung",
+              "text": "그래! 좋아."
+            },
+            {
+              "speaker": "player",
+              "text": "가자"
+            },
+            {
+              "speaker": "narration",
+              "text": "두 사람은 손을 잡고 산책하며 이야기를 나눈다."
+            }
+          ]
+        },
+        {
+          "label": "해변에서 책 읽기",
+          "score": 0,
+          "followUp": [
+            {
+              "speaker": "player",
+              "text": "조용히 책 읽는 건 어때?"
+            },
+            {
+              "speaker": "sujung",
+              "text": "어..? 책을 읽자고? 알았어…"
+            },
+            {
+              "speaker": "narration",
+              "text": "그녀는 따분해 한다.\n시간은 흘러 해가 지기 시작했다."
+            },
+            {
+              "speaker": "sujung",
+              "text": "있잖아 우리 다시 같이 바다 쪽으로 갈래?"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sprite": "/img/bg_road_scene3.webp",
+      "lines": [
+        {
+          "speaker": "narration",
+          "text": "{player}은 그녀가 파도에 휩쓸렸던 기억에 불안해 한다."
+        }
+      ],
+      "choices": [
+        {
+          "label": "안전한 곳으로 이동",
+          "score": 10,
+          "followUp": [
+            {
+              "speaker": "player",
+              "text": "아니야… 곧 해지는데 위험해… 바다에 너무 가까이 가진 말자."
+            },
+            {
+              "speaker": "sujung",
+              "text": "시간이 벌써 이렇게 지났네. 시간이 진짜 금방 가는 것 같아."
+            }
+          ]
+        },
+        {
+          "label": "그냥 같이 간다.",
+          "score": 0,
+          "gameOver": true,
+          "followUp": [
+            {
+              "speaker": "player",
+              "text": "그래 가자."
+            },
+            {
+              "speaker": "sujung",
+              "text": "우와! 파도 엄청 세다!"
+            },
+            {
+              "speaker": "player",
+              "text": "좀 위험한 거 아니야?"
+            },
+            {
+              "speaker": "narration",
+              "text": "그녀가 강한 바닷바람에 중심을 잃고 넘어진다."
+            },
+            {
+              "speaker": "player",
+              "text": "어어! 위험해!"
+            },
+            {
+              "speaker": "narration",
+              "text": "그녀는 파도에 휩쓸리며, {player}은 다시 회귀 한다."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -7,8 +7,8 @@ import { characterNameAtom, scoreAtom } from "../atom/atom";
 import { DialoguePlayer } from "../components/scene";
 import { Button } from "../components/ui";
 import { ROUTES } from "../constants/routes";
-import introStory from "../data/stories/intro.json";
-import { fromIntroStory } from "../game/dialogueScript";
+import introStoryJson from "../data/stories/intro.json";
+import { toIntroScript } from "../game/dialogueScript";
 import { PLAY_MODE } from "../game/playMode";
 import { resetProgress } from "../game/progress";
 import { getPreloadImages } from "../game/stages";
@@ -64,7 +64,7 @@ function Intro() {
   }, []);
 
   const script = useMemo(
-    () => fromIntroStory(introStory.story, { playerName: characterName }),
+    () => toIntroScript(introStoryJson, { playerName: characterName }),
     [characterName]
   );
 

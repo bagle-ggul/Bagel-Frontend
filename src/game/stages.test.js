@@ -18,7 +18,7 @@ describe("stages", () => {
       defaultExit: exit,
       ambient,
     });
-    expect(STAGE_CONFIGS[stage].storyData.plot.length).toBeGreaterThan(0);
+    expect(STAGE_CONFIGS[stage].storyData.scenes.length).toBeGreaterThan(0);
   });
 
   it("NEXT_STAGES는 stageRules의 stageExit 목적지와 일치한다", () => {
