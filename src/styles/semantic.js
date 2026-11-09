@@ -18,6 +18,8 @@ export const surface = {
   raisedHover: palette.white15,
   strong: palette.black80, // 불투명에 가까운 어두운 패널
   faint: palette.white05, // 카드 안에서 한 단계 더 옅게 구분하는 면
+  accentFaint: palette.lilac10, // 강조 대상 행·카드의 옅은 보라 면
+  accentHover: palette.lilac20, // 행·카드 hover 시 보라 면
 };
 
 /** 텍스트 */
@@ -78,6 +80,13 @@ export const rank = {
   third: palette.bronze,
 };
 
+/** 순위 글자 발광 (text-shadow 색) */
+export const rankGlow = {
+  first: palette.goldGlow,
+  second: palette.silverGlow,
+  third: palette.bronzeGlow,
+};
+
 /**
  * 이 프로젝트의 시각적 정체성.
  * 카드·모달의 기본 표면 처리다.
@@ -116,6 +125,7 @@ const semantic = {
   overlay,
   focus,
   rank,
+  rankGlow,
   glass,
   glassHover,
   layer,

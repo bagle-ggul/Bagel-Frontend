@@ -15,6 +15,7 @@ export const palette = {
   lilac40: "rgba(200, 182, 226, 0.4)",
   lilac30: "rgba(200, 182, 226, 0.3)",
   lilac20: "rgba(200, 182, 226, 0.2)",
+  lilac10: "rgba(200, 182, 226, 0.1)",
 
   // 중립 — 흰색 계열 (어두운 배경 위에서 쓴다)
   white: "#ffffff",
@@ -49,6 +50,9 @@ export const palette = {
   gold: "#FFD700",
   silver: "#C0C0C0",
   bronze: "#CD7F32",
+  goldGlow: "rgba(255, 215, 0, 0.6)",
+  silverGlow: "rgba(192, 192, 192, 0.5)",
+  bronzeGlow: "rgba(205, 127, 50, 0.5)",
 };
 
 /** 간격 스케일 */
