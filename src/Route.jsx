@@ -5,6 +5,7 @@ import RequireAuth from "./components/RequireAuth";
 import RequireProgress from "./components/RequireProgress";
 import RouteFallback from "./components/RouteFallback";
 import { ROUTES } from "./constants/routes";
+import { ENDING_IDS } from "./game/ending";
 import Board from "./pages/Board";
 import Help from "./pages/Help";
 import Home from "./pages/Home";
@@ -16,10 +17,7 @@ import { lazyWithReload } from "./utils/lazyWithReload";
 const Intro = lazyWithReload(() => import("./pages/Intro"));
 const StagePage = lazyWithReload(() => import("./pages/StagePage"));
 const Result = lazyWithReload(() => import("./pages/Result"));
-const Happy = lazyWithReload(() => import("./pages/Happy"));
-const Middle = lazyWithReload(() => import("./pages/Middle"));
-const Sad = lazyWithReload(() => import("./pages/Sad"));
-const Hidden = lazyWithReload(() => import("./pages/Hidden"));
+const EndingPage = lazyWithReload(() => import("./pages/EndingPage"));
 const GameOver = lazyWithReload(() => import("./pages/GameOver"));
 
 /** 지연 로드 화면 대기 표시 */
@@ -70,10 +68,11 @@ const router = createBrowserRouter([
 
       // 결과·엔딩 — 게임을 끝내야 볼 수 있다
       { path: "result", element: completedOnly(withSuspense(<Result />)) },
-      { path: "happy", element: completedOnly(withSuspense(<Happy />)) },
-      { path: "middle", element: completedOnly(withSuspense(<Middle />)) },
-      { path: "sad", element: completedOnly(withSuspense(<Sad />)) },
-      { path: "hidden", element: completedOnly(withSuspense(<Hidden />)) },
+      // key: 엔딩 간 이동 시 대사 흐름 재생성
+      ...ENDING_IDS.map((endingId) => ({
+        path: endingId,
+        element: completedOnly(withSuspense(<EndingPage key={endingId} endingId={endingId} />)),
+      })),
       { path: "over", element: startedOnly(withSuspense(<GameOver />)) },
 
       // 부가 화면

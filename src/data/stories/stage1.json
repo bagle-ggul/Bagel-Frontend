@@ -1,0 +1,159 @@
+{
+  "place": "Home",
+  "scenes": [
+    {
+      "sprite": "/img/bg_house_scene1.webp",
+      "lines": [
+        {
+          "speaker": "narration",
+          "text": "여행 전날 밤. 휴대폰이 짧게 울린다."
+        },
+        {
+          "speaker": "sujung",
+          "text": "내일 여행 준비는 다 했어?"
+        }
+      ],
+      "choices": [
+        {
+          "label": "다 준비해 뒀다고 말한다",
+          "score": 10,
+          "followUp": [
+            {
+              "speaker": "player",
+              "text": "물론이지. 이번엔 하나도 빠짐없이 준비했어."
+            },
+            {
+              "speaker": "sujung",
+              "text": "이번엔? 너 저번에 뭐 빠뜨린 적 있었나?"
+            },
+            {
+              "speaker": "player",
+              "text": "아, 아니야. 그냥 말이 그렇게 나왔어."
+            }
+          ]
+        },
+        {
+          "label": "가서 정하자고 한다",
+          "score": 0,
+          "followUp": [
+            {
+              "speaker": "player",
+              "text": "준비할 게 뭐 있어. 가서 정하면 되지."
+            },
+            {
+              "speaker": "sujung",
+              "text": "하긴… 너답다."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sprite": "/img/bg_house_scene3.webp",
+      "lines": [
+        {
+          "speaker": "narration",
+          "text": "잘 시간이다. 눈을 감자 차가운 파도 소리가 귓가에 맴돈다."
+        },
+        {
+          "speaker": "player",
+          "text": "내일은 절대 늦으면 안 돼."
+        },
+        {
+          "speaker": "narration",
+          "text": "알람을 맞출까?"
+        }
+      ],
+      "choices": [
+        {
+          "label": "알람을 맞춘다",
+          "score": 5,
+          "followUp": [
+            {
+              "speaker": "player",
+              "text": "일곱 시, 일곱 시 십 분, 일곱 시 이십 분. 이 정도면 됐다."
+            }
+          ]
+        },
+        {
+          "label": "그냥 잔다",
+          "score": 0,
+          "gameOver": true,
+          "followUp": [
+            {
+              "speaker": "player",
+              "text": "괜찮아. 알아서 눈이 떠지겠지."
+            },
+            {
+              "speaker": "narration",
+              "text": "눈을 뜨니 약속 시간은 한참 지나 있고, 수정의 부재중 전화만 쌓여 있다."
+            },
+            {
+              "speaker": "player",
+              "text": "안 돼… 시작부터 이렇게 망칠 수는 없어."
+            },
+            {
+              "speaker": "narration",
+              "text": "주변이 하얀 빛에 휩싸이며 시간이 되감긴다."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sprite": "/img/bg_house_scene5.webp",
+      "lines": [
+        {
+          "speaker": "narration",
+          "text": "아침. 바다로 가기 전에 수정과 카페에 들르기로 했다."
+        },
+        {
+          "speaker": "player",
+          "text": "카페까지 멀지는 않은데… 어떻게 가지?"
+        }
+      ],
+      "choices": [
+        {
+          "label": "차를 타고 간다",
+          "score": 10,
+          "followUp": [
+            {
+              "speaker": "player",
+              "text": "편하게 차로 가자. 오늘은 체력 아껴 둬야 하니까."
+            },
+            {
+              "speaker": "narration",
+              "text": "두 사람은 차를 타고 이동한다."
+            },
+            {
+              "speaker": "sujung",
+              "text": "와, 차 타니까 진짜 편하다."
+            },
+            {
+              "speaker": "player",
+              "text": "그렇지? 오늘은 하나도 힘들게 안 할 거야."
+            }
+          ]
+        },
+        {
+          "label": "걸어서 간다",
+          "score": 0,
+          "followUp": [
+            {
+              "speaker": "player",
+              "text": "가까우니까 걸어가자."
+            },
+            {
+              "speaker": "sujung",
+              "text": "으… 벌써 지치면 안 되는데. 아직 멀었어?"
+            },
+            {
+              "speaker": "player",
+              "text": "조금만 더 가면 돼. 생각보다 머네…"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

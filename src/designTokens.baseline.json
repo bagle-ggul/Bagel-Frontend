@@ -1,8 +1,4 @@
 {
   "src/index.jsx": 1,
-  "src/pages/Happy.jsx": 1,
-  "src/pages/Hidden.jsx": 1,
-  "src/pages/Middle.jsx": 1,
-  "src/pages/Result.jsx": 1,
-  "src/pages/Sad.jsx": 1
+  "src/pages/Result.jsx": 1
 }

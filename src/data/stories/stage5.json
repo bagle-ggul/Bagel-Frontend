@@ -1,0 +1,193 @@
+{
+  "place": "Beach",
+  "scenes": [
+    {
+      "sprite": "/img/bg_beach_scene1.webp",
+      "lines": [
+        {
+          "speaker": "narration",
+          "text": "드디어 바다다. 수정이 신발을 벗어 던지고 파도를 향해 달려간다."
+        },
+        {
+          "speaker": "narration",
+          "text": "그 뒷모습에 그날의 기억이 겹친다."
+        }
+      ],
+      "choices": [
+        {
+          "label": "같이 바다로 뛰어간다",
+          "score": 10,
+          "followUp": [
+            {
+              "speaker": "player",
+              "text": "같이 가!"
+            },
+            {
+              "speaker": "sujung",
+              "text": "빨리 와!"
+            },
+            {
+              "speaker": "narration",
+              "text": "두 사람은 한참을 웃으며 물장구를 쳤다."
+            }
+          ]
+        },
+        {
+          "label": "모래사장에 앉아 기다린다",
+          "score": 0,
+          "followUp": [
+            {
+              "speaker": "player",
+              "text": "난 좀 쉴게. 먼저 놀아."
+            },
+            {
+              "speaker": "sujung",
+              "text": "뭐야… 재미없게."
+            },
+            {
+              "speaker": "narration",
+              "text": "수정이 혼자 노는 동안, 멀찍이 바라보기만 했다."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sprite": "/img/bg_beach_scene2.webp",
+      "lines": [
+        {
+          "speaker": "narration",
+          "text": "한바탕 놀고 난 뒤, 수정이 물기를 털며 묻는다."
+        },
+        {
+          "speaker": "sujung",
+          "text": "이제 뭐 할까?"
+        }
+      ],
+      "choices": [
+        {
+          "label": "모래성 쌓기",
+          "score": 10,
+          "followUp": [
+            {
+              "speaker": "player",
+              "text": "모래성 쌓을래?"
+            },
+            {
+              "speaker": "sujung",
+              "text": "좋아! 누가 더 크게 쌓나 내기야."
+            },
+            {
+              "speaker": "narration",
+              "text": "두 사람은 해가 기울 때까지 모래성을 쌓았다."
+            }
+          ]
+        },
+        {
+          "label": "해변 산책",
+          "score": 10,
+          "followUp": [
+            {
+              "speaker": "player",
+              "text": "해변 따라 좀 걸을까?"
+            },
+            {
+              "speaker": "sujung",
+              "text": "좋아."
+            },
+            {
+              "speaker": "narration",
+              "text": "두 사람은 손을 잡고 파도 소리를 따라 걸었다."
+            }
+          ]
+        },
+        {
+          "label": "해변에서 책 읽기",
+          "score": 0,
+          "followUp": [
+            {
+              "speaker": "player",
+              "text": "조용히 책 읽는 건 어때?"
+            },
+            {
+              "speaker": "sujung",
+              "text": "책…? 알았어."
+            },
+            {
+              "speaker": "narration",
+              "text": "수정은 금세 따분해한다."
+            },
+            {
+              "speaker": "narration",
+              "text": "시간이 흘러 해가 지기 시작한다."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sprite": "/img/bg_road_scene3.webp",
+      "lines": [
+        {
+          "speaker": "narration",
+          "text": "해 질 녘. 파도가 눈에 띄게 높아졌다."
+        },
+        {
+          "speaker": "sujung",
+          "text": "우리 저기 바위 쪽까지 가 보자! 파도 엄청 멋있어."
+        },
+        {
+          "speaker": "narration",
+          "text": "심장이 내려앉는다. 처음 그날도 꼭 이 시간이었다."
+        }
+      ],
+      "choices": [
+        {
+          "label": "안전한 곳으로 데려간다",
+          "score": 10,
+          "followUp": [
+            {
+              "speaker": "player",
+              "text": "아니야. 곧 어두워지고 파도도 세. 너무 가까이 가지 말자."
+            },
+            {
+              "speaker": "sujung",
+              "text": "…응. 오늘 시간 진짜 빨리 간다."
+            }
+          ]
+        },
+        {
+          "label": "그냥 같이 간다",
+          "score": 0,
+          "gameOver": true,
+          "followUp": [
+            {
+              "speaker": "player",
+              "text": "그래, 가자."
+            },
+            {
+              "speaker": "sujung",
+              "text": "우와, 파도 봐!"
+            },
+            {
+              "speaker": "player",
+              "text": "잠깐, 너무 가까워…!"
+            },
+            {
+              "speaker": "narration",
+              "text": "거센 바람에 수정이 중심을 잃는다."
+            },
+            {
+              "speaker": "player",
+              "text": "안 돼!"
+            },
+            {
+              "speaker": "narration",
+              "text": "파도가 그녀를 삼키고, 세상이 다시 하얗게 되감긴다."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

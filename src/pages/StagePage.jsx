@@ -4,19 +4,23 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 
-import { characterNameAtom, scoreAtom } from "../atom/atom";
+import { scoreAtom } from "../atom/atom";
 import { DialoguePlayer } from "../components/scene";
 import { Button } from "../components/ui";
 import { ROUTES } from "../constants/routes";
 import { toStageScript } from "../game/dialogueScript";
-import { markGameCompleted, markStageReached } from "../game/progress";
+import {
+  incrementRegressionCount,
+  markGameCompleted,
+  markStageReached,
+  recordChoice,
+} from "../game/progress";
 import { resolveAfterScene } from "../game/stageProgress";
 import { getPreloadImages, getStageConfig } from "../game/stages";
 import { resolveStageExit } from "../game/storyFlow";
 import { useBackgroundMusic } from "../hooks/useBackgroundMusic";
 import { useImagePreload } from "../hooks/useImagePreload";
-import axios from "../utils/axios";
-import { logger } from "../utils/logger";
+import { usePlayerName } from "../hooks/usePlayerName";
 
 // 다음 장소로 버튼 등장 페이드 (초)
 const END_BUTTON_FADE_SECONDS = 0.5;
@@ -30,7 +34,7 @@ function StagePage({ stage }) {
   const navigate = useNavigate();
   const audioRef = useBackgroundMusic();
   const [score, setScore] = useRecoilState(scoreAtom);
-  const [characterName, setCharacterName] = useRecoilState(characterNameAtom);
+  const characterName = usePlayerName();
 
   // 분기 없는 마지막 스테이지 방어값
   const fallbackExit = config.defaultExit ?? ROUTES.RESULT;
@@ -47,29 +51,15 @@ function StagePage({ stage }) {
     markStageReached(stage);
   }, [stage]);
 
-  // 닉네임 보충 (atom은 새로고침 시 비므로 스테이지마다 확인)
-  useEffect(() => {
-    if (characterName) return;
-    const fetchCharacterName = async () => {
-      try {
-        const response = await axios.get("/api/my-page");
-        if (response.data?.characterName) setCharacterName(response.data.characterName);
-      } catch (error) {
-        // 이름 기본값(주인공)으로 진행 가능
-        logger.error("캐릭터 정보 조회 실패:", error);
-      }
-    };
-    fetchCharacterName();
-  }, [characterName, setCharacterName]);
-
   const script = useMemo(
     () => toStageScript(config.storyData, { playerName: characterName }),
     [config, characterName]
   );
 
-  // 선택: 점수 누적(게임오버 제외) + 다음 목적지 갱신(카페 돈 줍기 분기)
+  // 선택: 선택 기록 + 점수 누적(게임오버 제외) + 다음 목적지 갱신(카페 돈 줍기 분기)
   const handleChoose = useCallback(
-    ({ choiceIndex, choice }) => {
+    ({ sceneIndex, choiceIndex, choice }) => {
+      recordChoice({ stage, sceneIndex, choiceIndex, label: choice.label });
       if (!choice.gameOver) {
         scoreRef.current += choice.score;
         setScore(scoreRef.current);
@@ -92,6 +82,8 @@ function StagePage({ stage }) {
       if (step.type === "navigate") {
         // 결과·엔딩 화면 진입 자격
         if (step.completed) markGameCompleted();
+        // 게임오버 = 회귀 1회 (이어지는 대사를 다 본 뒤 1번만)
+        if (choice?.gameOver) incrementRegressionCount();
         navigate(step.to);
         return undefined;
       }
