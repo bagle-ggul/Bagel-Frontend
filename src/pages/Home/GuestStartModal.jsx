@@ -1,7 +1,7 @@
 import React from "react";
 import { Dice5 } from "react-bootstrap-icons";
 
-import { Modal } from "../../components/ui";
+import { Modal, VisuallyHidden } from "../../components/ui";
 import { useGuestStartForm } from "../../hooks/useGuestStartForm";
 import { NICKNAME_MAX_LENGTH } from "../../utils/nickname";
 
@@ -16,7 +16,6 @@ import {
   NicknameRow,
   RerollButton,
   StartButton,
-  VisuallyHiddenLabel,
 } from "./GuestStartModal.styled";
 import MbtiSelect from "./MbtiSelect";
 
@@ -50,7 +49,9 @@ function GuestStartModal({ description, onStarted, onClose }) {
         <InputWrapper>
           <NicknameRow>
             <NicknameField>
-              <VisuallyHiddenLabel htmlFor={NICKNAME_INPUT_ID}>닉네임</VisuallyHiddenLabel>
+              <VisuallyHidden as="label" htmlFor={NICKNAME_INPUT_ID}>
+                닉네임
+              </VisuallyHidden>
               <GlassInput
                 id={NICKNAME_INPUT_ID}
                 type="text"

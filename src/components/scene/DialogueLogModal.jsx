@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { useEffect, useRef } from "react";
 import styled from "styled-components";
 
+import { SPEAKER } from "../../game/dialogueScript";
 import { border, text } from "../../styles/semantic";
 import { spacing } from "../../styles/tokens";
 import { Modal } from "../ui";
@@ -48,10 +49,10 @@ function DialogueLogModal({ entries, onClose }) {
       ) : (
         <List>
           {entries.map((entry) => {
-            const isChoice = entry.speakerId === "choice";
+            const isChoice = entry.speakerId === SPEAKER.CHOICE;
             return (
               <Entry key={entry.id} $isChoice={isChoice}>
-                {!isChoice && entry.speakerId !== "narration" && (
+                {!isChoice && entry.speakerId !== SPEAKER.NARRATION && (
                   <SpeakerName>{entry.speakerName}</SpeakerName>
                 )}
                 {isChoice ? `선택 · ${entry.text}` : entry.text}

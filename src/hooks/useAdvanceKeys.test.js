@@ -46,6 +46,26 @@ describe("useAdvanceKeys", () => {
     expect(onAdvance).not.toHaveBeenCalled();
   });
 
+  it("버튼에 포커스돼 있어도 숫자 키는 선택한다", () => {
+    const { onChoose } = setup();
+    const button = document.body.appendChild(document.createElement("button"));
+    press("2", { target: button });
+    button.remove();
+    expect(onChoose).toHaveBeenCalledWith(1);
+  });
+
+  it("입력창·dialog 안의 숫자 키는 무시", () => {
+    const { onChoose } = setup();
+    const input = document.body.appendChild(document.createElement("input"));
+    const dialog = document.body.appendChild(document.createElement("div"));
+    dialog.setAttribute("role", "dialog");
+    press("1", { target: input });
+    press("1", { target: dialog });
+    input.remove();
+    dialog.remove();
+    expect(onChoose).not.toHaveBeenCalled();
+  });
+
   it("dialog 안의 키는 무시", () => {
     const { onAdvance } = setup();
     const dialog = document.body.appendChild(document.createElement("div"));

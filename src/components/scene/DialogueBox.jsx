@@ -2,10 +2,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import PropTypes from "prop-types";
 import styled, { keyframes } from "styled-components";
 
+import { SPEAKER } from "../../game/dialogueScript";
 import { border, dialogue, text } from "../../styles/semantic";
 import { media } from "../../styles/theme";
 import { blur, motionCurve, motionSeconds, radius, shadow, spacing } from "../../styles/tokens";
-import { NameTag } from "../ui";
+import { NameTag, VisuallyHidden } from "../ui";
 
 const blink = keyframes`
   0%, 100% { opacity: 1; transform: translateY(0); }
@@ -70,11 +71,16 @@ const ProgressDot = styled.span`
   }
 `;
 
+// 스크린리더 낭독 문구 (화자 있으면 "이름: 본문")
+const toAnnouncement = (line, isNarration) =>
+  isNarration ? line.text : `${line.speakerName}: ${line.text}`;
+
 /**
  * 대사창: 화자 이름표(나레이션 제외, 화자 바뀔 때 미끄러져 등장) + 타이핑 본문 + 완료 시 진행 표시
+ * 낭독은 숨은 알림 영역에서 줄마다 1회 (타이핑 중 글자 단위 낭독 방지)
  */
 function DialogueBox({ line, visibleText, isDone }) {
-  const isNarration = line.speakerId === "narration";
+  const isNarration = line.speakerId === SPEAKER.NARRATION;
   return (
     <Wrapper>
       <AnimatePresence initial={false} mode="wait">
@@ -90,10 +96,13 @@ function DialogueBox({ line, visibleText, isDone }) {
           </NameTagSlot>
         )}
       </AnimatePresence>
-      <Box $narration={isNarration} aria-live="polite">
+      <Box $narration={isNarration} aria-hidden="true">
         {visibleText}
-        {isDone && <ProgressDot aria-hidden="true" />}
+        {isDone && <ProgressDot />}
       </Box>
+      <VisuallyHidden role="status" data-announcer="">
+        <span key={`${line.speakerName}:${line.text}`}>{toAnnouncement(line, isNarration)}</span>
+      </VisuallyHidden>
     </Wrapper>
   );
 }

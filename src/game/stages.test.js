@@ -1,6 +1,7 @@
 import stageRules from "../data/stageRules.json";
 
-import { getPreloadImages, getStageConfig, NEXT_STAGES, STAGE_CONFIGS } from "./stages";
+import { NEXT_STAGES } from "./stageGraph";
+import { getPreloadImages, getStageConfig, STAGE_CONFIGS } from "./stages";
 
 describe("stages", () => {
   it.each([

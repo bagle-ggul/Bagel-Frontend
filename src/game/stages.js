@@ -59,9 +59,6 @@ export const STAGE_CONFIGS = {
   },
 };
 
-// 다음 후보 스테이지 (미리 불러오기용, 원본은 stageGraph)
-export { NEXT_STAGES };
-
 /** 스테이지 번호 > 설정 (없으면 null) */
 export const getStageConfig = (stage) => STAGE_CONFIGS[stage] ?? null;
 

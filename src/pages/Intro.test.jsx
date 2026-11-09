@@ -5,6 +5,8 @@ import { RecoilRoot } from "recoil";
 
 import { getMaxStage, PROGRESS_KEYS, resetProgress, markStageReached } from "../game/progress";
 import { clearSeenLines } from "../game/seenLines";
+import { getPreloadImages } from "../game/stages";
+import { __resetPreloadedUrlsForTest } from "../hooks/useImagePreload";
 import axios from "../utils/axios";
 
 import Intro from "./Intro";
@@ -75,6 +77,19 @@ describe("Intro", () => {
       tapScreen();
     }
     expect(screen.getByText("메인1 화면")).toBeInTheDocument();
+  });
+
+  it("인트로 중에 1스테이지 그림을 미리 받는다", async () => {
+    __resetPreloadedUrlsForTest();
+    const requestedUrls = [];
+    const imageSpy = jest.spyOn(window, "Image").mockImplementation(() => {
+      const image = {};
+      Object.defineProperty(image, "src", { set: (url) => requestedUrls.push(url) });
+      return image;
+    });
+    await renderLoadedIntro();
+    imageSpy.mockRestore();
+    expect(requestedUrls).toEqual(expect.arrayContaining(getPreloadImages(1)));
   });
 
   it("건너뛰기(세션) 버튼은 없다", async () => {

@@ -10,10 +10,8 @@ import {
   selectLine,
   selectLineKey,
 } from "../game/dialogueFlow";
+import { SPEAKER } from "../game/dialogueScript";
 import { isLineSeen, markLineSeen } from "../game/seenLines";
-
-// 지난 대사 기록의 선택 항목 화자 id (DialogueLogModal이 "선택 · " 접두로 표시)
-const CHOICE_LOG_SPEAKER_ID = "choice";
 
 /**
  * 대사 흐름: 진행·선택 상태, 본 줄 기록, 지난 대사 로그, 장면 종료 통지
@@ -110,7 +108,7 @@ export function useDialogueFlow({
 
       const choice = currentScene.choices[choiceIndex];
       callbacksRef.current.onChoose?.({ sceneIndex: currentFlow.sceneIndex, choiceIndex, choice });
-      appendLog({ speakerId: CHOICE_LOG_SPEAKER_ID, speakerName: playerName, text: choice.label });
+      appendLog({ speakerId: SPEAKER.CHOICE, speakerName: playerName, text: choice.label });
       updateFlow(nextFlow);
     },
     [script, playerName, appendLog, updateFlow]

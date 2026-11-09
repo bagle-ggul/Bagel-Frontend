@@ -254,4 +254,19 @@ describe("DialoguePlayer", () => {
     expect(onSceneDone).toHaveBeenCalledTimes(1);
     expect(screen.getByText("엔딩 화면")).toBeInTheDocument();
   });
+
+  it("ended 뒤에도 지난 대사 버튼으로 로그를 연다", () => {
+    const onSceneDone = jest.fn(() => ({ type: "end" }));
+    renderPlayer({ onSceneDone, endSlot: <button type="button">다음 장소로</button> });
+    tapUntilChoices();
+    pressKey("1");
+    tapThroughLine();
+    tapThroughLine();
+    const endSlotButton = screen.getByRole("button", { name: "다음 장소로" });
+    // 덮개 빈 곳은 클릭 통과, 종료 버튼만 클릭 받음
+    expect(screen.getByTestId("end-slot")).toHaveStyle("pointer-events: none");
+    expect(endSlotButton).not.toHaveStyle("pointer-events: none");
+    fireEvent.click(screen.getByRole("button", { name: "지난 대사" }));
+    expect(within(screen.getByRole("dialog")).getByText("고마워.")).toBeInTheDocument();
+  });
 });

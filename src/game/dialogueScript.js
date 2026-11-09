@@ -7,6 +7,8 @@ export const SPEAKER = {
   PLAYER: "player",
   SUJUNG: "sujung",
   NARRATION: "narration",
+  // 지난 대사 기록의 고른 선택지 (DialogueLogModal이 "선택 · " 접두로 표시)
+  CHOICE: "choice",
 };
 
 export const DEFAULT_PLAYER_NAME = "주인공";

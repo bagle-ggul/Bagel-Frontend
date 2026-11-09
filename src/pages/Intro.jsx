@@ -11,7 +11,9 @@ import introStory from "../data/stories/intro.json";
 import { fromIntroStory } from "../game/dialogueScript";
 import { PLAY_MODE } from "../game/playMode";
 import { resetProgress } from "../game/progress";
+import { getPreloadImages } from "../game/stages";
 import { useBackgroundMusic } from "../hooks/useBackgroundMusic";
+import { useImagePreload } from "../hooks/useImagePreload";
 import { layer } from "../styles/semantic";
 import { spacing } from "../styles/tokens";
 import axios from "../utils/axios";
@@ -19,6 +21,10 @@ import { logger } from "../utils/logger";
 
 const INTRO_BACKGROUND = "/img/bg_intro_main.webp";
 const INTRO_MUSIC = "/audio/intro.m4a";
+const FIRST_STAGE = 1;
+
+// 1스테이지 화면 코드 미리 받기 (실패는 무시, 실제 진입 시 다시 시도)
+const warmFirstStageChunk = () => import("./StagePage").catch(() => {});
 
 // 왼쪽 위 고정 (오른쪽 위 조작 버튼과 겹치지 않게, 플레이어보다 위)
 const IntroSkipButton = styled(Button)`
@@ -49,6 +55,13 @@ function Intro() {
     };
     fetchCharacterName();
   }, [setCharacterName]);
+
+  // 인트로 재생 중 1스테이지 그림·화면 코드 미리 받기 (진입 시 빈 화면 방지)
+  const firstStageImages = useMemo(() => getPreloadImages(FIRST_STAGE), []);
+  useImagePreload(firstStageImages);
+  useEffect(() => {
+    warmFirstStageChunk();
+  }, []);
 
   const script = useMemo(
     () => fromIntroStory(introStory.story, { playerName: characterName }),

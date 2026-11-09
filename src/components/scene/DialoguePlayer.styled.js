@@ -74,7 +74,7 @@ export const ChoiceArea = styled.div`
   overflow-y: auto;
 `;
 
-// 3층: 종료 슬롯, 화면 가운데 덮개
+// 4층: 종료 슬롯, 화면 가운데 (빈 곳은 통과 > 조작 버튼·지난 대사 계속 사용)
 export const EndSlotArea = styled.div`
   position: absolute;
   inset: 0;
@@ -83,5 +83,10 @@ export const EndSlotArea = styled.div`
   align-items: center;
   justify-content: center;
   padding: ${spacing.lg};
-  cursor: default;
+  pointer-events: none;
+
+  & > * {
+    pointer-events: auto;
+    cursor: default;
+  }
 `;

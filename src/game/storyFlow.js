@@ -1,4 +1,3 @@
-import { ROUTES } from "../constants/routes";
 import stageRules from "../data/stageRules.json";
 
 /**
@@ -48,7 +47,7 @@ export const resolveNextStep = (scene, index, score) => {
   }
 
   // 규칙이 없는 씬은 순서대로 진행한다.
-  // 씬 인덱스가 데이터 길이를 넘으면 컴포넌트가 "다음 스테이지로" 버튼을 띄운다.
+  // 씬 인덱스가 데이터 길이를 넘으면 컴포넌트가 "다음 장소로" 버튼을 띄운다.
   return { type: "scene", index: index + 1 };
 };
 
@@ -70,9 +69,6 @@ export const resolveStageExit = (scene, choiceIndex, defaultRoute) => {
   return exitRule.byChoice?.[String(choiceIndex)] ?? exitRule.default ?? defaultRoute;
 };
 
-/** 결과 화면 경로. 데이터의 exit 값과 일치해야 한다 */
-export const RESULT_ROUTE = ROUTES.RESULT;
-
-const storyFlow = { resolveNextStep, resolveStageExit, RESULT_ROUTE };
+const storyFlow = { resolveNextStep, resolveStageExit };
 
 export default storyFlow;

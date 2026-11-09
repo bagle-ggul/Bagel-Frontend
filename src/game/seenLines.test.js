@@ -38,4 +38,24 @@ describe("seenLines", () => {
     resetProgress();
     expect(isLineSeen("s1:0:s:0")).toBe(true);
   });
+
+  describe("저장소 오류", () => {
+    afterEach(() => jest.restoreAllMocks());
+
+    it("setItem이 실패해도 던지지 않는다", () => {
+      jest.spyOn(Storage.prototype, "setItem").mockImplementation(() => {
+        throw new DOMException("quota", "QuotaExceededError");
+      });
+      expect(() => markLineSeen("s1:0:s:0")).not.toThrow();
+      expect(isLineSeen("s1:0:s:0")).toBe(false);
+    });
+
+    it("getItem이 실패하면 본 줄 없음", () => {
+      jest.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
+        throw new Error("blocked");
+      });
+      expect(isLineSeen("s1:0:s:0")).toBe(false);
+      expect(() => markLineSeen("s1:0:s:0")).not.toThrow();
+    });
+  });
 });

@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
 
 import RequireAuth from "./components/RequireAuth";
@@ -10,16 +10,17 @@ import Help from "./pages/Help";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import Profile from "./pages/Profile";
+import { lazyWithReload } from "./utils/lazyWithReload";
 
-// 게임 화면 지연 로드 (첫 화면 번들에서 제외)
-const Intro = lazy(() => import("./pages/Intro"));
-const StagePage = lazy(() => import("./pages/StagePage"));
-const Result = lazy(() => import("./pages/Result"));
-const Happy = lazy(() => import("./pages/Happy"));
-const Middle = lazy(() => import("./pages/Middle"));
-const Sad = lazy(() => import("./pages/Sad"));
-const Hidden = lazy(() => import("./pages/Hidden"));
-const GameOver = lazy(() => import("./pages/GameOver"));
+// 게임 화면 지연 로드 (첫 화면 번들에서 제외, 배포 후 옛 청크 실패 시 새로고침 1회)
+const Intro = lazyWithReload(() => import("./pages/Intro"));
+const StagePage = lazyWithReload(() => import("./pages/StagePage"));
+const Result = lazyWithReload(() => import("./pages/Result"));
+const Happy = lazyWithReload(() => import("./pages/Happy"));
+const Middle = lazyWithReload(() => import("./pages/Middle"));
+const Sad = lazyWithReload(() => import("./pages/Sad"));
+const Hidden = lazyWithReload(() => import("./pages/Hidden"));
+const GameOver = lazyWithReload(() => import("./pages/GameOver"));
 
 /** 지연 로드 화면 대기 표시 */
 const withSuspense = (element) => <Suspense fallback={<RouteFallback />}>{element}</Suspense>;

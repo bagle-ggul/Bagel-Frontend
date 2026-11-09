@@ -137,7 +137,7 @@ function DialoguePlayer({
           <AnimatePresence>
             {isLogOpen && <DialogueLogModal entries={log} onClose={() => setIsLogOpen(false)} />}
           </AnimatePresence>
-          {isEnded && endSlot && <EndSlotArea>{endSlot}</EndSlotArea>}
+          {isEnded && endSlot && <EndSlotArea data-testid="end-slot">{endSlot}</EndSlotArea>}
         </Screen>
       </SceneBackdrop>
     </MotionConfig>
