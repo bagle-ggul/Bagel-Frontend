@@ -5,6 +5,8 @@ import { storyData as stage3StoryData } from "../utils/data3";
 import { storyData as stage4StoryData } from "../utils/data4";
 import { storyData as stage5StoryData } from "../utils/data5";
 
+import { NEXT_STAGES } from "./stageGraph";
+
 /**
  * 스테이지 설정 표: 장소, 스토리 데이터, 배경, 음악, 기본 다음 경로, 분위기 효과
  * StagePage가 stage 번호로 조회 (defaultExit null = 마지막 스테이지)
@@ -57,8 +59,8 @@ export const STAGE_CONFIGS = {
   },
 };
 
-/** 스테이지 > 다음에 갈 수 있는 후보 스테이지 (미리 불러오기용) */
-export const NEXT_STAGES = { 1: [2], 2: [3, 4], 3: [5], 4: [5], 5: [] };
+// 다음 후보 스테이지 (미리 불러오기용, 원본은 stageGraph)
+export { NEXT_STAGES };
 
 /** 스테이지 번호 > 설정 (없으면 null) */
 export const getStageConfig = (stage) => STAGE_CONFIGS[stage] ?? null;

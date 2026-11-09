@@ -1,3 +1,5 @@
+import { getPreviousStages } from "./stageGraph";
+
 /**
  * 게임 진행 상태 영속화
  *
@@ -77,15 +79,17 @@ export const resetProgress = () => {
 };
 
 /**
- * 해당 스테이지에 진입할 자격이 있는지 판정.
- * 직전 스테이지까지 도달했으면 통과시킨다.
+ * 스테이지 진입 자격: 들어올 수 있는 직전 스테이지 중 하나라도 도달했으면 통과
+ * (분기 2 > 4, 3 > 5는 번호가 하나씩 이어지지 않음 > "번호 - 1" 판정이면 막힘)
  *
  * @param {number} stage 진입하려는 스테이지 번호 (1~5)
  * @returns {boolean}
  */
 export const canEnterStage = (stage) => {
   if (stage <= 1) return true; // 첫 스테이지는 인트로만 거치면 된다
-  return getMaxStage() >= stage - 1;
+  const previousStages = getPreviousStages(stage);
+  if (previousStages.length === 0) return false;
+  return getMaxStage() >= Math.min(...previousStages);
 };
 
 const progress = {
