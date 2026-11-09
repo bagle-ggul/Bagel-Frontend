@@ -50,11 +50,8 @@ const MBTI_AXES = [
 ];
 
 /**
- * MBTI 선택 UI.
- *
- * @param {Object} value 축별 선택값 `{ e, s, t, j }`
- * @param {Function} onChange `(axisKey, selected) => void`
- * @param {string} [result] 완성된 MBTI 문자열. 있으면 제목 옆에 배지로 표시
+ * MBTI 선택 UI: 축별 선택값 { e, s, t, j } > onChange(axisKey, selected)
+ * 4축을 모두 고르면 제목 옆에 결과 배지 표시
  */
 function MbtiSelect({ value, onChange, result }) {
   return (

@@ -10,11 +10,8 @@ const MBTI_REQUIRED_MESSAGE = "MBTI를 모두 선택해주세요.";
 const START_FAILED_MESSAGE = "시작하지 못했어요. 잠시 후 다시 시도해주세요.";
 
 /**
- * 게스트 시작 폼: 닉네임 추천 > 입력 검증 > 시작 요청 > 토큰 저장
- * 닉네임은 열릴 때 서버 추천값으로 채우고, 비워서 보내면 서버가 자동 생성
- *
- * @param {Object} options
- * @param {Function} options.onStarted 시작 성공 후 호출 (응답 본문 전달)
+ * 게스트 시작 폼: 닉네임 추천, 입력 검증, 시작 요청, 토큰 저장
+ * 추천 > 검증 > 요청 > 저장 순, 닉네임을 비워 보내면 서버가 자동 생성
  */
 export const useGuestStartForm = ({ onStarted }) => {
   const [characterName, setCharacterName] = useState("");
