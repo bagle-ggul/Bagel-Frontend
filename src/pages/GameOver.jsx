@@ -5,6 +5,7 @@ import styled, { keyframes } from "styled-components";
 
 import { scoreAtom } from "../atom/atom";
 import { Button, Card } from "../components/ui";
+import { ROUTES } from "../constants/routes";
 import axios from "../utils/axios";
 import { logger } from "../utils/logger";
 
@@ -151,11 +152,11 @@ function GameOver() {
     }
   };
 
-  const handleNavigation = async (path) => {
+  const handleNavigation = async (path, navigationState) => {
     setFadeOutEffect(true);
     setTimeout(() => {
       setScore(0); // score 초기화
-      navigate(path);
+      navigate(path, { state: navigationState });
       handleSubmit();
     }, 1000); // 1초 후에 페이지를 이동합니다.
   };
@@ -163,7 +164,8 @@ function GameOver() {
   const handleHome = () => handleNavigation("/");
   const handleRankings = () => handleNavigation("/board");
   const handleProfile = () => handleNavigation("/profile");
-  const handlePlayAgain = () => handleNavigation("/intro");
+  // 회귀 재시작: 인트로가 회귀 횟수를 남기고 회차만 초기화
+  const handlePlayAgain = () => handleNavigation(ROUTES.INTRO, { isRegression: true });
 
   return (
     <CenteredDiv className={fadeOutEffect ? "fade-out" : ""}>

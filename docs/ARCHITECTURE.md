@@ -29,16 +29,13 @@ src/
 | `src/components/`       | 화면 간 재사용되는 컴포넌트                                                                                                                                                                                                                                                                                                  |
 | `src/components/scene/` | 장면 플레이어 — `DialoguePlayer`가 대사창·선택지·배경·캐릭터·효과·조작 버튼 조립                                                                                                                                                                                                                                             |
 | `src/components/ui/`    | 공용 UI — `Button`·`Card`·`Modal`·`NameTag`·`VisuallyHidden`(스크린리더 전용)                                                                                                                                                                                                                                                |
-| `src/data/stories/`     | 새 형식의 JSON 스토리 데이터. 현재 인트로만 사용                                                                                                                                                                                                                                                                             |
+| `src/data/stories/`     | 스토리 데이터 단일 원본 — `intro`·`stage1`~`stage5`·`endings` JSON (화자 id + 본문, `{player}` 자리표시자)                                                                                                                                                                                                                   |
 | `src/hooks/`            | 대사 플레이어 — `useDialogueFlow`(진행·선택·로그), `useTypewriter`(타이핑), `useAdvanceKeys`(Space·Enter·1~4 키), `useAutoPlay`(자동·건너뛰기), `useImagePreload`(그림 미리 받기), `useBackgroundMusic`(배경 음악). 그 외 `useRankingData`(랭킹 조회), `useInfiniteScroll`(무한 스크롤), `useGuestStartForm`(게스트 시작 폼) |
-| `src/game/`             | 스테이지 설정(`stages`), 대사 변환·진행(`dialogueScript`, `dialogueFlow`), 본 줄 기록(`seenLines`), 장면 종료 판정(`stageProgress`), 재생 모드(`playMode`), 전이 규칙(`storyFlow`), 진행도(`progress`)                                                                                                                       |
-| `src/pages/`            | 스테이지 5개는 `StagePage` 하나, 나머지는 라우트 1:1 대응 화면                                                                                                                                                                                                                                                               |
+| `src/game/`             | 캐릭터(`characters`), 엔딩 결정·변환(`ending`), 스테이지 설정(`stages`), 대사 변환·진행(`dialogueScript`, `dialogueFlow`), 본 줄 기록(`seenLines`), 장면 종료 판정(`stageProgress`), 재생 모드(`playMode`), 전이 규칙(`storyFlow`), 진행도·고른 선택·회귀 횟수(`progress`)                                                   |
+| `src/pages/`            | 스테이지 5개는 `StagePage`, 엔딩 4개는 `EndingPage` 하나, 나머지는 라우트 1:1 대응 화면                                                                                                                                                                                                                                      |
 | `src/styles/`           | `theme.js` — 색상·간격·z-index 토큰                                                                                                                                                                                                                                                                                          |
-| `src/utils/`            | 인증·HTTP·시간 유틸, `lazyWithReload`(배포 후 옛 청크 로드 실패 시 새로고침 1회) + **레거시 스토리 데이터**(`data.jsx`~`data5.jsx`)                                                                                                                                                                                          |
+| `src/utils/`            | 인증·HTTP·시간 유틸, `lazyWithReload`(배포 후 옛 청크 로드 실패 시 새로고침 1회)                                                                                                                                                                                                                                             |
 
-> `src/utils/`에 스토리 데이터가 섞여 있는 것은 정리되지 않은 상태다. Phase 4에서
-> `src/data/stories/`로 통합한다.
->
 > `src/constants/version.js`는 `scripts/sync-version.js`가 빌드 전에 생성하는 파일이라
 > 저장소에 커밋되지 않는다.
 
@@ -46,18 +43,18 @@ src/
 
 `src/Route.jsx`가 `createBrowserRouter`로 정의한다. **이 표가 실제 라우트의 전부다.**
 
-| 경로              | 화면                                         | 인증 보호 |
-| ----------------- | -------------------------------------------- | --------- |
-| `/`               | `src/pages/Home.jsx`                         | ✗         |
-| `/help`           | `src/pages/Help.jsx`                         | ✗         |
-| `/intro`          | `src/pages/Intro.jsx`                        | ✓         |
-| `/main1`~`/main5` | `src/pages/StagePage.jsx` (`stage` prop 1~5) | ✓         |
-| `/result`         | `src/pages/Result.jsx`                       | ✓         |
-| `/happy`          | `src/pages/Happy.jsx`                        | ✓         |
-| `/middle`         | `src/pages/Middle.jsx`                       | ✓         |
-| `/sad`            | `src/pages/Sad.jsx`                          | ✓         |
-| `/hidden`         | `src/pages/Hidden.jsx`                       | ✓         |
-| `/over`           | `src/pages/GameOver.jsx`                     | ✓         |
+| 경로              | 화면                                           | 인증 보호 |
+| ----------------- | ---------------------------------------------- | --------- |
+| `/`               | `src/pages/Home.jsx`                           | ✗         |
+| `/help`           | `src/pages/Help.jsx`                           | ✗         |
+| `/intro`          | `src/pages/Intro.jsx`                          | ✓         |
+| `/main1`~`/main5` | `src/pages/StagePage.jsx` (`stage` prop 1~5)   | ✓         |
+| `/result`         | `src/pages/Result.jsx`                         | ✓         |
+| `/happy`          | `src/pages/EndingPage.jsx` (`endingId` happy)  | ✓         |
+| `/middle`         | `src/pages/EndingPage.jsx` (`endingId` middle) | ✓         |
+| `/sad`            | `src/pages/EndingPage.jsx` (`endingId` sad)    | ✓         |
+| `/hidden`         | `src/pages/EndingPage.jsx` (`endingId` hidden) | ✓         |
+| `/over`           | `src/pages/GameOver.jsx`                       | ✓         |
 
 게임 화면(인트로·스테이지·결과·엔딩·게임오버)은 `React.lazy`로 지연 로드하고 `Suspense`의
 `RouteFallback`을 보여 준다. 스테이지 라우트는 `key`로 스테이지 간 상태를 새로 만든다.| `/over` | `src/pages/GameOver.jsx` | ✓ |

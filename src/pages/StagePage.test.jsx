@@ -3,7 +3,13 @@ import { MotionGlobalConfig } from "framer-motion";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 
-import { getMaxStage, PROGRESS_KEYS, resetProgress } from "../game/progress";
+import {
+  getChoiceHistory,
+  getMaxStage,
+  getRegressionCount,
+  PROGRESS_KEYS,
+  resetProgress,
+} from "../game/progress";
 import { clearSeenLines } from "../game/seenLines";
 import axios from "../utils/axios";
 
@@ -103,6 +109,21 @@ describe("StagePage", () => {
       tapScreen();
     }
     expect(screen.getByText("게임오버 화면")).toBeInTheDocument();
+    // 게임오버 = 회귀 1회, 점수 변화 없음
+    expect(getRegressionCount()).toBe(1);
+    expect(sessionStorage.getItem(PROGRESS_KEYS.SCORE)).toBe("10");
+  });
+
+  it("고른 선택을 스테이지·장면·문구로 기록한다", () => {
+    renderStage();
+    tapUntilChoices();
+    const firstChoiceLabel = within(queryChoiceGroup()).getAllByRole("button")[0].textContent;
+    chooseByIndex(0);
+    expect(getChoiceHistory()).toEqual([
+      { stage: 1, sceneIndex: 0, choiceIndex: 0, label: expect.any(String) },
+    ]);
+    expect(firstChoiceLabel).toContain(getChoiceHistory()[0].label);
+    expect(getRegressionCount()).toBe(0);
   });
 
   it("스테이지를 마치면 다음 장소로 버튼이 기본 목적지를 가리킨다", () => {

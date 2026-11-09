@@ -3,7 +3,14 @@ import { MotionGlobalConfig } from "framer-motion";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 
-import { getMaxStage, PROGRESS_KEYS, resetProgress, markStageReached } from "../game/progress";
+import {
+  getMaxStage,
+  getRegressionCount,
+  incrementRegressionCount,
+  PROGRESS_KEYS,
+  resetProgress,
+  markStageReached,
+} from "../game/progress";
 import { clearSeenLines } from "../game/seenLines";
 import { getPreloadImages } from "../game/stages";
 import { __resetPreloadedUrlsForTest } from "../hooks/useImagePreload";
@@ -18,9 +25,9 @@ MotionGlobalConfig.skipAnimations = true;
 // 인트로 전체를 넘기는 데 충분한 조작 횟수 상한 (무한 반복 방지)
 const MAXIMUM_INTERACTION_COUNT = 200;
 
-const renderIntro = () =>
+const renderIntro = (introEntry = "/intro") =>
   render(
-    <MemoryRouter initialEntries={["/intro"]}>
+    <MemoryRouter initialEntries={[introEntry]}>
       <RecoilRoot>
         <Routes>
           <Route path="/intro" element={<Intro />} />
@@ -31,8 +38,8 @@ const renderIntro = () =>
   );
 
 // 닉네임 조회 반영까지 대기 (비동기 state 갱신을 테스트 안에서 마무리)
-const renderLoadedIntro = async () => {
-  renderIntro();
+const renderLoadedIntro = async (introEntry) => {
+  renderIntro(introEntry);
   await screen.findByText("민수");
 };
 
@@ -65,6 +72,22 @@ describe("Intro", () => {
     expect(screen.getByText("메인1 화면")).toBeInTheDocument();
     expect(getMaxStage()).toBe(0);
     expect(sessionStorage.getItem(PROGRESS_KEYS.SCORE)).not.toBe("40");
+  });
+
+  it("새 게임은 회귀 횟수까지 초기화한다", async () => {
+    incrementRegressionCount();
+    await renderLoadedIntro();
+    fireEvent.click(screen.getByRole("button", { name: "인트로 건너뛰기" }));
+    expect(getRegressionCount()).toBe(0);
+  });
+
+  it("게임오버 회귀 재시작은 회귀 횟수를 남긴다", async () => {
+    incrementRegressionCount();
+    markStageReached(3);
+    await renderLoadedIntro({ pathname: "/intro", state: { isRegression: true } });
+    fireEvent.click(screen.getByRole("button", { name: "인트로 건너뛰기" }));
+    expect(getRegressionCount()).toBe(1);
+    expect(getMaxStage()).toBe(0);
   });
 
   it("마지막 줄을 넘기면 /main1로 간다", async () => {

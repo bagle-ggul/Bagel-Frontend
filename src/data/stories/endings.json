@@ -1,0 +1,196 @@
+{
+  "happy": {
+    "title": "해피 엔딩",
+    "subtitle": "되감기의 끝",
+    "background": "/img/bg_wedding_main.webp",
+    "sprite": "/img/her_wedding_main.webp",
+    "music": "/audio/happy.m4a",
+    "lines": [
+      {
+        "speaker": "narration",
+        "text": "노을이 바다를 물들인다. 수정은 무사히, 바로 옆에 있다."
+      },
+      {
+        "speaker": "sujung",
+        "text": "있잖아… 오늘 진짜 재밌었어. 이렇게 웃은 게 얼마 만인지 몰라."
+      },
+      {
+        "speaker": "player",
+        "text": "나도. 그래서 말인데… 앞으로도 이렇게 같이 다닐래?"
+      },
+      {
+        "speaker": "sujung",
+        "text": "응? 무슨 뜻이야?"
+      },
+      {
+        "speaker": "player",
+        "text": "좋아해. 네가 처음 나한테 뉴욕 베이글 사 줬던 날부터, 쭉."
+      },
+      {
+        "speaker": "sujung",
+        "text": "…바보. 나도 좋아해."
+      },
+      {
+        "speaker": "narration",
+        "text": "그날 이후, 시간은 다시 되감기지 않았다."
+      },
+      {
+        "speaker": "narration",
+        "text": "몇 번의 계절이 지나고, 두 사람은 같은 바다 앞에서 평생을 약속한다."
+      }
+    ]
+  },
+  "middle": {
+    "title": "미들 엔딩",
+    "subtitle": "말하지 못한 밤",
+    "background": "/img/bg_middle_main.webp",
+    "sprite": "/img/her_middle_main.webp",
+    "music": "/audio/middle.m4a",
+    "lines": [
+      {
+        "speaker": "sujung",
+        "text": "있잖아, 넌 꿈이 뭐야?"
+      },
+      {
+        "speaker": "player",
+        "text": "나? 아직 잘 모르겠어. 요즘은 하루하루 잘 지내는 게 목표야. 너는?"
+      },
+      {
+        "speaker": "narration",
+        "text": "수정이 별을 올려다보며 오래 품어 온 꿈 이야기를 꺼낸다."
+      },
+      {
+        "speaker": "narration",
+        "text": "두 사람은 밤이 깊도록 이야기를 나눴다."
+      },
+      {
+        "speaker": "player",
+        "text": "오늘도 말하지 못했다. 그래도 수정은 여기, 살아 있다."
+      },
+      {
+        "speaker": "narration",
+        "text": "고백은 다음으로 미뤄졌지만, 그녀를 잃지 않았다는 것만으로 충분한 밤이었다."
+      }
+    ]
+  },
+  "sad": {
+    "title": "새드 엔딩",
+    "subtitle": "멈춘 시간",
+    "background": "/img/bg_sad_main.webp",
+    "sprite": "/img/her_sad_main.webp",
+    "music": "/audio/sad.m4a",
+    "lines": [
+      {
+        "speaker": "sujung",
+        "text": "그거 알아? 나 사실 수영 잘 못해."
+      },
+      {
+        "speaker": "player",
+        "text": "진짜? 그럼 바다는 괜히 왔네."
+      },
+      {
+        "speaker": "sujung",
+        "text": "…괜히 왔다고? 나랑 여기 온 게?"
+      },
+      {
+        "speaker": "sujung",
+        "text": "솔직히 오늘 하루 종일 기분 별로였어."
+      },
+      {
+        "speaker": "player",
+        "text": "내가 뭐 잘못했어? 그냥 농담이었어!"
+      },
+      {
+        "speaker": "sujung",
+        "text": "나 먼저 갈게. 따라오지 마."
+      },
+      {
+        "speaker": "narration",
+        "text": "붙잡으려 손을 뻗었지만, 수정은 뒤돌아보지 않았다."
+      },
+      {
+        "speaker": "narration",
+        "text": "시간을 되돌리려 해도, 이번에는 아무 일도 일어나지 않는다."
+      },
+      {
+        "speaker": "stranger",
+        "text": "말했을 텐데. 그녀의 마음이 떠나면 더는 돌아갈 수 없다고."
+      },
+      {
+        "speaker": "stranger",
+        "text": "그래도 그녀는 살았다. 그거면 된 것 아닌가."
+      },
+      {
+        "speaker": "player",
+        "text": "…그걸로 된 거라고요?"
+      },
+      {
+        "speaker": "narration",
+        "text": "남자는 대답 없이 사라졌다. 노을 진 바다 앞에 혼자 남았다."
+      },
+      {
+        "speaker": "stranger",
+        "text": "…물론, 다음 회차가 있다면 이야기는 다르겠지."
+      }
+    ]
+  },
+  "hidden": {
+    "title": "히든 엔딩",
+    "subtitle": "마지막 회귀",
+    "background": "/img/bg_hidden_main.webp",
+    "sprite": "/img/her_hidden_main.webp",
+    "music": null,
+    "lines": [
+      {
+        "speaker": "sujung",
+        "text": "오늘 진짜 재밌었어. 있잖아, 아까 네가 물어본 거."
+      },
+      {
+        "speaker": "sujung",
+        "text": "시간을 되돌릴 수 있으면 뭐 할 거냐고. 너는? 너라면 뭐 할 거야?"
+      },
+      {
+        "speaker": "player",
+        "text": "나는… 이미 여러 번 돌아왔어. 너한테 이 말 하려고."
+      },
+      {
+        "speaker": "player",
+        "text": "좋아해, 수정아."
+      },
+      {
+        "speaker": "sujung",
+        "text": "…응. 나도."
+      },
+      {
+        "speaker": "narration",
+        "text": "그때, 모래사장 끝에 검은 코트의 남자가 서 있다."
+      },
+      {
+        "speaker": "stranger",
+        "text": "드디어 말했군."
+      },
+      {
+        "speaker": "player",
+        "text": "당신… 누구예요? 왜 매번 나를 도와준 거죠?"
+      },
+      {
+        "speaker": "narration",
+        "text": "남자가 모자를 벗는다. 조금 더 나이 든, 낯익은 얼굴."
+      },
+      {
+        "speaker": "stranger",
+        "name": "미래의 {player}",
+        "text": "몇 번이고 돌아가고도, 끝내 그 말을 못 했던 너다."
+      },
+      {
+        "speaker": "stranger",
+        "name": "미래의 {player}",
+        "text": "이번의 너는 해냈어. 그러니 나는 이제 사라져도 된다."
+      },
+      {
+        "speaker": "narration",
+        "text": "남자의 모습이 노을 속으로 흩어진다. 시간은 이제, 앞으로만 흐른다."
+      }
+    ]
+  }
+}

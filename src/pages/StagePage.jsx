@@ -9,7 +9,12 @@ import { DialoguePlayer } from "../components/scene";
 import { Button } from "../components/ui";
 import { ROUTES } from "../constants/routes";
 import { toStageScript } from "../game/dialogueScript";
-import { markGameCompleted, markStageReached } from "../game/progress";
+import {
+  incrementRegressionCount,
+  markGameCompleted,
+  markStageReached,
+  recordChoice,
+} from "../game/progress";
 import { resolveAfterScene } from "../game/stageProgress";
 import { getPreloadImages, getStageConfig } from "../game/stages";
 import { resolveStageExit } from "../game/storyFlow";
@@ -67,9 +72,10 @@ function StagePage({ stage }) {
     [config, characterName]
   );
 
-  // 선택: 점수 누적(게임오버 제외) + 다음 목적지 갱신(카페 돈 줍기 분기)
+  // 선택: 선택 기록 + 점수 누적(게임오버 제외) + 다음 목적지 갱신(카페 돈 줍기 분기)
   const handleChoose = useCallback(
-    ({ choiceIndex, choice }) => {
+    ({ sceneIndex, choiceIndex, choice }) => {
+      recordChoice({ stage, sceneIndex, choiceIndex, label: choice.label });
       if (!choice.gameOver) {
         scoreRef.current += choice.score;
         setScore(scoreRef.current);
@@ -92,6 +98,8 @@ function StagePage({ stage }) {
       if (step.type === "navigate") {
         // 결과·엔딩 화면 진입 자격
         if (step.completed) markGameCompleted();
+        // 게임오버 = 회귀 1회 (이어지는 대사를 다 본 뒤 1번만)
+        if (choice?.gameOver) incrementRegressionCount();
         navigate(step.to);
         return undefined;
       }

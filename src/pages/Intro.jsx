@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 
@@ -10,7 +10,7 @@ import { ROUTES } from "../constants/routes";
 import introStoryJson from "../data/stories/intro.json";
 import { toIntroScript } from "../game/dialogueScript";
 import { PLAY_MODE } from "../game/playMode";
-import { resetProgress } from "../game/progress";
+import { resetProgress, resetRunProgress } from "../game/progress";
 import { getPreloadImages } from "../game/stages";
 import { useBackgroundMusic } from "../hooks/useBackgroundMusic";
 import { useImagePreload } from "../hooks/useImagePreload";
@@ -39,6 +39,8 @@ const IntroSkipButton = styled(Button)`
  */
 function Intro() {
   const navigate = useNavigate();
+  // 게임오버 "회귀 하기"로 들어옴 (회귀 횟수 유지)
+  const isRegression = Boolean(useLocation().state?.isRegression);
   const audioRef = useBackgroundMusic();
   const setScore = useSetRecoilState(scoreAtom);
   const [characterName, setCharacterName] = useRecoilState(characterNameAtom);
@@ -69,8 +71,10 @@ function Intro() {
   );
 
   // 인트로 종료 시점이 곧 새 게임 시작 (이전 판 점수·진행도가 남으면 엉뚱한 엔딩)
+  // 회귀 재시작은 회차 상태만, 그 외는 회귀 횟수까지 초기화
   const startNewGame = () => {
-    resetProgress();
+    if (isRegression) resetRunProgress();
+    else resetProgress();
     setScore(0);
     navigate(ROUTES.MAIN1);
   };
